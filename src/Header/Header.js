@@ -4,7 +4,7 @@ function App() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/homepage", {
+    fetch("https://code1tech.page.gd/wp-json/v1/homepage", {
       method: "GET",
       headers: {
         "Accept": "application/json",
