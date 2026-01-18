@@ -14,7 +14,7 @@ function App() {
       }
     })
       .then(res => res.json())
-      .then(result => console.log('hhhh',result))
+      .then(result => setData('hhhh'))
       .catch(err => console.log("Fetch error:", err));
   }, []);
 
