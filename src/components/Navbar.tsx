@@ -2,100 +2,29 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown, Brain, Cloud, Database, Shield, Cpu, BarChart3, Workflow, Users, Building2, Landmark, HeartPulse, Factory } from "lucide-react";
 
-const servicesMenu = [{
-  icon: Brain,
-  label: "AI & Machine Learning",
-  description: "Intelligent automation solutions"
-}, {
-  icon: Cloud,
-  label: "Cloud Services",
-  description: "Scalable cloud infrastructure"
-}, {
-  icon: Database,
-  label: "Data Engineering",
-  description: "Enterprise data pipelines"
-}, {
-  icon: Shield,
-  label: "Cybersecurity",
-  description: "Advanced threat protection"
-}, {
-  icon: Cpu,
-  label: "Custom Development",
-  description: "Tailored software solutions"
-}, {
-  icon: Workflow,
-  label: "Process Automation",
-  description: "Workflow optimization"
-}];
+interface NavMenuItem {
+  id: number;
+  title: string;
+  url: string;
+  children?: NavMenuItem[];
+}
 
-const solutionsMenu = [{
-  icon: BarChart3,
-  label: "Business Intelligence",
-  description: "Data-driven insights"
-}, {
-  icon: Users,
-  label: "Customer Analytics",
-  description: "360° customer view"
-}, {
-  icon: Building2,
-  label: "Enterprise AI",
-  description: "AI at scale"
-}, {
-  icon: Landmark,
-  label: "Financial Services",
-  description: "Fintech solutions"
-}, {
-  icon: HeartPulse,
-  label: "Healthcare Tech",
-  description: "Digital health platforms"
-}, {
-  icon: Factory,
-  label: "Manufacturing AI",
-  description: "Smart factory solutions"
-}];
+interface HeaderProps {
+  headerLogo: {
+    logo_id: number;
+    full: string;
+    medium: string;
+  };
+  navMenus: NavMenuItem[];
+}
 
-const Navbar = () => {
+const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const sections = ["services", "solutions", "industries", "about"];
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navLinks = [{
-    label: "Services",
-    href: "#services",
-    hasDropdown: true,
-    menu: servicesMenu
-  }, {
-    label: "Solutions",
-    href: "#solutions",
-    hasDropdown: true,
-    menu: solutionsMenu
-  }, {
-    label: "Industries",
-    href: "#industries"
-  }, {
-    label: "About",
-    href: "#about"
-  }];
+ 
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -109,6 +38,8 @@ const Navbar = () => {
     setIsOpen(false);
     setActiveDropdown(null);
   };
+
+
 
   return (
     <nav 
@@ -125,36 +56,37 @@ const Navbar = () => {
             <img 
               alt="Code1 Tech Systems" 
               className="h-10 w-auto transition-all duration-300 group-hover:brightness-110 brightness-110 contrast-110" 
-              src="/lovable-uploads/be96b161-1e7c-4c4a-8065-54051cbd349b.png" 
+              src={headerLogo?.full} 
             />
           </a>
 
           {/* Desktop Navigation - Centered */}
           <div className="hidden lg:flex items-center justify-center flex-1 gap-10">
-            {navLinks.map(link => {
-              const isActive = activeSection === link.href.replace("#", "");
-              const hasDropdown = link.hasDropdown;
-              const isDropdownOpen = activeDropdown === link.label;
+            {navMenus?.map(link => {
+
+              const isActive = activeSection === link.url.replace("#", "");
+              const hasDropdown = link.children;
+              const isDropdownOpen = activeDropdown === link.title;
               
               return (
                 <div 
-                  key={link.label} 
+                  key={link.title} 
                   className="relative" 
-                  onMouseEnter={() => hasDropdown && setActiveDropdown(link.label)} 
+                  onMouseEnter={() => hasDropdown && setActiveDropdown(link.title)} 
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <a 
-                    href={link.href} 
-                    onClick={e => handleNavClick(e, link.href)} 
+                    href={link.url} 
+                    onClick={e => handleNavClick(e, link.url)} 
                     className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg ${
                       isActive 
-                        ? "text-accent shadow-[0_0_20px_rgba(0,194,255,0.3)]" 
+                        ? "text-accent" 
                         : isDropdownOpen
                           ? "text-accent/90"
                           : "text-foreground hover:text-accent"
                     }`}
                   >
-                    {link.label}
+                    {link.title}
                     {hasDropdown && (
                       <ChevronDown 
                         className={`w-3.5 h-3.5 transition-transform duration-300 ${
@@ -165,7 +97,7 @@ const Navbar = () => {
                   </a>
 
                   {/* Mega Dropdown */}
-                  {hasDropdown && link.menu && (
+                  {hasDropdown && link.children && (
                     <div 
                       className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 ${
                         isDropdownOpen 
@@ -173,27 +105,27 @@ const Navbar = () => {
                           : "opacity-0 invisible -translate-y-2"
                       }`}
                     >
-                      <div className="bg-background/95 backdrop-blur-xl rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-5 min-w-[420px]">
+                      <div className="bg-background/95 backdrop-blur-xl rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-5 min-w-[320px]">
                         {/* Dropdown arrow */}
                         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-background/95 rotate-45" />
                         
-                        <div className="grid grid-cols-2 gap-2 relative">
-                          {link.menu.map(item => (
+                        <div className="grid grid-cols-1 gap-2 relative">
+                          {link?.children?.map(item => (
                             <a 
-                              key={item.label} 
-                              href={link.href} 
-                              onClick={e => handleNavClick(e, link.href)} 
+                              key={item.title} 
+                              href={link.url} 
+                              onClick={e => handleNavClick(e, link.url)} 
                               className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
-                                <item.icon className="w-4 h-4" />
+                            {/*  <item.icon className="w-4 h-4" />*/}
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-medium text-foreground group-hover/item:text-accent transition-colors duration-300">
-                                  {item.label}
+                                  {item.title}
                                 </div>
                                 <div className="text-xs text-foreground/50 mt-0.5">
-                                  {item.description}
+                                  {item.title}
                                 </div>
                               </div>
                             </a>
@@ -203,11 +135,11 @@ const Navbar = () => {
                         {/* View All link */}
                         <div className="mt-4 pt-4 border-t border-border/10">
                           <a 
-                            href={link.href} 
-                            onClick={e => handleNavClick(e, link.href)} 
+                            href={link.url} 
+                            onClick={e => handleNavClick(e, link.url)} 
                             className="flex items-center justify-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors duration-300 group/all"
                           >
-                            View All {link.label}
+                            View All {link.title}
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/all:translate-x-1" />
                           </a>
                         </div>
@@ -272,21 +204,21 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col gap-1">
-            {navLinks.map(link => {
-              const isActive = activeSection === link.href.replace("#", "");
+            {navMenus?.map(link => {
+              const isActive = activeSection === link.url.replace("#", "");
               return (
-                <div key={link.label}>
+                <div key={link.title}>
                   <a 
-                    href={link.href} 
-                    onClick={e => handleNavClick(e, link.href)} 
+                    href={link.url} 
+                    onClick={e => handleNavClick(e, link.url)} 
                     className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between ${
                       isActive 
                         ? "text-accent bg-accent/10 shadow-[0_0_15px_rgba(0,194,255,0.2)]" 
                         : "text-foreground/70 hover:text-foreground hover:bg-foreground/5"
                     }`}
                   >
-                    {link.label}
-                    {link.hasDropdown && <ChevronDown className="w-4 h-4" />}
+                    {link.title}
+                    {link.children && <ChevronDown className="w-4 h-4" />}
                   </a>
                 </div>
               );

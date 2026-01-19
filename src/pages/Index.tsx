@@ -16,28 +16,53 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import RelatedBlogs from "@/components/RelatedBlogs";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
 import {useQuery} from "@tanstack/react-query";
 
 
 const Index = () => {
-  const {data, isLoading, isError, error} = useQuery({
-    queryKey: ["homepage"],
-    queryFn: async () => {
-      const res = await fetch('http://localhost:5000/api/homepage', {
+ const { data, isLoading, isError, error } = useQuery({
+  queryKey: ["homepage"],
+  queryFn: async () => {
+    const [homepageRes, headerRes, navRes] = await Promise.all([
+      fetch("http://localhost:5000/api/homepage", {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432"
+          Authorization:
+            "Bearer a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432",
         },
-      });
-      if(!res.ok)
-      {
-         throw new Error("Failed to fetch homepage");
-      }
-      return res.json();
-    } 
-  });
-  const homepageData = data?.data;
+      }),
+      fetch("http://localhost:5000/api/headerlogo", {
+        headers: {
+          Accept: "application/json",
+        },
+      }),
+      fetch("http://localhost:5000/api/navmenus", {
+        headers: {
+          Accept: "application/json",
+        },
+      }),
+    ]);
+
+    if (!homepageRes.ok || !headerRes.ok || !navRes) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const homepage = await homepageRes.json();
+    const navMenus = await navRes.json();
+    const headerLogo = await headerRes.json();
+
+    return {
+      homepage,
+      navMenus,
+      headerLogo,
+    };
+  },
+});
+
+  
+  const homepageData = data?.homepage;
+  const navMenus = data?.navMenus;
+  const headerpageData = data?.headerLogo;
   return (
     <div className="min-h-screen bg-background">
       {isLoading ? (
@@ -46,10 +71,10 @@ const Index = () => {
         </div>
       ) : (
         <>
-          <Navbar />
+          <Navbar headerLogo={headerpageData?.data} navMenus={navMenus?.data} />
           <main>
-            <HeroSection dataBanner={homepageData?.home_page_banner} dataClientLogo = {homepageData?.home_client_logo_section} />
-            <EnterpriseTechSection dataTrusted = {homepageData?.trusted_section} />
+            <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo = {homepageData?.data?.home_client_logo_section} />
+            <EnterpriseTechSection dataTrusted = {homepageData?.data?.trusted_section} />
 
             <GrowthStrategies />
             <EngineeringServices />
