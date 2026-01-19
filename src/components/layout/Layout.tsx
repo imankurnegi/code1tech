@@ -22,7 +22,7 @@ const Layout = () => {
                 }),
             ]);
 
-            if (!headerRes.ok || !navRes) {
+            if (!headerRes.ok || !navRes.ok) {
                 throw new Error("Failed to fetch data");
             }
 
@@ -38,7 +38,7 @@ const Layout = () => {
 
     return (
         <>
-            <Navbar headerLogo={data?.headerLogo} navMenus={data?.navMenus} />
+            <Navbar headerLogo={data?.headerLogo?.data} navMenus={data?.navMenus?.data} />
             <main>
                 <Outlet />
             </main>
