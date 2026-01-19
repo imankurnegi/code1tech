@@ -1,6 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useParallax } from "@/hooks/use-parallax";
+
+interface VideoDetails {
+  video_text?: string;
+  video_image?: boolean | string;
+  video_url?: string;
+}
+interface trustedSectionProps {
+  dataTrusted?: {
+    main_heading?:string;
+      left_video_section?:{
+        first_video_details?:VideoDetails;
+        second_video_details?: VideoDetails;
+        third_video_details?: VideoDetails;
+        fourth_video_details?: VideoDetails;
+      };
+       right_side_heading?: string;
+       right_side_paragraph?: string; // HTML string
+       cta_text?: string;
+       cta_url?: string;
+  };
+}
 const FloatingParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -57,26 +78,10 @@ const FloatingParticles = () => {
   }, []);
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />;
 };
+  // Convert API response into an array
 
 // Video thumbnails data
-const videoData = [{
-  id: 1,
-  label: "Data Engineering",
-  video: "/videos/data-engineering.mp4"
-}, {
-  id: 2,
-  label: "Full-stack Engineering",
-  video: "/videos/full-stack-engineering.mp4"
-}, {
-  id: 3,
-  label: "AI solutions",
-  video: "/videos/ai-solutions.mp4"
-}, {
-  id: 4,
-  label: "Low code- No code",
-  video: "/videos/low-code-no-code.mp4?v=3"
-}];
-const EnterpriseTechSection = () => {
+const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
   const [activeThumb, setActiveThumb] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
@@ -85,6 +90,14 @@ const EnterpriseTechSection = () => {
   const thumbnailRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const parallaxOffset = useParallax(0.1);
 
+    const videoFullData= Object.values(dataTrusted?.left_video_section).map((video,index) => ({
+    id: index+1,
+    label: video.video_text,
+    video: video.video_url,
+//    image: video.video_image, // optional
+    }));
+    console.log('videoess',videoFullData);
+    const videoData = videoFullData;
   // Handle thumbnail hover play/pause
   const handleThumbnailHover = (index: number) => {
     setHoveredThumb(index);
@@ -165,9 +178,24 @@ const EnterpriseTechSection = () => {
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Centered Main Heading - Full Width */}
         <div className={`text-center mb-8 md:mb-16 lg:mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold leading-tight text-foreground max-w-5xl mx-auto px-2 lg:text-4xl">
-            Your Trusted Partner to <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Automate Business</span> and Leverage <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Advanced Technology!</span>
-          </h2>
+            <h2 className="text-3xl sm:text-4xl font-bold leading-tight text-foreground max-w-5xl mx-auto px-2 lg:text-4xl">
+              {dataTrusted?.main_heading
+                // Split the string by <span>...</span> but keep the tags
+                .split(/(<span>.*?<\/span>)/g)
+                .map((segment, idx) => {
+                  const isSpan = segment.startsWith("<span>") && segment.endsWith("</span>");
+                  const cleanText = segment.replace("<span>", "").replace("</span>", "");
+                  return (
+                    <span
+                      key={idx}
+                      className={isSpan ? "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent" : "text-foreground"}
+                    >
+                      {cleanText}
+                    </span>
+                  );
+                })}
+            </h2>
+
         </div>
 
         {/* Two Column Layout */}
@@ -273,32 +301,13 @@ const EnterpriseTechSection = () => {
             letterSpacing: 'normal',
             lineHeight: '1.35'
           }}>
-              Accelerate your Business Growth through Global Expertise, Artificial Intelligence, and Data Solutions!
+            {dataTrusted?.right_side_heading}
             </h3>
 
             {/* Content Text - Short readable paragraphs */}
             <div className="space-y-4 sm:space-y-5 text-sm sm:text-base lg:text-[15px] text-foreground/90 leading-relaxed lg:leading-[1.85]">
-              <p className="text-justify text-base">
-
-
-At Code1 Tech Systems, we're not simply assisting your business; we are diving in as your partner for growth. We bring techies, effective systems, and AI tools that make your work faster, easier, and more reliable.
-
-
+              <p className="text-justify text-base"  dangerouslySetInnerHTML={{ __html: dataTrusted?.right_side_paragraph || "" }}>
             </p>
-              <p className="text-justify text-base">
-                
-Whether it is streamlining daily operations, scaling to infinity, or looking forward to new opportunities using AI, we will make it happen. For bold entrepreneurs, Code1 is not just another service; this is the advantage to achieve more and win bigger.
-
-
-
-              </p>
-              <p className="text-justify hidden lg:block text-base">
-                We help you simplify operations, scale quickly, and effectively leverage technology to achieve measurable results. By aligning solutions with your goals, we can enhance efficiency, agility, and confidence in every step of the process. Whether you are undertaking operational transformation, optimizing workflows, or expanding to new markets, Code1Tech Systems has the capability and expertise to support your success with clarity and control.
-
-
-
-
-              </p>
             </div>
 
             {/* CTA Button */}
@@ -306,13 +315,13 @@ Whether it is streamlining daily operations, scaling to infinity, or looking for
               <Button size="lg" className="relative group w-full sm:w-auto rounded-full px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{
               background: "linear-gradient(135deg, hsl(205 100% 35%), hsl(194 68% 55%))",
               boxShadow: "0 4px 25px hsla(205, 100%, 35%, 0.35)"
-            }}>
+            }} onClick={() => window.location.href = dataTrusted?.cta_url}>
                 {/* Hover glow effect */}
                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
                 boxShadow: "0 0 35px hsla(194, 68%, 55%, 0.45), 0 0 70px hsla(194, 68%, 55%, 0.25)"
               }} />
                 <span className="relative z-10 text-primary-foreground">
-                  Shape the Future With Us
+                  {dataTrusted?.cta_text}
                 </span>
               </Button>
             </div>

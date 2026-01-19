@@ -17,38 +17,30 @@ import RelatedBlogs from "@/components/RelatedBlogs";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
+import {useQuery} from "@tanstack/react-query";
 
 
 const Index = () => {
-  const [homepageData, setHomepageData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  console.log("Test1111111----")
-  useEffect(() => {
-    setLoading(true);
-    fetch("http://localhost:5000/api/homepage", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("API response:", data);
-        setHomepageData(data.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        setLoading(false);
+  const {data, isLoading, isError, error} = useQuery({
+    queryKey: ["homepage"],
+    queryFn: async () => {
+      const res = await fetch('http://localhost:5000/api/homepage', {
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432"
+        },
       });
-  }, []);
-
+      if(!res.ok)
+      {
+         throw new Error("Failed to fetch homepage");
+      }
+      return res.json();
+    } 
+  });
+  const homepageData = data?.data;
   return (
     <div className="min-h-screen bg-background">
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center h-screen">
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
         </div>
@@ -56,8 +48,8 @@ const Index = () => {
         <>
           <Navbar />
           <main>
-            <HeroSection data={homepageData?.home_page_banner} />
-            <EnterpriseTechSection />
+            <HeroSection dataBanner={homepageData?.home_page_banner} dataClientLogo = {homepageData?.home_client_logo_section} />
+            <EnterpriseTechSection dataTrusted = {homepageData?.trusted_section} />
 
             <GrowthStrategies />
             <EngineeringServices />

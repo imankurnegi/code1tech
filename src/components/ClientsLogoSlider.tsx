@@ -1,10 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 
-const ClientsLogoSlider = () => {
+interface dataClientLogoProps {
+    dataClientLogo?: {
+    client_logo_section ? :{
+      clent_logo?: string;
+    }[];
+  };
+}
+const ClientsLogoSlider = ({dataClientLogo}: dataClientLogoProps) => {
   const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-
+  const apiClients = dataClientLogo?.client_logo_section || [];
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -22,28 +29,33 @@ const ClientsLogoSlider = () => {
 
     return () => observer.disconnect();
   }, []);
-  const clients = [{
-    name: "DELOITTE",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }, {
-    name: "NAGARRO",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }, {
-    name: "MATELLIO",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }, {
-    name: "CLOUDWICK",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }, {
-    name: "KPI PARTNERS",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }, {
-    name: "ANVIZENT",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }, {
-    name: "GIRNARSOFT",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl"
-  }];
+  // const clients = [{
+  //   name: "DELOITTE",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }, {
+  //   name: "NAGARRO",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }, {
+  //   name: "MATELLIO",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }, {
+  //   name: "CLOUDWICK",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }, {
+  //   name: "KPI PARTNERS",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }, {
+  //   name: "ANVIZENT",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }, {
+  //   name: "GIRNARSOFT",
+  //   style: "font-bold text-2xl md:text-3xl lg:text-4xl"
+  // }];
+  const clients = apiClients.map((item) => ({
+    name: item.clent_logo || "",
+    style: "font-bold text-2xl md:text-3xl lg:text-4xl",
+    }));
+
 
   // Duplicate for seamless loop
   const allClients = [...clients, ...clients];

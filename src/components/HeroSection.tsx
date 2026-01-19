@@ -6,7 +6,7 @@ import HeroGlowBackground from "./HeroGlowBackground";
 import ClientsLogoSlider from "./ClientsLogoSlider";
 
 interface HeroSectionProps {
-  data?: {
+  dataBanner?: {
     banner_main_heading?: string;
     changeable_text?: {
       default_text?: string;
@@ -20,19 +20,19 @@ interface HeroSectionProps {
   };
 }
 
-const HeroSection = ({ data }: HeroSectionProps) => {
+const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataClientLogo?: any}) => {
   const [showCTA, setShowCTA] = useState(false);
   console.log("testing-----",);
   // Log data only when it changes
   useEffect(() => {
-    console.log("data", data);
-  }, [data]);
+    console.log("data", dataBanner);
+  }, [dataBanner]);
   
   // const phrases = ["Build Smarter.","Scale Faster.","Stay Ahead!"]
   // Extract phrases from data or use defaults
   const phrases = useMemo(() => {
-    if (data?.changeable_text) {
-      const { default_text, second_text, third_text } = data.changeable_text;
+    if (dataBanner?.changeable_text) {
+      const { default_text, second_text, third_text } = dataBanner.changeable_text;
       return [
         default_text || "Build Smarter.",
         second_text || "Scale Faster.",
@@ -40,7 +40,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
       ].filter(Boolean);
     }
     return ["Build Smarter.", "Scale Faster.", "Stay Ahead!"];
-  }, [data?.changeable_text]);
+  }, [dataBanner?.changeable_text]);
 
   const {
     displayText,
@@ -54,11 +54,12 @@ const HeroSection = ({ data }: HeroSectionProps) => {
   });
 
   // Extract data with fallbacks
-  const mainHeading = data?.banner_main_heading || "Code1 Empowering Businesses";
-  const paragraph = data?.banner_paragraph || "Unlock efficiency, innovation, and growth with technology-driven business solutions.";
-  const buttonText = data?.button_text || "Turn Bold Ideas Into Real Growth";
-  const buttonUrl = data?.button_url || "/";
-  const backgroundImage = data?.banner_background_image;
+  const mainHeading = dataBanner.banner_main_heading || "Code1 Empowering Businesses";
+  const paragraph = dataBanner.banner_paragraph || "Unlock efficiency, innovation, and growth with technology-driven business solutions.";
+  const buttonText = dataBanner.button_text || "Turn Bold Ideas Into Real Growth";
+  const buttonUrl = dataBanner.button_url || "/";
+  const backgroundImage = dataBanner.banner_background_image;
+  
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-24">
       {/* Top fade for seamless navbar blend */}
       <div className="absolute top-0 left-0 right-0 h-32 md:h-40 pointer-events-none z-[2]" style={{
@@ -72,19 +73,34 @@ const HeroSection = ({ data }: HeroSectionProps) => {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           {/* Main headline - two lines */}
-          <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-6 animate-fade-in lg:text-6xl">
-            {(() => {
-              const words = mainHeading.split(' ');
-              return words.map((word, index) => {
-                const isEmpowering = word.toLowerCase() === 'empowering';
+
+
+                <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-6 animate-fade-in lg:text-6xl">
+            {mainHeading
+              // Split by <span>...</span> while keeping the span segments
+              .split(/(<span>.*?<\/span>)/g)
+              .map((segment, idx) => {
+                const isSpan = segment.startsWith("<span>") && segment.endsWith("</span>");
+                const cleanText = segment.replace("<span>", "").replace("</span>", "");
                 return (
-                  <span key={index} className={isEmpowering ? "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent" : "text-foreground"}>
-                    {word}{index < words.length - 1 ? ' ' : ''}
+                  <span
+                    key={idx}
+                    className={
+                      isSpan
+                        ? "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent"
+                        : "text-foreground"
+                    }
+                  >
+                    {cleanText}
                   </span>
                 );
-              });
-            })()}
+              })}
           </h1>
+
+
+
+
+
 
           {/* Typing headline */}
           <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent mb-6 sm:mb-8 min-h-[1.2em]">
@@ -112,7 +128,7 @@ const HeroSection = ({ data }: HeroSectionProps) => {
 
           {/* Client Logo Slider */}
           <div className="mt-12 w-full max-w-4xl mx-auto">
-            <ClientsLogoSlider />
+            <ClientsLogoSlider dataClientLogo ={dataClientLogo} />
           </div>
         </div>
       </div>
