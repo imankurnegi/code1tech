@@ -15,10 +15,10 @@ const App = () => (
       <Toaster />
       <Sonner />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route element={<Layout />}>
           <Route index element={<Index />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
-        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </TooltipProvider>
   </QueryClientProvider>
