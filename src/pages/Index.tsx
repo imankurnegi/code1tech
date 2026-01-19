@@ -24,22 +24,22 @@ const Index = () => {
     queryKey: ["homepage"],
     queryFn: async () => {
       const [homepageRes, headerRes, navRes] = await Promise.all([
-        fetch(`${process.env.REACT_APP_BASE_URL}/homepage`, {
+        fetch(`${import.meta.env.VITE_BASE_URL}/homepage`, {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+            Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
           },
         }),
         fetch("https://code1tech.page.gd/wp-json/theme/v1/header-logo", {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+            Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
           },
         }),
-        fetch(`${process.env.REACT_APP_BASE_URL}/menus/topmenu`, {
+        fetch(`${import.meta.env.VITE_BASE_URL}/menus/topmenu`, {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+            Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
           },
         }),
       ]);
