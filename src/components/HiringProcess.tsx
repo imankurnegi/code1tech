@@ -1,34 +1,42 @@
 import { useState, useEffect, useRef } from "react";
-import { ClipboardList, UserCheck, Rocket, Shield, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-const steps = [
-  {
-    number: "01",
-    icon: ClipboardList,
-    title: "Requirement Mapping",
-    description: "We start by carefully evaluating your specific needs, like technical skill, cultural fit, and role expectations. We then determine the scope of work and responsibilities, ensuring total clarity before we begin matching the best talent to your organisation."
-  },
-  {
-    number: "02",
-    icon: UserCheck,
-    title: "Talent Match",
-    description: "We present only a shortlist of pre-screened professionals who meet your skill needs and cultural fit. This saves you time and effort, knowing that every candidate you engage has been vetted to uphold your vision."
-  },
-  {
-    number: "03",
-    icon: Rocket,
-    title: "Onboarding Support",
-    description: "After you make a hiring decision, we manage the entire onboarding process virtually. We introduce the candidate into your systems, align workflows and tools, and ensure your new remote worker's productivity from day one."
-  },
-  {
-    number: "04",
-    icon: Shield,
-    title: "Ongoing Support",
-    description: "Our job isn't finished once a hire is made; we track performance and compliance and efficiently scale the team as your business grows, providing stability, efficiency, and long-term value throughout the engagement."
-  }
-];
+interface ProcessIcon {
+  id: number;
+  url: string;
+  alt: string;
+  title: string;
+  width: number;
+  height: number;
+}
 
-const HiringProcess = () => {
+interface HiringProcessStep {
+  process_number: string;
+  process_icon: ProcessIcon;
+  process_heading: string;
+  process_description: string;
+}
+
+interface HiringProcessData {
+  section_heading: string;
+  section_sub_heading: string;
+  hiring_process: HiringProcessStep[];
+  section_cta_text: string;
+  section_cta_url: string;
+}
+
+interface HiringProcessProps {
+  dataHiring?: HiringProcessData;
+}
+
+const HiringProcess = ({ dataHiring }: HiringProcessProps) => {
+  // Transform API data to match component structure
+  const steps = dataHiring?.hiring_process?.map((process) => ({
+    number: process.process_number,
+    icon: process.process_icon.url,
+    title: process.process_heading,
+    description: process.process_description,
+  })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -137,18 +145,21 @@ const HiringProcess = () => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
-        <div
-          className={`text-center mb-16 md:mb-24 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Simple, <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Transparent</span> Hiring
-          </h2>
-          <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto px-4">
-            We keep hiring simple, transparent, and efficient.
-          </p>
-        </div>
+        {dataHiring && (
+          <div
+            className={`text-center mb-16 md:mb-24 transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <h2 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
+              dangerouslySetInnerHTML={{ __html: dataHiring.section_heading }}
+            />
+            <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto px-4">
+              {dataHiring.section_sub_heading}
+            </p>
+          </div>
+        )}
 
         {/* Desktop: Horizontal Animated Timeline */}
         <div className="hidden lg:block max-w-6xl mx-auto mb-16">
@@ -180,7 +191,6 @@ const HiringProcess = () => {
             {/* Steps - z-10 to be above the line */}
             <div className="grid grid-cols-4 gap-8 relative z-10">
               {steps.map((step, index) => {
-                const Icon = step.icon;
                 const isCurrent = activeStep === index;
                 const isHovered = hoveredIndex === index;
                 const isHighlighted = isCurrent || isHovered;
@@ -232,10 +242,15 @@ const HiringProcess = () => {
                         <div className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all duration-700 ${
                           isHighlighted ? "bg-accent/20" : "bg-muted/15"
                         }`}>
-                          <Icon 
-                            className={`w-7 h-7 transition-all duration-700 ${
-                              isHighlighted ? "text-accent" : "text-muted-foreground/40"
-                            }`} 
+                          <img 
+                            src={step.icon}
+                            alt={step.title}
+                            className="w-7 h-7 transition-all duration-700"
+                            style={{
+                              filter: isHighlighted 
+                                ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
+                                : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%) opacity(0.4)'
+                            }}
                           />
                         </div>
                         
@@ -257,7 +272,7 @@ const HiringProcess = () => {
                       }`}>
                         {step.title}
                       </h3>
-                      <p className={`text-sm leading-relaxed transition-all duration-700 min-h-[120px] max-w-[300px] mx-auto cursor-default text-justify ${
+                      <p className={`text-sm leading-relaxed transition-all duration-700 min-h-[120px] max-w-[300px] mx-auto cursor-default ${
                         isHighlighted ? "text-muted-foreground opacity-100" : "text-muted-foreground/50 opacity-70"
                       }`}>
                         {step.description}
@@ -296,7 +311,6 @@ const HiringProcess = () => {
             {/* Steps - z-10 above the line */}
             <div className="space-y-10 sm:space-y-12 relative z-10">
               {steps.map((step, index) => {
-                const Icon = step.icon;
                 const isCurrent = activeStep === index;
                 const isHighlighted = isCurrent;
                 
@@ -329,10 +343,15 @@ const HiringProcess = () => {
                         {/* Background to cover line */}
                         <div className="absolute inset-0 rounded-full bg-[hsl(222,47%,5%)]" />
                         
-                        <Icon 
-                          className={`relative z-10 w-6 sm:w-7 h-6 sm:h-7 transition-colors duration-700 ${
-                            isHighlighted ? "text-accent" : "text-muted-foreground/40"
-                          }`}
+                        <img 
+                          src={step.icon}
+                          alt={step.title}
+                          className="relative z-10 w-6 sm:w-7 h-6 sm:h-7 transition-all duration-700"
+                          style={{
+                            filter: isHighlighted 
+                              ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
+                              : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%) opacity(0.4)'
+                          }}
                         />
                       </div>
                       {/* Step number */}
@@ -409,20 +428,27 @@ const HiringProcess = () => {
         </div>
 
         {/* CTA - Animates in after steps complete */}
-        <div
-          className={`text-center transition-all duration-1000 ${
-            showCTA ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          <button 
-            className={`group inline-flex items-center gap-2 bg-accent/10 hover:bg-accent/15 border border-accent/30 hover:border-accent/40 text-accent px-6 py-3 rounded-full text-base font-medium transition-all duration-500 hover:shadow-[0_0_30px_8px_hsl(var(--accent)/0.1)] ${
-              ctaPulse ? 'animate-cta-pulse' : ''
+        {dataHiring?.section_cta_text && (
+          <div
+            className={`text-center transition-all duration-1000 ${
+              showCTA ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            <span>Start Hiring with Confidence</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-500" />
-          </button>
-        </div>
+            <button 
+              className={`group inline-flex items-center gap-2 bg-accent/10 hover:bg-accent/15 border border-accent/30 hover:border-accent/40 text-accent px-6 py-3 rounded-full text-base font-medium transition-all duration-500 hover:shadow-[0_0_30px_8px_hsl(var(--accent)/0.1)] ${
+                ctaPulse ? 'animate-cta-pulse' : ''
+              }`}
+              onClick={() => {
+                if (dataHiring.section_cta_url) {
+                  window.location.href = dataHiring.section_cta_url;
+                }
+              }}
+            >
+              <span>{dataHiring.section_cta_text}</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-500" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Custom animations - slow, premium */}

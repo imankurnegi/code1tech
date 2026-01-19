@@ -5,8 +5,26 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Clock, ShieldCheck, MessageCircle, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+interface ContactData {
+  section_heading: string;
+  section_sub_heading: string;
+  left_side_heading: string;
+  left_side_description: string;
+  item_1_icon: string;
+  item_1_text: string;
+  item_2_icon: string;
+  item_2_text: string;
+  item_3_icon: string;
+  item_3_text: string;
+}
+
+interface ContactSectionProps {
+  dataContact?: ContactData;
+}
+
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Please enter your name").max(100, "Name must be less than 100 characters"),
   email: z.string().trim().email("Please enter a valid work email").max(255, "Email must be less than 255 characters"),
@@ -14,18 +32,16 @@ const contactSchema = z.object({
   subject: z.string().trim().min(1, "Please enter a subject").max(100, "Subject must be less than 100 characters"),
   message: z.string().trim().min(10, "Please share a bit more about your needs").max(1000, "Message must be less than 1000 characters")
 });
+
 type ContactFormData = z.infer<typeof contactSchema>;
-const trustBullets = [{
-  icon: Clock,
-  text: "Response within 24 hours"
-}, {
-  icon: ShieldCheck,
-  text: "No spam, ever"
-}, {
-  icon: MessageCircle,
-  text: "Free strategy discussion"
-}];
-const ContactSection = () => {
+
+const ContactSection = ({ dataContact }: ContactSectionProps) => {
+  // Transform API data to trust bullets
+  const trustBullets = dataContact ? [
+    { icon: dataContact.item_1_icon, text: dataContact.item_1_text },
+    { icon: dataContact.item_2_icon, text: dataContact.item_2_text },
+    { icon: dataContact.item_3_icon, text: dataContact.item_3_text },
+  ] : [];
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -90,41 +106,60 @@ const ContactSection = () => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
-        <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Contact <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Us</span>
-          </h2>
-          <p className="text-muted-foreground text-base sm:text-lg lg:text-xl">
-            Start the conversation, not a sales pitch.
-          </p>
-        </div>
+        {dataContact && (
+          <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              {dataContact.section_heading.split(' ').map((word, index) => {
+                if (word === 'Us') {
+                  return (
+                    <span key={index} className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
+                      {word}
+                    </span>
+                  );
+                }
+                return word + ' ';
+              })}
+            </h2>
+            <p className="text-muted-foreground text-base sm:text-lg lg:text-xl">
+              {dataContact.section_sub_heading}
+            </p>
+          </div>
+        )}
 
         {/* Two Column Layout */}
         <div className={`grid lg:grid-cols-2 gap-8 lg:gap-16 max-w-5xl mx-auto transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           {/* Left Column - Trust Content */}
-          <div className="flex flex-col justify-center">
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 sm:mb-6">
-              Let's discuss how we can help you grow
-            </h3>
-            <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed text-justify">
-              Whether you're exploring AI solutions, looking to scale your engineering team, or need strategic technology guidance—we're here to listen first and advise second.
-            </p>
+          {dataContact && (
+            <div className="flex flex-col justify-center">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4 sm:mb-6">
+                {dataContact.left_side_heading}
+              </h3>
+              <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed">
+                {dataContact.left_side_description}
+              </p>
 
-            {/* Trust Bullets */}
-            <div className="space-y-4">
-              {trustBullets.map((bullet, index) => {
-              const Icon = bullet.icon;
-              return <div key={index} className="flex items-center gap-4">
+              {/* Trust Bullets */}
+              <div className="space-y-4">
+                {trustBullets.map((bullet, index) => (
+                  <div key={index} className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center flex-shrink-0">
-                      <Icon className="w-5 h-5 text-accent" />
+                      <img 
+                        src={bullet.icon} 
+                        alt={bullet.text}
+                        className="w-5 h-5"
+                        style={{
+                          filter: 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)'
+                        }}
+                      />
                     </div>
                     <span className="text-foreground font-medium">
                       {bullet.text}
                     </span>
-                  </div>;
-            })}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Right Column - Form */}
           <div className="relative">

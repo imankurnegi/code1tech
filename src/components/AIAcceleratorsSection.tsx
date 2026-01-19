@@ -3,7 +3,37 @@ import { Calendar, Zap, Bot, TrendingUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AIOrbitVisual from "./AIOrbitVisual";
 
-const AIAcceleratorsSection = () => {
+interface TagImage {
+  ID?: number;
+  url?: string;
+  alt?: string;
+}
+
+interface SectionTag {
+  text_label: string;
+  tag_image: number | TagImage;
+}
+
+interface SectionTags {
+  tag_one: SectionTag;
+  tag_two: SectionTag;
+  tag_three: SectionTag;
+}
+
+interface AIAgentData {
+  section_heading: string;
+  section_sub_heading: string;
+  section_description: string;
+  section_tags: SectionTags;
+  section_cta_text: string;
+  section_cta_url: string;
+}
+
+interface AIAcceleratorsSectionProps {
+  dataAiAgent?: AIAgentData;
+}
+
+const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -24,11 +54,12 @@ const AIAcceleratorsSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const valuePoints = [
-    { icon: Zap, label: "Faster Automation" },
-    { icon: Bot, label: "Scalable AI Agents" },
-    { icon: TrendingUp, label: "Measurable ROI" },
-  ];
+  // Map API tags to value points with default icons
+  const valuePoints = dataAiAgent?.section_tags ? [
+    { icon: Zap, label: dataAiAgent.section_tags.tag_one.text_label },
+    { icon: Bot, label: dataAiAgent.section_tags.tag_two.text_label },
+    { icon: TrendingUp, label: dataAiAgent.section_tags.tag_three.text_label },
+  ] : [];
 
   return (
     <section
@@ -88,42 +119,54 @@ const AIAcceleratorsSection = () => {
           {/* Left Column - Content */}
           <div className="max-w-xl">
             {/* Heading */}
-            <h2 
-              className={`text-4xl font-bold text-foreground mb-4 leading-tight transition-all duration-1000 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-            >
-              <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">AI Agents</span> and{" "}
-              <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Accelerators</span> to Business Operations While You Focus on Expansion!
-            </h2>
+            {dataAiAgent?.section_heading && (
+              <h2 
+                className={`text-4xl font-bold text-foreground mb-4 leading-tight transition-all duration-1000 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+              >
+                {dataAiAgent.section_heading.split(' ').map((word, index) => {
+                  if (word === 'AI' || word === 'Agents' || word === 'Accelerators') {
+                    return (
+                      <span key={index} className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
+                        {word}{' '}
+                      </span>
+                    );
+                  }
+                  return word + ' ';
+                })}
+              </h2>
+            )}
 
             {/* Subheading */}
-            <p 
-              className={`text-muted-foreground text-base sm:text-lg lg:text-xl mb-6 font-light transition-all duration-1000 delay-100 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              Accelerators That Simplify. AI That Scales. Amplify{" "}
-              <span className="text-accent font-semibold">ROI</span>.
-            </p>
+            {dataAiAgent?.section_sub_heading && (
+              <p 
+                className={`text-muted-foreground text-base sm:text-lg lg:text-xl mb-6 font-light transition-all duration-1000 delay-100 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`}
+              >
+                {dataAiAgent.section_sub_heading.split(' ').map((word, index) => {
+                  if (word.includes('ROI')) {
+                    return (
+                      <span key={index} className="text-accent font-semibold">
+                        {word}{' '}
+                      </span>
+                    );
+                  }
+                  return word + ' ';
+                })}
+              </p>
+            )}
 
-            {/* Body Content */}
-            <p 
-              className={`text-muted-foreground text-sm sm:text-base leading-relaxed mb-4 text-justify transition-all duration-1000 delay-200 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              Reduce intricacy and enhance speed with tailored accelerators, capped ETL/ELT stacks, and automated systems built to modernize your data infrastructure and increase efficiencies. Our experts develop AI-powered agents, including virtual assistants, chatbots, and workflows, that improve operations, enhance customer engagement, and enable faster, smarter decision-making.
-            </p>
-
-            {/* Additional Text */}
-            <p 
-              className={`text-foreground/80 text-sm sm:text-base leading-relaxed mb-8 font-medium text-justify transition-all duration-1000 delay-300 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              Don't let your growth potential sit idle. Let's build solutions specific to your original needs and operational goals.
-            </p>
+            {/* Description Content */}
+            {dataAiAgent?.section_description && (
+              <div 
+                className={`text-muted-foreground text-sm sm:text-base leading-relaxed mb-8 text-justify transition-all duration-1000 delay-200 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`}
+                dangerouslySetInnerHTML={{ __html: dataAiAgent.section_description }}
+              />
+            )}
 
             {/* Value Points */}
             <div 
@@ -144,16 +187,27 @@ const AIAcceleratorsSection = () => {
             </div>
 
             {/* CTA Button */}
-            <div 
-              className={`transition-all duration-1000 delay-500 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              <Button variant="hero" size="lg" className="group w-full sm:w-auto text-sm sm:text-base">
-                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                Schedule Your Free Strategy Call
-              </Button>
-            </div>
+            {dataAiAgent?.section_cta_text && (
+              <div 
+                className={`transition-all duration-1000 delay-500 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`}
+              >
+                <Button 
+                  variant="hero" 
+                  size="lg" 
+                  className="group w-full sm:w-auto text-sm sm:text-base"
+                  onClick={() => {
+                    if (dataAiAgent.section_cta_url) {
+                      window.location.href = dataAiAgent.section_cta_url;
+                    }
+                  }}
+                >
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  {dataAiAgent.section_cta_text}
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Right Column - Visual */}

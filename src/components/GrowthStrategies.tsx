@@ -1,7 +1,23 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Users, Cpu, Network, Cog } from "lucide-react";
 import { useParallax } from "@/hooks/use-parallax";
-const GrowthStrategies = () => {
+
+interface GrowthStrategyData {
+  strategy_1_icon: boolean | string;
+  strategy_1_heading: string;
+  strategy_1_sub_heading: string;
+  strategy_1_description: string;
+  strategy_2_icon: boolean | string;
+  strategy_2_heading: string;
+  strategy_2_sub_heading: string;
+  strategy_2_description: string;
+}
+
+interface GrowthStrategiesProps {
+  dataGrowth?: GrowthStrategyData;
+}
+
+const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [lineVisible, setLineVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<'left' | 'right' | null>(null);
@@ -206,29 +222,24 @@ const GrowthStrategies = () => {
                 {/* Strategy Label */}
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-[#00C8C8] text-xs font-bold tracking-[0.25em] uppercase">
-                    Strategy One
+                    {dataGrowth?.strategy_1_heading}
                   </span>
                   <div className="flex-1 h-px bg-gradient-to-r from-[#00C8C8]/40 to-transparent" />
                 </div>
 
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight">
-                  Outsourcing Advisory &<br />
-                  <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-                    Talent Solutions
-                  </span>
+                  {dataGrowth?.strategy_1_sub_heading && (
+                    <>
+                      {dataGrowth.strategy_1_sub_heading.split('&')[0]}&<br />
+                      <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
+                        {dataGrowth.strategy_1_sub_heading.split('&')[1]}
+                      </span>
+                    </>
+                  )}
                 </h3>
 
                 <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 flex-1 text-justify">
-                  We assist firms in team building, negotiating contracts that save costs, enabling upscaling and downscaling so that you can scale operations rapidly while decreasing overhead and focusing on the core aspects of growing your business.
-
-
-
-
-
-
-
-
-
+                  {dataGrowth?.strategy_1_description}
                 </p>
 
                 {/* Decorative elements */}
@@ -284,23 +295,24 @@ const GrowthStrategies = () => {
                 {/* Strategy Label */}
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-accent text-xs font-bold tracking-[0.25em] uppercase">
-                    Strategy Two
+                    {dataGrowth?.strategy_2_heading}
                   </span>
                   <div className="flex-1 h-px bg-gradient-to-r from-accent/40 to-transparent" />
                 </div>
 
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight">
-                  Technology Consulting &<br />
-                  <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-                    Implementation
-                  </span>
+                  {dataGrowth?.strategy_2_sub_heading && (
+                    <>
+                      {dataGrowth.strategy_2_sub_heading.split('&')[0]}&<br />
+                      <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                        {dataGrowth.strategy_2_sub_heading.split('&')[1]}
+                      </span>
+                    </>
+                  )}
                 </h3>
 
                 <p className="text-sm sm:text-base md:text-lg leading-relaxed text-[#e1e7ef] flex-1 text-justify">
-                  Our specialists design and implement AI and data solutions suited to your 
-                  specific industry. We create solutions to modernize workflows, unlock efficiencies, 
-                  and deliver tangible success through data-driven digital transformation initiatives,
-                  from strategy to execution.
+                  {dataGrowth?.strategy_2_description}
                 </p>
 
                 {/* Decorative elements */}

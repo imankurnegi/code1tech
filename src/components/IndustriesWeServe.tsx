@@ -1,67 +1,35 @@
 import { useState, useEffect, useRef } from "react";
-import { 
-  Landmark, 
-  Heart, 
-  ShoppingCart, 
-  Factory, 
-  Building, 
-  Plane, 
-  Monitor, 
-  GraduationCap, 
-  Rocket,
-  ArrowRight
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const industries = [
-  {
-    icon: Landmark,
-    title: "Banking & Finance",
-    description: "We provide risk analytics, fraud prevention, and outsourced help to improve operational insight and security."
-  },
-  {
-    icon: Heart,
-    title: "Healthcare",
-    description: "We create solutions that improve patient data management, enable telemedicine, and facilitate patient care experiences with enhanced dashboards."
-  },
-  {
-    icon: ShoppingCart,
-    title: "Retail & eCommerce",
-    description: "We help retailers personalize customer experiences, track buying habits, and make supply chain improvements with AI and ML solutions."
-  },
-  {
-    icon: Factory,
-    title: "Manufacturing & Energy",
-    description: "We offer efficiency through predictive maintenance, IoT connectivity, and automation to lower expenses and downtime."
-  },
-  {
-    icon: Building,
-    title: "Real Estate",
-    description: "We provide digital capabilities and AI-powered analytics to enhance property management, automate workflows, and deepen client engagement."
-  },
-  {
-    icon: Plane,
-    title: "Travel & Hospitality",
-    description: "We help businesses deliver personalized customer experience and automated support through dynamic booking systems and operational efficiencies."
-  },
-  {
-    icon: Monitor,
-    title: "Professional IT",
-    description: "We provide Staff Augmentation and Bench Engineers for offshore and nearshore projects, allowing companies to scale teams efficiently."
-  },
-  {
-    icon: GraduationCap,
-    title: "EdTech",
-    description: "We empower education platforms utilizing cloud-ready applications, AI-powered personalization, and scalable remote teams."
-  },
-  {
-    icon: Rocket,
-    title: "Startups & SMEs",
-    description: "We offer outsourcing, adaptable teams, and cloud-ready solutions to help startups and SMEs scale smarter."
-  }
-];
+interface IndustryCard {
+  ID: number;
+  post_title: string;
+  post_excerpt: string;
+  acf: {
+    card_icon: string;
+  };
+}
 
-const IndustriesWeServe = () => {
+interface IndustriesData {
+  section_main_heading: string;
+  section_description: string;
+  industries_cards: IndustryCard[];
+  help_cta_text: string;
+  help_cta_url: string;
+}
+
+interface IndustriesWeServeProps {
+  dataIndustries?: IndustriesData;
+}
+
+const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
+  // Transform API data to match component structure
+  const industries = dataIndustries?.industries_cards?.map((card) => ({
+    icon: card.acf.card_icon,
+    title: card.post_title,
+    description: card.post_excerpt,
+  })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -132,23 +100,25 @@ const IndustriesWeServe = () => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
-        <div
-          className={`text-center mb-14 md:mb-20 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Industries We <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Empower</span>
-          </h2>
-          <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
-            We customize our outsourcing and digital transformation services to address specific challenges and opportunities across a variety of industries:
-          </p>
-        </div>
+        {dataIndustries && (
+          <div
+            className={`text-center mb-14 md:mb-20 transition-all duration-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <h2 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
+              dangerouslySetInnerHTML={{ __html: dataIndustries.section_main_heading }}
+            />
+            <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
+              {dataIndustries.section_description}
+            </p>
+          </div>
+        )}
 
         {/* Industry Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 max-w-6xl mx-auto mb-14 md:mb-16">
           {industries.map((industry, index) => {
-            const Icon = industry.icon;
             const isHovered = hoveredIndex === index;
             return (
               <div
@@ -177,9 +147,16 @@ const IndustriesWeServe = () => {
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 ${
                     isHovered ? "bg-accent/20" : "bg-muted/50"
                   }`}>
-                    <Icon className={`w-6 h-6 transition-colors duration-300 ${
-                      isHovered ? "text-accent" : "text-muted-foreground"
-                    }`} />
+                    <img 
+                      src={industry.icon} 
+                      alt={industry.title}
+                      className="w-6 h-6 transition-all duration-300"
+                      style={{
+                        filter: isHovered 
+                          ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
+                          : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
+                      }}
+                    />
                   </div>
 
                   {/* Title */}
@@ -190,7 +167,7 @@ const IndustriesWeServe = () => {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed text-justify">
+                  <p className="text-muted-foreground text-sm leading-relaxed">
                     {industry.description}
                   </p>
                 </div>
@@ -200,22 +177,29 @@ const IndustriesWeServe = () => {
         </div>
 
         {/* CTA */}
-        <div
-          className={`text-center transition-all duration-700 delay-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <Button
-            variant="ghost"
-            className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
+        {dataIndustries?.help_cta_text && (
+          <div
+            className={`text-center transition-all duration-700 delay-500 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
           >
-            <span className="relative">
-              See How We Can Help Your Industry
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
-            </span>
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </div>
+            <Button
+              variant="ghost"
+              className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
+              onClick={() => {
+                if (dataIndustries.help_cta_url) {
+                  window.location.href = dataIndustries.help_cta_url;
+                }
+              }}
+            >
+              <span className="relative">
+                {dataIndustries.help_cta_text}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
+              </span>
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

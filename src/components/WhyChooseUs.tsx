@@ -1,28 +1,40 @@
 import { useState, useEffect, useRef } from "react";
-import { Blend, DollarSign, Lightbulb, TrendingUp, Globe, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-const pillars = [{
-  icon: Blend,
-  title: "Hybrid Expertise",
-  description: "We offer a distinctive blend of outsourcing and enterprise technology consulting, combining strategic insight and technical depth to create solutions that seamlessly align business purpose and technology."
-}, {
-  icon: DollarSign,
-  title: "Cost Efficiency",
-  description: "With global talent, expertise across industries, and experience building advanced modules, we help you save on hiring processes and get a team that works to your needs through flexible partnering models."
-}, {
-  icon: Lightbulb,
-  title: "Innovation-Driven",
-  description: "Each solution we propose is innovation-led. We use the meshing of AI, data, and other next-gen technologies into everything we deploy to ensure your business stays competitive and future-ready."
-}, {
-  icon: TrendingUp,
-  title: "Scalability",
-  description: "Whether you're a rapidly scaling startup or a Fortune 500 business, our solutions flex and scale with your business to make the process seamless, strategic, and stress-free."
-}, {
-  icon: Globe,
-  title: "Global Reach",
-  description: "We have established offices and talent hubs in Asia, the US, and Europe, and can bring a global perspective and local expertise to every project, maximizing your business's ability to succeed in every market."
-}];
-const WhyChooseUs = () => {
+
+interface CardIcon {
+  id: number;
+  url: string;
+  alt: string;
+  title: string;
+  width: number;
+  height: number;
+}
+
+interface BusinessCard {
+  card_icon: CardIcon;
+  card_heading: string;
+  card_description: string;
+}
+
+interface WhyBusinessesData {
+  section_heading: string;
+  "business-card": BusinessCard[];
+  section_cta_text: string;
+  section_cta_url: string;
+}
+
+interface WhyChooseUsProps {
+  dataWhyBusinesses?: WhyBusinessesData;
+}
+
+const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
+  // Transform API data to match component structure
+  const pillars = dataWhyBusinesses?.["business-card"]?.map((card) => ({
+    icon: card.card_icon.url,
+    title: card.card_heading,
+    description: card.card_description,
+  })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -42,7 +54,6 @@ const WhyChooseUs = () => {
   const leftPillars = pillars.slice(0, 3);
   const rightPillars = pillars.slice(3, 5);
   const renderPillar = (pillar: typeof pillars[0], index: number, globalIndex: number) => {
-    const Icon = pillar.icon;
     const isHovered = hoveredIndex === globalIndex;
     return <div key={globalIndex} onMouseEnter={() => setHoveredIndex(globalIndex)} onMouseLeave={() => setHoveredIndex(null)} className={`group relative transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-1" : ""}`} style={{
       transitionDelay: `${200 + globalIndex * 80}ms`
@@ -59,7 +70,16 @@ const WhyChooseUs = () => {
         <div className="relative p-6 md:p-7">
           {/* Icon */}
           <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 ${isHovered ? "bg-accent/20" : "bg-muted/40"}`}>
-            <Icon className={`w-5 h-5 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
+            <img 
+              src={pillar.icon}
+              alt={pillar.title}
+              className="w-5 h-5 transition-all duration-300"
+              style={{
+                filter: isHovered 
+                  ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
+                  : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
+              }}
+            />
           </div>
 
           {/* Title */}
@@ -68,7 +88,7 @@ const WhyChooseUs = () => {
           </h3>
 
           {/* Description */}
-          <p className="text-muted-foreground text-sm leading-relaxed text-justify">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             {pillar.description}
           </p>
         </div>
@@ -105,18 +125,20 @@ const WhyChooseUs = () => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
-        <div className={`text-center mb-10 md:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 px-2 lg:text-4xl">
-            Why Businesses Choose{" "}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Code1 Tech Systems</span>
-          </h2>
-          
-          {/* Glowing divider */}
-          <div className="relative w-24 sm:w-32 h-px mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/50 to-transparent blur-sm" />
+        {dataWhyBusinesses && (
+          <div className={`text-center mb-10 md:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <h2 
+              className="text-3xl sm:text-4xl font-bold text-foreground mb-4 px-2 lg:text-4xl [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
+              dangerouslySetInnerHTML={{ __html: dataWhyBusinesses.section_heading }}
+            />
+            
+            {/* Glowing divider */}
+            <div className="relative w-24 sm:w-32 h-px mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/50 to-transparent blur-sm" />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Desktop: Asymmetric Value Grid */}
         <div className="hidden lg:grid grid-cols-2 gap-6 max-w-5xl mx-auto mb-16">
@@ -134,7 +156,6 @@ const WhyChooseUs = () => {
         {/* Mobile/Tablet: Vertical Stack with Numbers */}
         <div className="lg:hidden space-y-4 max-w-2xl mx-auto mb-10">
           {pillars.map((pillar, index) => {
-          const Icon = pillar.icon;
           return <div key={index} className={`group relative transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`} style={{
             transitionDelay: `${200 + index * 80}ms`
           }}>
@@ -155,7 +176,14 @@ const WhyChooseUs = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-9 h-9 rounded-lg bg-muted/40 flex items-center justify-center">
-                        <Icon className="w-4 h-4 text-accent" />
+                        <img 
+                          src={pillar.icon}
+                          alt={pillar.title}
+                          className="w-4 h-4"
+                          style={{
+                            filter: 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)'
+                          }}
+                        />
                       </div>
                       <h3 className="text-lg font-bold text-foreground">
                         {pillar.title}
@@ -171,12 +199,22 @@ const WhyChooseUs = () => {
         </div>
 
         {/* CTA Button */}
-        <div className={`text-center px-4 sm:px-0 transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Button size="lg" className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300">
-            Get Started with Code1 Tech Systems
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-          </Button>
-        </div>
+        {dataWhyBusinesses?.section_cta_text && (
+          <div className={`text-center px-4 sm:px-0 transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <Button 
+              size="lg" 
+              className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
+              onClick={() => {
+                if (dataWhyBusinesses.section_cta_url) {
+                  window.location.href = dataWhyBusinesses.section_cta_url;
+                }
+              }}
+            >
+              {dataWhyBusinesses.section_cta_text}
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>;
 };

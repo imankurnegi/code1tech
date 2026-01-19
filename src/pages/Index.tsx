@@ -16,50 +16,50 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import RelatedBlogs from "@/components/RelatedBlogs";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 
 const Index = () => {
- const { data, isLoading, isError, error } = useQuery({
-  queryKey: ["homepage"],
-  queryFn: async () => {
-    const [homepageRes, headerRes, navRes] = await Promise.all([
-      fetch("https://code1tech.page.gd/wp-json/v1/homepage", {
-        headers: {
-          Accept: "application/json",
-          Authorization:
-            "Bearer a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432",
-        },
-      }),
-      fetch("https://code1tech.page.gd/wp-json/theme/v1/header-logo", {
-        headers: {
-          Accept: "application/json",
-        },
-      }),
-      fetch("https://code1tech.page.gd/wp-json/v1/menus/topmenu", {
-        headers: {
-          Accept: "application/json",
-        },
-      }),
-    ]);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["homepage"],
+    queryFn: async () => {
+      const [homepageRes, headerRes, navRes] = await Promise.all([
+        fetch(`${process.env.REACT_APP_BASE_URL}/homepage`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+          },
+        }),
+        fetch("https://code1tech.page.gd/wp-json/theme/v1/header-logo", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+          },
+        }),
+        fetch(`${process.env.REACT_APP_BASE_URL}/menus/topmenu`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+          },
+        }),
+      ]);
 
-    if (!homepageRes.ok || !headerRes.ok || !navRes) {
-      throw new Error("Failed to fetch data");
-    }
+      if (!homepageRes.ok || !headerRes.ok || !navRes) {
+        throw new Error("Failed to fetch data");
+      }
 
-    const homepage = await homepageRes.json();
-    const navMenus = await navRes.json();
-    const headerLogo = await headerRes.json();
+      const homepage = await homepageRes.json();
+      const navMenus = await navRes.json();
+      const headerLogo = await headerRes.json();
 
-    return {
-      homepage,
-      navMenus,
-      headerLogo,
-    };
-  },
-});
+      return {
+        homepage,
+        navMenus,
+        headerLogo,
+      };
+    },
+  });
 
-  
   const homepageData = data?.homepage;
   const navMenus = data?.navMenus;
   const headerpageData = data?.headerLogo;
@@ -73,23 +73,23 @@ const Index = () => {
         <>
           <Navbar headerLogo={headerpageData?.data} navMenus={navMenus?.data} />
           <main>
-            <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo = {homepageData?.data?.home_client_logo_section} />
-            <EnterpriseTechSection dataTrusted = {homepageData?.data?.trusted_section} />
+            <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo={homepageData?.data?.home_client_logo_section} />
+            <EnterpriseTechSection dataTrusted={homepageData?.data?.trusted_section} />
 
-            <GrowthStrategies />
-            <EngineeringServices />
+            <GrowthStrategies dataGrowth={homepageData?.data?.two_growth_section} />
+            <EngineeringServices dataEngineering={homepageData?.data?.engineering_solution_section} />
 
-            <AIAcceleratorsSection />
-            <TechnologyServicesPanel />
+            <AIAcceleratorsSection dataAiAgent={homepageData?.data?.ai_agent_section} />
+            <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
             <TechnologyStackSection />
-            <IndustriesWeServe />
+            <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
             <CaseStudiesSection />
-            <WorkWithUs />
-            <HiringProcess />
-            <WhyChooseUs />
+            <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
+            <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
+            <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
             <TestimonialsSection />
             <RelatedBlogs />
-            <ContactSection />
+            <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
           </main>
           <Footer />
         </>

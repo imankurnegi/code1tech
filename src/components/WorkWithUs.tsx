@@ -1,24 +1,41 @@
 import { useState, useEffect, useRef } from "react";
-import { Target, Users, MessageSquare, Shuffle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-const models = [{
-  icon: Target,
-  title: "Project-Based",
-  description: "Ideal for one-off projects with a defined scope. We manage the entire delivery process, ensuring quality, predictable timelines, and costs, making it suitable for businesses testing new concepts or addressing specific issues quickly."
-}, {
-  icon: Users,
-  title: "Dedicated Teams",
-  description: "We mobilize qualified experts to work solely for you, functioning much like an in-house team. Maintaining the same team throughout the project drive ensures continuity, cultural fit, and scalability for long-term engagements."
-}, {
-  icon: MessageSquare,
-  title: "Consulting & Advisory",
-  description: "Our specialists provide hands-on support for outsourcing and digital transformation. From strategy and vendor selection to implementation, we help organizations make better decisions, reduce risk, and create sustainable opportunities for growth."
-}, {
-  icon: Shuffle,
-  title: "Hybrid Models",
-  description: "A flexible mix of outsourcing and in-sourcing. Organizations maintain control over their core functions and are comfortable outsourcing repetitive or specialized tasks, thereby reducing time-to-delivery and increasing operational flexibility."
-}];
-const WorkWithUs = () => {
+
+interface CardIcon {
+  id: number;
+  url: string;
+  alt: string;
+  title: string;
+  width: number;
+  height: number;
+}
+
+interface WorkCard {
+  card_icon: CardIcon;
+  card_heading: string;
+  card_description: string;
+}
+
+interface WorkWithUsData {
+  section_heading: string;
+  section_sub_heading: string;
+  work_cards: WorkCard[];
+  section_cta_text: string;
+  section_cta_url: string;
+}
+
+interface WorkWithUsProps {
+  dataWorkWithUs?: WorkWithUsData;
+}
+
+const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
+  // Transform API data to match component structure
+  const models = dataWorkWithUs?.work_cards?.map((card) => ({
+    icon: card.card_icon.url,
+    title: card.card_heading,
+    description: card.card_description,
+  })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -68,19 +85,21 @@ const WorkWithUs = () => {
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
-        <div className={`text-center mb-14 md:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Work With Us, <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Your Way</span>
-          </h2>
-          <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-4">
-            We understand every business runs differently, so we offer flexible engagement:
-          </p>
-        </div>
+        {dataWorkWithUs && (
+          <div className={`text-center mb-14 md:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <h2 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
+              dangerouslySetInnerHTML={{ __html: dataWorkWithUs.section_heading }}
+            />
+            <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed px-4">
+              {dataWorkWithUs.section_sub_heading}
+            </p>
+          </div>
+        )}
 
         {/* Cards Grid */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 max-w-6xl mx-auto mb-10 md:mb-16">
           {models.map((model, index) => {
-          const Icon = model.icon;
           const isHovered = hoveredIndex === index;
           return <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)} className={`group relative rounded-2xl transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-2" : ""}`} style={{
             transitionDelay: `${100 + index * 75}ms`
@@ -94,7 +113,16 @@ const WorkWithUs = () => {
                 <div className="relative p-4 sm:p-6 md:p-7 flex flex-col h-full">
                   {/* Icon */}
                   <div className={`w-10 sm:w-12 h-10 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-5 transition-all duration-300 ${isHovered ? "bg-accent/20 scale-105" : "bg-muted/50"}`}>
-                    <Icon className={`w-5 sm:w-6 h-5 sm:h-6 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
+                    <img 
+                      src={model.icon} 
+                      alt={model.title}
+                      className="w-5 sm:w-6 h-5 sm:h-6 transition-all duration-300"
+                      style={{
+                        filter: isHovered 
+                          ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
+                          : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
+                      }}
+                    />
                   </div>
 
                   {/* Title */}
@@ -103,7 +131,7 @@ const WorkWithUs = () => {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed flex-grow text-justify">
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed flex-grow">
                     {model.description}
                   </p>
                 </div>
@@ -112,12 +140,22 @@ const WorkWithUs = () => {
         </div>
 
         {/* CTA */}
-        <div className={`text-center px-4 sm:px-0 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Button size="lg" className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300">
-            Schedule a Strategy Call
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-          </Button>
-        </div>
+        {dataWorkWithUs?.section_cta_text && (
+          <div className={`text-center px-4 sm:px-0 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <Button 
+              size="lg" 
+              className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
+              onClick={() => {
+                if (dataWorkWithUs.section_cta_url) {
+                  window.location.href = dataWorkWithUs.section_cta_url;
+                }
+              }}
+            >
+              {dataWorkWithUs.section_cta_text}
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>;
 };
