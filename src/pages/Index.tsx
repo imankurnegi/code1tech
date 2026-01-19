@@ -24,19 +24,19 @@ const Index = () => {
   queryKey: ["homepage"],
   queryFn: async () => {
     const [homepageRes, headerRes, navRes] = await Promise.all([
-      fetch("http://localhost:5000/api/homepage", {
+      fetch("https://code1tech.page.gd/wp-json/v1/homepage", {
         headers: {
           Accept: "application/json",
           Authorization:
             "Bearer a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432",
         },
       }),
-      fetch("http://localhost:5000/api/headerlogo", {
+      fetch("https://code1tech.page.gd/wp-json/theme/v1/header-logo", {
         headers: {
           Accept: "application/json",
         },
       }),
-      fetch("http://localhost:5000/api/navmenus", {
+      fetch("https://code1tech.page.gd/wp-json/v1/menus/topmenu", {
         headers: {
           Accept: "application/json",
         },
