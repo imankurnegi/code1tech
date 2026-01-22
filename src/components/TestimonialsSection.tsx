@@ -1,46 +1,38 @@
 import { useState, useEffect, useRef } from "react";
 import { Quote } from "lucide-react";
 
-const testimonials = [
-  {
-    quote: "Code1 Tech Systems transformed our data infrastructure in ways we didn't think possible. Their team integrated seamlessly with ours and delivered ahead of schedule.",
-    name: "Sarah Chen",
-    role: "VP of Engineering",
-    company: "FinTech Solutions Inc."
-  },
-  {
-    quote: "The AI solutions they built for us reduced our operational costs by 40%. Their expertise in machine learning and cloud architecture is exceptional.",
-    name: "Michael Rodriguez",
-    role: "CTO",
-    company: "HealthCore Systems"
-  },
-  {
-    quote: "Working with Code1 felt like having an extension of our own team. They understood our business challenges and delivered solutions that actually work.",
-    name: "Emily Thompson",
-    role: "Director of Digital Transformation",
-    company: "RetailMax Global"
-  },
-  {
-    quote: "Their staff augmentation model gave us access to top-tier talent without the lengthy hiring process. We scaled our engineering team in weeks, not months.",
-    name: "David Park",
-    role: "Head of Product",
-    company: "ScaleUp Ventures"
-  },
-  {
-    quote: "The predictive analytics platform they developed has become central to our decision-making process. ROI was visible within the first quarter.",
-    name: "Jennifer Walsh",
-    role: "Chief Data Officer",
-    company: "Manufacturing Plus"
-  },
-  {
-    quote: "Code1's hybrid approach—combining strategic consulting with hands-on engineering—is exactly what enterprise companies need. Highly recommended.",
-    name: "Robert Kim",
-    role: "CEO",
-    company: "TechBridge Partners"
-  }
-];
+interface TestimonialItem {
+  ID: number;
+  post_title: string;
+  post_content: string;
+  acf: {
+    designation: string;
+    company: string;
+  };
+}
 
-const TestimonialsSection = () => {
+interface TestimonialsData {
+  testimonial_heading: string;
+  testimonials: TestimonialItem[];
+}
+
+interface TestimonialsSectionProps {
+  dataTestimonials: TestimonialsData;
+}
+
+const stripHtml = (html: string): string => {
+  const tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+};
+
+const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => {
+  const testimonials = dataTestimonials?.testimonials?.map(item => ({
+    quote: stripHtml(item.post_content),
+    name: item.post_title,
+    role: item.acf?.designation,
+    company: item.acf?.company
+  })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -90,7 +82,11 @@ const TestimonialsSection = () => {
   }, [isPaused]);
 
   // Duplicate testimonials for seamless loop
-  const duplicatedTestimonials = [...testimonials, ...testimonials];
+  const duplicatedTestimonials = testimonials.length > 0 ? [...testimonials, ...testimonials] : [];
+
+  if (!dataTestimonials || testimonials.length === 0) {
+    return null;
+  }
 
   return (
     <section
@@ -135,9 +131,10 @@ const TestimonialsSection = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Voices of <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Confidence</span>
-          </h2>
+          <h2 
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
+            dangerouslySetInnerHTML={{ __html: dataTestimonials?.testimonial_heading}}
+          />
           
           {/* Glowing divider */}
           <div className="relative w-24 h-px mx-auto">
@@ -174,7 +171,7 @@ const TestimonialsSection = () => {
 
                   {/* Quote text */}
                   <p className="text-foreground/90 text-base leading-relaxed mb-6 min-h-[100px]">
-                    "{testimonial.quote}"
+                    {testimonial.quote}
                   </p>
 
                   {/* Client info */}
@@ -227,7 +224,7 @@ const TestimonialsSection = () => {
 
                   {/* Quote text */}
                   <p className="text-foreground/90 text-sm leading-relaxed mb-5">
-                    "{testimonial.quote}"
+                    {testimonial.quote}
                   </p>
 
                   {/* Client info */}

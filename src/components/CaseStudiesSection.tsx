@@ -1,58 +1,27 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, TrendingUp, Clock, Users, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-const caseStudies = [
-  {
-    industry: "Banking & Finance",
-    title: "AI-Driven Automation",
-    quote: "Automating 65% of compliance checks",
-    description: "A leading financial services firm transformed operations with AI-powered automation that reduced risk.",
-    results: [
-      { value: "65%", label: "Efficiency" },
-      { value: "$2.4M", label: "Savings" },
-    ],
-    icon: TrendingUp,
-    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&h=400&fit=crop"
-  },
-  {
-    industry: "Healthcare",
-    title: "Intelligent Dashboards",
-    quote: "Real-time analytics for faster care",
-    description: "Unified platform with predictive analytics improved care quality across all facilities.",
-    results: [
-      { value: "45%", label: "Faster Dx" },
-      { value: "98%", label: "Accuracy" },
-    ],
-    icon: Clock,
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop"
-  },
-  {
-    industry: "Retail & eCommerce",
-    title: "Personalized Experiences",
-    quote: "AI recommendations boost conversions",
-    description: "AI-powered personalization transformed customer engagement and recovered abandoned carts.",
-    results: [
-      { value: "28%", label: "Revenue ↑" },
-      { value: "40%", label: "Recovery" },
-    ],
-    icon: Users,
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop"
-  },
-  {
-    industry: "Manufacturing",
-    title: "Smart Operations",
-    quote: "Predictive maintenance revolution",
-    description: "IoT-enabled predictive maintenance reduced downtime and optimized production efficiency.",
-    results: [
-      { value: "50%", label: "Less Downtime" },
-      { value: "3x", label: "Efficiency" },
-    ],
-    icon: Zap,
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop"
-  }
-];
+interface CaseStudy {
+  id: number;
+  title: string;
+  content: string;
+  card_image: string;
+  hover_icon: string;
+  value_1: string;
+  value_1_text: string;
+  value_2: string;
+  value_2_text: string;
+  permalink: string;
+}
 
-const CaseStudiesSection = () => {
+interface CaseStudiesData {
+  status: boolean;
+  section_heading: string;
+  section_sub_heading: string;
+  case_studies: CaseStudy[];
+}
+
+const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudiesData }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -73,6 +42,10 @@ const CaseStudiesSection = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  if (!dataCaseStudies || !dataCaseStudies.case_studies || dataCaseStudies.case_studies.length === 0) {
+    return null;
+  }
 
   return (
     <section
@@ -110,10 +83,21 @@ const CaseStudiesSection = () => {
           }`}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Case <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Studies</span>
+            {dataCaseStudies?.section_heading ? (
+              <>
+                {dataCaseStudies.section_heading.split(' ')[0]}{' '}
+                <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
+                  {dataCaseStudies.section_heading.split(' ').slice(1).join(' ')}
+                </span>
+              </>
+            ) : (
+              <>
+                Case <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Studies</span>
+              </>
+            )}
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto px-4">
-            Real-world problems. Measurable outcomes. Scalable growth.
+            {dataCaseStudies?.section_sub_heading}
           </p>
         </div>
 
@@ -124,13 +108,12 @@ const CaseStudiesSection = () => {
           }`}
           style={{ transitionDelay: "200ms" }}
         >
-          {caseStudies.map((study, index) => {
-            const IconComponent = study.icon;
+          {dataCaseStudies?.case_studies?.map((study, index) => {
             const isHovered = hoveredIndex === index;
             
             return (
               <div
-                key={index}
+                key={study.id}
                 className="group relative bg-card/30 backdrop-blur-sm border border-border/30 rounded-xl overflow-hidden transition-all duration-500 hover:border-accent/40 hover:bg-card/50"
                 style={{ transitionDelay: `${index * 100}ms` }}
                 onMouseEnter={() => setHoveredIndex(index)}
@@ -139,7 +122,7 @@ const CaseStudiesSection = () => {
                 {/* Image Section */}
                 <div className="relative h-40 lg:h-44 overflow-hidden">
                   <img
-                    src={study.image}
+                    src={study.card_image}
                     alt={study.title}
                     className={`w-full h-full object-cover transition-transform duration-700 ${
                       isHovered ? "scale-110" : "scale-100"
@@ -148,17 +131,21 @@ const CaseStudiesSection = () => {
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
                   
-                  {/* Industry badge */}
-                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-accent/90 backdrop-blur-sm rounded-full">
-                    <span className="text-accent-foreground text-xs font-medium">{study.industry}</span>
-                  </div>
-                  
-                  {/* Icon */}
-                  <div className={`absolute bottom-3 right-3 p-2 bg-background/80 backdrop-blur-sm rounded-lg transition-all duration-300 ${
-                    isHovered ? "bg-accent text-accent-foreground" : "text-accent"
-                  }`}>
-                    <IconComponent className="w-4 h-4" />
-                  </div>
+                  {/* Hover Icon */}
+                  {study.hover_icon && (
+                    <div className={`absolute bottom-3 right-3 p-2 bg-background/80 backdrop-blur-sm rounded-lg transition-all duration-300 ${
+                      isHovered ? "bg-accent/20" : ""
+                    }`}>
+                      <img 
+                        src={study.hover_icon} 
+                        alt={study.title}
+                        className="w-6 h-6 object-contain transition-all duration-300"
+                        style={isHovered ? {
+                          filter: 'brightness(0) saturate(100%) invert(70%) sepia(100%) saturate(1500%) hue-rotate(175deg)',
+                        } : {}}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Content Section */}
@@ -168,35 +155,42 @@ const CaseStudiesSection = () => {
                     {study.title}
                   </h3>
                   
-                  {/* Quote */}
-                  <p className="text-accent/80 text-sm font-medium mb-2">
-                    "{study.quote}"
-                  </p>
-                  
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2">
-                    {study.description}
-                  </p>
+                  {study.content && (
+                    <div 
+                      dangerouslySetInnerHTML={{ __html: study.content }}
+                    />
+                  )}
                   
                   {/* Results */}
                   <div className="flex gap-4 mb-4">
-                    {study.results.map((result, i) => (
-                      <div key={i} className="flex flex-col">
-                        <span className="text-foreground font-bold text-lg">{result.value}</span>
-                        <span className="text-muted-foreground text-xs">{result.label}</span>
+                    {study.value_1 && (
+                      <div className="flex flex-col">
+                        <span className="text-foreground font-bold text-lg">{study.value_1}</span>
+                        <span className="text-muted-foreground text-xs">{study.value_1_text}</span>
                       </div>
-                    ))}
+                    )}
+                    {study.value_2 && (
+                      <div className="flex flex-col">
+                        <span className="text-foreground font-bold text-lg">{study.value_2}</span>
+                        <span className="text-muted-foreground text-xs">{study.value_2_text}</span>
+                      </div>
+                    )}
                   </div>
                   
                   {/* CTA */}
-                  <button className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${
-                    isHovered ? "text-accent" : "text-muted-foreground"
-                  }`}>
+                  <a 
+                    href={study.permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${
+                      isHovered ? "text-accent" : "text-muted-foreground"
+                    }`}
+                  >
                     View Case Study
                     <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${
                       isHovered ? "translate-x-1" : ""
                     }`} />
-                  </button>
+                  </a>
                 </div>
                 
                 {/* Hover glow effect */}

@@ -5,6 +5,29 @@ import engineerServiceImg from "@/assets/engineer-service.jpg";
 import dataSolutionsImg from "@/assets/data-solutions.jpg";
 import aiMachineLearningImg from "@/assets/ai-machine-learning.jpg";
 
+interface ServiceCategory {
+  term_id: number;
+  name: string;
+  slug: string;
+  term_group: number;
+  term_taxonomy_id: number;
+  taxonomy: string;
+  description: string;
+  parent: number;
+  count: number;
+  filter: string;
+}
+
+interface EngineeringData {
+  section_heading: string;
+  section_sub_heading: string;
+  service_categories: ServiceCategory[];
+}
+
+interface EngineeringServicesProps {
+  dataEngineering?: EngineeringData;
+}
+
 // Animated network background hook
 const useNetworkAnimation = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
   useEffect(() => {
@@ -100,33 +123,19 @@ const useNetworkAnimation = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
     };
   }, [canvasRef]);
 };
-const services = [
-  {
-    tag: "SERVICE",
-    title: "Engineer as a Service",
-    description:
-      "Connect with highly skilled engineers without the time commitment of the hiring process. Our on-demand, offshore, or managed expert engineers seamlessly integrate into your workflow to expedite your projects and reduce costs and overhead.",
-    image: engineerServiceImg,
-    keyword: "Service",
-  },
-  {
-    tag: "DATA",
-    title: "Data Solutions",
-    description:
-      "We transform data into a strategic asset by building scalable, modern systems that ensure reliability, accessibility, and actionable insights. From data pipelines to advanced analytics, empower businesses to unlock value, accelerate innovation, and make smarter decisions.",
-    image: dataSolutionsImg,
-    keyword: "Data",
-  },
-  {
-    tag: "AI",
-    title: "AI & Machine Learning",
-    description:
-      "Use AI solutions to increase automation, predict future outcomes, and enhance engagement with customers. From chatbots to computer vision, we develop intelligent solutions to create efficiency to reduce costs, allowing your business to explore new growth opportunities.",
-    image: aiMachineLearningImg,
-    keyword: "AI",
-  },
-];
-const EngineeringServices = () => {
+
+const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
+  // Map images to service categories
+  const serviceImages = [engineerServiceImg, dataSolutionsImg, aiMachineLearningImg, dataSolutionsImg];
+  
+  // Transform API data to match component structure
+  const services = dataEngineering?.service_categories?.map((category, index) => ({
+    tag: category.name.split(' ')[0].toUpperCase(),
+    title: category.name,
+    description: category.description,
+    image: serviceImages[index] || engineerServiceImg,
+    keyword: category.slug,
+  })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -194,13 +203,11 @@ const EngineeringServices = () => {
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
             <span className="text-foreground text-4xl">
-              Engineering Solutions for Modern Business Operations and Better
-              Growth
+              {dataEngineering?.section_heading}
             </span>
           </h2>
           <p className="text-muted-foreground text-base lg:text-lg mt-4 max-w-xl mx-auto">
-            Comprehensive technical solutions powered by world-class engineering
-            talent
+            {dataEngineering?.section_sub_heading}
           </p>
         </div>
 

@@ -6,6 +6,7 @@ interface NavMenuItem {
   id: number;
   title: string;
   url: string;
+  icon:string;
   children?: NavMenuItem[];
 }
 
@@ -15,7 +16,10 @@ interface HeaderProps {
     full: string;
     medium: string;
   };
-  navMenus: NavMenuItem[];
+  navMenus: {
+    primary_menu: NavMenuItem[];
+    secondary_menu: NavMenuItem[];
+  };
 }
 
 const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
@@ -24,7 +28,10 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
   const [activeSection, setActiveSection] = useState("");
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
- 
+  const mainNavMenus = navMenus?.primary_menu|| [];
+  const ctaMenus = navMenus?.secondary_menu || [];
+  const contactUsMenu = ctaMenus[0];
+  const getStartedMenu = ctaMenus[1];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -62,7 +69,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
 
           {/* Desktop Navigation - Centered */}
           <div className="hidden lg:flex items-center justify-center flex-1 gap-10">
-            {navMenus?.map(link => {
+            {mainNavMenus?.map(link => {
 
               const isActive = activeSection === link.url.replace("#", "");
               const hasDropdown = link.children;
@@ -118,7 +125,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                               className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
-                            {/*  <item.icon className="w-4 h-4" />*/}
+                             <img src={item.icon} className="w-4 h-4"/>
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-medium text-foreground group-hover/item:text-accent transition-colors duration-300">
@@ -153,23 +160,27 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-5 shrink-0">
-            <a 
-              href="#contact" 
-              onClick={e => handleNavClick(e, "#contact")} 
-              className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
-            >
-              Contact Us
-            </a>
-            <Button 
-              size="sm" 
-              className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center gap-2 text-primary-foreground">
-                Get Started
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </span>
-              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Button>
+            {contactUsMenu && (
+              <a 
+                href={contactUsMenu.url} 
+                onClick={e => handleNavClick(e, contactUsMenu.url)} 
+                className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
+              >
+                {contactUsMenu.title}
+              </a>
+            )}
+            {getStartedMenu && (
+              <Button 
+                size="sm" 
+                className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-2 text-primary-foreground">
+                  {getStartedMenu.title}
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -204,7 +215,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
       >
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col gap-1">
-            {navMenus?.map(link => {
+            {mainNavMenus?.map(link => {
               const isActive = activeSection === link.url.replace("#", "");
               return (
                 <div key={link.title}>
@@ -225,19 +236,23 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
             })}
           </div>
           <div className="flex flex-col gap-3 pt-5 mt-5 border-t border-border/10">
-            <a 
-              href="#contact" 
-              onClick={e => handleNavClick(e, "#contact")} 
-              className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
-            >
-              Contact Us
-            </a>
-            <Button 
-              className="w-full bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium py-3 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.2)] flex items-center justify-center gap-2"
-            >
-              Get Started
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            {contactUsMenu && (
+              <a 
+                href={contactUsMenu.url} 
+                onClick={e => handleNavClick(e, contactUsMenu.url)} 
+                className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
+              >
+                {contactUsMenu.title}
+              </a>
+            )}
+            {getStartedMenu && (
+              <Button 
+                className="w-full bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium py-3 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.2)] flex items-center justify-center gap-2"
+              >
+                {getStartedMenu.title}
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            )}
           </div>
         </div>
       </div>

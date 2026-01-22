@@ -1,44 +1,73 @@
 import { useState } from "react";
 import { Linkedin, Twitter, Github, Mail, MapPin, ChevronDown } from "lucide-react";
-import logo from "@/assets/code1-logo.svg";
-const Footer = () => {
+
+interface FooterMenuItem {
+  id: number;
+  title: string;
+  url: string;
+}
+
+interface FooterMenuSection {
+  title: string;
+  items: FooterMenuItem[];
+}
+
+interface FooterData {
+  footer_logo: {
+    id: number;
+    full: string;
+    medium: string;
+    alt: string;
+  };
+  footer_text: string;
+  copyright_text: string;
+  footer_menus: {
+    navigation: FooterMenuSection;
+    resources: FooterMenuSection;
+  };
+  social_links: {
+    linkedin: string;
+    twitter: string;
+    github: string;
+  };
+  legal_links: {
+    privacy_policy: string;
+    terms: string;
+  };
+  contact: {
+    email: string;
+    address: string;
+  };
+}
+
+interface FooterProps {
+  footerSecData: FooterData;
+}
+
+const Footer = ({ footerSecData }: FooterProps) => {
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const navigation = [{
-    label: "Services",
-    href: "#services"
-  }, {
-    label: "Solutions",
-    href: "#solutions"
-  }, {
-    label: "Industries",
-    href: "#industries"
-  }, {
-    label: "Case Studies",
-    href: "#case-studies"
-  }];
-  const resources = [{
-    label: "Blogs",
-    href: "#blogs"
-  }, {
-    label: "Careers",
-    href: "#careers"
-  }, {
-    label: "Contact",
-    href: "#contact"
-  }];
-  const socialLinks = [{
-    icon: Linkedin,
-    href: "#",
-    label: "LinkedIn"
-  }, {
-    icon: Twitter,
-    href: "#",
-    label: "Twitter"
-  }, {
-    icon: Github,
-    href: "#",
-    label: "GitHub"
-  }];
+
+  const socialLinks = [
+    {
+      icon: Linkedin,
+      href: footerSecData?.social_links?.linkedin || "#",
+      label: "LinkedIn"
+    },
+    {
+      icon: Twitter,
+      href: footerSecData?.social_links?.twitter || "#",
+      label: "Twitter"
+    },
+    {
+      icon: Github,
+      href: footerSecData?.social_links?.github || "#",
+      label: "GitHub"
+    }
+  ];
+
+  const navigation = footerSecData?.footer_menus?.navigation?.items || [];
+  const resources = footerSecData?.footer_menus?.resources?.items || [];
+
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
   };
@@ -49,11 +78,14 @@ const Footer = () => {
           {/* Brand Column */}
           <div>
             <a href="#" className="flex items-center gap-2.5 mb-5">
-              <img alt="Code1 Tech Systems" src="/lovable-uploads/1fea59e7-107a-4f96-90f3-b2e2cb8867e6.png" className="h-16 w-auto object-contain" />
-              
+              <img 
+                alt={footerSecData?.footer_logo?.alt || "Code1 Tech Systems"} 
+                src={footerSecData?.footer_logo?.full} 
+                className="h-16 w-auto object-contain" 
+              />
             </a>
             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-              Enterprise technology solutions that scale with your ambition.
+              {footerSecData?.footer_text}
             </p>
 
             {/* Social Links */}
@@ -67,12 +99,12 @@ const Footer = () => {
           {/* Navigation */}
           <div>
             <h4 className="text-foreground font-semibold text-sm uppercase tracking-wider mb-5">
-              Navigation
+              {footerSecData?.footer_menus?.navigation?.title}
             </h4>
             <ul className="space-y-3">
-              {navigation.map((link, index) => <li key={index}>
-                  <a href={link.href} className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200">
-                    {link.label}
+              {navigation.map((link) => <li key={link.id}>
+                  <a href={link.url} className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200">
+                    {link.title}
                   </a>
                 </li>)}
             </ul>
@@ -81,12 +113,12 @@ const Footer = () => {
           {/* Resources */}
           <div>
             <h4 className="text-foreground font-semibold text-sm uppercase tracking-wider mb-5">
-              Resources
+              {footerSecData?.footer_menus?.resources?.title}
             </h4>
             <ul className="space-y-3">
-              {resources.map((link, index) => <li key={index}>
-                  <a href={link.href} className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200">
-                    {link.label}
+              {resources.map((link) => <li key={link.id}>
+                  <a href={link.url} className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200">
+                    {link.title}
                   </a>
                 </li>)}
             </ul>
@@ -100,14 +132,14 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-accent flex-shrink-0" />
-                <a href="mailto:hello@code1tech.com" className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200">
-                  hello@code1tech.com
+                <a href={`mailto:${footerSecData?.contact?.email}`} className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200">
+                  {footerSecData?.contact?.email}
                 </a>
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
                 <span className="text-muted-foreground text-sm">
-                  Global presence across US, UK, and Asia
+                  {footerSecData?.contact?.address}
                 </span>
               </div>
             </div>
@@ -119,11 +151,14 @@ const Footer = () => {
           {/* Brand */}
           <div className="mb-8 pb-8 border-b border-border/20">
             <a href="#" className="flex items-center gap-2.5 mb-4">
-              <img src={logo} alt="Code1 Tech Systems" className="h-8 w-auto" />
-              
+              <img 
+                src={footerSecData?.footer_logo?.full} 
+                alt={footerSecData?.footer_logo?.alt || "Code1 Tech Systems"} 
+                className="h-8 w-auto" 
+              />
             </a>
             <p className="text-muted-foreground text-sm mb-5 leading-relaxed">
-              Enterprise technology solutions that scale with your ambition.
+              {footerSecData?.footer_text}
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social, index) => <a key={index} href={social.href} className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center" aria-label={social.label}>
@@ -136,15 +171,15 @@ const Footer = () => {
           <div className="border-b border-border/20">
             <button onClick={() => toggleSection("navigation")} className="w-full flex items-center justify-between py-4">
               <span className="text-foreground font-semibold text-sm uppercase tracking-wider">
-                Navigation
+                {footerSecData?.footer_menus?.navigation?.title}
               </span>
               <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "navigation" ? "rotate-180" : ""}`} />
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${openSection === "navigation" ? "max-h-48 pb-4" : "max-h-0"}`}>
               <ul className="space-y-3 pl-1">
-                {navigation.map((link, index) => <li key={index}>
-                    <a href={link.href} className="text-muted-foreground text-sm">
-                      {link.label}
+                {navigation.map((link) => <li key={link.id}>
+                    <a href={link.url} className="text-muted-foreground text-sm">
+                      {link.title}
                     </a>
                   </li>)}
               </ul>
@@ -155,15 +190,15 @@ const Footer = () => {
           <div className="border-b border-border/20">
             <button onClick={() => toggleSection("resources")} className="w-full flex items-center justify-between py-4">
               <span className="text-foreground font-semibold text-sm uppercase tracking-wider">
-                Resources
+                {footerSecData?.footer_menus?.resources?.title}
               </span>
               <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "resources" ? "rotate-180" : ""}`} />
             </button>
             <div className={`overflow-hidden transition-all duration-200 ${openSection === "resources" ? "max-h-36 pb-4" : "max-h-0"}`}>
               <ul className="space-y-3 pl-1">
-                {resources.map((link, index) => <li key={index}>
-                    <a href={link.href} className="text-muted-foreground text-sm">
-                      {link.label}
+                {resources.map((link) => <li key={link.id}>
+                    <a href={link.url} className="text-muted-foreground text-sm">
+                      {link.title}
                     </a>
                   </li>)}
               </ul>
@@ -182,12 +217,12 @@ const Footer = () => {
               <div className="space-y-3 pl-1">
                 <div className="flex items-center gap-3">
                   <Mail className="w-4 h-4 text-accent" />
-                  <span className="text-muted-foreground text-sm">hello@code1tech.com</span>
+                  <span className="text-muted-foreground text-sm">{footerSecData?.contact?.email}</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-accent mt-0.5" />
                   <span className="text-muted-foreground text-sm">
-                    Global presence across US, UK, and Asia
+                    {footerSecData?.contact?.address}
                   </span>
                 </div>
               </div>
@@ -198,14 +233,14 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="py-6 border-t border-border/20 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Code1 Tech Systems. All rights reserved.
+            {footerSecData?.copyright_text}
           </p>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors duration-200 px-2 py-1">
+            <a href={footerSecData?.legal_links?.privacy_policy} className="hover:text-foreground transition-colors duration-200 px-2 py-1">
               Privacy Policy
             </a>
             <span className="text-border">|</span>
-            <a href="#" className="hover:text-foreground transition-colors duration-200 px-2 py-1">
+            <a href={footerSecData?.legal_links?.terms} className="hover:text-foreground transition-colors duration-200 px-2 py-1">
               Terms
             </a>
           </div>
