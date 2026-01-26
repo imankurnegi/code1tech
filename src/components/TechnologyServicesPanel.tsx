@@ -135,9 +135,10 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                       }}
                     />
                   </div>
-                  <span className={`text-xs font-medium text-center leading-tight ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
-                    {service.title.split(" ").slice(0, 2).join(" ")}
-                  </span>
+                  <span 
+                    className={`text-xs font-medium text-center leading-tight ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                    dangerouslySetInnerHTML={{ __html: service.title.split(" ").slice(0, 2).join(" ") }}
+                  />
                 </button>;
           })}
           </div>
@@ -159,9 +160,10 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                       }}
                     />
                   </div>
-                  <span className={`text-sm font-medium text-center leading-tight transition-colors duration-300 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}>
-                    {service.title}
-                  </span>
+                  <span 
+                    className={`text-sm font-medium text-center leading-tight transition-colors duration-300 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
+                    dangerouslySetInnerHTML={{ __html: service.title }}
+                  />
                 </button>;
           })}
           </div>
@@ -186,9 +188,10 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                       }}
                     />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {activeService.title}
-                  </h3>
+                  <h3 
+                    className="text-2xl font-bold text-foreground"
+                    dangerouslySetInnerHTML={{ __html: activeService.title }}
+                  />
                 </div>
 
                 {/* Description */}

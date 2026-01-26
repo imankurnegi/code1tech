@@ -72,7 +72,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
             {mainNavMenus?.map(link => {
 
               const isActive = activeSection === link.url.replace("#", "");
-              const hasDropdown = link.children;
+              const hasDropdown = link.children.length>0;
               const isDropdownOpen = activeDropdown === link.title;
               
               return (
@@ -85,13 +85,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                   <a 
                     href={link.url} 
                     onClick={e => handleNavClick(e, link.url)} 
-                    className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg ${
-                      isActive 
-                        ? "text-accent" 
-                        : isDropdownOpen
-                          ? "text-accent/90"
-                          : "text-foreground hover:text-accent"
-                    }`}
+                    className="relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent"
                   >
                     {link.title}
                     {hasDropdown && (
@@ -224,8 +218,8 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                     onClick={e => handleNavClick(e, link.url)} 
                     className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between ${
                       isActive 
-                        ? "text-accent bg-accent/10 shadow-[0_0_15px_rgba(0,194,255,0.2)]" 
-                        : "text-foreground/70 hover:text-foreground hover:bg-foreground/5"
+                        ? "text-foreground bg-accent/10 shadow-[0_0_15px_rgba(0,194,255,0.2)]" 
+                        : "text-foreground hover:text-accent hover:bg-foreground/5"
                     }`}
                   >
                     {link.title}

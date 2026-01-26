@@ -38,6 +38,24 @@ const Index = () => {
     },
   });
 
+  const { data: caseStudiesData, isLoading: caseStudiesLoading } = useQuery({
+    queryKey: ["caseStudies"],
+    queryFn: async () => {
+      const res = await fetch(`https://code1tech.page.gd/wp-json/theme/v1/case-studies`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch case studies data");
+      }
+
+      return await res.json();
+    },
+  });
+
   const homepageData = data?.homepage;
 
   if (isLoading) return <div>Loading...</div>;
@@ -59,13 +77,13 @@ const Index = () => {
 
           <AIAcceleratorsSection dataAiAgent={homepageData?.data?.ai_agent_section} />
           <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
-          <TechnologyStackSection />
+          <TechnologyStackSection dataCapabilities={homepageData?.data?.our_capabilities_section}/>
           <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
-          <CaseStudiesSection />
+          <CaseStudiesSection dataCaseStudies={caseStudiesData} />
           <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
           <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
           <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
-          <TestimonialsSection />
+          <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section}/>
           <RelatedBlogs />
           <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
         </>
