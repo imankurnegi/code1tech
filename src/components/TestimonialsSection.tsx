@@ -21,9 +21,17 @@ interface TestimonialsSectionProps {
 }
 
 const stripHtml = (html: string): string => {
-  const tmp = document.createElement("DIV");
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || "";
+  if (!html) return "";
+
+  const cleanText = html.replace(/<[^>]*>?/gm, '');
+
+  if (typeof document !== 'undefined') {
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = cleanText;
+    return tmp.textContent || tmp.innerText || "";
+  }
+
+  return cleanText;
 };
 
 const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => {

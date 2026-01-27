@@ -2,46 +2,13 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/api";
 
 const Layout = () => {
-    const { data, isLoading, isError, error } = useQuery({
+    const { data } = useQuery({
         queryKey: ["layout"],
-        queryFn: async () => {
-            const [headerRes, navRes, footerRes] = await Promise.all([
-                fetch(`${import.meta.env.VITE_BASE_URL}/header-logo`, {
-                    headers: {
-                        Accept: "application/json",
-                        Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
-                    },
-                }),
-                fetch(`${import.meta.env.VITE_BASE_URL}/menus/topmenu`, {
-                    headers: {
-                        Accept: "application/json",
-                        Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
-                    },
-                }),
-                fetch(`${import.meta.env.VITE_BASE_URL}/footer`, {
-                    headers: {
-                        Accept: "application/json",
-                        Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
-                    },
-                }),
-            ]);
-
-            if (!headerRes.ok || !navRes.ok) {
-                throw new Error("Failed to fetch data");
-            }
-
-            return {
-                headerLogo: await headerRes.json(),
-                navMenus: await navRes.json(),
-                footerData: await footerRes.json(),
-            };
-
-        },
+        queryFn: api.getLayoutData,
     });
-    // if (isLoading) return <div>Loading layout...</div>;
-    // if (isError) return <div>{error.message}</div>;
 
     return (
         <>
@@ -49,7 +16,7 @@ const Layout = () => {
             <main>
                 <Outlet />
             </main>
-            <Footer footerSecData = {data?.footerData?.data}/>
+            <Footer footerSecData={data?.footerData?.data} />
         </>
 
     );

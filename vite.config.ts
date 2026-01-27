@@ -10,6 +10,9 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 3000,
   },
+  ssr: {
+    noExternal: ["react-helmet-async", "@tanstack/react-query"]
+  },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
