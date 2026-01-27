@@ -41,7 +41,7 @@ const Index = () => {
   const { data: caseStudiesData, isLoading: caseStudiesLoading } = useQuery({
     queryKey: ["caseStudies"],
     queryFn: async () => {
-      const res = await fetch(`https://code1tech.page.gd/wp-json/theme/v1/case-studies`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/case-studies`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,

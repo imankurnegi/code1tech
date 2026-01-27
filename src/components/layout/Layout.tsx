@@ -8,7 +8,7 @@ const Layout = () => {
         queryKey: ["layout"],
         queryFn: async () => {
             const [headerRes, navRes, footerRes] = await Promise.all([
-                fetch(`https://code1tech.page.gd/wp-json/theme/v1/header-logo`, {
+                fetch(`${import.meta.env.VITE_BASE_URL}/header-logo`, {
                     headers: {
                         Accept: "application/json",
                         Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
@@ -20,7 +20,7 @@ const Layout = () => {
                         Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
                     },
                 }),
-                fetch(`https://code1tech.page.gd/wp-json/theme/v1/footer`, {
+                fetch(`${import.meta.env.VITE_BASE_URL}/footer`, {
                     headers: {
                         Accept: "application/json",
                         Authorization: `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`,
