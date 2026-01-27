@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build React app
-        run: npm run build:ssr
+        run: npm run build
 
       - name: Deploy via FTP to Code1tech Frontend
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
