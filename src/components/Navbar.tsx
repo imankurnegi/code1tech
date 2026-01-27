@@ -120,6 +120,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
                              <img src={item.icon} className="w-4 h-4"/>
+                             {/* <item.icon className="w-4 h-4" /> */}
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-medium text-foreground group-hover/item:text-accent transition-colors duration-300">
