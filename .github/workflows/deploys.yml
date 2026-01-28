@@ -28,7 +28,7 @@ jobs:
         run: node proxy.js &
 
       - name: Build React SSG
-        run: npm run build:prod
+        run: npm run build:ssg
 
       - name: Deploy via FTP to Code1tech Frontend
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4

@@ -13,7 +13,12 @@ app.get('/api/*', async (req, res) => {
     const apiPath = req.originalUrl.replace('/api', '');
     const response = await fetch(`${API_BASE}${apiPath}`, {
       headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`,
+        Accept: application/json,
+        'Content-Type': 'application/json',
+        'Authorization':`Bearer ${AUTH_TOKEN}`,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+        'Referer': 'https://code1tech.page.gd/',
+        'Origin': 'https://code1tech.page.gd'
       },
     });
 

@@ -10,8 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "dev:ssg": "vite-react-ssg dev",
-    "build:ssg": "vite-react-ssg build",
-    "build:prod": "node proxy.js & vite-react-ssg build"
+    "build:ssg": "vite-react-ssg build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
