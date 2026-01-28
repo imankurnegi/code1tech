@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
-import { DynamicIcon } from 'lucide-react/dynamic';
-
-
+import { DynamicIcon } from "./DynamicIcon";
 
 interface NavMenuItem {
   id: number;
