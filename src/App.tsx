@@ -1,22 +1,19 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import Layout from "./components/layout/Layout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Outlet } from "react-router-dom";
+
+const queryClient = new QueryClient();
 
 const App = () => (
-  <TooltipProvider>
-    <Toaster />
-    <Sonner />
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Index />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-  </TooltipProvider>
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <Outlet /> 
+    </TooltipProvider>
+  </QueryClientProvider>
 );
 
 export default App;

@@ -17,18 +17,26 @@ import ContactSection from "@/components/ContactSection";
 import { useQuery } from "@tanstack/react-query";
 import SeoTags from "@/components/SeoTags";
 import { api } from "@/api";
+import { useLoaderData } from "react-router-dom";
 
+export async function loader() {
+  const data = await api.getHomeData();
+  return data;
+}
 
 const Index = () => {
+  const initialData = useLoaderData() as any;
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["homepage"],
-    queryFn: api.getHomeData
+    queryFn: api.getHomeData,
+    initialData: initialData,
+    staleTime: 1000 * 60 * 5
   });
 
   const homepageData = data?.homepage;
   const caseStudiesData = data?.caseStudies;
 
-  if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{error.message}</div>;
 
   return (

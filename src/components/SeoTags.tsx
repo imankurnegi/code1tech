@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Head } from "vite-react-ssg";
 
 interface SEOProps {
   title?: string;
@@ -13,7 +13,7 @@ const SeoTags = ({ title, description, canonical, ogType = "website", ogImage }:
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 
   return (
-    <Helmet>
+    <Head>
       <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
       {canonical && <link rel="canonical" href={canonical} />}
@@ -29,7 +29,7 @@ const SeoTags = ({ title, description, canonical, ogType = "website", ogImage }:
       <meta name="twitter:title" content={fullTitle} />
       {description && <meta name="twitter:description" content={description} />}
       {ogImage && <meta name="twitter:image" content={ogImage} />}
-    </Helmet>
+    </Head>
   );
 };
 

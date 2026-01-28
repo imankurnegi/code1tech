@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => ({
     port: 3000,
   },
   ssr: {
-    noExternal: ["react-helmet-async", "@tanstack/react-query"]
+    noExternal: ['@tanstack/react-query', 'react-router-dom']
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
@@ -19,4 +19,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  ssgOptions: {
+    script: 'async',
+    formatting: 'minify',
+  }
 }));
