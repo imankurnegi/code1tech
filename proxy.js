@@ -3,9 +3,9 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 const app = express();
-const PORT = 5500;
+const PORT = 4500;
 
-const API_BASE = process.env.VITE_BASE_URL;
+const API_BASE = process.env.VITE_WEB_URL;
 const AUTH_TOKEN = process.env.VITE_AUTH_TOKEN;
 
 app.get('/api/*', async (req, res) => {
