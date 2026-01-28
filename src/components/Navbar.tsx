@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ArrowRight, ChevronDown, Brain, Cloud, Database, Shield, Cpu, BarChart3, Workflow, Users, Building2, Landmark, HeartPulse, Factory } from "lucide-react";
+import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
+import { DynamicIcon } from 'lucide-react/dynamic';
+
+
 
 interface NavMenuItem {
   id: number;
   title: string;
   url: string;
   icon:string;
+  class:any;
   children?: NavMenuItem[];
 }
 
@@ -119,8 +123,8 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                               className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
-                             <img src={item.icon} className="w-4 h-4"/>
-                             {/* <item.icon className="w-4 h-4" /> */}
+                             {/* <img src={item.icon} className="w-4 h-4"/> */}
+                             <DynamicIcon name={item.class} className="w-4 h-4" />
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-sm font-medium text-foreground group-hover/item:text-accent transition-colors duration-300">
