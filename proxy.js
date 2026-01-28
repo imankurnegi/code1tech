@@ -3,7 +3,7 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 const app = express();
-const PORT = 4000;
+const PORT = 5000;
 
 const API_BASE = process.env.VITE_BASE_URL;
 const AUTH_TOKEN = process.env.VITE_AUTH_TOKEN;
