@@ -9,13 +9,12 @@ lerna-debug.log*
 
 node_modules
 dist
-dist-ssr
+.vite-react-ssg-temp
+.DS_Store
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
+.vscode/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj

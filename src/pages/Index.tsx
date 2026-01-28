@@ -30,8 +30,12 @@ const Index = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["homepage"],
     queryFn: api.getHomeData,
-    initialData: initialData,
-    staleTime: 1000 * 60 * 5
+    initialData,
+    staleTime: 1000 * 60 * 5,
+    // Avoid client refetch clobbering SSG data in production
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const homepageData = data?.homepage;
