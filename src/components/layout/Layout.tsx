@@ -5,8 +5,18 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 
 export async function loader() {
-  const data = await api.getLayoutData();
-  return data;
+  try {
+    const data = await api.getLayoutData();
+    return data;
+  } catch (error) {
+    console.error("Failed to load layout data for SSG", error);
+    return {
+      headerLogo: null,
+      navMenus: null,
+      footerData: null,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 }
 
 const Layout = () => {

@@ -20,8 +20,17 @@ import { api } from "@/api";
 import { useLoaderData } from "react-router-dom";
 
 export async function loader() {
-  const data = await api.getHomeData();
-  return data;
+  try {
+    const data = await api.getHomeData();
+    return data;
+  } catch (error) {
+    console.error("Failed to load home data for SSG", error);
+    return {
+      homepage: null,
+      caseStudies: null,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 }
 
 const Index = () => {
