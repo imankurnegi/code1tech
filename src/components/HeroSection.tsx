@@ -22,11 +22,6 @@ interface HeroSectionProps {
 
 const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataClientLogo?: any}) => {
   const [showCTA, setShowCTA] = useState(false);
-  console.log("testing-----",);
-  // Log data only when it changes
-  useEffect(() => {
-    console.log("data", dataBanner);
-  }, [dataBanner]);
   
   // const phrases = ["Build Smarter.","Scale Faster.","Stay Ahead!"]
   // Extract phrases from data or use defaults
@@ -54,11 +49,11 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
   });
 
   // Extract data with fallbacks
-  const mainHeading = dataBanner.banner_main_heading || "Code1 Empowering Businesses";
-  const paragraph = dataBanner.banner_paragraph || "Unlock efficiency, innovation, and growth with technology-driven business solutions.";
-  const buttonText = dataBanner.button_text || "Turn Bold Ideas Into Real Growth";
-  const buttonUrl = dataBanner.button_url || "/";
-  const backgroundImage = dataBanner.banner_background_image;
+  const mainHeading = dataBanner?.banner_main_heading || "Code1 Empowering Businesses";
+  const paragraph = dataBanner?.banner_paragraph || "Unlock efficiency, innovation, and growth with technology-driven business solutions.";
+  const buttonText = dataBanner?.button_text || "Turn Bold Ideas Into Real Growth";
+  const buttonUrl = dataBanner?.button_url || "/";
+  const backgroundImage = dataBanner?.banner_background_image;
   
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-24">
       {/* Top fade for seamless navbar blend */}

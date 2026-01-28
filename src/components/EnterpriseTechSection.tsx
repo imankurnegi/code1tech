@@ -90,14 +90,41 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
   const thumbnailRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const parallaxOffset = useParallax(0.1);
 
-    const videoFullData= Object.values(dataTrusted?.left_video_section).map((video,index) => ({
-    id: index+1,
-    label: video.video_text,
-    video: video.video_url,
-//    image: video.video_image, // optional
-    }));
-    console.log('videoess',videoFullData);
-    const videoData = videoFullData;
+  // Build video list from API with safe fallbacks for SSG/SSR
+  const videoFullData = dataTrusted?.left_video_section
+    ? Object.values(dataTrusted.left_video_section).map((video, index) => ({
+        id: index + 1,
+        label: video.video_text,
+        video: video.video_url,
+        // image: video.video_image, // optional
+      }))
+    : [];
+
+  // Fallback demo videos if API data is missing so SSG won't crash
+  const videoData = videoFullData.length > 0
+    ? videoFullData
+    : [
+        {
+          id: 1,
+          label: "AI Solutions",
+          video: "/videos/ai-solutions.mp4",
+        },
+        {
+          id: 2,
+          label: "Data Engineering",
+          video: "/videos/data-engineering.mp4",
+        },
+        {
+          id: 3,
+          label: "Full-Stack Engineering",
+          video: "/videos/full-stack-engineering.mp4",
+        },
+        {
+          id: 4,
+          label: "Low-Code / No-Code",
+          video: "/videos/low-code-no-code.mp4",
+        },
+      ];
   // Handle thumbnail hover play/pause
   const handleThumbnailHover = (index: number) => {
     setHoveredThumb(index);
@@ -138,7 +165,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
       videoRef.current.play();
     }
   }, [activeThumb]);
-  const currentVideo = videoData[activeThumb];
+  const currentVideo = videoData[activeThumb] ?? videoData[0];
   return <section ref={sectionRef} className="relative w-full pb-16 md:pb-24 lg:pb-28 overflow-hidden">
       {/* Dark navy to black gradient background */}
       <div className="absolute inset-0" style={{
