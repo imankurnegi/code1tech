@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      
   repository_dispatch:
     types: [wp-content-updated]
 
@@ -22,18 +23,19 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+      
       - name: Start local proxy
         run: node proxy.js &
-      
+
       - name: Build React SSG
         run: npm run build:prod
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+      - name: Deploy via FTP to Code1tech Frontend
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: dist/
+#          local-dir: ./
           server-dir: ${{ secrets.FTP_PATH }}/
