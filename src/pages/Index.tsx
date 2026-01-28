@@ -41,7 +41,7 @@ const Index = () => {
     queryFn: api.getHomeData,
     initialData,
     staleTime: 1000 * 60 * 5,
-    // Avoid client refetch clobbering SSG data in production
+    // Avoid client refetch clobbering SSG datas in production
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
