@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
+import { DynamicIcon } from "lucide-react/dynamic";
 
 interface TechGroup {
   label: string;
@@ -19,7 +20,8 @@ interface Subsection {
 
 interface Capability {
   id: string;
-  icon: React.ElementType | string; 
+  icon: React.ElementType | string;
+  class: any; 
   title: string;
   image: string;
   tagline?: string;
@@ -93,9 +95,6 @@ const SubsectionCard = ({ subsection }: { subsection: Subsection }) => (
 
 // Content panel for selected capability - now supports HTML from API
 const ContentPanel = ({ capability, isAnimating, allCapabilities }: { capability: Capability; isAnimating: boolean; allCapabilities: Capability[] }) => {
-  const isIconUrl = typeof capability.icon === 'string';
-  const Icon = !isIconUrl ? capability.icon as React.ElementType : null;
-  
   return (
     <div className={`h-full transition-all duration-300 ${isAnimating ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'}`}>
       {/* Image banner with all images preloaded - wider aspect ratio */}
@@ -119,15 +118,7 @@ const ContentPanel = ({ capability, isAnimating, allCapabilities }: { capability
         <div className="absolute bottom-4 left-4 right-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.95)]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-background/80 backdrop-blur-md border border-accent/40 flex items-center justify-center shadow-xl">
-              {isIconUrl ? (
-                <img 
-                  src={capability.icon as string} 
-                  alt={capability.title}
-                  className="w-5 h-5 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]"
-                />
-              ) : Icon ? (
-                <Icon className="w-5 h-5 text-accent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]" />
-              ) : null}
+              <DynamicIcon name={capability.class} className="w-5 h-5 text-accent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white">{capability.title}</h3>
@@ -173,9 +164,6 @@ const NavItem = ({
   isActive: boolean; 
   onClick: () => void;
 }) => {
-  const isIconUrl = typeof capability.icon === 'string';
-  const Icon = !isIconUrl ? capability.icon as React.ElementType : null;
-  
   return (
     <button
       onClick={onClick}
@@ -190,17 +178,9 @@ const NavItem = ({
           ? 'bg-accent/20 border border-accent/40' 
           : 'bg-muted/50 border border-border/30 group-hover:bg-muted/70 group-hover:border-accent/20'
       }`}>
-        {isIconUrl ? (
-          <img 
-            src={capability.icon as string} 
-            alt={capability.title}
-            className="w-4 h-4 object-contain"
-          />
-        ) : Icon ? (
-          <Icon className={`w-4 h-4 transition-colors duration-200 ${
+        <DynamicIcon name={capability.class} className={`w-4 h-4 transition-colors duration-200 ${
             isActive ? 'text-accent' : 'text-muted-foreground group-hover:text-accent/80'
           }`} />
-        ) : null}
       </div>
       
       <span className={`flex-1 text-sm font-medium transition-colors duration-200 ${
@@ -248,8 +228,6 @@ const MobileTabBar = ({
       className="flex gap-2 overflow-x-auto pb-3 mb-4 hide-scrollbar"
     >
       {capabilities.map((cap) => {
-        const isIconUrl = typeof cap.icon === 'string';
-        const Icon = !isIconUrl ? cap.icon as React.ElementType : null;
         const isActive = activeId === cap.id;
         return (
           <button
@@ -262,15 +240,7 @@ const MobileTabBar = ({
                 : 'bg-muted/30 border-border/40 text-muted-foreground hover:border-accent/30'
             }`}
           >
-            {isIconUrl ? (
-              <img 
-                src={cap.icon as string} 
-                alt={cap.title}
-                className="w-4 h-4 object-contain"
-              />
-            ) : Icon ? (
-              <Icon className="w-4 h-4" />
-            ) : null}
+            <DynamicIcon name={cap.class} className="w-4 h-4" />
             <span className="text-xs font-medium whitespace-nowrap">
               {cap.title.split(' ').slice(0, 2).join(' ')}
             </span>
