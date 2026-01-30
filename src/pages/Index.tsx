@@ -32,23 +32,20 @@ export async function loader() {
 }
 
 const Index = () => {
-  const initialData = useLoaderData() as any;
+  const loaderData = useLoaderData() as any;
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { isError, error } = useQuery({
     queryKey: ["homepage"],
     queryFn: api.getHomeData,
-    initialData,
-    staleTime: 1000 * 60 * 5,
-    // Avoid client refetch clobbering SSG datas in production
+    initialData: loaderData,
+    staleTime: Infinity,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
   });
 
-  const homepageData = data?.homepage;
-  const caseStudiesData = data?.caseStudies;
-
   if (isError) return <div>{error.message}</div>;
+
+  const homepageData = loaderData?.homepage;
+  const caseStudiesData = loaderData?.caseStudies;
 
   return (
     <>
@@ -58,31 +55,32 @@ const Index = () => {
         ogImage="https://lovable.dev/opengraph-image-p98pqg.png"
       />
       <div className="min-h-screen bg-background">
-        {isLoading ? (
+        {/* {isLoading ? (
           <div className="flex justify-center items-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
           </div>
         ) : (
           <>
-            <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo={homepageData?.data?.home_client_logo_section} />
-            <EnterpriseTechSection dataTrusted={homepageData?.data?.trusted_section} />
-
-            <GrowthStrategies dataGrowth={homepageData?.data?.two_growth_section} />
-            <EngineeringServices dataEngineering={homepageData?.data?.engineering_solution_section} />
-
-            <AIAcceleratorsSection dataAiAgent={homepageData?.data?.ai_agent_section} />
-            <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
-            <TechnologyStackSection dataCapabilities={homepageData?.data?.our_capabilities_section} />
-            <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
-            <CaseStudiesSection dataCaseStudies={caseStudiesData} />
-            <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
-            <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
-            <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
-            <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
-            <RelatedBlogs />
-            <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
+            
           </>
-        )}
+        )} */}
+        <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo={homepageData?.data?.home_client_logo_section} />
+        <EnterpriseTechSection dataTrusted={homepageData?.data?.trusted_section} />
+
+        <GrowthStrategies dataGrowth={homepageData?.data?.two_growth_section} />
+        <EngineeringServices dataEngineering={homepageData?.data?.engineering_solution_section} />
+
+        <AIAcceleratorsSection dataAiAgent={homepageData?.data?.ai_agent_section} />
+        <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
+        <TechnologyStackSection dataCapabilities={homepageData?.data?.our_capabilities_section} />
+        <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
+        <CaseStudiesSection dataCaseStudies={caseStudiesData} />
+        <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
+        <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
+        <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
+        <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
+        <RelatedBlogs />
+        <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
       </div>
     </>
   )

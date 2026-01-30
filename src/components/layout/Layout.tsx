@@ -17,26 +17,23 @@ export async function loader() {
 }
 
 const Layout = () => {
-  const initialData = useLoaderData() as any;
+  const loaderData = useLoaderData() as any;
 
   const { data } = useQuery({
     queryKey: ["layout"],
     queryFn: api.getLayoutData,
-    initialData,
-    staleTime: 1000 * 60 * 5,
-    // In production, rely on SSG data and avoid refetch overwriting it
+    initialData: loaderData,
+    staleTime: Infinity,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
   });
 
   return (
     <>
-      <Navbar headerLogo={data?.headerLogo?.data} navMenus={data?.navMenus?.data} />
+      <Navbar headerLogo={loaderData?.headerLogo?.data} navMenus={loaderData?.navMenus?.data} />
       <main>
         <Outlet />
       </main>
-      <Footer footerSecData={data?.footerData?.data} />
+      <Footer footerSecData={loaderData?.footerData?.data} />
     </>
   );
 };
