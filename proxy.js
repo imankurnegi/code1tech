@@ -5,8 +5,8 @@ import fetch from 'node-fetch';
 const app = express();
 const PORT = 4500;
 
-const API_BASE = 'https://code1tech.page.gd/wp-json/v1';
-const AUTH_TOKEN = 'a3f1c5d9b8e7f2c4d6a1b0e9c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b1ry432';
+const API_BASE = import.meta.env.VITE_WEB_URL;
+const AUTH_TOKEN = import.meta.env.VITE_AUTH_TOKEN;
 
 app.get('/api/*', async (req, res) => {
   try {
