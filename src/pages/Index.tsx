@@ -22,14 +22,12 @@ import { useLoaderData } from "react-router-dom";
 export async function loader() {
   try {
     const data = await api.getHomeData();
+    console.log("SSG HOME DATA:", data);
+
     return data;
   } catch (error) {
     console.error("Failed to load home data for SSG", error);
-    return {
-      homepage: null,
-      caseStudies: null,
-      error: error instanceof Error ? error.message : String(error),
-    };
+    throw error;
   }
 }
 
