@@ -30,5 +30,23 @@ export const api = {
       navMenus: await nav.json(),
       footerData: await footer.json()
     };
-  }
+  },
+  
+  submitContactForm: async (formData: FormData) => {
+    const res = await fetch(`${BASE_URL}/cf7/submit`, {
+      method: "POST",
+      headers,
+      body: formData,
+    });
+    console.log(res, "res");
+
+    const json = await res.json();
+    console.log(json, "json");
+    if (!res.ok) {
+      const msg =
+        (json && json.message) || "Failed to send message. Please try again.";
+      throw new Error(msg);
+    }
+    return json;
+  },
 };

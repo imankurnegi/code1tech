@@ -20,8 +20,7 @@ interface Subsection {
 
 interface Capability {
   id: string;
-  icon: React.ElementType | string;
-  class: any; 
+  iconClass: string;
   title: string;
   image: string;
   tagline?: string;
@@ -118,7 +117,7 @@ const ContentPanel = ({ capability, isAnimating, allCapabilities }: { capability
         <div className="absolute bottom-4 left-4 right-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.95)]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-background/80 backdrop-blur-md border border-accent/40 flex items-center justify-center shadow-xl">
-              <DynamicIcon name={capability.class} className="w-5 h-5 text-accent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]" />
+              <DynamicIcon name={capability.iconClass} className="w-5 h-5 text-accent drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-white">{capability.title}</h3>
@@ -178,7 +177,7 @@ const NavItem = ({
           ? 'bg-accent/20 border border-accent/40' 
           : 'bg-muted/50 border border-border/30 group-hover:bg-muted/70 group-hover:border-accent/20'
       }`}>
-        <DynamicIcon name={capability.class} className={`w-4 h-4 transition-colors duration-200 ${
+        <DynamicIcon name={capability.iconClass} className={`w-4 h-4 transition-colors duration-200 ${
             isActive ? 'text-accent' : 'text-muted-foreground group-hover:text-accent/80'
           }`} />
       </div>
@@ -240,7 +239,7 @@ const MobileTabBar = ({
                 : 'bg-muted/30 border-border/40 text-muted-foreground hover:border-accent/30'
             }`}
           >
-            <DynamicIcon name={cap.class} className="w-4 h-4" />
+            <DynamicIcon name={cap.iconClass} className="w-4 h-4" />
             <span className="text-xs font-medium whitespace-nowrap">
               {cap.title.split(' ').slice(0, 2).join(' ')}
             </span>
@@ -282,10 +281,10 @@ const TechnologyStackSection = ({ dataCapabilities }: { dataCapabilities: any })
 
     return dataCapabilities.section_content.map((item: any) => {
       const slug = item.post_name || item.ID?.toString();
-      const iconUrl = item.acf?.box_icon?.url;
+      const iconClass = item.acf?.class;
       return {
         id: slug,
-        icon: iconUrl || "",
+        iconClass: iconClass || "",
         title: item.post_title || "",
         image: item.acf?.box_image?.url || "",
         tagline: item.acf?.sub_heading || undefined,

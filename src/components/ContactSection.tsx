@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { api } from "@/api";
 
 interface ContactData {
   section_heading: string;
@@ -75,18 +76,34 @@ const ContactSection = ({ dataContact }: ContactSectionProps) => {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    reset();
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you within 24 hours."
-    });
+    try {
+      const formData = new FormData();
+      formData.append("your-name", data.name);
+      formData.append("email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("subject", data.subject);
+      formData.append("message", data.message);
 
-    // Reset success state after a delay
-    setTimeout(() => setIsSubmitted(false), 5000);
+      await api.submitContactForm(formData);
+
+      setIsSubmitted(true);
+      reset();
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you within 24 hours."
+      });
+
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to send message. Please try again.";
+      toast({
+        title: "Something went wrong",
+        description: message,
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return <section ref={sectionRef} id="contact" className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden">
       {/* Background gradient */}
