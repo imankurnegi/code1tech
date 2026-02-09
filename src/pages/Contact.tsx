@@ -64,11 +64,17 @@ export async function loader() {
     };
   } catch (error) {
     console.error("Failed to load contact page SSG data", error);
-    throw error;
+    return {
+      contactData: null,
+      clientLogos: { data: [] },
+    };
   }
 }
 
 const Contact = () => {
+  
+  const loaderData = useLoaderData() as any;
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState("+91");
@@ -82,21 +88,18 @@ const Contact = () => {
   const locationsRef = useRef<HTMLElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
 
-
-  const loaderData = useLoaderData() as any;
-
-  const { isError, error } = useQuery({
-    queryKey: ["contactpage"],
-    queryFn: async () => {
-       await Promise.all([
-        api.getContactData(),
-        api.getClientLogos(),
-      ]);
-    },
-    initialData: loaderData,
-    staleTime: Infinity,
-    refetchOnMount: false,
-  });
+  // const { isError, error } = useQuery({
+  //   queryKey: ["contactpage"],
+  //   queryFn: async () => {
+  //      await Promise.all([
+  //       api.getContactData(),
+  //       api.getClientLogos(),
+  //     ]);
+  //   },
+  //   initialData: loaderData,
+  //   staleTime: Infinity,
+  //   refetchOnMount: false,
+  // });
 
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
 

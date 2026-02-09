@@ -19,13 +19,13 @@ export async function loader() {
 const Layout = () => {
   const loaderData = useLoaderData() as any;
 
-  const { data } = useQuery({
-    queryKey: ["layout"],
-    queryFn: api.getLayoutData,
-    initialData: loaderData,
-    staleTime: Infinity,
-    refetchOnMount: false,
-  });
+  // const { data } = useQuery({
+  //   queryKey: ["layout"],
+  //   queryFn: api.getLayoutData,
+  //   initialData: loaderData,
+  //   staleTime: Infinity,
+  //   refetchOnMount: false,
+  // });
 
   return (
     <>

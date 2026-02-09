@@ -32,25 +32,28 @@ export async function loader() {
     };
   } catch (error) {
     console.error("Failed to load home page SSG data", error);
-    throw error;
+    return {
+      homeData: null,
+      clientLogos: { data: [] },
+    };
   }
 }
 
 const Index = () => {
   const loaderData = useLoaderData() as any;
 
-  const { isError, error } = useQuery({
-    queryKey: ["homepage"],
-    queryFn: async () => {
-       await Promise.all([
-        api.getHomeData(),
-        api.getClientLogos(),
-      ]);
-    },
-    initialData: loaderData,
-    staleTime: Infinity,
-    refetchOnMount: false,
-  });
+  // const { isError, error } = useQuery({
+  //   queryKey: ["homepage"],
+  //   queryFn: async () => {
+  //      await Promise.all([
+  //       api.getHomeData(),
+  //       api.getClientLogos(),
+  //     ]);
+  //   },
+  //   initialData: loaderData,
+  //   staleTime: Infinity,
+  //   refetchOnMount: false,
+  // });
 
   // if (isError) return <div>{error.message}</div>;
 
