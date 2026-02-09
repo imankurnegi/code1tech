@@ -55,23 +55,23 @@ export const api = {
 
 
   getClientLogos: async () => {
-    const response = await fetch(`${BASE_URL}/clientlogos`, { headers });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch client logos');
+    try {
+      const response = await fetch(`${BASE_URL}/clientlogos`, { headers });
+      if (!response.ok) return { data: [] };
+      return await response.json();
+    } catch {
+      return { data: [] };
     }
-
-    return response.json();
   },
 
   getContactData: async () => {
-    const response = await fetch(`${BASE_URL}/contactus`, { headers });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch contact data');
+    try {
+      const response = await fetch(`${BASE_URL}/contactus`, { headers });
+      if (!response.ok) return { data: {} };
+      return await response.json();
+    } catch {
+      return { data: {} };
     }
-
-    return response.json();
   },
 
 
