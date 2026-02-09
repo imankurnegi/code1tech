@@ -12,7 +12,11 @@ export async function loader() {
     return data;
   } catch (error) {
     console.error("Failed to load layout data for SSG", error);
-    throw error;
+    return {
+      headerLogo: { data: null },
+      navMenus: { data: [] },
+      footerData: { data: {} },
+    };
   }
 }
 
