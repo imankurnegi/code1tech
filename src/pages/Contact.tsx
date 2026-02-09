@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import ServicePageLayout from "@/components/ServicePageLayout";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -164,7 +163,7 @@ const Contact = () => {
     });
     setTimeout(() => setIsSubmitted(false), 5000);
   };
-  return <ServicePageLayout>
+  return <>
     <SeoTags
         title={"Contact Us - Code1Tech"}
         description={"Get in touch with Code1Tech for expert software development, AI solutions, and digital transformation services. We're here to help your business thrive in the digital age."}
@@ -842,6 +841,6 @@ const Contact = () => {
       <ClientsLogoSlider dataClientLogo={clientLogosData} />
     </section>
 
-  </ServicePageLayout>;
+  </>;
 };
 export default Contact;

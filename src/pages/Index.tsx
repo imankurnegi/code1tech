@@ -68,7 +68,6 @@ const Index = () => {
         description={homepageData?.data?.home_page_banner?.banner_paragraph}
         ogImage="https://lovable.dev/opengraph-image-p98pqg.png"
       />
-      <div className="min-h-screen bg-background">
         {/* {isLoading ? (
           <div className="flex justify-center items-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
@@ -95,7 +94,7 @@ const Index = () => {
         <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
         <RelatedBlogs />
         <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
-      </div>
+      
     </>
   )
 };

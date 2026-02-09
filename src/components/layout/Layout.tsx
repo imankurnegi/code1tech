@@ -32,13 +32,13 @@ const Layout = () => {
   // });
 
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <Navbar headerLogo={loaderData?.headerLogo?.data} navMenus={loaderData?.navMenus?.data} />
       <main>
         <Outlet />
       </main>
       <Footer footerSecData={loaderData?.footerData?.data} />
-    </>
+    </div>
   );
 };
 export default Layout;
