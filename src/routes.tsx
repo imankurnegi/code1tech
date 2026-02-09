@@ -4,6 +4,7 @@ import Index, { loader as indexLoader } from "./pages/Index";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ErrorPage from "./pages/ErrorPage";
+import Contact, { loader as contactLoader } from "./pages/Contact";
 
 export const routes = [
   {
@@ -20,6 +21,12 @@ export const routes = [
             path: "",
             Component: Index,
             loader: indexLoader,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "contactus",
+            Component: Contact,
+            loader: contactLoader,
             errorElement: <ErrorPage />,
           },
           {

@@ -10,35 +10,77 @@ export const api = {
   getHomeData: async () => {
     const [homeRes, casesRes] = await Promise.all([
       fetch(`${BASE_URL}/homepage`, { headers }),
-      fetch(`${BASE_URL}/case-studies`, { headers })
+      fetch(`${BASE_URL}/case-studies`, { headers }),
     ]);
-    const homeJson = await homeRes.json();
+
+    if (!homeRes.ok || !casesRes.ok) {
+      throw new Error('Home data fetch failed');
+    }
+
+    const [homeJson, caseStudies] = await Promise.all([
+      homeRes.json(),
+      casesRes.json(),
+    ]);
+
     return {
       homepage: homeJson?.homepage ?? homeJson,
-      caseStudies: await casesRes.json()
+      caseStudies,
     };
   },
 
+
   getLayoutData: async () => {
-    const [header, nav, footer] = await Promise.all([
+    const [headerRes, navRes, footerRes] = await Promise.all([
       fetch(`${BASE_URL}/header-logo`, { headers }),
       fetch(`${BASE_URL}/menus/topmenu`, { headers }),
-      fetch(`${BASE_URL}/footer`, { headers })
+      fetch(`${BASE_URL}/footer`, { headers }),
     ]);
+
+    if (!headerRes.ok || !navRes.ok || !footerRes.ok) {
+      throw new Error('Layout data fetch failed');
+    }
+
+    const [headerLogo, navMenus, footerData] = await Promise.all([
+      headerRes.json(),
+      navRes.json(),
+      footerRes.json(),
+    ]);
+
     return {
-      headerLogo: await header.json(),
-      navMenus: await nav.json(),
-      footerData: await footer.json()
+      headerLogo,
+      navMenus,
+      footerData,
     };
   },
-  
+
+
+  getClientLogos: async () => {
+    const response = await fetch(`${BASE_URL}/clientlogos`, { headers });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch client logos');
+    }
+
+    return response.json();
+  },
+
+  getContactData: async () => {
+    const response = await fetch(`${BASE_URL}/contactus`, { headers });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch contact data');
+    }
+
+    return response.json();
+  },
+
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",
       headers,
       body: formData,
     });
-    console.log(res, "res");
 
     const json = await res.json();
     console.log(json, "json");

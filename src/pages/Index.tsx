@@ -21,31 +21,37 @@ import { useLoaderData } from "react-router-dom";
 
 export async function loader() {
   try {
-    const data = await api.getHomeData();
-    console.log("SSG HOME DATA:", data);
+    const [homeData, clientLogos] = await Promise.all([
+      api.getHomeData(),
+      api.getClientLogos(),
+    ]);
 
-    return data;
+    return {
+      homeData,
+      clientLogos,
+    };
   } catch (error) {
-    console.error("Failed to load home data for SSG", error);
+    console.error("Failed to load home page SSG data", error);
     throw error;
   }
 }
 
 const Index = () => {
-  const loaderData = useLoaderData() as any;
+  const {homeData, clientLogos} = useLoaderData() as any;
 
-  const { isError, error } = useQuery({
-    queryKey: ["homepage"],
-    queryFn: api.getHomeData,
-    initialData: loaderData,
-    staleTime: Infinity,
-    refetchOnMount: false,
-  });
+  // const { isError, error } = useQuery({
+  //   queryKey: ["homepage"],
+  //   queryFn: api.getHomeData,
+  //   initialData: loaderData,
+  //   staleTime: Infinity,
+  //   refetchOnMount: false,
+  // });
 
-  if (isError) return <div>{error.message}</div>;
+  // if (isError) return <div>{error.message}</div>;
 
-  const homepageData = loaderData?.homepage;
-  const caseStudiesData = loaderData?.caseStudies;
+  const homepageData = homeData?.homepage;
+  const caseStudiesData = homeData?.caseStudies;
+  const clientLogosData = clientLogos?.data ?? [];
 
   return (
     <>
@@ -64,7 +70,7 @@ const Index = () => {
             
           </>
         )} */}
-        <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo={homepageData?.data?.home_client_logo_section} />
+        <HeroSection dataBanner={homepageData?.data?.home_page_banner} dataClientLogo={clientLogosData} />
         <EnterpriseTechSection dataTrusted={homepageData?.data?.trusted_section} />
 
         <GrowthStrategies dataGrowth={homepageData?.data?.two_growth_section} />

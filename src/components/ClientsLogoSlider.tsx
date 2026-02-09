@@ -1,20 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
+type ClientLogo = {
+  title?: string;
+  image?: string;
+};
+
 interface dataClientLogoProps {
-  dataClientLogo?: {
-    client_logo_section?: {
-      clent_logo?: string;
-      logo:{
-        thumbnail?:string;
-      };
-    }[];
-  };
+  dataClientLogo?: ClientLogo[];
 }
+
 const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
-  const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const apiClients = dataClientLogo?.client_logo_section || [];
+  const apiClients = dataClientLogo || [];
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -23,7 +22,7 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -32,75 +31,52 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
 
     return () => observer.disconnect();
   }, []);
- 
+
   const clients = apiClients.map((item) => ({
-    name: item.clent_logo || "",
-    style: "font-bold text-2xl md:text-3xl lg:text-4xl",
-    logo: item.logo.thumbnail,
+    name: item.title || "",
+    logo: item.image,
   }));
 
   // Duplicate for seamless loop
   const allClients = [...clients, ...clients];
+
   return (
-    <div 
+    <div
       ref={sectionRef}
       className={`relative w-[100vw] left-1/2 -translate-x-1/2 py-0 overflow-hidden transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
     >
-      {/* Subtle separator lines */}
-      <div className="absolute inset-x-0 top-0 h-px z-[2] pointer-events-none" style={{
-        background: `linear-gradient(
-          90deg,
-          transparent 0%,
-          hsl(194 68% 63% / 0.15) 20%,
-          hsl(194 68% 63% / 0.25) 50%,
-          hsl(194 68% 63% / 0.15) 80%,
-          transparent 100%
-        )`
-      }} />
-      
-      <div className="absolute inset-x-0 bottom-0 h-px z-[2] pointer-events-none" style={{
-        background: `linear-gradient(
-          90deg,
-          transparent 0%,
-          hsl(194 68% 63% / 0.1) 20%,
-          hsl(194 68% 63% / 0.18) 50%,
-          hsl(194 68% 63% / 0.1) 80%,
-          transparent 100%
-        )`
-      }} />
 
       {/* Content */}
       <div className="relative z-10">
         {/* Logo Slider Container */}
-        <div className="relative" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
+        <div className="relative">
           {/* Left gradient fade - matches hero background */}
           <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 z-20 pointer-events-none" style={{
             background: 'linear-gradient(to right, hsl(222 47% 8%) 0%, transparent 100%)'
           }} />
-          
+
           {/* Right gradient fade - matches hero background */}
           <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 z-20 pointer-events-none" style={{
             background: 'linear-gradient(to left, hsl(222 47% 8%) 0%, transparent 100%)'
           }} />
 
           {/* Scrolling Container */}
-          <div 
-            className={`flex items-center relative z-10 py-0 ${isPaused ? 'pause-animation' : ''}`}
+          <div
+            className="flex items-center relative z-10 py-0"
             style={{
-              animation: 'marquee 20s linear infinite',
-              animationPlayState: isPaused ? 'paused' : 'running'
+              animation: 'marquee 20s linear infinite'
             }}
           >
             {allClients.map((client, index) => (
-              <div 
-                key={index} 
-                className="flex-shrink-0 mx-4 md:mx-6 lg:mx-8 h-[5.5rem] md:h-28 lg:h-32 flex items-center justify-center group cursor-pointer"
+              <div
+                key={index}
+                className="flex-shrink-0 mx-4 md:mx-6 lg:mx-8 h-28 md:h-32 lg:h-40 flex items-center justify-center group cursor-pointer"
               >
                 {client.logo ? (
-                  <img 
-                    src={client.logo} 
+                  <img
+                    src={client.logo}
                     alt={client.name}
-                    className="h-[5.5rem] md:h-28 lg:h-32 w-auto object-contain transition-all duration-300 ease-out brightness-100 opacity-90 group-hover:opacity-100 group-hover:scale-105 group-hover:brightness-110 group-hover:drop-shadow-[0_0_12px_hsl(var(--accent)/0.5)]"
+                    className="h-28 md:h-32 lg:h-40 w-auto object-contain transition-all duration-300 ease-out brightness-100 opacity-90 group-hover:opacity-100 group-hover:scale-105 group-hover:brightness-110 group-hover:drop-shadow-[0_0_12px_hsl(var(--accent)/0.5)]"
                   />
                 ) : (
                   <span className="font-bold text-2xl md:text-3xl lg:text-4xl text-foreground/80 whitespace-nowrap transition-all duration-300 ease-out group-hover:text-foreground group-hover:opacity-100 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_hsl(var(--accent)/0.4)]">
@@ -123,10 +99,6 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
             transform: translateX(-50%);
           }
         }
-        
-        .pause-animation {
-          animation-play-state: paused !important;
-        }
 
         @media (max-width: 768px) {
           div[style*="animation: marquee"] {
@@ -137,4 +109,5 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
     </div>
   );
 };
+
 export default ClientsLogoSlider;
