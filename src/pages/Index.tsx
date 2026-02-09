@@ -37,21 +37,26 @@ export async function loader() {
 }
 
 const Index = () => {
-  const {homeData, clientLogos} = useLoaderData() as any;
+  const loaderData = useLoaderData() as any;
 
-  // const { isError, error } = useQuery({
-  //   queryKey: ["homepage"],
-  //   queryFn: api.getHomeData,
-  //   initialData: loaderData,
-  //   staleTime: Infinity,
-  //   refetchOnMount: false,
-  // });
+  const { isError, error } = useQuery({
+    queryKey: ["homepage"],
+    queryFn: async () => {
+       await Promise.all([
+        api.getHomeData(),
+        api.getClientLogos(),
+      ]);
+    },
+    initialData: loaderData,
+    staleTime: Infinity,
+    refetchOnMount: false,
+  });
 
   // if (isError) return <div>{error.message}</div>;
 
-  const homepageData = homeData?.homepage;
-  const caseStudiesData = homeData?.caseStudies;
-  const clientLogosData = clientLogos?.data ?? [];
+  const homepageData = loaderData?.homeData?.homepage;
+  const caseStudiesData = homepageData?.homeData?.caseStudies;
+  const clientLogosData = loaderData?.clientLogos?.data ?? [];
 
   return (
     <>

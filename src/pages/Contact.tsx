@@ -14,6 +14,7 @@ import { useLoaderData } from "react-router-dom";
 import { api } from "@/api";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import SeoTags from "@/components/SeoTags";
+import { useQuery } from "@tanstack/react-query";
 const contactSchema = z.object({
   firstName: z.string().trim().min(1, "Please enter your first name").max(50, "First name must be less than 50 characters"),
   lastName: z.string().trim().min(1, "Please enter your last name").max(50, "Last name must be less than 50 characters"),
@@ -49,6 +50,7 @@ const countryCodes = [{
   country: "CN"
 }];
 
+
 export async function loader() {
   try {
     const [contactData, clientLogos] = await Promise.all([
@@ -81,19 +83,33 @@ const Contact = () => {
   const brandsRef = useRef<HTMLDivElement>(null);
 
 
-  const { contactData, clientLogos } = useLoaderData() as any;
-  const clientLogosData = clientLogos?.data ?? [];
+  const loaderData = useLoaderData() as any;
 
-  const salesNumbers = [contactData?.data.sales_group.phone_1, contactData?.data.sales_group.phone_2, contactData?.data.sales_group.phone_3];
-  const hrNumbers = [contactData?.data.career_group.phone_1, contactData?.data.career_group.phone_2];
+  const { isError, error } = useQuery({
+    queryKey: ["contactpage"],
+    queryFn: async () => {
+       await Promise.all([
+        api.getContactData(),
+        api.getClientLogos(),
+      ]);
+    },
+    initialData: loaderData,
+    staleTime: Infinity,
+    refetchOnMount: false,
+  });
+
+  const clientLogosData = loaderData?.clientLogos?.data ?? [];
+
+  const salesNumbers = [loaderData?.contactData?.data.sales_group.phone_1, loaderData?.contactData?.data.sales_group.phone_2, loaderData?.contactData?.data.sales_group.phone_3];
+  const hrNumbers = [loaderData?.contactData?.data.career_group.phone_1, loaderData?.contactData?.data.career_group.phone_2];
 
   const officeLocations = [{
-    city: contactData?.data.locations_group.sub_heading,
-    address: contactData?.data.locations_group.address,
+    city: loaderData?.contactData?.data.locations_group.sub_heading,
+    address: loaderData?.contactData?.data.locations_group.address,
     country: "India"
   }, {
-    city: contactData?.data.locations_group.sub_heading_2,
-    address: contactData?.data.locations_group.address_2,
+    city: loaderData?.contactData?.data.locations_group.sub_heading_2,
+    address: loaderData?.contactData?.data.locations_group.address_2,
     country: "USA"
   }];
 
@@ -162,7 +178,7 @@ const Contact = () => {
 
       {/* Background Image with improved visibility */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style={{
-        backgroundImage: `url(${contactData?.data?.banner_image || ""})`
+        backgroundImage: `url(${loaderData?.contactData?.data?.banner_image || ""})`
       }} />
 
       {/* Subtle gradient overlay instead of heavy dark shade */}
@@ -195,9 +211,9 @@ const Contact = () => {
             <span className="text-foreground">Contact </span>
             <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Us</span>
           </h1> */}
-          <h1 dangerouslySetInnerHTML={{ __html: contactData?.data.page_title }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
+          <h1 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.page_title }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
           </h1>
-          <p dangerouslySetInnerHTML={{ __html: contactData?.data.page_content }} className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed text-center"></p>
+          <p dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.page_content }} className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed text-center"></p>
         </div>
       </div>
 
@@ -236,8 +252,8 @@ const Contact = () => {
                   {/* <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
                     Send us a <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">message</span>
                   </h2> */}
-                  <h2 dangerouslySetInnerHTML={{ __html: contactData?.data.form_heading }} className="text-2xl sm:text-3xl font-bold text-foreground mb-2"></h2>
-                  <p className="text-muted-foreground mb-8">{contactData?.data.form_paragraph}</p>
+                  <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.form_heading }} className="text-2xl sm:text-3xl font-bold text-foreground mb-2"></h2>
+                  <p className="text-muted-foreground mb-8">{loaderData?.contactData?.data.form_paragraph}</p>
 
                   {/* Name Fields - Two Column */}
                   <div className="grid sm:grid-cols-2 gap-5 mb-5">
@@ -502,10 +518,10 @@ const Contact = () => {
                   {/* <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
                     How Can We <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Help?</span>
                   </h3> */}
-                  <h3 dangerouslySetInnerHTML={{ __html: contactData?.data.contact_help_section.help_section_heading }} className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                  <h3 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.contact_help_section.help_section_heading }} className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
                   </h3>
                   <p className="text-muted-foreground text-base lg:text-lg leading-relaxed">
-                    {contactData?.data.contact_help_section.help_section_paragraph}
+                    {loaderData?.contactData?.data.contact_help_section.help_section_paragraph}
                   </p>
                 </div>
 
@@ -517,7 +533,7 @@ const Contact = () => {
                 {/* Bullet points with enhanced styling */}
                 <ul className="space-y-6 mb-8">
                   {
-                    contactData?.data.contact_help_section.help_lists.length > 0 && contactData?.data.contact_help_section.help_lists.map((point: any, index: number) => (
+                    loaderData?.contactData?.data.contact_help_section.help_lists.length > 0 && loaderData?.contactData?.data.contact_help_section.help_lists.map((point: any, index: number) => (
 
                       <li key={index} className="flex items-start gap-4 group">
                         <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-300 group-hover:bg-accent/20 group-hover:border-accent/50 group-hover:shadow-[0_0_15px_rgba(95,194,227,0.2)]">
@@ -530,7 +546,7 @@ const Contact = () => {
                 </ul>
 
                 {/* Subtle emphasis line */}
-                <p className="text-muted-foreground/80 text-sm italic mb-8 text-center">{contactData?.data.contact_help_section.help_comment}</p>
+                <p className="text-muted-foreground/80 text-sm italic mb-8 text-center">{loaderData?.contactData?.data.contact_help_section.help_comment}</p>
 
                 {/* Divider */}
                 <div className="relative h-px mb-8">
@@ -540,7 +556,7 @@ const Contact = () => {
                 {/* Trust row with enhanced styling */}
                 <div className="flex flex-wrap justify-center gap-4 lg:gap-5 mt-4">
                   {
-                    contactData?.data.contact_help_section.helop_bottom_section.length > 0 && contactData?.data.contact_help_section.helop_bottom_section.map((item: any, index: number) => (
+                    loaderData?.contactData?.data.contact_help_section.helop_bottom_section.length > 0 && loaderData?.contactData?.data.contact_help_section.helop_bottom_section.map((item: any, index: number) => (
                       <div key={index} className="flex items-center gap-2.5 px-5 py-3 rounded-xl bg-accent/8 border border-accent/20 transition-all duration-300 hover:bg-accent/15 hover:border-accent/40">
                         <DynamicIcon name={item.icon} className="w-5 h-5 text-accent" />
                         <span className="text-sm font-medium text-foreground">{item.label}</span>
@@ -691,9 +707,9 @@ const Contact = () => {
               <Card className="relative h-full bg-card/20 backdrop-blur-xl border-border/20 overflow-hidden transition-all duration-500 group-hover:border-accent/40 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_rgba(95,194,227,0.15)]">
                 <CardContent className="p-6 lg:p-8">
                   <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                    <DynamicIcon name={contactData?.data.locations_group.icon} className="w-7 h-7 text-accent" />
+                    <DynamicIcon name={loaderData?.contactData?.data.locations_group.icon} className="w-7 h-7 text-accent" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{contactData?.data.locations_group.heading}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{loaderData?.contactData?.data.locations_group.heading}</h3>
                   <div className="space-y-4">
                     {officeLocations.length > 0 && officeLocations.map((location, index) => <div key={index} className="pb-4 border-b border-border/20 last:border-0 last:pb-0">
                       <p className="font-semibold text-foreground mb-1">{location.city}</p>
@@ -710,9 +726,9 @@ const Contact = () => {
               <Card className="relative h-full bg-card/20 backdrop-blur-xl border-border/20 overflow-hidden transition-all duration-500 group-hover:border-primary/40 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_rgba(0,78,158,0.15)]">
                 <CardContent className="p-6 lg:p-8">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                    <DynamicIcon name={contactData?.data.sales_group.icon} className="w-7 h-7 text-primary" />
+                    <DynamicIcon name={loaderData?.contactData?.data.sales_group.icon} className="w-7 h-7 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">{contactData?.data.sales_group.heading}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">{loaderData?.contactData?.data.sales_group.heading}</h3>
                   <div className="space-y-3 mb-6">
                     {salesNumbers.length > 0 && salesNumbers.map((num, index) => <a key={index} href={`tel:${num.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Phone className="w-4 h-4 text-accent" />
@@ -720,9 +736,9 @@ const Contact = () => {
                     </a>)}
                   </div>
                   <div className="pt-4 border-t border-border/20">
-                    <a href={`mailto:${contactData?.data.sales_group.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+                    <a href={`mailto:${loaderData?.contactData?.data.sales_group.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Mail className="w-4 h-4 text-accent" />
-                      <span className="text-sm">{contactData?.data.sales_group.email}</span>
+                      <span className="text-sm">{loaderData?.contactData?.data.sales_group.email}</span>
                     </a>
                   </div>
                 </CardContent>
@@ -735,9 +751,9 @@ const Contact = () => {
               <Card className="relative h-full bg-card/20 backdrop-blur-xl border-border/20 overflow-hidden transition-all duration-500 group-hover:border-accent/40 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_rgba(95,194,227,0.15)]">
                 <CardContent className="p-6 lg:p-8">
                   <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                    <DynamicIcon name={contactData?.data.career_group.icon} className="w-7 h-7 text-accent" />
+                    <DynamicIcon name={loaderData?.contactData?.data.career_group.icon} className="w-7 h-7 text-accent" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{contactData?.data.career_group.heading}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{loaderData?.contactData?.data.career_group.heading}</h3>
                   <div className="space-y-3 mb-6">
                     {hrNumbers.length > 0 && hrNumbers.map((num, index) => <a key={index} href={`tel:${num.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Phone className="w-4 h-4 text-accent" />
@@ -745,9 +761,9 @@ const Contact = () => {
                     </a>)}
                   </div>
                   <div className="pt-4 border-t border-border/20">
-                    <a href={`mailto:${contactData?.data.career_group.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+                    <a href={`mailto:${loaderData?.contactData?.data.career_group.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Mail className="w-4 h-4 text-accent" />
-                      <span className="text-sm">{contactData?.data.career_group.email}</span>
+                      <span className="text-sm">{loaderData?.contactData?.data.career_group.email}</span>
                     </a>
                   </div>
                 </CardContent>
@@ -760,12 +776,12 @@ const Contact = () => {
             <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 blur-sm pointer-events-none" />
             <div className="relative bg-card/20 backdrop-blur-xl border border-border/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-center gap-4 group-hover:border-accent/30 transition-colors">
               <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                <DynamicIcon name={contactData?.data.business_hours_group.icon} className="w-6 h-6 text-accent" />
+                <DynamicIcon name={loaderData?.contactData?.data.business_hours_group.icon} className="w-6 h-6 text-accent" />
               </div>
               <div className="text-center sm:text-left">
-                <p className="text-foreground font-semibold text-lg">{contactData?.data.business_hours_group.heading}</p>
-                <p className="text-muted-foreground">{contactData?.data.business_hours_group.option_1}</p>
-                <p className="text-muted-foreground">{contactData?.data.business_hours_group.option_2}</p>
+                <p className="text-foreground font-semibold text-lg">{loaderData?.contactData?.data.business_hours_group.heading}</p>
+                <p className="text-muted-foreground">{loaderData?.contactData?.data.business_hours_group.option_1}</p>
+                <p className="text-muted-foreground">{loaderData?.contactData?.data.business_hours_group.option_2}</p>
               </div>
             </div>
           </div>
@@ -784,13 +800,13 @@ const Contact = () => {
               Find Us on{" "}
               <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Map</span>
             </h2> */}
-            <h2 dangerouslySetInnerHTML={{ __html: contactData?.data.map_group.heading }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
-            <p className="text-muted-foreground">{contactData?.data.map_group.sub_heading}</p>
+            <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.map_group.heading }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
+            <p className="text-muted-foreground">{loaderData?.contactData?.data.map_group.sub_heading}</p>
           </div>
 
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/20 group">
             <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 blur-sm pointer-events-none" />
-            <div dangerouslySetInnerHTML={{ __html: contactData?.data.map_group.map_code }}></div>
+            <div dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.map_group.map_code }}></div>
           </div>
         </div>
       </div>
@@ -809,8 +825,8 @@ const Contact = () => {
             Building Success with{" "}
             <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Global Brands</span>
           </h2> */}
-          <h2 dangerouslySetInnerHTML={{ __html: contactData?.data.brand_group.heading }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
-          <p className="text-muted-foreground">{contactData?.data.brand_group.sub_heading}</p>
+          <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data.brand_group.heading }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
+          <p className="text-muted-foreground">{loaderData?.contactData?.data.brand_group.sub_heading}</p>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto mt-6">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
