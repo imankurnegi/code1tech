@@ -1,41 +1,48 @@
-name: Deploy React to Code1tech Frontend (FTP)
+name: Deploy React SSG to Code1tech Frontend (SFTP)
 
 on:
   push:
     branches:
       - main
-      
-  repository_dispatch:
-    types: [wp-content-updated]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2️⃣ Node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3️⃣ Install deps
       - name: Install dependencies
         run: npm install
-      
+
+      # 4️⃣ Proxy (if needed)
       - name: Start local proxy
         run: node proxy.js &
 
+      # 5️⃣ Build
       - name: Build React SSG
         run: npm run build:ssg
 
-      - name: Deploy via FTP to Code1tech Frontend
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/
-#          local-dir: ./
-          server-dir: ${{ secrets.FTP_PATH }}/
+      # 6️⃣ Setup SSH key
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SFTP_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
+
+      # 7️⃣ Deploy via rsync (KEY BASED)
+      - name: Deploy via SFTP (rsync)
+        run: |
+          rsync -avz --delete \
+          dist/ \
+          ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/public_html/code1new/frontend/
