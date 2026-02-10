@@ -24,10 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4️⃣ Proxy (if needed)
-      - name: Start local proxy
-        run: node proxy.js &
-
       # 5️⃣ Build
       - name: Build React SSG
         run: npm run build:ssg

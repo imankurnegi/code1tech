@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/frontend/',
+  base: '/code1new/frontend/',
   server: {
     host: "::",
     port: 3000,
