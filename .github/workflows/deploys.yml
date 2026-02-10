@@ -1,63 +1,45 @@
-name: Deploy React to Code1tech Frontend (SFTP)
+name: Deploy React SSG to Code1tech Frontend (SFTP)
 
 on:
   push:
     branches:
       - main
-      
-  repository_dispatch:
-    types: [wp-content-updated]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
+      # 1️⃣ Code checkout
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup Node.js
+      # 2️⃣ Node setup
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3️⃣ Install dependencies
+      # 3️⃣ Install deps
       - name: Install dependencies
         run: npm install
 
-      # 4️⃣ Start local proxy (if needed)
+      # 4️⃣ Start proxy (agar required ho)
       - name: Start local proxy
         run: node proxy.js &
-      
+
       # 5️⃣ Build React SSG
       - name: Build React SSG
         run: npm run build:ssg
 
-      # 6️⃣ Ensure remote folder exists
-      - name: Create remote folder if not exists
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ./id_rsa_temp -p ${{ secrets.SFTP_PORT }} ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} \
-          "mkdir -p /home/pm36sc96i3w0/public_html/code1new/frontend/"
-        env:
-          PRIVATE_KEY_CONTENT: ${{ secrets.SFTP_PRIVATE_KEY }}
-        # Convert secret to file
-        shell: bash
-        continue-on-error: false
-      - name: Save private key to file
-        run: |
-          echo "${{ secrets.SFTP_PRIVATE_KEY }}" > id_rsa_temp
-          chmod 600 id_rsa_temp
-
-      # 7️⃣ Deploy via SFTP
-      - name: Deploy via SFTP to Code1tech Frontend
+      # 6️⃣ Deploy via SFTP (PRIVATE KEY)
+      - name: Deploy to server via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
+          protocol: sftp
           server: ${{ secrets.SFTP_HOST }}
           username: ${{ secrets.SFTP_USER }}
-          port: ${{ secrets.SFTP_PORT }}
-          protocol: sftp
+          port: 22
           private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
           local-dir: dist/
           server-dir: /home/pm36sc96i3w0/public_html/code1new/frontend/
