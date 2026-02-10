@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+  repository_dispatch:
+    types: [wp-content-updated]
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
