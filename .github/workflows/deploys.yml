@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Code checkout
+      # 1️⃣ Checkout
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Node setup
+      # 2️⃣ Node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,22 +24,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4️⃣ Start proxy (agar required ho)
+      # 4️⃣ Proxy (if needed)
       - name: Start local proxy
         run: node proxy.js &
 
-      # 5️⃣ Build React SSG
+      # 5️⃣ Build
       - name: Build React SSG
         run: npm run build:ssg
 
-      # 6️⃣ Deploy via SFTP (PRIVATE KEY)
-      - name: Deploy to server via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          protocol: sftp
-          server: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USER }}
-          port: 22
-          private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
-          local-dir: dist/
-          server-dir: /home/pm36sc96i3w0/public_html/code1new/frontend/
+      # 6️⃣ Setup SSH key
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SFTP_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
+
+      # 7️⃣ Deploy via rsync (KEY BASED)
+      - name: Deploy via SFTP (rsync)
+        run: |
+          rsync -avz --delete \
+          dist/ \
+          ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/public_html/code1new/frontend/
