@@ -2,16 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 
 interface CaseStudy {
-  id: number;
-  title: string;
-  content: string;
-  card_image: string;
-  hover_icon: string;
-  value_1: string;
-  value_1_text: string;
-  value_2: string;
-  value_2_text: string;
-  permalink: string;
+  ID: number;
+  post_title: string;
+  post_content: string;
+  post_name: string;
+  acf: {
+    card_image: string;
+    hover_icon: string;
+    value_1: string;
+    value_1_text: string;
+    value_2: string;
+    value_2_text: string;
+  };
 }
 
 interface CaseStudiesData {
@@ -113,7 +115,7 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
             
             return (
               <div
-                key={study.id}
+                key={study.ID}
                 className="group relative bg-card/30 backdrop-blur-sm border border-border/30 rounded-xl overflow-hidden transition-all duration-500 hover:border-accent/40 hover:bg-card/50"
                 style={{ transitionDelay: `${index * 100}ms` }}
                 onMouseEnter={() => setHoveredIndex(index)}
@@ -122,8 +124,8 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
                 {/* Image Section */}
                 <div className="relative h-40 lg:h-44 overflow-hidden">
                   <img
-                    src={study.card_image}
-                    alt={study.title}
+                    src={study.acf.card_image}
+                    alt={study.post_title}
                     className={`w-full h-full object-cover transition-transform duration-700 ${
                       isHovered ? "scale-110" : "scale-100"
                     }`}
@@ -132,13 +134,13 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
                   
                   {/* Hover Icon */}
-                  {study.hover_icon && (
+                  {study.acf.hover_icon && (
                     <div className={`absolute bottom-3 right-3 p-2 bg-background/80 backdrop-blur-sm rounded-lg transition-all duration-300 ${
                       isHovered ? "bg-accent/20" : ""
                     }`}>
                       <img 
-                        src={study.hover_icon} 
-                        alt={study.title}
+                        src={study.acf.hover_icon} 
+                        alt={study.post_title}
                         className="w-6 h-6 object-contain transition-all duration-300"
                         style={isHovered ? {
                           filter: 'brightness(0) saturate(100%) invert(70%) sepia(100%) saturate(1500%) hue-rotate(175deg)',
@@ -152,34 +154,34 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
                 <div className="p-4 lg:p-5">
                   {/* Title */}
                   <h3 className="text-lg font-bold text-foreground mb-1.5 group-hover:text-accent transition-colors duration-300">
-                    {study.title}
+                    {study.post_title}
                   </h3>
                   
-                  {study.content && (
+                  {study.post_content && (
                     <div 
-                      dangerouslySetInnerHTML={{ __html: study.content }}
+                      dangerouslySetInnerHTML={{ __html: study.post_content }}
                     />
                   )}
                   
                   {/* Results */}
                   <div className="flex gap-4 mb-4">
-                    {study.value_1 && (
+                    {study.acf.value_1 && (
                       <div className="flex flex-col">
-                        <span className="text-foreground font-bold text-lg">{study.value_1}</span>
-                        <span className="text-muted-foreground text-xs">{study.value_1_text}</span>
+                        <span className="text-foreground font-bold text-lg">{study.acf.value_1}</span>
+                        <span className="text-muted-foreground text-xs">{study.acf.value_1_text}</span>
                       </div>
                     )}
-                    {study.value_2 && (
+                    {study.acf.value_2 && (
                       <div className="flex flex-col">
-                        <span className="text-foreground font-bold text-lg">{study.value_2}</span>
-                        <span className="text-muted-foreground text-xs">{study.value_2_text}</span>
+                        <span className="text-foreground font-bold text-lg">{study.acf.value_2}</span>
+                        <span className="text-muted-foreground text-xs">{study.acf.value_2_text}</span>
                       </div>
                     )}
                   </div>
                   
                   {/* CTA */}
                   <a 
-                    href={study.permalink}
+                    href={study.post_name}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${

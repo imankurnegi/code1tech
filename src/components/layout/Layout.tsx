@@ -7,8 +7,6 @@ import { api } from "@/api";
 export async function loader() {
   try {
     const data = await api.getLayoutData();
-    console.log("SSG LAYOUT DATA:", data);
-
     return data;
   } catch (error) {
     console.error("Failed to load layout data for SSG", error);

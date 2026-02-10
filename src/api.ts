@@ -3,31 +3,19 @@ const TOKEN = import.meta.env.VITE_AUTH_TOKEN || '';
 
 const headers = {
   "Accept": "application/json",
-  "Authorization": `Bearer ${TOKEN}`
+  "Authorization": `Bearer ${TOKEN}`,
 };
 
 export const api = {
   getHomeData: async () => {
-    const [homeRes, casesRes] = await Promise.all([
-      fetch(`${BASE_URL}/homepage`, { headers }),
-      fetch(`${BASE_URL}/case-studies`, { headers }),
-    ]);
-
-    if (!homeRes.ok || !casesRes.ok) {
-      throw new Error('Home data fetch failed');
+    const response = await fetch(`${BASE_URL}/homepage`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch home page data");
     }
 
-    const [homeJson, caseStudies] = await Promise.all([
-      homeRes.json(),
-      casesRes.json(),
-    ]);
+    return response.json();
 
-    return {
-      homepage: homeJson?.homepage ?? homeJson,
-      caseStudies,
-    };
   },
-
 
   getLayoutData: async () => {
     const [headerRes, navRes, footerRes] = await Promise.all([
@@ -53,27 +41,21 @@ export const api = {
     };
   },
 
-
   getClientLogos: async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/clientlogos`, { headers });
-      if (!response.ok) return { data: [] };
-      return await response.json();
-    } catch {
-      return { data: [] };
+    const response = await fetch(`${BASE_URL}/clientlogos`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch client logos");
     }
+    return response.json();
   },
 
   getContactData: async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/contactus`, { headers });
-      if (!response.ok) return { data: {} };
-      return await response.json();
-    } catch {
-      return { data: {} };
+    const response = await fetch(`${BASE_URL}/contactus`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch contact data");
     }
+    return await response.json();
   },
-
 
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {

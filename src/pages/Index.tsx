@@ -57,8 +57,7 @@ const Index = () => {
 
   // if (isError) return <div>{error.message}</div>;
 
-  const homepageData = loaderData?.homeData?.homepage;
-  const caseStudiesData = homepageData?.homeData?.caseStudies;
+  const homepageData = loaderData?.homeData;
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
 
   return (
@@ -87,7 +86,7 @@ const Index = () => {
         <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
         <TechnologyStackSection dataCapabilities={homepageData?.data?.our_capabilities_section} />
         <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
-        <CaseStudiesSection dataCaseStudies={caseStudiesData} />
+        <CaseStudiesSection dataCaseStudies={homepageData?.data?.case_study_section} />
         <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
         <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
         <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />

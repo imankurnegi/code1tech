@@ -7,10 +7,7 @@ interface HeroGlowBackgroundProps {
 }
 
 const HeroGlowBackground = React.memo(({ backgroundImage }: HeroGlowBackgroundProps) => {
-  console.log(backgroundImage, "iiiiii")
   const parallaxOffset = useParallax(0.3);
-  const imageSrc = backgroundImage || heroBackground;
-  console.log("imageSrc", imageSrc);
   return (
     <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
       {/* Background image with scroll parallax and zoom-in animation */}
