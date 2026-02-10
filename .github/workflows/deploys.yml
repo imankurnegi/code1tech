@@ -1,4 +1,4 @@
-name: Deploy React to Code1tech Frontend (FTP)
+name: Deploy React to Code1tech Frontend (SFTP)
 
 on:
   push:
@@ -13,29 +13,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout repo
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm install
-      
+
+      # 4️⃣ Start local proxy (if needed)
       - name: Start local proxy
         run: node proxy.js &
-
+      
+      # 5️⃣ Build React SSG
       - name: Build React SSG
         run: npm run build:ssg
 
-      - name: Deploy via FTP to Code1tech Frontend
+      # 6️⃣ Ensure remote folder exists
+      - name: Create remote folder if not exists
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ./id_rsa_temp -p ${{ secrets.SFTP_PORT }} ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} \
+          "mkdir -p /home/pm36sc96i3w0/public_html/code1new/frontend/"
+        env:
+          PRIVATE_KEY_CONTENT: ${{ secrets.SFTP_PRIVATE_KEY }}
+        # Convert secret to file
+        shell: bash
+        continue-on-error: false
+      - name: Save private key to file
+        run: |
+          echo "${{ secrets.SFTP_PRIVATE_KEY }}" > id_rsa_temp
+          chmod 600 id_rsa_temp
+
+      # 7️⃣ Deploy via SFTP
+      - name: Deploy via SFTP to Code1tech Frontend
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          port: ${{ secrets.SFTP_PORT }}
+          protocol: sftp
+          private-key: ${{ secrets.SFTP_PRIVATE_KEY }}
           local-dir: dist/
-#          local-dir: ./
-          server-dir: ${{ secrets.FTP_PATH }}/
+          server-dir: /home/pm36sc96i3w0/public_html/code1new/frontend/
