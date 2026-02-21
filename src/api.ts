@@ -57,6 +57,14 @@ export const api = {
     return await response.json();
   },
 
+  getContactFormFields: async () => {
+    const response = await fetch(`${BASE_URL}/cf7/form-fields/292`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch contact form fields");
+    }
+    return await response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",

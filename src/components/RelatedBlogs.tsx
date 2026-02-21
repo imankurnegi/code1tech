@@ -3,6 +3,14 @@ import { ArrowRight, Clock } from "lucide-react";
 import blogAi from "@/assets/blog-ai.jpg";
 import blogData from "@/assets/blog-data.jpg";
 import blogCloud from "@/assets/blog-cloud.jpg";
+import { addClassToSpan } from "@/lib/utils";
+
+interface RelatedBlogsData {
+  heading?: string;
+  sub_heading?: string;
+  section_cta_text?: string;
+  section_cta_url?: string;
+}
 
 const blogs = [
   {
@@ -34,7 +42,7 @@ const categoryColors: Record<string, string> = {
   Cloud: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
 };
 
-const RelatedBlogs = () => {
+const RelatedBlogs = ({ dataRelatedBlogs }: { dataRelatedBlogs?: RelatedBlogsData }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -95,12 +103,19 @@ const RelatedBlogs = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Related <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Blogs</span>
-          </h2>
-          <p className="text-muted-foreground text-base sm:text-lg lg:text-xl">
-            Thought leadership, not content marketing.
-          </p>
+          {dataRelatedBlogs?.heading &&(
+            <h2 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4"
+              dangerouslySetInnerHTML={{ __html: addClassToSpan(dataRelatedBlogs?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
+            />
+          )}
+          
+          {dataRelatedBlogs?.sub_heading && (
+            <p
+              className="text-muted-foreground text-base sm:text-lg lg:text-xl"
+              dangerouslySetInnerHTML={{ __html: dataRelatedBlogs?.sub_heading ?? "" }}
+            />
+          )}
         </div>
 
         {/* Blog Cards Grid */}
@@ -189,19 +204,29 @@ const RelatedBlogs = () => {
         </div>
 
         {/* CTA */}
-        <div
-          className={`text-center transition-all duration-700 delay-400 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <button className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors">
-            <span className="relative">
-              Explore All Insights
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
-            </span>
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
+        {(dataRelatedBlogs?.section_cta_text || dataRelatedBlogs?.section_cta_url) && (
+          <div
+            className={`text-center transition-all duration-700 delay-400 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
+          >
+            <button
+              type="button"
+              className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors"
+              onClick={() => {
+                if (dataRelatedBlogs?.section_cta_url) {
+                  window.location.href = dataRelatedBlogs.section_cta_url;
+                }
+              }}
+            >
+              <span className="relative">
+                {dataRelatedBlogs?.section_cta_text}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
+              </span>
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

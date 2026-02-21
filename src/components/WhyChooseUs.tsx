@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { addClassToSpan } from "@/lib/utils";
 
 interface CardIcon {
   id: number;
@@ -129,7 +130,7 @@ const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
           <div className={`text-center mb-10 md:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2 
               className="text-3xl sm:text-4xl font-bold text-foreground mb-4 px-2 lg:text-4xl [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
-              dangerouslySetInnerHTML={{ __html: dataWhyBusinesses.section_heading }}
+              dangerouslySetInnerHTML={{ __html: addClassToSpan(dataWhyBusinesses.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
             />
             
             {/* Glowing divider */}

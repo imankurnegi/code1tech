@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface NavMenuItem {
   id: number;
@@ -61,13 +62,13 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
       <div className="container mx-auto px-6 lg:px-12 h-full">
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <a href="#" className="flex items-center group shrink-0">
+          <Link to="/" className="flex items-center group shrink-0">
             <img 
               alt="Code1 Tech Systems" 
               className="h-10 w-auto transition-all duration-300 group-hover:brightness-110 brightness-110 contrast-110" 
               src={headerLogo?.full} 
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation - Centered */}
           <div className="hidden lg:flex items-center justify-center flex-1 gap-10">

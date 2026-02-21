@@ -23,18 +23,11 @@ interface HeroSectionProps {
 const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataClientLogo?: any}) => {
   const [showCTA, setShowCTA] = useState(false);
   
-  // const phrases = ["Build Smarter.","Scale Faster.","Stay Ahead!"]
-  // Extract phrases from data or use defaults
+  // Extract phrases from data
   const phrases = useMemo(() => {
-    if (dataBanner?.changeable_text) {
-      const { default_text, second_text, third_text } = dataBanner.changeable_text;
-      return [
-        default_text || "Build Smarter.",
-        second_text || "Scale Faster.",
-        third_text || "Stay Ahead!"
-      ].filter(Boolean);
-    }
-    return ["Build Smarter.", "Scale Faster.", "Stay Ahead!"];
+    if (!dataBanner?.changeable_text) return [];
+    const { default_text, second_text, third_text } = dataBanner.changeable_text;
+    return [default_text, second_text, third_text].filter(Boolean);
   }, [dataBanner?.changeable_text]);
 
   const {
@@ -48,11 +41,10 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
     onFirstComplete: () => setShowCTA(true)
   });
 
-  // Extract data with fallbacks
-  const mainHeading = dataBanner?.banner_main_heading || "Code1 Empowering Businesses";
-  const paragraph = dataBanner?.banner_paragraph || "Unlock efficiency, innovation, and growth with technology-driven business solutions.";
-  const buttonText = dataBanner?.button_text || "Turn Bold Ideas Into Real Growth";
-  const buttonUrl = dataBanner?.button_url || "/";
+  const mainHeading = dataBanner?.banner_main_heading ?? "";
+  const paragraph = dataBanner?.banner_paragraph ?? "";
+  const buttonText = dataBanner?.button_text ?? "";
+  const buttonUrl = dataBanner?.button_url ?? "";
   const backgroundImage = dataBanner?.banner_background_image;
   
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-24">
@@ -70,7 +62,7 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
           {/* Main headline - two lines */}
 
 
-                <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-6 animate-fade-in lg:text-6xl">
+          {/* <h1 className="text-3xl sm:text-4xl font-bold leading-tight mb-6 animate-fade-in lg:text-6xl">
             {mainHeading
               // Split by <span>...</span> while keeping the span segments
               .split(/(<span>.*?<\/span>)/g)
@@ -90,11 +82,12 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
                   </span>
                 );
               })}
-          </h1>
+          </h1> */}
 
-
-
-
+          <h1
+            className="text-3xl sm:text-4xl font-bold leading-tight mb-6 animate-fade-in lg:text-6xl"
+            dangerouslySetInnerHTML={{ __html: mainHeading ?? "" }}
+          />
 
 
           {/* Typing headline */}

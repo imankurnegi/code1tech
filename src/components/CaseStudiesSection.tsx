@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import { addClassToSpan } from "@/lib/utils";
 
 interface CaseStudy {
   ID: number;
@@ -84,20 +85,11 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            {dataCaseStudies?.section_heading ? (
-              <>
-                {dataCaseStudies.section_heading.split(' ')[0]}{' '}
-                <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-                  {dataCaseStudies.section_heading.split(' ').slice(1).join(' ')}
-                </span>
-              </>
-            ) : (
-              <>
-                Case <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Studies</span>
-              </>
-            )}
-          </h2>
+      
+       <h2
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4"
+            dangerouslySetInnerHTML={{ __html: addClassToSpan(dataCaseStudies?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
+          />
           <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto px-4">
             {dataCaseStudies?.section_sub_heading}
           </p>

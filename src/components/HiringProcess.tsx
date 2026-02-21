@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import { addClassToSpan } from "@/lib/utils";
 
 interface ProcessIcon {
   id: number;
@@ -153,7 +154,7 @@ const HiringProcess = ({ dataHiring }: HiringProcessProps) => {
           >
             <h2 
               className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
-              dangerouslySetInnerHTML={{ __html: dataHiring.section_heading }}
+              dangerouslySetInnerHTML={{ __html: addClassToSpan(dataHiring.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
             />
             <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto px-4">
               {dataHiring.section_sub_heading}

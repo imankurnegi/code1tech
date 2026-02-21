@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useParallax } from "@/hooks/use-parallax";
+import { addClassToSpan } from "@/lib/utils";
 
 interface VideoDetails {
   video_text?: string;
@@ -100,31 +101,12 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
       }))
     : [];
 
-  // Fallback demo videos if API data is missing so SSG won't crash
-  const videoData = videoFullData.length > 0
-    ? videoFullData
-    : [
-        {
-          id: 1,
-          label: "AI Solutions",
-          video: "/videos/ai-solutions.mp4",
-        },
-        {
-          id: 2,
-          label: "Data Engineering",
-          video: "/videos/data-engineering.mp4",
-        },
-        {
-          id: 3,
-          label: "Full-Stack Engineering",
-          video: "/videos/full-stack-engineering.mp4",
-        },
-        {
-          id: 4,
-          label: "Low-Code / No-Code",
-          video: "/videos/low-code-no-code.mp4",
-        },
-      ];
+  const videoData = videoFullData;
+
+  if (!dataTrusted || videoData.length === 0) {
+    return null;
+  }
+
   // Handle thumbnail hover play/pause
   const handleThumbnailHover = (index: number) => {
     setHoveredThumb(index);
@@ -205,23 +187,10 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Centered Main Heading - Full Width */}
         <div className={`text-center mb-8 md:mb-16 lg:mb-20 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold leading-tight text-foreground max-w-5xl mx-auto px-2 lg:text-4xl">
-              {dataTrusted?.main_heading
-                // Split the string by <span>...</span> but keep the tags
-                .split(/(<span>.*?<\/span>)/g)
-                .map((segment, idx) => {
-                  const isSpan = segment.startsWith("<span>") && segment.endsWith("</span>");
-                  const cleanText = segment.replace("<span>", "").replace("</span>", "");
-                  return (
-                    <span
-                      key={idx}
-                      className={isSpan ? "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent" : "text-foreground"}
-                    >
-                      {cleanText}
-                    </span>
-                  );
-                })}
-            </h2>
+            <h2
+              className="text-3xl sm:text-4xl font-bold leading-tight text-foreground max-w-5xl mx-auto px-2 lg:text-4xl"
+              dangerouslySetInnerHTML={{ __html: addClassToSpan(dataTrusted?.main_heading ?? "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
+            />
 
         </div>
 

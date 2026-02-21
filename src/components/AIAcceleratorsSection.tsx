@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Zap, Bot, TrendingUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AIOrbitVisual from "./AIOrbitVisual";
+import { addClassToSpan } from "@/lib/utils";
 
 interface TagImage {
   ID?: number;
@@ -120,42 +121,35 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
           <div className="max-w-xl">
             {/* Heading */}
             {dataAiAgent?.section_heading && (
-              <h2 
-                className={`text-4xl font-bold text-foreground mb-4 leading-tight transition-all duration-1000 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-              >
-                {dataAiAgent.section_heading.split(' ').map((word, index) => {
-                  if (word === 'AI' || word === 'Agents' || word === 'Accelerators') {
-                    return (
-                      <span key={index} className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-                        {word}{' '}
-                      </span>
-                    );
-                  }
-                  return word + ' ';
-                })}
-              </h2>
+               <h2 
+                className="text-4xl font-bold text-foreground mb-4 leading-tight transition-all duration-1000"
+                dangerouslySetInnerHTML={{ __html: addClassToSpan(dataAiAgent?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
+             />
             )}
 
             {/* Subheading */}
             {dataAiAgent?.section_sub_heading && (
+                // <p 
+                //   className={`text-muted-foreground text-base sm:text-lg lg:text-xl mb-6 font-light transition-all duration-1000 delay-100 ${
+                //     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                //   }`}
+                // >
+                //   {dataAiAgent.section_sub_heading.split(' ').map((word, index) => {
+                //     if (word.includes('ROI')) {
+                //       return (
+                //         <span key={index} className="text-accent font-semibold">
+                //           {word}{' '}
+                //         </span>
+                //       );
+                //     }
+                //     return word + ' ';
+                //   })}
+                // </p>
+
               <p 
-                className={`text-muted-foreground text-base sm:text-lg lg:text-xl mb-6 font-light transition-all duration-1000 delay-100 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-                }`}
-              >
-                {dataAiAgent.section_sub_heading.split(' ').map((word, index) => {
-                  if (word.includes('ROI')) {
-                    return (
-                      <span key={index} className="text-accent font-semibold">
-                        {word}{' '}
-                      </span>
-                    );
-                  }
-                  return word + ' ';
-                })}
-              </p>
+                className="text-muted-foreground text-base sm:text-lg lg:text-xl mb-6 font-light transition-all duration-1000 delay-100"
+                dangerouslySetInnerHTML={{ __html: dataAiAgent?.section_sub_heading ?? "" }}
+             />
             )}
 
             {/* Description Content */}

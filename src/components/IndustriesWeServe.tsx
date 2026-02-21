@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { addClassToSpan } from "@/lib/utils";
 
 interface IndustryCard {
   ID: number;
@@ -108,7 +109,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
           >
             <h2 
               className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
-              dangerouslySetInnerHTML={{ __html: dataIndustries.section_main_heading }}
+              dangerouslySetInnerHTML={{ __html: addClassToSpan(dataIndustries.section_main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
             />
             <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
               {dataIndustries.section_description}

@@ -1,71 +1,34 @@
 import { useState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Mail, Phone, CheckCircle2, ChevronDown } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Mail, Phone, CheckCircle2 } from "lucide-react";
 import { useLoaderData } from "react-router-dom";
 import { api } from "@/api";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
-const contactSchema = z.object({
-  firstName: z.string().trim().min(1, "Please enter your first name").max(50, "First name must be less than 50 characters"),
-  lastName: z.string().trim().min(1, "Please enter your last name").max(50, "Last name must be less than 50 characters"),
-  email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
-  phone: z.string().trim().min(1, "Please enter your phone number").max(20, "Phone number must be less than 20 characters"),
-  company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
-  message: z.string().trim().min(10, "Please share a bit more about your needs").max(1000, "Message must be less than 1000 characters")
-});
-type ContactFormData = z.infer<typeof contactSchema>;
-const countryCodes = [{
-  code: "+1",
-  country: "US"
-}, {
-  code: "+44",
-  country: "UK"
-}, {
-  code: "+91",
-  country: "IN"
-}, {
-  code: "+61",
-  country: "AU"
-}, {
-  code: "+49",
-  country: "DE"
-}, {
-  code: "+33",
-  country: "FR"
-}, {
-  code: "+81",
-  country: "JP"
-}, {
-  code: "+86",
-  country: "CN"
-}];
-
+import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import { addClassToSpan } from "@/lib/utils";
 
 export async function loader() {
   try {
-    const [contactData, clientLogos] = await Promise.all([
+    const [contactData, clientLogos, contactFormFields] = await Promise.all([
       api.getContactData(),
       api.getClientLogos(),
+      api.getContactFormFields()
     ]);
 
     return {
       contactData,
       clientLogos,
+      contactFormFields
     };
   } catch (error) {
     console.error("Failed to load contact page SSG data", error);
     return {
       contactData: null,
       clientLogos: { data: [] },
+      contactFormFields: null
     };
   }
 }
@@ -74,10 +37,6 @@ const Contact = () => {
   
   const loaderData = useLoaderData() as any;
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedCountryCode, setSelectedCountryCode] = useState("+91");
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLocationsVisible, setIsLocationsVisible] = useState(false);
@@ -101,6 +60,18 @@ const Contact = () => {
   // });
 
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
+  const contactFormFields = loaderData?.contactFormFields ?? null;
+
+  const handleFormSubmit = async (data: ContactFormData) => {
+    const formData = new FormData();
+    formData.append("your-name", data.firstName);
+    formData.append("last-name", data.lastName);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("company-name", data.company ?? "");
+    formData.append("message", data.message);
+    await api.submitContactForm(formData);
+  };
 
   const salesNumbers = [loaderData?.contactData?.data?.sales_group?.phone_1, loaderData?.contactData?.data?.sales_group?.phone_2, loaderData?.contactData?.data?.sales_group?.phone_3].filter((n): n is string => !!n);
   const hrNumbers = [loaderData?.contactData?.data?.career_group?.phone_1, loaderData?.contactData?.data?.career_group?.phone_2].filter((n): n is string => !!n);
@@ -114,20 +85,6 @@ const Contact = () => {
     address: loaderData?.contactData?.data?.locations_group?.address_2,
     country: "USA"
   }];
-
-  const {
-    toast
-  } = useToast();
-  const {
-    register,
-    handleSubmit,
-    formState: {
-      errors
-    },
-    reset
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema)
-  });
 
   // Intersection observers for animations
   useEffect(() => {
@@ -149,20 +106,7 @@ const Contact = () => {
     createObserver(brandsRef, setIsBrandsVisible);
     return () => observers.forEach(obs => obs.disconnect());
   }, []);
-  const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    reset();
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you within 24 hours."
-    });
-    setTimeout(() => setIsSubmitted(false), 5000);
-  };
   return <>
     <SeoTags
         title={"Contact Us - Code1Tech"}
@@ -209,11 +153,7 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`max-w-4xl mx-auto transition-all duration-1000 ${isHeroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {/* <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
-            <span className="text-foreground">Contact </span>
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Us</span>
-          </h1> */}
-                  <h1 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.page_title || "" }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
+                  <h1 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
           </h1>
           <p dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.page_content || "" }} className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed text-center"></p>
         </div>
@@ -249,104 +189,7 @@ const Contact = () => {
               <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20 blur-sm pointer-events-none" />
 
               {/* Glassmorphism card */}
-              <div className="relative rounded-2xl bg-card/20 backdrop-blur-xl border border-border/20 overflow-hidden transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-[0_25px_60px_rgba(0,78,158,0.15)] h-full flex flex-col">
-                <form onSubmit={handleSubmit(onSubmit)} className="relative p-6 sm:p-8 lg:p-10">
-                  {/* <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-                    Send us a <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">message</span>
-                  </h2> */}
-                  <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.form_heading || "" }} className="text-2xl sm:text-3xl font-bold text-foreground mb-2"></h2>
-                  <p className="text-muted-foreground mb-8">{loaderData?.contactData?.data?.form_paragraph}</p>
-
-                  {/* Name Fields - Two Column */}
-                  <div className="grid sm:grid-cols-2 gap-5 mb-5">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-foreground mb-2">
-                        First Name *
-                      </label>
-                      <Input id="firstName" placeholder="John" {...register("firstName")} className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors.firstName ? "border-destructive" : ""}`} />
-                      {errors.firstName && <p className="text-destructive text-xs mt-1.5">{errors.firstName.message}</p>}
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-foreground mb-2">
-                        Last Name *
-                      </label>
-                      <Input id="lastName" placeholder="Smith" {...register("lastName")} className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors.lastName ? "border-destructive" : ""}`} />
-                      {errors.lastName && <p className="text-destructive text-xs mt-1.5">{errors.lastName.message}</p>}
-                    </div>
-                  </div>
-
-                  {/* Email Field */}
-                  <div className="mb-5">
-                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email *
-                    </label>
-                    <Input id="email" type="email" placeholder="john@company.com" {...register("email")} className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors.email ? "border-destructive" : ""}`} />
-                    {errors.email && <p className="text-destructive text-xs mt-1.5">{errors.email.message}</p>}
-                  </div>
-
-                  {/* Phone Field with Country Code */}
-                  <div className="mb-5">
-                    <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                      Phone Number *
-                    </label>
-                    <div className="flex gap-2">
-                      <div className="relative">
-                        <button type="button" onClick={() => setIsCountryDropdownOpen(!isCountryDropdownOpen)} className="h-12 px-3 bg-muted/30 border border-border/50 rounded-xl flex items-center gap-2 text-foreground hover:border-accent/50 transition-colors min-w-[80px]">
-                          <span className="text-sm">{selectedCountryCode}</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        {isCountryDropdownOpen && <div className="absolute top-full left-0 mt-1 bg-card border border-border/50 rounded-xl shadow-xl z-50 min-w-[120px] py-1">
-                          {countryCodes.map(item => <button key={item.code} type="button" onClick={() => {
-                            setSelectedCountryCode(item.code);
-                            setIsCountryDropdownOpen(false);
-                          }} className="w-full px-3 py-2 text-left text-sm hover:bg-muted/50 text-foreground flex items-center justify-between">
-                            <span>{item.code}</span>
-                            <span className="text-muted-foreground text-xs">{item.country}</span>
-                          </button>)}
-                        </div>}
-                      </div>
-                      <Input id="phone" type="tel" placeholder="123-456-7890" {...register("phone")} className={`flex-1 bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors.phone ? "border-destructive" : ""}`} />
-                    </div>
-                    {errors.phone && <p className="text-destructive text-xs mt-1.5">{errors.phone.message}</p>}
-                  </div>
-
-                  {/* Company Field */}
-                  <div className="mb-5">
-                    <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
-                      Company Name <span className="text-muted-foreground">(Optional)</span>
-                    </label>
-                    <Input id="company" placeholder="Your company name" {...register("company")} className="bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200" />
-                  </div>
-
-                  {/* Message Field */}
-                  <div className="mb-6">
-                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                      Message *
-                    </label>
-                    <Textarea id="message" placeholder="Tell us about your project or challenge..." rows={5} {...register("message")} className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 text-foreground placeholder:text-muted-foreground/50 resize-none rounded-xl transition-all duration-200 ${errors.message ? "border-destructive" : ""}`} />
-                    {errors.message && <p className="text-destructive text-xs mt-1.5">{errors.message.message}</p>}
-                  </div>
-
-                  {/* Submit Button */}
-                  <Button type="submit" variant="hero" size="lg" disabled={isSubmitting || isSubmitted} className="w-full group h-14 text-base font-semibold rounded-xl disabled:opacity-70">
-                    {isSubmitting ? <span className="flex items-center gap-2">
-                      <span className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                      Sending...
-                    </span> : isSubmitted ? <span className="flex items-center gap-2">
-                      <CheckCircle2 className="w-5 h-5" />
-                      Message Sent!
-                    </span> : <>
-                      Send Message
-                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </>}
-                  </Button>
-
-                  {/* Helper text */}
-                  <p className="text-center text-muted-foreground text-sm mt-4">
-                    We usually respond within 24 hours
-                  </p>
-                </form>
-              </div>
+              <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
             </div>
           </div>
 
@@ -517,10 +360,7 @@ const Contact = () => {
               <div className="relative z-10 flex flex-col justify-center h-full py-4">
                 {/* Header Section */}
                 <div className="mb-8">
-                  {/* <h3 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                    How Can We <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Help?</span>
-                  </h3> */}
-                  <h3 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.contact_help_section?.help_section_heading || "" }} className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                  <h3 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.contact_help_section?.help_section_heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
                   </h3>
                   <p className="text-muted-foreground text-base lg:text-lg leading-relaxed">
                     {loaderData?.contactData?.data?.contact_help_section?.help_section_paragraph}
@@ -798,11 +638,7 @@ const Contact = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
-            {/* <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-              Find Us on{" "}
-              <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Map</span>
-            </h2> */}
-            <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.map_group?.heading || "" }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
+            <h2 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.map_group?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
             <p className="text-muted-foreground">{loaderData?.contactData?.data?.map_group?.sub_heading}</p>
           </div>
 
@@ -823,11 +659,7 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={brandsRef} className={`text-center mb-10 transition-all duration-700 ${isBrandsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {/* <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
-            Building Success with{" "}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Global Brands</span>
-          </h2> */}
-          <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.brand_group?.heading || "" }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
+          <h2 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.brand_group?.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
           <p className="text-muted-foreground">{loaderData?.contactData?.data?.brand_group?.sub_heading}</p>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto mt-6">

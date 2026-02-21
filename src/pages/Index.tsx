@@ -21,20 +21,23 @@ import { useLoaderData } from "react-router-dom";
 
 export async function loader() {
   try {
-    const [homeData, clientLogos] = await Promise.all([
+    const [homeData, clientLogos, contactFormFields] = await Promise.all([
       api.getHomeData(),
       api.getClientLogos(),
+      api.getContactFormFields(),
     ]);
 
     return {
       homeData,
       clientLogos,
+      contactFormFields,
     };
   } catch (error) {
     console.error("Failed to load home page SSG data", error);
     return {
       homeData: null,
       clientLogos: { data: [] },
+      contactFormFields: null,
     };
   }
 }
@@ -59,6 +62,7 @@ const Index = () => {
 
   const homepageData = loaderData?.homeData;
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
+  const contactFormFields = loaderData?.contactFormFields ?? null;
 
   return (
     <>
@@ -91,8 +95,8 @@ const Index = () => {
         <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
         <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
         <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
-        <RelatedBlogs />
-        <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
+        <RelatedBlogs dataRelatedBlogs={homepageData?.data?.blog_section}/>
+        <ContactSection dataContact={homepageData?.data?.contact_form_fields} contactFormFields={contactFormFields} />
       
     </>
   )

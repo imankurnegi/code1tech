@@ -201,11 +201,17 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
         <div
           className={`text-center mb-12 md:mb-16 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+          {/* <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
             <span className="text-foreground text-4xl">
               {dataEngineering?.section_heading}
             </span>
-          </h2>
+          </h2> */}
+
+          <h3 
+            className="text-3xl sm:text-4xl lg:text-4xl font-bold text-foreground leading-tight"
+            dangerouslySetInnerHTML={{ __html: dataEngineering?.section_heading ?? "" }}
+          />
+
           <p className="text-muted-foreground text-base lg:text-lg mt-4 max-w-xl mx-auto">
             {dataEngineering?.section_sub_heading}
           </p>

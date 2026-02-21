@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Quote } from "lucide-react";
+import { addClassToSpan } from "@/lib/utils";
 
 interface TestimonialItem {
   ID: number;
@@ -141,7 +142,7 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
         >
           <h2 
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 [&>span]:bg-gradient-to-r [&>span]:from-[#5FC2E3] [&>span]:to-[#0077B6] [&>span]:bg-clip-text [&>span]:text-transparent"
-            dangerouslySetInnerHTML={{ __html: dataTestimonials?.testimonial_heading}}
+            dangerouslySetInnerHTML={{ __html: addClassToSpan(dataTestimonials?.testimonial_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
           />
           
           {/* Glowing divider */}

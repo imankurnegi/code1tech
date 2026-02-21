@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Users, Cpu, Network, Cog } from "lucide-react";
 import { useParallax } from "@/hooks/use-parallax";
+import { addClassToSpan } from "@/lib/utils";
 
 interface GrowthStrategyData {
   strategy_1_icon: boolean | string;
@@ -227,16 +228,10 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
                   <div className="flex-1 h-px bg-gradient-to-r from-[#00C8C8]/40 to-transparent" />
                 </div>
 
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight">
-                  {dataGrowth?.strategy_1_sub_heading && (
-                    <>
-                      {dataGrowth.strategy_1_sub_heading.split('&')[0]}&<br />
-                      <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-                        {dataGrowth.strategy_1_sub_heading.split('&')[1]}
-                      </span>
-                    </>
-                  )}
-                </h3>
+                <h3 
+                  className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight"
+                  dangerouslySetInnerHTML={{ __html: addClassToSpan(dataGrowth?.strategy_1_sub_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
+                />
 
                 <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 flex-1 text-justify">
                   {dataGrowth?.strategy_1_description}
@@ -300,7 +295,7 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
                   <div className="flex-1 h-px bg-gradient-to-r from-accent/40 to-transparent" />
                 </div>
 
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight">
+                {/* <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight">
                   {dataGrowth?.strategy_2_sub_heading && (
                     <>
                       {dataGrowth.strategy_2_sub_heading.split('&')[0]}&<br />
@@ -309,8 +304,11 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
                       </span>
                     </>
                   )}
-                </h3>
-
+                </h3> */}
+                <h3 
+                  className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight"
+                  dangerouslySetInnerHTML={{ __html: addClassToSpan(dataGrowth?.strategy_2_sub_heading, "bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent") }}
+                />
                 <p className="text-sm sm:text-base md:text-lg leading-relaxed text-[#e1e7ef] flex-1 text-justify">
                   {dataGrowth?.strategy_2_description}
                 </p>
