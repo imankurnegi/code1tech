@@ -29,10 +29,10 @@ export const routes = [
             loader: contactLoader,
             errorElement: <ErrorPage />,
           },
-          {
-            path: "about",
-            Component: About,
-          },
+          // {
+          //   path: "about",
+          //   Component: About,
+          // },
         ],
       },
       {
