@@ -85,9 +85,8 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                   onMouseEnter={() => hasDropdown && setActiveDropdown(link.title)} 
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <a 
-                    href={link.url} 
-                    onClick={e => handleNavClick(e, link.url)} 
+                  <Link 
+                    to={link.url} 
                     className="relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent"
                   >
                     {link.title}
@@ -98,7 +97,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
                         }`} 
                       />
                     )}
-                  </a>
+                  </Link>
 
                   {/* Mega Dropdown */}
                   {hasDropdown && link.children && (

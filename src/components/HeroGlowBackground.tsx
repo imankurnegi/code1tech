@@ -1,5 +1,4 @@
 import React  from "react";
-import heroBackground from "@/assets/hero-background.jpg";
 import { useParallax } from "@/hooks/use-parallax";
 
 interface HeroGlowBackgroundProps {
@@ -18,7 +17,7 @@ const HeroGlowBackground = React.memo(({ backgroundImage }: HeroGlowBackgroundPr
         }}
       >
         <img
-          src={heroBackground}
+          src={backgroundImage}
           alt=""
           className="w-full h-full object-cover blur-[2px]"
         />

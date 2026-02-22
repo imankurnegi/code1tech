@@ -1,10 +1,10 @@
 import App from "./App";
 import Layout, { loader as layoutLoader } from "./components/layout/Layout"; 
 import Index, { loader as indexLoader } from "./pages/Index";
-import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ErrorPage from "./pages/ErrorPage";
 import Contact, { loader as contactLoader } from "./pages/Contact";
+import About, { loader as aboutLoader } from "./pages/About";
 
 export const routes = [
   {
@@ -29,10 +29,12 @@ export const routes = [
             loader: contactLoader,
             errorElement: <ErrorPage />,
           },
-          // {
-          //   path: "about",
-          //   Component: About,
-          // },
+          {
+            path: "about",
+            Component: About,
+            loader: aboutLoader,
+            errorElement: <ErrorPage />,
+          },
         ],
       },
       {

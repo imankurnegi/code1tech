@@ -1,47 +1,29 @@
 import { RefObject } from "react";
-import { Award } from "lucide-react";
-import certISO27001 from "@/assets/cert-iso27001.png";
-import certISO9001 from "@/assets/cert-iso9001.png";
-import certISO20000 from "@/assets/cert-iso20000.png";
-import certCMMI from "@/assets/cert-cmmi.png";
+import { addClassToSpan } from "@/lib/utils";
+import { DynamicIcon } from "./DynamicIcon";
+
+interface CertificationBlock {
+  certification_image: {
+    large: string;
+    alt: string;
+  };
+  certification_validity: string;
+  certification_label: string;
+}
 
 interface CertificationsSectionProps {
+  certificationData?: {
+    certification_content: string;
+    certification_heading: string;
+    certification_icon_class: string;
+    certification_label: string;
+    certifications_blocks: CertificationBlock[];
+  };
   sectionRef: RefObject<HTMLElement>;
   isVisible: boolean;
 }
 
-const certifications = [
-  {
-    image: certISO27001,
-    title: "ISO 27001:2022",
-    subtitle: "Information Security Management",
-    description:
-      "Certified for international standards in information security management, ensuring your data is protected with the highest level of controls and governance.",
-  },
-  {
-    image: certISO9001,
-    title: "ISO 9001:2015",
-    subtitle: "Quality Management System",
-    description:
-      "Our quality management system meets the globally recognized ISO 9001 standard, guaranteeing consistent delivery of high-quality services and continuous improvement.",
-  },
-  {
-    image: certISO20000,
-    title: "ISO 20000-1:2018",
-    subtitle: "IT Service Management",
-    description:
-      "Certified for IT service management excellence, ensuring reliable, efficient, and continuously improving IT service delivery aligned with business needs.",
-  },
-  {
-    image: certCMMI,
-    title: "CMMI Level 3",
-    subtitle: "Capability Maturity Model",
-    description:
-      "CMMI Level 3 certified, demonstrating defined and consistent processes across the organization for software development and service delivery.",
-  },
-];
-
-const CertificationsSection = ({ sectionRef, isVisible }: CertificationsSectionProps) => {
+const CertificationsSection = ({certificationData, sectionRef, isVisible }: CertificationsSectionProps) => {
   return (
     <section
       ref={sectionRef}
@@ -73,28 +55,23 @@ const CertificationsSection = ({ sectionRef, isVisible }: CertificationsSectionP
         >
           {/* Section label pill */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-5">
-            <Award className="w-3.5 h-3.5 text-accent" />
+            <DynamicIcon name={certificationData?.certification_icon_class} className="w-3.5 h-3.5 text-accent" />
             <span className="text-xs font-semibold uppercase tracking-wider text-accent">
-              Certifications
+              {certificationData?.certification_label}
             </span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-5 leading-tight">
-            Recognized For{" "}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-              Excellence
-            </span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-5 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(certificationData?.certification_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
           </h2>
 
           {/* Subtitle */}
-          <p className="text-base lg:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
-            Our certifications reflect our unwavering commitment to security, quality, and compliance giving you confidence that your data and projects are in trusted hands.
+          <p className="text-base lg:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto" dangerouslySetInnerHTML={{ __html: certificationData?.certification_content }}>
           </p>
 
           {/* Certification Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8">
-            {certifications.map((cert, index) => (
+            {certificationData.certifications_blocks.length > 0 && certificationData.certifications_blocks.map((cert, index) => (
               <div
                 key={index}
                 className="group relative rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm p-6 lg:p-8 text-center hover:border-accent/40 hover:bg-card/50 transition-all duration-500 hover:shadow-[0_10px_40px_rgba(0,78,158,0.18)] hover:-translate-y-2"
@@ -105,18 +82,18 @@ const CertificationsSection = ({ sectionRef, isVisible }: CertificationsSectionP
                 {/* Badge Image */}
                 <div className="w-24 h-24 mx-auto mb-5 bg-white rounded-xl p-2 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(92,200,220,0.15)]">
                   <img
-                    src={cert.image}
-                    alt={cert.title}
+                    src={cert.certification_image.large}
+                    alt={cert.certification_image.alt}
                     loading="lazy"
                     className="w-full h-full object-contain"
                   />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-foreground mb-1">{cert.title}</h3>
+                <h3 className="text-lg font-bold text-foreground mb-1">{cert.certification_validity}</h3>
 
                 {/* Subtitle */}
-                <p className="text-sm font-medium text-accent mb-3">{cert.subtitle}</p>
+                <p className="text-sm font-medium text-accent mb-3">{cert.certification_label}</p>
 
               </div>
             ))}

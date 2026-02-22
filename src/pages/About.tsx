@@ -1,25 +1,40 @@
 import { useEffect, useRef, useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
-import aboutHeroBg from "@/assets/about-hero-bg.jpg";
 import aboutIntroVisual from "@/assets/about-intro-visual.jpg";
-import visionMissionVisual from "@/assets/vision-mission-visual.jpg";
-import missionVisual from "@/assets/mission-visual.jpg";
-import valueIntegrityImg from "@/assets/value-integrity.jpg";
-import valueIngenuityImg from "@/assets/value-ingenuity.jpg";
-import valuePartnershipImg from "@/assets/value-partnership.jpg";
-import valueImpactImg from "@/assets/value-impact.svg";
-import approachProjectImg from "@/assets/approach-project-based.jpg";
-import approachTeamsImg from "@/assets/approach-dedicated-teams.jpg";
-import approachConsultingImg from "@/assets/approach-consulting.jpg";
-import approachHybridImg from "@/assets/approach-hybrid.jpg";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Lightbulb, Users, Target, Briefcase, UsersRound, MessageSquare, Layers, ArrowRight, Eye, Rocket, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import SeoTags from "@/components/SeoTags";
 import CertificationsSection from "@/components/CertificationsSection";
+import { api } from "@/api";
+import { addClassToSpan } from "@/lib/utils";
+import { DynamicIcon } from "@/components/DynamicIcon";
+
+export async function loader() {
+  try {
+    const [aboutData, clientLogos] = await Promise.all([
+      api.getAboutData(),
+      api.getClientLogos(),
+    ]);
+
+    return {
+      aboutData,
+      clientLogos
+    };
+  } catch (error) {
+    console.error("Failed to load about page SSG data", error);
+    return {
+      aboutData: null,
+      clientLogos: { data: [] },
+    };
+  }
+}
+
 const About = () => {
+  const loaderData = useLoaderData() as any;
+  const clientLogosData = loaderData?.clientLogos?.data ?? [];
   const [heroVisible, setHeroVisible] = useState(false);
   const [introVisible, setIntroVisible] = useState(false);
   const [visionVisible, setVisionVisible] = useState(false);
@@ -53,48 +68,7 @@ const About = () => {
     createObserver(teamRef, setTeamVisible);
     return () => observers.forEach(o => o.disconnect());
   }, []);
-  const values = [{
-    icon: Shield,
-    image: valueIntegrityImg,
-    title: "Integrity",
-    description: "We value being honest and following through with what we say. When we say we're going to do something, we mean it and we do it."
-  }, {
-    icon: Lightbulb,
-    image: valueIngenuityImg,
-    title: "Ingenuity",
-    description: "We'll never just take the easy way out. We look for ways to solve problems that are truly creative, smarter, and more effective every time."
-  }, {
-    icon: Users,
-    image: valuePartnershipImg,
-    title: "Partnership",
-    description: "We think of our clients as partners, not customers. When you grow, we grow; together every step of the way."
-  }, {
-    icon: Target,
-    image: valueImpactImg,
-    title: "Impact",
-    description: "Every project we take on must create real, measurable value. If it doesn't create forward momentum in your business, it's not good enough for us."
-  }];
-  const workApproaches = [{
-    icon: Briefcase,
-    image: approachProjectImg,
-    title: "Project-Based Engagements",
-    description: "Fast wins for defined objectives, made for businesses testing new ideas or launching quickly."
-  }, {
-    icon: UsersRound,
-    image: approachTeamsImg,
-    title: "Dedicated Teams",
-    description: "Your very own engineers and experts. Fully embedded, fully accountable, and 100% dedicated to your success."
-  }, {
-    icon: MessageSquare,
-    image: approachConsultingImg,
-    title: "Consulting & Advisory",
-    description: "We do not just advise but experience the process with you to plan, implement, and optimize."
-  }, {
-    icon: Layers,
-    image: approachHybridImg,
-    title: "Hybrid Models",
-    description: "Partner with us for the right balance of control and ease of convenience. We let you build your team that works exactly like you wish!"
-  }];
+  
   return <>
     <SeoTags
       title="About Us"
@@ -108,7 +82,7 @@ const About = () => {
 
       {/* Background Image with improved visibility */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-45" style={{
-        backgroundImage: `url(${aboutHeroBg})`
+        backgroundImage: `url(${loaderData.aboutData?.data?.banner_image})`
       }} />
 
       {/* Subtle gradient overlay (top-to-bottom) instead of heavy dark shade */}
@@ -146,12 +120,9 @@ const About = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-6 whitespace-nowrap">
-            <span className="text-foreground">Building the Future of </span>
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Business Together</span>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-6 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed">
-            At Code1 Tech Systems, we make great ideas become real outcomes. From AI to automation to global outsourcing, we help bold businesses simplify, scale, and lead with confidence.
+          <p className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.page_content }}>
           </p>
         </div>
       </div>
@@ -167,11 +138,11 @@ const About = () => {
       background: "hsl(222 47% 5%)"
     }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <ClientsLogoSlider />
+        <ClientsLogoSlider dataClientLogo={clientLogosData} />
         <div className="text-center mt-10 animate-fade-in">
 
           <p className="text-muted-foreground max-w-3xl mx-auto text-base sm:text-lg">
-            We partner with trailblazers across Finance, Healthcare, Retail, Manufacturing, Energy, and Tech Startups companies who share our passion for progress.
+            {loaderData.aboutData?.data?.paragraph_below_client_logo}
           </p>
         </div>
       </div>
@@ -226,27 +197,23 @@ const About = () => {
 
           {/* Text content - primary container */}
           <div className="relative z-10 lg:max-w-[60%]">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-tight tracking-tight">
-              We Have the <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Systems</span>, <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Strategy</span>, and{" "}
-              <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Velocity</span>{" "}
-              to Make It a Reality
-            </h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-tight tracking-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.what_can_we_do_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
 
             <div className="space-y-4 mb-8">
-              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed text-justify">
-                At Code1 Tech Systems, we help organizations operate more intelligently, automate more smartly, and scale frictionlessly. Whether you are streamlining workflows, developing products powered by AI, or penetrating new markets, we have professionals who can work side by side with you to make change possible and practical.
+              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed text-justify" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.what_can_we_do_section?.description }}>
+                
               </p>
-              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed">
+              {/* <p className="text-base lg:text-lg text-foreground/90 leading-relaxed">
                 Our mission is simple: turn complexity into clarity and innovation into results.
               </p>
               <p className="text-base lg:text-lg font-medium text-foreground">
                 We don't just build technology. We build awareness.
-              </p>
+              </p> */}
             </div>
 
-            <Link to="/#services">
+            <Link to={`/${loaderData.aboutData?.data?.what_can_we_do_section?.button_url}`}>
               <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
-                Learn What We Can Do for You
+                {loaderData.aboutData?.data?.what_can_we_do_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -275,10 +242,8 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-10 lg:mb-14 transition-all duration-700 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Our{" "}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Vision & Mission</span>
-          </h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.our_vision_section?.vision_tab_label, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
+            </h2>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
@@ -295,10 +260,10 @@ const About = () => {
 
             <div className="relative h-full rounded-2xl overflow-hidden border border-border/20 group-hover:border-primary/30 transition-all duration-500 group-hover:shadow-[0_25px_60px_rgba(0,78,158,0.15)]">
               {/* Vision Image */}
-              <img src={visionMissionVisual} alt="AI technology visualization with neural networks and data streams" className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "vision" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
+              <img src={loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image?.url} alt={loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image?.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "vision" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
 
               {/* Mission Image */}
-              <img src={missionVisual} alt="Mission-driven technology with growth and innovation visualization" className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "mission" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
+              <img src={loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image?.url} alt={loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image?.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "mission" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
 
               {/* Subtle overlay for depth */}
               <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none" />
@@ -308,14 +273,14 @@ const About = () => {
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl backdrop-blur-sm border flex items-center justify-center transition-all duration-300 ${activeTab === "vision" ? "bg-primary/20 border-primary/30" : "bg-accent/20 border-accent/30"}`}>
-                    {activeTab === "vision" ? <Eye className="w-5 h-5 text-accent" /> : <Rocket className="w-5 h-5 text-accent" />}
+                    {activeTab === "vision" ? <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image_icon} className="w-5 h-5 text-accent" />  : <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image_icon} className="w-5 h-5 text-accent" />}
                   </div>
                   <div>
                     <p className="text-sm text-accent font-medium">
-                      {activeTab === "vision" ? "Global Innovation" : "Driving Progress"}
+                      {activeTab === "vision" ? loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image_heading : loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image_heading}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {activeTab === "vision" ? "Empowering businesses worldwide" : "Building tomorrow's solutions"}
+                      {activeTab === "vision" ? loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image_content : loaderData.aboutData?.data?.our_vision_section.mission_tab_left_image_content}
                     </p>
                   </div>
                 </div>
@@ -329,12 +294,12 @@ const About = () => {
               {/* Tab Triggers */}
               <TabsList className="w-full bg-card/30 backdrop-blur-xl border border-border/20 p-1.5 rounded-xl mb-6 h-auto flex-shrink-0">
                 <TabsTrigger value="vision" className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-primary/20 data-[state=active]:border-primary/40 data-[state=active]:shadow-[0_0_15px_rgba(0,78,158,0.2)] border border-transparent transition-all duration-300 hover:bg-card/50 hover:text-foreground">
-                  <Eye className="w-4 h-4" />
-                  <span className="font-semibold">Vision</span>
+                  <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.vision_tab_icon_class} className="w-4 h-4" />
+                  <span className="font-semibold">{loaderData.aboutData?.data?.our_vision_section?.vision_tab_label}</span>
                 </TabsTrigger>
                 <TabsTrigger value="mission" className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-accent/20 data-[state=active]:border-accent/40 data-[state=active]:shadow-[0_0_15px_rgba(95,194,227,0.2)] border border-transparent transition-all duration-300 hover:bg-card/50 hover:text-foreground">
-                  <Rocket className="w-4 h-4" />
-                  <span className="font-semibold">Mission</span>
+                  <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.mission_tab_icon_class} className="w-4 h-4" />
+                  <span className="font-semibold">{loaderData.aboutData?.data?.our_vision_section?.mission_tab_label}</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -349,29 +314,29 @@ const About = () => {
                       {/* Vision Header */}
                       <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 rounded-xl bg-primary/20 backdrop-blur-sm border border-primary/30 flex items-center justify-center shadow-[0_0_20px_rgba(0,78,158,0.2)]">
-                          <Eye className="w-6 h-6 text-accent" />
+                          <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_icon} className="w-6 h-6 text-accent" />
                         </div>
                         <div>
-                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Vision</h3>
+                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_heading}</h3>
                           <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full mt-1" />
                         </div>
                       </div>
 
                       {/* Vision Content */}
-                      <div className="space-y-4 flex-1">
-                        <p className="text-muted-foreground leading-relaxed text-base lg:text-lg text-justify">
+                      <div className="space-y-4 flex-1" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_description }}>
+                        {/* <p className="text-muted-foreground leading-relaxed text-base lg:text-lg text-justify">
                           To facilitate global businesses in making greater strides with fewer resources, leveraging smart, scalable, and deeply human technology.
                         </p>
                         <p className="text-muted-foreground leading-relaxed text-base lg:text-lg text-justify">
                           We envision a world where innovation is not only a possibility for larger organizations, but for any organization with the courage to act on it.
-                        </p>
+                        </p> */}
                       </div>
 
                       {/* Decorative accent */}
                       <div className="mt-auto pt-6 border-t border-border/20">
                         <div className="flex items-center gap-2 text-accent text-sm">
                           <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_hsl(var(--accent))]" />
-                          <span>Driving innovation at every scale</span>
+                          <span>{loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_bottom_text}</span>
                         </div>
                       </div>
                     </CardContent>
@@ -390,35 +355,35 @@ const About = () => {
                       {/* Mission Header */}
                       <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 rounded-xl bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center shadow-[0_0_20px_rgba(95,194,227,0.2)]">
-                          <Rocket className="w-6 h-6 text-accent" />
+                          <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_icon} className="w-6 h-6 text-accent" />
                         </div>
                         <div>
-                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">Mission</h3>
+                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_heading}</h3>
                           <div className="w-16 h-0.5 bg-gradient-to-r from-accent to-primary rounded-full mt-1" />
                         </div>
                       </div>
 
                       {/* Mission Content */}
-                      <div className="space-y-4 flex-1">
-                        <p className="text-muted-foreground leading-relaxed text-base lg:text-lg">
-                          To allow progressive organizations to harness the power of AI, automation, and data to:
-                        </p>
+                      <div className="space-y-4 flex-1" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_description }}>
+                        {/* <p className="text-muted-foreground leading-relaxed text-base lg:text-lg">
+                          {loaderData.aboutData?.data?.our_vision_section.mission_tab_content_description}
+                        </p> */}
 
                         {/* Enhanced bullet points */}
-                        <ul className="space-y-3">
+                        {/* <ul className="space-y-3">
                           {["Discover new operational efficiencies and growth opportunities.", "Make daily operational and decision-making simpler.", "Empower teams with solutions that enhance success.", "Deliver meaningful value through intelligent transformation."].map((item, i) => <li key={i} className="flex items-start gap-3 group/item">
                             <div className="mt-1 flex-shrink-0">
                               <CheckCircle2 className="w-5 h-5 text-accent opacity-80 group-hover/item:opacity-100 transition-opacity" />
                             </div>
                             <span className="text-muted-foreground leading-relaxed">{item}</span>
                           </li>)}
-                        </ul>
+                        </ul> */}
                       </div>
 
                       {/* Decorative accent */}
                       <div className="mt-auto pt-4 border-t border-border/20">
                         <p className="text-muted-foreground text-sm">
-                          Your business deserves technology that looks out for you.
+                          {loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_bottom_text}
                         </p>
                       </div>
                     </CardContent>
@@ -431,9 +396,9 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-12 transition-all duration-700 delay-300 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to="/#contact">
+          <Link to={`/${loaderData.aboutData?.data?.our_vision_section?.bottom_button_url}`}>
             <Button variant="hero" size="lg" className="group">
-              Let's Design Your Growth Strategy
+              {loaderData.aboutData?.data?.our_vision_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
@@ -468,13 +433,9 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-12 lg:mb-16 transition-all duration-700 ${valuesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Our{" "}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Values</span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(loaderData.aboutData?.data?.our_values_section?.our_values_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} >
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground">
-            <span className="text-accent">Integrity</span> | <span className="text-accent">Ingenuity</span> | <span className="text-accent">Partnership</span> | <span className="text-accent">Impact</span>
-          </p>
+          <p className="text-lg sm:text-xl text-muted-foreground" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.our_values_section?.our_values_sub_heading }}></p>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto mt-4">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
@@ -484,10 +445,9 @@ const About = () => {
 
         {/* Values Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {values.map((value, index) => {
-            const Icon = value.icon;
+          {loaderData.aboutData?.data?.our_values_section?.our_values_blocks.length > 0 && loaderData.aboutData?.data?.our_values_section?.our_values_blocks.map((value, index) => {
             const isHovered = hoveredValue === index;
-            return <div key={value.title} onMouseEnter={() => setHoveredValue(index)} onMouseLeave={() => setHoveredValue(null)} className={`group relative transition-all duration-500 ${valuesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-2" : ""}`} style={{
+            return <div key={index} onMouseEnter={() => setHoveredValue(index)} onMouseLeave={() => setHoveredValue(null)} className={`group relative transition-all duration-500 ${valuesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-2" : ""}`} style={{
               transitionDelay: `${200 + index * 100}ms`
             }}>
               {/* Outer glow on hover */}
@@ -497,13 +457,13 @@ const About = () => {
               <div className={`relative h-full rounded-2xl bg-gradient-to-br from-muted/30 to-muted/10 backdrop-blur-xl border transition-all duration-300 overflow-hidden ${isHovered ? "border-accent/40 shadow-xl shadow-accent/15" : "border-border/20"}`}>
                 {/* Image */}
                 <div className="relative h-36 sm:h-40 overflow-hidden">
-                  <img src={value.image} alt={`${value.title} visualization`} className="w-full h-full transition-transform duration-700 group-hover:scale-110 object-cover object-center" />
+                  <img src={value.image.large} alt={`${value.image.alt} visualization`} className="w-full h-full transition-transform duration-700 group-hover:scale-110 object-cover object-center" />
                   {/* No overlay - show image clearly */}
 
                   {/* Icon badge */}
                   <div className="absolute bottom-3 left-4">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-sm border transition-all duration-300 ${isHovered ? "bg-accent/20 border-accent/40" : "bg-background/60 border-border/30"}`}>
-                      <Icon className={`w-5 h-5 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
+                      <DynamicIcon name={value.icon_class} className={`w-5 h-5 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
                     </div>
                   </div>
                 </div>
@@ -511,10 +471,10 @@ const About = () => {
                 {/* Content */}
                 <div className="p-5 lg:p-6">
                   <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${isHovered ? "text-accent" : "text-foreground"}`}>
-                    {value.title}
+                    {value.heading}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed text-justify">
-                    {value.description}
+                    {value.content}
                   </p>
                 </div>
 
@@ -537,12 +497,11 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
-            Our{" "}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Work Approach</span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.our_work_approach_section?.our_work_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} >
+            
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto">
-            You have a unique way of running your business, and we believe technology should adapt to you, not the other way around.
+            {loaderData.aboutData?.data?.our_work_approach_section?.our_work_paragraph}
           </p>
         </div>
 
@@ -556,7 +515,7 @@ const About = () => {
               <div className="absolute -inset-2 bg-gradient-to-br from-primary/10 via-accent/5 to-transparent blur-xl opacity-60" />
 
               <div className="relative h-full rounded-xl overflow-hidden border border-border/20">
-                <img src={approachConsultingImg} alt="Enterprise consulting approach" className="w-full h-full object-cover" />
+                <img src={loaderData.aboutData?.data?.our_work_approach_section?.left_image.large} alt={loaderData.aboutData?.data?.our_work_approach_section?.left_image.alt} className="w-full h-full object-cover" />
                 {/* Soft overlay for blending */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[hsl(222_47%_5%/0.3)]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[hsl(222_47%_5%/0.4)] via-transparent to-transparent" />
@@ -564,8 +523,8 @@ const About = () => {
                 {/* Floating label */}
                 <div className="absolute bottom-4 left-4 px-4 py-2 rounded-lg bg-card/60 backdrop-blur-sm border border-accent/20">
                   <div className="flex items-center gap-2">
-                    <Target className="w-4 h-4 text-accent" />
-                    <span className="text-sm font-medium text-foreground">Client-Centric Models</span>
+                    <DynamicIcon name={loaderData.aboutData?.data?.our_work_approach_section?.left_image_icon_class} className="w-4 h-4 text-accent" />
+                    <span className="text-sm font-medium text-foreground">{loaderData.aboutData?.data?.our_work_approach_section?.left_image_text}</span>
                   </div>
                 </div>
               </div>
@@ -574,9 +533,8 @@ const About = () => {
 
           {/* Right - 2x2 Cards Grid */}
           <div className="lg:w-[60%] grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {workApproaches.map((approach, index) => {
-              const Icon = approach.icon;
-              return <div key={approach.title} className={`group relative transition-all duration-500 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{
+            {loaderData.aboutData?.data?.our_work_approach_section?.approach_blocks.length > 0 && loaderData.aboutData?.data?.our_work_approach_section?.approach_blocks.map((approach, index) => {
+              return <div key={index} className={`group relative transition-all duration-500 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{
                 transitionDelay: `${150 + index * 75}ms`
               }}>
                 <div className="absolute -inset-0.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/15 blur-sm pointer-events-none" />
@@ -585,16 +543,16 @@ const About = () => {
                   {/* Icon + Title row */}
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-9 h-9 rounded-md bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/20 flex items-center justify-center group-hover:border-accent/40 transition-colors flex-shrink-0">
-                      <Icon className="w-4 h-4 text-accent" />
+                      <DynamicIcon name={approach.icon_class} className="w-4 h-4 text-accent" />
                     </div>
                     <h3 className="text-base font-semibold text-foreground group-hover:text-accent transition-colors">
-                      {approach.title}
+                      {approach.heading}
                     </h3>
                   </div>
 
                   {/* Description */}
                   <p className="text-muted-foreground text-sm leading-relaxed text-justify">
-                    {approach.description}
+                    {approach.content}
                   </p>
                 </div>
               </div>;
@@ -604,9 +562,9 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-8 transition-all duration-700 delay-400 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to="/#contact">
+          <Link to={`/${loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_url}`}>
             <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
-              Let's talk about your next project
+              {loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
@@ -615,7 +573,7 @@ const About = () => {
     </section>
 
     {/* Certifications Section */}
-    <CertificationsSection sectionRef={teamRef} isVisible={teamVisible} />
+    <CertificationsSection certificationData={loaderData.aboutData?.data?.certifications_section} sectionRef={teamRef} isVisible={teamVisible} />
   </>;
 };
 export default About;

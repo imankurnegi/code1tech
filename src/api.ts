@@ -14,7 +14,14 @@ export const api = {
     }
 
     return response.json();
+  },
 
+  getAboutData: async () => {
+    const response = await fetch(`${BASE_URL}/about`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch about page data");
+    }
+    return response.json();
   },
 
   getLayoutData: async () => {
