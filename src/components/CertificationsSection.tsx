@@ -71,7 +71,7 @@ const CertificationsSection = ({certificationData, sectionRef, isVisible }: Cert
 
           {/* Certification Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8">
-            {certificationData.certifications_blocks.length > 0 && certificationData.certifications_blocks.map((cert, index) => (
+            {certificationData?.certifications_blocks?.length > 0 && certificationData?.certifications_blocks.map((cert, index) => (
               <div
                 key={index}
                 className="group relative rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm p-6 lg:p-8 text-center hover:border-accent/40 hover:bg-card/50 transition-all duration-500 hover:shadow-[0_10px_40px_rgba(0,78,158,0.18)] hover:-translate-y-2"
