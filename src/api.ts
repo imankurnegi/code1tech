@@ -24,6 +24,14 @@ export const api = {
     return response.json();
   },
 
+  getTeamData: async () => {
+    const response = await fetch(`${BASE_URL}/teams`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch team data");
+    }
+    return response.json();
+  },
+
   getLayoutData: async () => {
     const [headerRes, navRes, footerRes] = await Promise.all([
       fetch(`${BASE_URL}/header-logo`, { headers }),

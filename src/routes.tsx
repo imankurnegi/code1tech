@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import ErrorPage from "./pages/ErrorPage";
 import Contact, { loader as contactLoader } from "./pages/Contact";
 import About, { loader as aboutLoader } from "./pages/About";
+import Team, { loader as teamLoader } from "./pages/Team";
 
 export const routes = [
   {
@@ -33,6 +34,12 @@ export const routes = [
             path: "about",
             Component: About,
             loader: aboutLoader,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "teams",
+            Component: Team,
+            loader: teamLoader,
             errorElement: <ErrorPage />,
           },
         ],
