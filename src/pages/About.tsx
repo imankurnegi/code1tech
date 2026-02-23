@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
-import aboutIntroVisual from "@/assets/about-intro-visual.jpg";
 import { Button } from "@/components/ui/button";
 import { Link, useLoaderData } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -180,7 +179,7 @@ const About = () => {
             {/* Image with gradient blending */}
             <div className="relative h-full flex items-start pt-2">
               <div className="relative w-full">
-                <img src={aboutIntroVisual} alt="Enterprise technology systems visualization" className="w-full h-auto object-cover rounded-l-2xl" />
+                <img src={loaderData.aboutData?.data?.what_can_we_do_section?.image?.url} alt={loaderData.aboutData?.data?.what_can_we_do_section?.image?.alt} className="w-full h-auto object-cover rounded-l-2xl" />
                 {/* Left fade - blends image into text area */}
                 <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[hsl(222_47%_5%)] via-[hsl(222_47%_5%/0.7)] to-transparent pointer-events-none" />
                 {/* Top fade */}
@@ -222,7 +221,7 @@ const About = () => {
           {/* Mobile image - shown below text on smaller screens */}
           <div className="lg:hidden mt-8">
             <div className="relative">
-              <img src={aboutIntroVisual} alt="Enterprise technology systems visualization" className="w-full h-auto object-cover rounded-xl" />
+              <img src={loaderData.aboutData?.data?.what_can_we_do_section?.image?.url} alt={loaderData.aboutData?.data?.what_can_we_do_section?.image?.alt} className="w-full h-auto object-cover rounded-xl" />
               {/* Soft gradient overlays for mobile */}
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(222_47%_5%)] via-transparent to-[hsl(222_47%_5%/0.3)] pointer-events-none rounded-xl" />
             </div>
@@ -242,7 +241,7 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-10 lg:mb-14 transition-all duration-700 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.our_vision_section?.vision_tab_label, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.our_vision_section?.vision_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
             </h2>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto">
