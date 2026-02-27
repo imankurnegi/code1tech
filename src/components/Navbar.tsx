@@ -30,6 +30,7 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
   const mainNavMenus = navMenus?.primary_menu|| [];
   const ctaMenus = navMenus?.secondary_menu || [];
@@ -207,27 +208,63 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
       {/* Mobile Navigation */}
       <div 
         className={`lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl transition-all duration-400 ease-out overflow-hidden ${
-          isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-[85vh] opacity-100 overflow-y-auto" : "max-h-0 opacity-0"
         }`}
       >
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col gap-1">
             {mainNavMenus?.map(link => {
               const isActive = activeSection === link.url.replace("#", "");
-              return (
-                <div key={link.title}>
+              const hasDropdown = link.children && link.children.length > 0;
+
+              // Simple link (no dropdown) – always neutral style on mobile
+              if (!hasDropdown) {
+                return (
                   <a 
+                    key={link.title}
                     href={link.url} 
                     onClick={e => handleNavClick(e, link.url)} 
-                    className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between ${
-                      isActive 
-                        ? "text-foreground bg-accent/10 shadow-[0_0_15px_rgba(0,194,255,0.2)]" 
-                        : "text-foreground hover:text-accent hover:bg-foreground/5"
+                    className="relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5"
+                  >
+                    {link.title}
+                  </a>
+                );
+              }
+
+              // Dropdown link – style based only on open/closed state on mobile
+              return (
+                <div key={link.title}>
+                  <button 
+                    type="button"
+                    onClick={() => setMobileDropdown(mobileDropdown === link.title ? null : link.title)}
+                    className={`w-full relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between ${
+                      mobileDropdown === link.title
+                        ? "text-accent bg-accent/10"
+                        : "text-foreground/70 hover:text-foreground hover:bg-foreground/5"
                     }`}
                   >
                     {link.title}
-                    {link.children && <ChevronDown className="w-4 h-4" />}
-                  </a>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileDropdown === link.title ? "rotate-180" : ""}`} />
+                  </button>
+                  {link.children && mobileDropdown === link.title && (
+                    <div className="ml-4 mt-1 mb-2 flex flex-col gap-1 border-l border-accent/20 pl-3">
+                      {link.children.map(item => (
+                        <a
+                          key={item.title}
+                          href={item.url}
+                          onClick={e => {
+                            handleNavClick(e, item.url);
+                            setIsOpen(false);
+                            setMobileDropdown(null);
+                          }}
+                          className="flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-foreground/70 hover:text-accent hover:bg-accent/5 transition-all duration-200"
+                        >
+                          <DynamicIcon name={item.class} className="w-4 h-4 text-accent/70" />
+                          <span>{item.title}</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -243,12 +280,14 @@ const Navbar = ({headerLogo, navMenus}: HeaderProps) => {
               </a>
             )}
             {getStartedMenu && (
-              <Button 
-                className="w-full bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium py-3 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.2)] flex items-center justify-center gap-2"
-              >
-                {getStartedMenu.title}
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <Link to="/contact" onClick={() => setIsOpen(false)} className="w-full">
+                <Button 
+                  className="w-full bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium py-3 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.2)] flex items-center justify-center gap-2"
+                >
+                  {getStartedMenu.title}
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
             )}
           </div>
         </div>

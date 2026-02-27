@@ -13,15 +13,10 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 
 export async function loader() {
   try {
-    const [aboutData, clientLogos] = await Promise.all([
-      api.getAboutData(),
-      api.getClientLogos(),
-    ]);
+    const aboutData = await api.getAboutData();
+    const clientLogos = await api.getClientLogos();
 
-    return {
-      aboutData,
-      clientLogos
-    };
+    return { aboutData, clientLogos };
   } catch (error) {
     console.error("Failed to load about page SSG data", error);
     return {

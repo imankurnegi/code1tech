@@ -33,21 +33,17 @@ export const api = {
   },
 
   getLayoutData: async () => {
-    const [headerRes, navRes, footerRes] = await Promise.all([
-      fetch(`${BASE_URL}/header-logo`, { headers }),
-      fetch(`${BASE_URL}/menus/topmenu`, { headers }),
-      fetch(`${BASE_URL}/footer`, { headers }),
-    ]);
+    const headerRes = await fetch(`${BASE_URL}/header-logo`, { headers });
+    const navRes = await fetch(`${BASE_URL}/menus/topmenu`, { headers });
+    const footerRes = await fetch(`${BASE_URL}/footer`, { headers });
 
     if (!headerRes.ok || !navRes.ok || !footerRes.ok) {
       throw new Error('Layout data fetch failed');
     }
 
-    const [headerLogo, navMenus, footerData] = await Promise.all([
-      headerRes.json(),
-      navRes.json(),
-      footerRes.json(),
-    ]);
+    const headerLogo = await headerRes.json();
+    const navMenus = await navRes.json();
+    const footerData = await footerRes.json();
 
     return {
       headerLogo,

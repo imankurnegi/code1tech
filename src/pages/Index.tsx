@@ -21,17 +21,11 @@ import { useLoaderData } from "react-router-dom";
 
 export async function loader() {
   try {
-    const [homeData, clientLogos, contactFormFields] = await Promise.all([
-      api.getHomeData(),
-      api.getClientLogos(),
-      api.getContactFormFields(),
-    ]);
+    const homeData = await api.getHomeData();
+    const clientLogos = await api.getClientLogos();
+    const contactFormFields = await api.getContactFormFields();
 
-    return {
-      homeData,
-      clientLogos,
-      contactFormFields,
-    };
+    return { homeData, clientLogos, contactFormFields };
   } catch (error) {
     console.error("Failed to load home page SSG data", error);
     return {
@@ -44,21 +38,6 @@ export async function loader() {
 
 const Index = () => {
   const loaderData = useLoaderData() as any;
-
-  // const { isError, error } = useQuery({
-  //   queryKey: ["homepage"],
-  //   queryFn: async () => {
-  //      await Promise.all([
-  //       api.getHomeData(),
-  //       api.getClientLogos(),
-  //     ]);
-  //   },
-  //   initialData: loaderData,
-  //   staleTime: Infinity,
-  //   refetchOnMount: false,
-  // });
-
-  // if (isError) return <div>{error.message}</div>;
 
   const homepageData = loaderData?.homeData;
   const clientLogosData = loaderData?.clientLogos?.data ?? [];

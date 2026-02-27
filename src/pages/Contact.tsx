@@ -12,11 +12,9 @@ import { addClassToSpan } from "@/lib/utils";
 
 export async function loader() {
   try {
-    const [contactData, clientLogos, contactFormFields] = await Promise.all([
-      api.getContactData(),
-      api.getClientLogos(),
-      api.getContactFormFields()
-    ]);
+    const contactData = await api.getContactData();
+    const clientLogos = await api.getClientLogos();
+    const contactFormFields = await api.getContactFormFields();
 
     return {
       contactData,
@@ -45,19 +43,6 @@ const Contact = () => {
   const formRef = useRef<HTMLElement>(null);
   const locationsRef = useRef<HTMLElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
-
-  // const { isError, error } = useQuery({
-  //   queryKey: ["contactpage"],
-  //   queryFn: async () => {
-  //      await Promise.all([
-  //       api.getContactData(),
-  //       api.getClientLogos(),
-  //     ]);
-  //   },
-  //   initialData: loaderData,
-  //   staleTime: Infinity,
-  //   refetchOnMount: false,
-  // });
 
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
   const contactFormFields = loaderData?.contactFormFields ?? null;
