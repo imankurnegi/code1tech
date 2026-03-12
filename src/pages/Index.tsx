@@ -69,12 +69,12 @@ const Index = () => {
         <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
         <TechnologyStackSection dataCapabilities={homepageData?.data?.our_capabilities_section} />
         <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
-        <CaseStudiesSection dataCaseStudies={homepageData?.data?.case_study_section} />
+        {/* <CaseStudiesSection dataCaseStudies={homepageData?.data?.case_study_section} /> */}
         <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
         <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
         <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
         <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
-        <RelatedBlogs dataRelatedBlogs={homepageData?.data?.blog_section}/>
+        {/* <RelatedBlogs dataRelatedBlogs={homepageData?.data?.blog_section}/> */}
         <ContactSection dataContact={homepageData?.data?.contact_form_fields} contactFormFields={contactFormFields} />
       
     </>

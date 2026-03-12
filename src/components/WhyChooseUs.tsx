@@ -2,18 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
-
-interface CardIcon {
-  id: number;
-  url: string;
-  alt: string;
-  title: string;
-  width: number;
-  height: number;
-}
+import { DynamicIcon } from "./DynamicIcon";
 
 interface BusinessCard {
-  card_icon: CardIcon;
+  card_icon: string;
   card_heading: string;
   card_description: string;
 }
@@ -32,7 +24,7 @@ interface WhyChooseUsProps {
 const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
   // Transform API data to match component structure
   const pillars = dataWhyBusinesses?.["business-card"]?.map((card) => ({
-    icon: card.card_icon.url,
+    icon: card.card_icon,
     title: card.card_heading,
     description: card.card_description,
   })) || [];
@@ -71,16 +63,7 @@ const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
         <div className="relative p-6 md:p-7">
           {/* Icon */}
           <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all duration-300 ${isHovered ? "bg-accent/20" : "bg-muted/40"}`}>
-            <img 
-              src={pillar.icon}
-              alt={pillar.title}
-              className="w-5 h-5 transition-all duration-300"
-              style={{
-                filter: isHovered 
-                  ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
-                  : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
-              }}
-            />
+             <DynamicIcon name={pillar.icon} className={`w-5 h-5 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
           </div>
 
           {/* Title */}
@@ -177,14 +160,7 @@ const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-9 h-9 rounded-lg bg-muted/40 flex items-center justify-center">
-                        <img 
-                          src={pillar.icon}
-                          alt={pillar.title}
-                          className="w-4 h-4"
-                          style={{
-                            filter: 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)'
-                          }}
-                        />
+                        <DynamicIcon name={pillar.icon} className="w-4 h-4 text-accent" />
                       </div>
                       <h3 className="text-lg font-bold text-foreground">
                         {pillar.title}

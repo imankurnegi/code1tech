@@ -2,18 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
-
-interface CardIcon {
-  id: number;
-  url: string;
-  alt: string;
-  title: string;
-  width: number;
-  height: number;
-}
+import { DynamicIcon } from "./DynamicIcon";
 
 interface WorkCard {
-  card_icon: CardIcon;
+  card_icon: string;
   card_heading: string;
   card_description: string;
 }
@@ -33,7 +25,7 @@ interface WorkWithUsProps {
 const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
   // Transform API data to match component structure
   const models = dataWorkWithUs?.work_cards?.map((card) => ({
-    icon: card.card_icon.url,
+    icon: card.card_icon,
     title: card.card_heading,
     description: card.card_description,
   })) || [];
@@ -114,16 +106,7 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
                 <div className="relative p-4 sm:p-6 md:p-7 flex flex-col h-full">
                   {/* Icon */}
                   <div className={`w-10 sm:w-12 h-10 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-5 transition-all duration-300 ${isHovered ? "bg-accent/20 scale-105" : "bg-muted/50"}`}>
-                    <img 
-                      src={model.icon} 
-                      alt={model.title}
-                      className="w-5 sm:w-6 h-5 sm:h-6 transition-all duration-300"
-                      style={{
-                        filter: isHovered 
-                          ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
-                          : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
-                      }}
-                    />
+                    <DynamicIcon name={model.icon} className={`w-5 sm:w-6 h-5 sm:h-6 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
                   </div>
 
                   {/* Title */}

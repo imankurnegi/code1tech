@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Linkedin, Mail, ChevronDown, Phone, Instagram } from "lucide-react";
+import { Linkedin, Mail, ChevronDown, Phone, Instagram, Twitter } from "lucide-react";
 
 interface FooterMenuItem {
   id: number;
@@ -26,10 +26,12 @@ interface FooterData {
     hire: FooterMenuSection;
   };
   social_links: {
-    stackoverflow: string;
     linkedin: string;
     instagram: string;
-    leetcode: string;
+    twitter: string;
+    facebook: string;
+    ambition_box: string;
+    pinterest: string;
   };
   legal_links: {
     privacy_policy: string;
@@ -39,11 +41,15 @@ interface FooterData {
     sales_email: string;
     sales_number_1: string;
     sales_number_2: string;
+    sales_number_3: string;
     hr_number_1: string;
     hr_number_2: string;
     address: string;
     address_2: string;
     address_3: string;
+    address_heading_1: string;
+    address_heading_2: string;
+    address_heading_3: string;
   };
 }
 
@@ -57,15 +63,15 @@ const Footer = ({ footerSecData }: FooterProps) => {
   const addresses = footerSecData?.contact
     ? [
       {
-        label: "Jaipur HQ",
+        label: footerSecData.contact.address_heading_1 || "",
         address: footerSecData.contact.address || "",
       },
       {
-        label: "Delhi Office",
+        label: footerSecData.contact.address_heading_2 || "",
         address: footerSecData.contact.address_2 || "",
       },
       {
-        label: "Austin Office",
+        label: footerSecData.contact.address_heading_3 || "",
         address: footerSecData.contact.address_3 || "",
       },
     ].filter((addr) => addr.address)
@@ -76,7 +82,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
   const hireTalentLinks = footerSecData?.footer_menus?.hire?.items || [];
 
   const salesNumbers = footerSecData?.contact
-    ? [footerSecData.contact.sales_number_1, footerSecData.contact.sales_number_2].filter(Boolean)
+    ? [footerSecData.contact.sales_number_1, footerSecData.contact.sales_number_2, footerSecData.contact.sales_number_3].filter(Boolean)
     : [];
 
   const hrNumbers = footerSecData?.contact
@@ -107,7 +113,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
           </div>
 
           {/* Main Grid */}
-          <div className="grid grid-cols-4 gap-8 lg:gap-12 mb-12">
+          <div className={`${hireTalentLinks.length > 0 ? "grid-cols-4" : "grid-cols-3"} grid gap-8 lg:gap-12 mb-12`}>
             {/* Locations Column */}
             <div>
               <h4 className="text-foreground font-semibold text-base mb-5">
@@ -147,7 +153,8 @@ const Footer = ({ footerSecData }: FooterProps) => {
             </div>
 
             {/* Hire Talent Links */}
-            <div>
+            {hireTalentLinks.length > 0 &&
+              <div>
               <h4 className="text-foreground font-semibold text-base mb-5">
                 {footerSecData?.footer_menus?.hire?.title || "Hire Talent"}
               </h4>
@@ -164,6 +171,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 ))}
               </ul>
             </div>
+            }
 
             {/* Follow Us & Email */}
             <div>
@@ -171,17 +179,26 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 Follow US
               </h4>
               <div className="flex items-center gap-2 mb-6 flex-wrap">
-                {footerSecData?.social_links?.stackoverflow && (
+                {footerSecData?.social_links?.ambition_box && (
                   <a
-                    href={footerSecData.social_links.stackoverflow}
+                    href={footerSecData.social_links.ambition_box}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
-                    aria-label="StackOverflow"
+                    aria-label="Ambition Box"
                   >
-                    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M15.292 19.925l-3.923-2.103.839-1.857 3.923 2.103-.839 1.857zm2.843-3.503l-3.539-1.922 1.185-2.18 3.539 1.922-1.185 2.18zM18.95 1.29l-1.81.49.49 1.81 1.81-.49-.49-1.81zm-1.54 2.94l-1.08.29.29 1.08 1.08-.29-.29-1.08zm2.94 1.54l-1.81.49.49 1.81 1.81-.49-.49-1.81zM5.81 15.75l-1.922-3.539 2.18-1.185 1.922 3.539-2.18 1.185zm7.12-8.265l-2.103-3.923 1.857-.839 2.103 3.923-1.857.839zm-8.56 8.07l-1.29-2.405 1.857-.997 1.29 2.405-1.857.997zm10.58-11.8l-1.54-2.87 1.997-1.072 1.54 2.87-1.997 1.072zM4.5 19.5h15v2h-15v-2z" />
-                    </svg>
+                    <img src="/ambitionbox.svg" alt="Ambition Box" className="w-4 h-4" />
+                  </a>
+                )}
+                {footerSecData?.social_links?.facebook && (
+                  <a
+                    href={footerSecData.social_links.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
+                    aria-label="Facebook"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook w-4 h-4 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                   </a>
                 )}
                 {footerSecData?.social_links?.linkedin && (
@@ -192,7 +209,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="LinkedIn"
                   >
-                    <Linkedin className="w-4 h-4 text-muted-foreground" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                   </a>
                 )}
                 {footerSecData?.social_links?.instagram && (
@@ -203,20 +220,29 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Instagram"
                   >
-                    <Instagram className="w-4 h-4 text-muted-foreground" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-instagram w-4 h-4 text-muted-foreground"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
                   </a>
                 )}
-                {footerSecData?.social_links?.leetcode && (
+                {footerSecData?.social_links?.twitter && (
                   <a
-                    href={footerSecData.social_links.leetcode}
+                    href={footerSecData.social_links.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
-                    aria-label="LeetCode"
+                    aria-label="Twitter"
                   >
-                    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662L2.571 9.145c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.107-4.124c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l.883.879 3.85-3.855C15.838.195 16.476 0 17.187 0c.711 0 1.357.195 1.824.662l2.697 2.607c.467.467.703 1.15.703 1.864s-.236 1.357-.703 1.824l-7.709 7.721zm-1.112-8.14l2.712 2.607c.466.467.703 1.15.703 1.863s-.235 1.357-.702 1.824l-2.697 2.607c-.467.467-1.111.662-1.824.662s-1.357-.195-1.823-.662l-2.697-2.607c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l2.697-2.607c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-twitter w-4 h-4 text-muted-foreground"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                  </a>
+                )}
+                {footerSecData?.social_links?.pinterest && (
+                  <a
+                    href={footerSecData.social_links.pinterest}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
+                    aria-label="Pinterest"
+                  >
+                    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path></svg>
                   </a>
                 )}
               </div>
@@ -441,17 +467,15 @@ const Footer = ({ footerSecData }: FooterProps) => {
           <div className="py-6">
             <p className="text-foreground text-sm font-medium mb-3">Follow US</p>
             <div className="flex items-center gap-2 flex-wrap">
-              {footerSecData?.social_links?.stackoverflow && (
+              {footerSecData?.social_links?.ambition_box && (
                 <a
-                  href={footerSecData.social_links.stackoverflow}
+                  href={footerSecData.social_links.ambition_box}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
-                  aria-label="StackOverflow"
+                  aria-label="Ambition Box"
                 >
-                  <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M15.292 19.925l-3.923-2.103.839-1.857 3.923 2.103-.839 1.857zm2.843-3.503l-3.539-1.922 1.185-2.18 3.539 1.922-1.185 2.18zM18.95 1.29l-1.81.49.49 1.81 1.81-.49-.49-1.81zm-1.54 2.94l-1.08.29.29 1.08 1.08-.29-.29-1.08zm2.94 1.54l-1.81.49.49 1.81 1.81-.49-.49-1.81zM5.81 15.75l-1.922-3.539 2.18-1.185 1.922 3.539-2.18 1.185zm7.12-8.265l-2.103-3.923 1.857-.839 2.103 3.923-1.857.839zm-8.56 8.07l-1.29-2.405 1.857-.997 1.29 2.405-1.857.997zm10.58-11.8l-1.54-2.87 1.997-1.072 1.54 2.87-1.997 1.072zM4.5 19.5h15v2h-15v-2z" />
-                  </svg>
+                 <img src="/ambitionbox.svg" alt="AmbitionBox" className="w-4 h-4" />
                 </a>
               )}
               {footerSecData?.social_links?.linkedin && (
@@ -465,6 +489,28 @@ const Footer = ({ footerSecData }: FooterProps) => {
                   <Linkedin className="w-4 h-4 text-muted-foreground" />
                 </a>
               )}
+              {footerSecData?.social_links?.facebook && (
+                <a
+                  href={footerSecData.social_links.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
+                  aria-label="Facebook"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook w-4 h-4 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+              )}
+              {footerSecData?.social_links?.linkedin && (
+                <a
+                  href={footerSecData.social_links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
+                  aria-label="LinkedIn"
+                >
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              )}
               {footerSecData?.social_links?.instagram && (
                 <a
                   href={footerSecData.social_links.instagram}
@@ -473,20 +519,29 @@ const Footer = ({ footerSecData }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Instagram"
                 >
-                  <Instagram className="w-4 h-4 text-muted-foreground" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-instagram w-4 h-4 text-muted-foreground"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
                 </a>
               )}
-              {footerSecData?.social_links?.leetcode && (
+              {footerSecData?.social_links?.twitter && (
                 <a
-                  href={footerSecData.social_links.leetcode}
+                  href={footerSecData.social_links.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
-                  aria-label="LeetCode"
+                  aria-label="Twitter"
                 >
-                  <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662L2.571 9.145c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.107-4.124c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l.883.879 3.85-3.855C15.838.195 16.476 0 17.187 0c.711 0 1.357.195 1.824.662l2.697 2.607c.467.467.703 1.15.703 1.864s-.236 1.357-.703 1.824l-7.709 7.721zm-1.112-8.14l2.712 2.607c.466.467.703 1.15.703 1.863s-.235 1.357-.702 1.824l-2.697 2.607c-.467.467-1.111.662-1.824.662s-1.357-.195-1.823-.662l-2.697-2.607c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l2.697-2.607c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662z" />
-                  </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-twitter w-4 h-4 text-muted-foreground"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                </a>
+              )}
+              {footerSecData?.social_links?.pinterest && (
+                <a
+                  href={footerSecData.social_links.pinterest}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
+                  aria-label="Pinterest"
+                >
+                <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path></svg>
                 </a>
               )}
             </div>

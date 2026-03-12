@@ -281,9 +281,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                   </span>
 
                   {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold mb-4 leading-tight text-primary-foreground">
-                    {service.title}
-                  </h3>
+                  <h3 className="text-xl md:text-2xl font-bold mb-4 leading-tight text-primary-foreground" dangerouslySetInnerHTML={{ __html: service.title }} />
 
                   {/* Description */}
                   <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6 max-w-xs text-justify">

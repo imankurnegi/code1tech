@@ -273,7 +273,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
                         background: "linear-gradient(to top, hsla(215, 55%, 6%, 0.95) 0%, hsla(215, 55%, 6%, 0.6) 50%, transparent 100%)"
                       }}>
                             <span className={`
-                                text-[9px] sm:text-[10px] md:text-xs font-medium pb-1.5 sm:pb-2 whitespace-nowrap
+                                text-[8px] sm:text-[10px] md:text-xs font-medium pb-1.5 sm:pb-2 text-center leading-tight px-0.5
                                 transition-all duration-300
                                 ${activeThumb === index ? "text-accent" : "text-foreground/90 group-hover:text-accent group-hover:translate-y-[-2px]"}
                               `}>

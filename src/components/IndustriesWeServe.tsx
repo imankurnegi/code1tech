@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
+import { DynamicIcon } from "./DynamicIcon";
 
 interface IndustryCard {
   ID: number;
@@ -148,16 +149,9 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 ${
                     isHovered ? "bg-accent/20" : "bg-muted/50"
                   }`}>
-                    <img 
-                      src={industry.icon} 
-                      alt={industry.title}
-                      className="w-6 h-6 transition-all duration-300"
-                      style={{
-                        filter: isHovered 
-                          ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
-                          : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
-                      }}
-                    />
+                    <DynamicIcon name={industry.icon} className={`w-6 h-6 transition-colors duration-300 ${
+                      isHovered ? "text-accent" : "text-muted-foreground"
+                    }`} />
                   </div>
 
                   {/* Title */}

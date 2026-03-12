@@ -76,6 +76,33 @@ export const api = {
     return await response.json();
   },
 
+  getDataEngineering: async () => {
+    const response = await fetch(`${BASE_URL}/data-engineering`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch data engineering data");
+    }
+
+    return response.json();
+  },
+
+  getEngineerAsAService: async () => {
+    const response = await fetch(`${BASE_URL}/engineer-as-a-service`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch engineer as a service data");
+    }
+
+    return response.json();
+  },
+
+  getDataScience: async () => {
+    const response = await fetch(`${BASE_URL}/data-science`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch data science data");
+    }
+
+    return response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",
