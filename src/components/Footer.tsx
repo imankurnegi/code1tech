@@ -105,7 +105,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
               <img
                 alt={footerSecData.footer_logo.alt || "Code1 Tech Systems"}
                 src={footerSecData.footer_logo.full}
-                className="h-12 w-auto object-contain mb-4"
+                className="h-24 w-auto object-contain mb-4"
               />
             )}
             <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">

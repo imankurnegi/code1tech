@@ -20,7 +20,7 @@ const LogoTrack = memo(({clients} : {clients: ClientLogo[]}) => (
           <img 
             src={client.image} 
             alt={client.title}
-            className="h-20 md:h-24 lg:h-28 w-auto object-contain opacity-90"
+            className="h-16 md:h-20 lg:h-24 w-auto object-contain opacity-90"
             draggable={false}
             loading="lazy"
           />
