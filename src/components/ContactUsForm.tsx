@@ -33,6 +33,10 @@ export type ContactFormFieldsData = {
   row4: ContactFormFieldConfig[];
   row5: ContactFormFieldConfig[];
   row6: ContactFormFieldConfig[];
+  heading: string;
+  paragraph: string;
+  button_text: string;
+  bottom_text: string;
 };
 
 const FIELD_NAME_TO_SCHEMA_KEY: Record<string, keyof ContactFormData> = {
@@ -113,9 +117,11 @@ const ContactUsForm = ({ contactFormFields, onSubmit: onSubmitProp }: ContactUsF
       <form onSubmit={handleSubmit(onSubmit)} className="relative p-6 sm:p-8 lg:p-10">
 
         <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-            Send us a <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">message</span>
+            {contactFormFields.heading}
         </h2>
-        <p className="text-muted-foreground mb-8">Simply fill the form to tell us what's happening. A few details can help us understand your needs perfectly.</p>
+        <p className="text-muted-foreground mb-8">
+          {contactFormFields.paragraph}
+        </p>
 
         {/* <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.form_heading || "" }} className="text-2xl sm:text-3xl font-bold text-foreground mb-2"></h2>
         <p className="text-muted-foreground mb-8">{loaderData?.contactData?.data?.form_paragraph}</p> */}
@@ -265,13 +271,13 @@ const ContactUsForm = ({ contactFormFields, onSubmit: onSubmitProp }: ContactUsF
             <CheckCircle2 className="w-5 h-5" />
             Message Sent!
           </span> : <>
-            Send Message
+            {contactFormFields.button_text}
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </>}
         </Button>
 
         <p className="text-center text-muted-foreground text-sm mt-4">
-          We usually respond within 24 hours
+          {contactFormFields.bottom_text}
         </p>
       </form>
     </div>

@@ -1,9 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Link } from "lucide-react";
 import { useTypingAnimation } from "@/hooks/use-typing-animation";
 import HeroGlowBackground from "./HeroGlowBackground";
 import ClientsLogoSlider from "./ClientsLogoSlider";
+import { addClassToSpan } from "@/lib/utils";
 
 interface HeroSectionProps {
   dataBanner?: {
@@ -86,7 +87,7 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
 
           <h1
             className="text-3xl sm:text-4xl font-bold leading-tight mb-6 animate-fade-in lg:text-6xl"
-            dangerouslySetInnerHTML={{ __html: mainHeading ?? "" }}
+            dangerouslySetInnerHTML={{ __html: addClassToSpan(mainHeading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") ?? "" }}
           />
 
 
@@ -107,10 +108,10 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
           {/* CTA Button - appears after first typing completes */}
           <div className={`transition-all duration-700 ease-out px-4 sm:px-0 ${showCTA ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'}`}>
             <Button variant="hero" size="xl" className="group w-full sm:w-auto text-sm sm:text-base" asChild>
-              <a href={buttonUrl}>
+              <Link to={buttonUrl}>
                 {buttonText}
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-              </a>
+              </Link>
             </Button>
           </div>
 

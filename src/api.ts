@@ -103,6 +103,15 @@ export const api = {
     return response.json();
   },
 
+  getAIMLData: async () => {
+    const response = await fetch(`${BASE_URL}/ai-ml-solutions`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch AI/ML data");
+    }
+
+    return response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",

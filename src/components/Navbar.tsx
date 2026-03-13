@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavMenuItem {
   id: number;
@@ -27,6 +27,7 @@ interface HeaderProps {
 }
 
 const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -49,7 +50,18 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
     setActiveDropdown(null);
   };
 
-
+  // Scroll-spy: track all major sections on homepage
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    
+    // Initial check
+    handleScroll();
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
 
   return (
     <nav
@@ -135,14 +147,14 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
 
                         {/* View All link */}
                         <div className="mt-4 pt-4 border-t border-border/10">
-                          <a
-                            href={link.url}
+                          <Link
+                            to={link.url}
                             onClick={e => handleNavClick(e, link.url)}
                             className="flex items-center justify-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors duration-300 group/all"
                           >
                             View All {link.title}
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/all:translate-x-1" />
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -158,8 +170,7 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
   ctaMenus?.map((menu, index) => {
     if (menu.class === "btn") {
       return (
-        <Link to={`${menu.url}`}   key={index}
-       >
+        <Link to={`${menu.url}`} key={index}>
           <Button
           size="sm"
           className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
@@ -171,7 +182,6 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
           <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
         </Button>
           </Link>
-        
       );
     }
 
@@ -224,14 +234,14 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
               // Simple link (no dropdown) – always neutral style on mobile
               if (!hasDropdown) {
                 return (
-                  <a
+                  <Link
                     key={link.title}
-                    href={link.url}
+                    to={link.url}
                     onClick={e => handleNavClick(e, link.url)}
                     className="relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5"
                   >
                     {link.title}
-                  </a>
+                  </Link>
                 );
               }
 
@@ -277,9 +287,9 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
   ctaMenus.length > 0 &&
   ctaMenus.map((menu, index) => {
     return menu.class === "btn" ? (
-      <Link
+      <a
         key={index}
-        to={`${menu.url}`}
+        href={`${menu.url}`}
         onClick={() => setIsOpen(false)}
         className="w-full"
       >
@@ -287,7 +297,7 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
           {menu.title}
           <ArrowRight className="w-4 h-4" />
         </Button>
-      </Link>
+      </a>
     ) : (
       <Link
         key={index}

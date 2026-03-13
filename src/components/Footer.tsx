@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, ChevronDown, Phone } from "lucide-react";
+import { Mail, ChevronDown, Phone, Link } from "lucide-react";
 import ambitionBoxIcon from "@/assets/ambitionbox.svg";
 
 interface FooterMenuItem {
@@ -365,9 +365,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <a href={link.url} className="text-muted-foreground text-sm">
+                    <Link to={link.url} className="text-muted-foreground text-sm">
                       {link.title}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -395,9 +395,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
-                    <a href={link.url} className="text-muted-foreground text-sm">
+                    <Link to={link.url} className="text-muted-foreground text-sm">
                       {link.title}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

@@ -173,7 +173,7 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
                   
                   {/* CTA */}
                   <a 
-                    href={study.post_name}
+                    href={`${study.post_name}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${
