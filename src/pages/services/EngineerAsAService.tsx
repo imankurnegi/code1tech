@@ -231,7 +231,7 @@ const EngineerAsAService = () => {
       title: service.post_title,
       description: service.sdb.engineer_service_post_fields.service_box_description,
       benefits: service.sdb.engineer_service_post_fields.box_tags_fields,
-      image: service.sdb.engineer_service_post_fields.service_box_image,
+      image: service.sdb.engineer_service_post_fields.service_box_image.url,
       link: service.post_name
     }
   }) || [];
