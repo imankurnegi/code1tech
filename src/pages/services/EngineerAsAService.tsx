@@ -2,13 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useLoaderData } from "react-router-dom";
 import { 
   ArrowRight, 
-  Users, 
-  Building2, 
-  UserPlus, 
-  Headphones,
   CheckCircle
 } from "lucide-react";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
@@ -1284,27 +1280,19 @@ const EngineerAsAService = () => {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className={`transition-all duration-700 ${visibleSections.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <span className="inline-block text-xs font-semibold tracking-[0.25em] text-accent/70 mb-3 uppercase">
-                Get In Touch
+                {loaderData?.data?.data?.services_get_started_section?.small_heading}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                Ready to Build Your <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Dream Engineering Team?</span>
-              </h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.services_get_started_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-muted-foreground text-base mb-4 text-justify">
-                Get in touch with our team to discuss how Engineer as a Service can accelerate your projects and optimize your engineering capacity.
+                {loaderData?.data?.data?.services_get_started_section?.paragraph}
               </p>
               <div className="space-y-2">
-                {[
-                  "Onboard engineers within 72 hours",
-                  "Access to top 3% global talent",
-                  "Flexible engagement models",
-                  "Full compliance and security",
-                  "End-to-end management"
-                ].map((item, index) => (
+                {loaderData?.data?.data?.services_get_started_section?.lists?.map((item: any, index: number) => (
                   <div key={index} className={`flex items-center gap-3 transition-all duration-500 ${visibleSections.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
                     style={{ transitionDelay: `${200 + index * 100}ms` }}
                   >
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
-                    <span className="text-foreground/80">{item}</span>
+                    <span className="text-foreground/80">{item.list}</span>
                   </div>
                 ))}
               </div>
@@ -1318,7 +1306,6 @@ const EngineerAsAService = () => {
                 boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(95, 194, 227, 0.05)",
                 animation: visibleSections.contact ? "borderGlow 4s ease-in-out infinite" : "none"
               }}>
-                {/* <ServiceContactForm serviceName="Engineer as a Service" /> */}
                 <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
               </div>
             </div>

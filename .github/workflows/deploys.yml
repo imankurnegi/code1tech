@@ -40,7 +40,7 @@ jobs:
 
       # 5️⃣ Build
       - name: Build React SSG
-        run: npm run build:ssg
+        run: npm run build
 
       # 6️⃣ Setup SSH key
       - name: Setup SSH
