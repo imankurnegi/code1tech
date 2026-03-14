@@ -12,6 +12,9 @@ interface GrowthStrategyData {
   strategy_2_heading: string;
   strategy_2_sub_heading: string;
   strategy_2_description: string;
+  growth_main_heading_white: string;
+  growth_main_heading_color: string;
+  growth_paragraph: string;
 }
 
 interface GrowthStrategiesProps {
@@ -154,14 +157,12 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
         {/* Header */}
         <div className={`max-w-4xl mx-auto text-center mb-10 md:mb-24 transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 leading-tight px-2 lg:text-4xl">
-            Two Growth Strategies.
+           {dataGrowth?.growth_main_heading_white}
             <br />
-            <span className="bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent">
-              One Mission: Your Success.
-            </span>
+            <span className="bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent" dangerouslySetInnerHTML={{ __html: addClassToSpan(dataGrowth?.growth_main_heading_color, "bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent") }} ></span>
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto px-4">
-            From outsourcing consultation to AI-driven enterprise solutions.
+            {dataGrowth?.growth_paragraph}
           </p>
         </div>
 
@@ -233,7 +234,7 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
                   dangerouslySetInnerHTML={{ __html: addClassToSpan(dataGrowth?.strategy_1_sub_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
                 />
 
-                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 flex-1 text-justify">
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-slate-200 flex-1 text-left">
                   {dataGrowth?.strategy_1_description}
                 </p>
 
@@ -309,7 +310,7 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
                   className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-5 leading-tight"
                   dangerouslySetInnerHTML={{ __html: addClassToSpan(dataGrowth?.strategy_2_sub_heading, "bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent") }}
                 />
-                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-[#e1e7ef] flex-1 text-justify">
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-[#e1e7ef] flex-1 text-left">
                   {dataGrowth?.strategy_2_description}
                 </p>
 

@@ -7,6 +7,7 @@ import Contact, { loader as contactLoader } from "./pages/Contact";
 import About, { loader as aboutLoader } from "./pages/About";
 import Team, { loader as teamLoader } from "./pages/Team";
 import EngineerAsAService, { loader as engServiceLoader } from "./pages/services/EngineerAsAService";
+import DataEngineering, { loader as dataEngineeringLoader } from "./pages/services/DataEngineering";
 
 export const routes = [
   {
@@ -47,6 +48,12 @@ export const routes = [
             path: "services/engineer-as-a-service",
             Component: EngineerAsAService,
             loader: engServiceLoader,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "services/data-engineering",
+            Component: DataEngineering,
+            loader: dataEngineeringLoader,
             errorElement: <ErrorPage />,
           },
         ],

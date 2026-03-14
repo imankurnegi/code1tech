@@ -46,8 +46,8 @@ const Index = () => {
   return (
     <>
       <SeoTags
-        title={homepageData?.data?.home_page_banner?.banner_main_heading}
-        description={homepageData?.data?.home_page_banner?.banner_paragraph}
+        title="Code1Tech - Your Trusted Partner for Custom Software Solutions"
+        description="Code1Tech is a leading software development company specializing in custom software solutions, AI accelerators, and enterprise technology services. We help businesses innovate and grow with cutting-edge technology."
         ogImage="https://lovable.dev/opengraph-image-p98pqg.png"
       />
         {/* {isLoading ? (

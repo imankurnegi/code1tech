@@ -219,8 +219,8 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
               border: "1px solid hsla(194, 68%, 50%, 0.15)"
             }}>
                 {/* Video Container */}
-                <div className="relative flex-1">
-                  <video ref={videoRef} key={currentVideo.video} autoPlay muted loop playsInline className="w-full h-full object-cover min-h-[280px] lg:min-h-[340px]">
+                <div className="relative flex-1 overflow-hidden">
+                  <video ref={videoRef} key={currentVideo.video} autoPlay muted loop playsInline className={`w-full h-full object-cover min-h-[280px] lg:min-h-[340px] ${currentVideo.id === 3 ? "scale-[1.18]" : ""} ${currentVideo.id === 4 ? "scale-[1.25]" : ""}`}>
                     <source src={currentVideo.video} type="video/mp4" />
                   </video>
                   
@@ -259,7 +259,8 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
                       }} muted loop playsInline className={`
                               w-full h-full object-cover 
                               transition-transform duration-500 ease-out
-                              ${activeThumb !== index && hoveredThumb === index ? "scale-110" : ""}
+                              ${video.id === 3 ? "scale-[1.35]" : ""} ${video.id === 4 ? "scale-[1.45]" : ""}
+                              ${activeThumb !== index && hoveredThumb === index ? (video.id === 3 ? "scale-[1.45]" : video.id === 4 ? "scale-[1.55]" : "scale-110") : ""}
                             `}>
                             <source src={video.video} type="video/mp4" />
                           </video>
@@ -291,7 +292,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
           {/* RIGHT COLUMN - Content */}
           <div className={`flex flex-col justify-center space-y-5 sm:space-y-6 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             {/* Subheading in accent blue */}
-            <h3 className="text-lg sm:text-xl text-accent font-bold md:text-2xl line-clamp-2 overflow-hidden" style={{
+            <h3 className="text-lg sm:text-xl text-accent font-bold md:text-2xl line-clamp-3 overflow-hidden" style={{
             textAlign: 'left',
             wordSpacing: 'normal',
             letterSpacing: 'normal',
@@ -302,7 +303,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
 
             {/* Content Text - Short readable paragraphs */}
             <div className="space-y-4 sm:space-y-5 text-sm sm:text-base lg:text-[15px] text-foreground/90 leading-relaxed lg:leading-[1.85]">
-              <p className="text-justify text-base"  dangerouslySetInnerHTML={{ __html: dataTrusted?.right_side_paragraph || "" }}>
+              <p className="text-left text-base"  dangerouslySetInnerHTML={{ __html: dataTrusted?.right_side_paragraph || "" }}>
             </p>
             </div>
 

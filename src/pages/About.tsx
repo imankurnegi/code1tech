@@ -194,7 +194,7 @@ const About = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-tight tracking-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.what_can_we_do_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
 
             <div className="space-y-4 mb-8">
-              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed text-justify" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.what_can_we_do_section?.description }}>
+              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.what_can_we_do_section?.description }}>
                 
               </p>
               {/* <p className="text-base lg:text-lg text-foreground/90 leading-relaxed">
@@ -467,8 +467,8 @@ const About = () => {
                   <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${isHovered ? "text-accent" : "text-foreground"}`}>
                     {value.heading}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed text-justify">
-                    {value.content}
+                  <p className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: value.content }}>
+                    
                   </p>
                 </div>
 
@@ -545,7 +545,7 @@ const About = () => {
                   </div>
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-relaxed text-justify">
+                  <p className="text-muted-foreground text-sm leading-relaxed text-left">
                     {approach.content}
                   </p>
                 </div>

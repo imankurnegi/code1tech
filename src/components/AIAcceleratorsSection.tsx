@@ -155,7 +155,7 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
             {/* Description Content */}
             {dataAiAgent?.section_description && (
               <div 
-                className={`text-muted-foreground text-sm sm:text-base leading-relaxed mb-8 text-justify transition-all duration-1000 delay-200 ${
+                className={`text-muted-foreground text-sm sm:text-base leading-relaxed mb-8 text-left transition-all duration-1000 delay-200 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
                 dangerouslySetInnerHTML={{ __html: dataAiAgent.section_description }}

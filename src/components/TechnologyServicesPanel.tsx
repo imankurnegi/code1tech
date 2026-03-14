@@ -2,33 +2,32 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useParallax } from "@/hooks/use-parallax";
 import { ArrowRight } from "lucide-react";
+import { addClassToSpan } from "@/lib/utils";
+import { DynamicIcon } from "./DynamicIcon";
 
-interface IconImage {
-  id: number;
-  url: string;
-  alt: string;
-  title: string;
-  width: number;
-  height: number;
+interface Outcome {
+  icon: string;
+  text: string;
 }
 
 interface ServiceCard {
-  card_heading: string;
-  card_description: string;
-  key_text: string;
-  key_team_1: string;
-  key_item_1_icon: IconImage;
-  key_team_2: string;
-  key_item_2_icon: IconImage;
-  key_team_3: string;
-  key_item_3_icon: IconImage;
-  card_icon: IconImage;
+  post_title: string;
+  post_content: string;
+  sdb: {
+    smart_technology_services_built_homepage: {
+      icon: string;
+      key_lists: Outcome[];
+      key_text: string;
+    };
+  };
 }
 
 interface SmartTechnologyData {
-  smart_tech_section: ServiceCard[];
+  smart_technology_cards: ServiceCard[];
   cta_text: string;
   cta_url: string;
+  heading: string;
+  sub_heading: string;
 }
 
 interface TechnologyServicesPanelProps {
@@ -37,26 +36,14 @@ interface TechnologyServicesPanelProps {
 
 const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPanelProps) => {
   // Transform API data to match component structure
-  const services = dataSmartTechnology?.smart_tech_section?.map((card) => ({
-    icon: card.card_icon.url,
-    title: card.card_heading,
-    description: card.card_description,
-    keyText: card.key_text,
-    outcomes: [
-      {
-        icon: card.key_item_1_icon.url,
-        text: card.key_team_1,
-      },
-      {
-        icon: card.key_item_2_icon.url,
-        text: card.key_team_2,
-      },
-      {
-        icon: card.key_item_3_icon.url,
-        text: card.key_team_3,
-      },
-    ],
+  const services = dataSmartTechnology?.smart_technology_cards?.map((card) => ({
+    icon: card.sdb?.smart_technology_services_built_homepage?.icon || "",
+    title: card.post_title || "",
+    description: card.post_content || "",
+    keyText: card.sdb?.smart_technology_services_built_homepage?.key_text || "",
+    outcomes: card.sdb?.smart_technology_services_built_homepage?.key_lists || []
   })) || [];
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -109,11 +96,9 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Header */}
         <div className={`text-center mb-12 md:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 lg:text-4xl">
-            Smart Technology Services Built Around You
-          </h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 lg:text-4xl" dangerouslySetInnerHTML={{ __html: addClassToSpan(dataSmartTechnology?.heading, "bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent")}} />
           <p className="text-muted-foreground text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">
-            Modular services designed to scale, secure, and accelerate your business.
+            {dataSmartTechnology?.sub_heading}
           </p>
         </div>
 
@@ -126,14 +111,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
             const isActive = index === activeIndex;
             return <button key={index} onClick={() => handleServiceChange(index)} className={`flex-shrink-0 flex flex-col items-center gap-2 p-4 rounded-xl border transition-all duration-300 min-w-[100px] ${isActive ? "bg-accent/10 border-accent shadow-lg shadow-accent/20" : "bg-muted/30 border-border/50 hover:border-accent/50 hover:bg-muted/50"}`}>
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors duration-300 ${isActive ? "bg-accent/20" : "bg-muted"}`}>
-                    <img 
-                      src={service.icon} 
-                      alt={service.title} 
-                      className="w-5 h-5"
-                      style={{
-                        filter: isActive ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
-                      }}
-                    />
+                    <DynamicIcon name={service.icon} className={`w-6 h-6 transition-colors duration-300 ${isActive ? "text-accent" : "text-muted-foreground group-hover:text-accent"}`} />
                   </div>
                   <span 
                     className={`text-xs font-medium text-center leading-tight ${isActive ? "text-foreground" : "text-muted-foreground"}`}
@@ -149,16 +127,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
             const isActive = index === activeIndex;
             return <button key={index} onClick={() => handleServiceChange(index)} className={`group flex flex-col items-center gap-3 p-4 rounded-xl border transition-all duration-300 ${isActive ? "bg-accent/10 border-accent shadow-lg shadow-accent/20" : "bg-muted/30 border-border/50 hover:border-accent/50 hover:bg-muted/50"}`}>
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300 ${isActive ? "bg-accent/20" : "bg-muted group-hover:bg-accent/10"}`}>
-                    <img 
-                      src={service.icon} 
-                      alt={service.title} 
-                      className="w-6 h-6 transition-all duration-300"
-                      style={{
-                        filter: isActive 
-                          ? 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)' 
-                          : 'brightness(0) saturate(100%) invert(50%) sepia(8%) saturate(295%) hue-rotate(180deg) brightness(95%) contrast(88%)'
-                      }}
-                    />
+                     <DynamicIcon name={service.icon} className={`w-6 h-6 transition-colors duration-300 ${isActive ? "text-accent" : "text-muted-foreground group-hover:text-accent"}`} />
                   </div>
                   <span 
                     className={`text-sm font-medium text-center leading-tight transition-colors duration-300 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
@@ -179,14 +148,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                 {/* Service Icon & Title */}
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center">
-                    <img 
-                      src={activeService.icon} 
-                      alt={activeService.title} 
-                      className="w-7 h-7"
-                      style={{
-                        filter: 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)'
-                      }}
-                    />
+                    <DynamicIcon name={activeService.icon} className="w-7 h-7 text-accent" />
                   </div>
                   <h3 
                     className="text-2xl font-bold text-foreground"
@@ -195,7 +157,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                 </div>
 
                 {/* Description */}
-                <p className="text-muted-foreground leading-relaxed mb-8 text-justify">
+                <p className="text-muted-foreground leading-relaxed mb-8 text-left">
                   {activeService.description}
                 </p>
 
@@ -208,14 +170,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                     {activeService.outcomes.map((outcome, index) => (
                       <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-muted/30 border border-border/30">
                         <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                          <img 
-                            src={outcome.icon} 
-                            alt={outcome.text} 
-                            className="w-4 h-4"
-                            style={{
-                              filter: 'brightness(0) saturate(100%) invert(71%) sepia(46%) saturate(589%) hue-rotate(144deg) brightness(95%) contrast(92%)'
-                            }}
-                          />
+                          <DynamicIcon name={outcome.icon} className="w-4 h-4 text-accent" />
                         </div>
                         <span className="text-foreground text-sm font-medium">
                           {outcome.text}

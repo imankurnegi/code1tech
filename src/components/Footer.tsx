@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Mail, ChevronDown, Phone, Link } from "lucide-react";
-import ambitionBoxIcon from "@/assets/ambitionbox.svg";
 
 interface FooterMenuItem {
   id: number;
@@ -94,6 +93,8 @@ const Footer = ({ footerSecData }: FooterProps) => {
     setOpenSection(openSection === section ? null : section);
   };
 
+  console.log(import.meta.env.BASE_URL);
+
   return (
     <footer className="bg-[hsl(222,50%,4%)] border-t border-border/20">
       <div className="container mx-auto px-4 lg:px-8">
@@ -105,7 +106,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
               <img
                 alt={footerSecData.footer_logo.alt || "Code1 Tech Systems"}
                 src={footerSecData.footer_logo.full}
-                className="h-24 w-auto object-contain mb-4"
+                className="h-12 w-auto object-contain mb-4"
               />
             )}
             <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
@@ -188,7 +189,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Ambition Box"
                   >
-                    <img src={ambitionBoxIcon} alt="Ambition Box" className="w-4 h-4" />
+                    <img src={`${import.meta.env.BASE_URL}/ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
                   </a>
                 )}
                 {footerSecData?.social_links?.facebook && (
@@ -476,7 +477,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Ambition Box"
                 >
-                 <img src={ambitionBoxIcon} alt="Ambition Box" className="w-4 h-4" />
+                 <img src={`${import.meta.env.BASE_URL}/ambitionbox.svg`} alt="Ambition Box" className="w-4 h-4" />
                 </a>
               )}
               {footerSecData?.social_links?.linkedin && (

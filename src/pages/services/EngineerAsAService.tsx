@@ -385,16 +385,16 @@ const EngineerAsAService = () => {
                 {loaderData?.data?.data?.banner_section?.highlighted_text}
               </p>
               
+              <Link to={loaderData?.data?.data?.banner_section?.cta_url}>
               <Button 
                 size="lg"
                 className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
               >
-                <Link to={loaderData?.data?.data?.banner_section?.cta_url}>
                   {loaderData?.data?.data?.banner_section?.cta_text}
-                </Link>
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>
-            </div>
+             </Link>
+               </div>
           </div>
 
           {/* Animated Stats Bar */}
