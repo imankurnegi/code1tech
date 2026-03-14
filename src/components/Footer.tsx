@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Mail, ChevronDown, Phone, Link } from "lucide-react";
+import { Mail, ChevronDown, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface FooterMenuItem {
   id: number;
@@ -376,6 +377,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
           </div>
 
           {/* Hire Talent Accordion */}
+          {hireTalentLinks.length > 0 && (
           <div className="border-b border-border/20">
             <button
               onClick={() => toggleSection("hireTalent")}
@@ -403,7 +405,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 ))}
               </ul>
             </div>
-          </div>
+          </div>)}
 
           {/* Contact Accordion */}
           <div className="border-b border-border/20">
@@ -477,7 +479,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Ambition Box"
                 >
-                 <img src={`${import.meta.env.BASE_URL}/ambitionbox.svg`} alt="Ambition Box" className="w-4 h-4" />
+                 <img src={`${import.meta.env.BASE_URL}/ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
                 </a>
               )}
               {footerSecData?.social_links?.linkedin && (
