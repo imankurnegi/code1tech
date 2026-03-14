@@ -8,6 +8,7 @@ import About, { loader as aboutLoader } from "./pages/About";
 import Team, { loader as teamLoader } from "./pages/Team";
 import EngineerAsAService, { loader as engServiceLoader } from "./pages/services/EngineerAsAService";
 import DataEngineering, { loader as dataEngineeringLoader } from "./pages/services/DataEngineering";
+import AIMLSolutions, { loader as AIMLSolutionsLoader } from "./pages/services/AIMLSolutions";
 
 export const routes = [
   {
@@ -54,6 +55,12 @@ export const routes = [
             path: "services/data-engineering",
             Component: DataEngineering,
             loader: dataEngineeringLoader,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "services/ai-ml-solutions",
+            Component: AIMLSolutions,
+            loader: AIMLSolutionsLoader,
             errorElement: <ErrorPage />,
           },
         ],
