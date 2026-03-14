@@ -566,7 +566,7 @@ const AIMLSolutions = () => {
             {/* Left – Image */}
             <div className={`relative transition-all duration-500 ease-out ${isVisible ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-12 scale-95"}`}>
               <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: "0 25px 80px rgba(0,0,0,0.6), 0 0 60px rgba(95,194,227,0.1)" }}>
-                <img src={loaderData?.data?.data?.banner_section?.banner_image?.url} alt={loaderData?.data?.data?.banner_section?.banner_image?.alt} className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" fetchPriority="high" />
+                <img src={loaderData?.data?.data?.banner_section?.banner_image?.url} alt={loaderData?.data?.data?.banner_section?.banner_image?.alt} className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-70" />
                 <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
               </div>
@@ -723,7 +723,7 @@ const AIMLSolutions = () => {
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Card 1 – Real-Time Streaming */}
             {loaderData?.data?.data?.advanced_capabilities_section?.box_fields?.length && loaderData?.data?.data?.advanced_capabilities_section?.box_fields.map((box,i) => (
-              <div className="group relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col gap-4" style={{ background: "rgba(10,18,35,0.75)", border: "1px solid rgba(95,194,227,0.15)", backdropFilter: "blur(14px)", boxShadow: "0 8px 32px rgba(0,0,0,0.45)" }}>
+              <div key={i} className="group relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col gap-4" style={{ background: "rgba(10,18,35,0.75)", border: "1px solid rgba(95,194,227,0.15)", backdropFilter: "blur(14px)", boxShadow: "0 8px 32px rgba(0,0,0,0.45)" }}>
               <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-accent/25 rounded-tr-lg" />
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.1))", border: "1px solid rgba(95,194,227,0.25)" }}>
