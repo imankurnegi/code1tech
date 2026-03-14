@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 interface NavMenuItem {
   id: number;
@@ -37,18 +37,18 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
   const mainNavMenus = navMenus?.primary_menu || [];
   const ctaMenus = navMenus?.secondary_menu || [];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-    setIsOpen(false);
-    setActiveDropdown(null);
-  };
+  // const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  //   e.preventDefault();
+  //   const target = document.querySelector(href);
+  //   if (target) {
+  //     target.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "start"
+  //     });
+  //   }
+  //   setIsOpen(false);
+  //   setActiveDropdown(null);
+  // };
 
   // Scroll-spy: track all major sections on homepage
   useEffect(() => {
@@ -73,13 +73,13 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
       <div className="container mx-auto px-6 lg:px-12 h-full">
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <Link to="/" className="flex items-center group shrink-0">
+          <a href="/" className="flex items-center group shrink-0">
             <img
               alt="Code1 Tech Systems"
               className="h-10 w-auto transition-all duration-300 group-hover:brightness-110 brightness-110 contrast-110"
               src={headerLogo?.full}
             />
-          </Link>
+          </a>
 
           {/* Desktop Navigation - Centered */}
           <div className="hidden lg:flex items-center justify-center flex-1 gap-10">
@@ -96,8 +96,8 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                   onMouseEnter={() => hasDropdown && setActiveDropdown(link.title)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link
-                    to={link.url}
+                  <a
+                    href={`${import.meta.env.BASE_URL}${link.url}`}
                     className="relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent"
                   >
                     {link.title}
@@ -107,7 +107,7 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                           }`}
                       />
                     )}
-                  </Link>
+                  </a>
 
                   {/* Mega Dropdown */}
                   {hasDropdown && link.children && (
@@ -123,10 +123,9 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
 
                         <div className="grid grid-cols-1 gap-2 relative">
                           {link?.children?.map(item => (
-                            <Link
+                            <a
                               key={item.title}
-                              to={link.url}
-                              onClick={e => handleNavClick(e, link.url)}
+                              href={`${import.meta.env.BASE_URL}${link.url}`}
                               className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
@@ -141,12 +140,12 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                                   {item.subtitle}
                                 </div>
                               </div>
-                            </Link>
+                            </a>
                           ))}
                         </div>
 
                         {/* View All link */}
-                        <div className="mt-4 pt-4 border-t border-border/10">
+                        {/* <div className="mt-4 pt-4 border-t border-border/10">
                           <Link
                             to={link.url}
                             onClick={e => handleNavClick(e, link.url)}
@@ -155,7 +154,7 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                             View All {link.title}
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/all:translate-x-1" />
                           </Link>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   )}
@@ -170,7 +169,7 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
   ctaMenus?.map((menu, index) => {
     if (menu.class === "btn") {
       return (
-        <Link to={`${menu.url}`} key={index}>
+        <a href={`${import.meta.env.BASE_URL}${menu.url}`} key={index}>
           <Button
           size="sm"
           className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
@@ -181,18 +180,18 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
           </span>
           <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
         </Button>
-          </Link>
+          </a>
       );
     }
 
     return (
-      <Link
+      <a
         key={index}
-        to={`${menu.url}`}
+        href={`${import.meta.env.BASE_URL}${menu.url}`}
         className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
       >
         {menu.title}
-      </Link>
+      </a>
     );
   })
 }
@@ -234,14 +233,13 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
               // Simple link (no dropdown) – always neutral style on mobile
               if (!hasDropdown) {
                 return (
-                  <Link
+                  <a
                     key={link.title}
-                    to={link.url}
-                    onClick={e => handleNavClick(e, link.url)}
+                    href={`${import.meta.env.BASE_URL}${link.url}`}
                     className="relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5"
                   >
                     {link.title}
-                  </Link>
+                  </a>
                 );
               }
 
@@ -264,9 +262,8 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                       {link.children.map(item => (
                         <a
                           key={item.title}
-                          href={item.url}
+                          href={`${import.meta.env.BASE_URL}${item.url}`}
                           onClick={e => {
-                            handleNavClick(e, item.url);
                             setIsOpen(false);
                             setMobileDropdown(null);
                           }}
@@ -289,7 +286,7 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
     return menu.class === "btn" ? (
       <a
         key={index}
-        href={`${menu.url}`}
+        href={`${import.meta.env.BASE_URL}${menu.url}`}
         onClick={() => setIsOpen(false)}
         className="w-full"
       >
@@ -299,14 +296,13 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
         </Button>
       </a>
     ) : (
-      <Link
+      <a
         key={index}
-        to={`${menu.url}`}
-        onClick={(e) => handleNavClick(e, menu.url)}
+        href={`${import.meta.env.BASE_URL}${menu.url}`}
         className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
       >
         {menu.title}
-      </Link>
+      </a>
     );
   })
 }

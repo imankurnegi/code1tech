@@ -94,8 +94,6 @@ const Footer = ({ footerSecData }: FooterProps) => {
     setOpenSection(openSection === section ? null : section);
   };
 
-  console.log(import.meta.env.BASE_URL);
-
   return (
     <footer className="bg-[hsl(222,50%,4%)] border-t border-border/20">
       <div className="container mx-auto px-4 lg:px-8">
