@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import ClientCaptcha from 'react-client-captcha'
+
 
 const contactSchema = z.object({
   firstName: z.string().trim().min(1, "Please enter your first name").max(50, "First name must be less than 50 characters"),
@@ -15,6 +17,7 @@ const contactSchema = z.object({
   phone: z.string().trim().min(1, "Please enter your phone number").max(20, "Phone number must be less than 20 characters"),
   company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
   message: z.string().trim().min(10, "Please share a bit more about your needs").max(1000, "Message must be less than 1000 characters"),
+  captcha: z.string().min(1, "Please enter captcha")
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
@@ -70,6 +73,9 @@ const ContactUsForm = ({ contactFormFields, onSubmit: onSubmitProp }: ContactUsF
   const [selectedCountryCode, setSelectedCountryCode] = useState("+91");
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
 
+  const [generatedCaptcha, setGeneratedCaptcha] = useState("");
+const [captchaError, setCaptchaError] = useState("");
+
   const { toast } = useToast();
 
   const {
@@ -86,7 +92,15 @@ const ContactUsForm = ({ contactFormFields, onSubmit: onSubmitProp }: ContactUsF
   }
 
   const onSubmit = async (data: ContactFormData) => {
+    if (data.captcha.toLowerCase() !== generatedCaptcha.toLowerCase()) {
+      setCaptchaError("Captcha does not match");
+      return;
+    }
+
+    setCaptchaError("");
+
     setIsSubmitting(true);
+
     try {
       if (onSubmitProp) {
         await onSubmitProp(data);
@@ -262,7 +276,37 @@ const ContactUsForm = ({ contactFormFields, onSubmit: onSubmitProp }: ContactUsF
             </div>
           );
         })}
-
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Enter Captcha
+          </label>
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="Type captcha"
+              {...register("captcha")}
+              onChange={(e) => {
+                setCaptchaError("");
+                register("captcha").onChange(e);
+              }}
+              className={`pr-[165px] h-12 bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 rounded-xl ${errors.captcha || captchaError ? "border-destructive" : ""
+                }`}
+            />
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-white px-1">
+              <ClientCaptcha captchaCode={(code) => setGeneratedCaptcha(code)} />
+            </div>
+          </div>
+          {errors.captcha && (
+            <p className="text-destructive text-xs mt-1.5">
+              {errors.captcha.message}
+            </p>
+          )}
+          {captchaError && !errors.captcha && (
+            <p className="text-destructive text-xs mt-1.5">
+              {captchaError}
+            </p>
+          )}
+        </div>
         <Button type="submit" variant="hero" size="lg" disabled={isSubmitting || isSubmitted} className="w-full group h-14 text-base font-semibold rounded-xl disabled:opacity-70">
           {isSubmitting ? <span className="flex items-center gap-2">
             <span className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />

@@ -36,7 +36,7 @@ jobs:
       # 3️⃣ Install deps
       - name: Install dependencies
         if: steps.cache-node.outputs.cache-hit != 'true'
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       # 5️⃣ Build
       - name: Build React SSG
