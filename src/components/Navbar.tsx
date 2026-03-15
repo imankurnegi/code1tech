@@ -125,11 +125,10 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                           {link?.children?.map(item => (
                             <a
                               key={item.title}
-                              href={`${import.meta.env.BASE_URL}${link.url}`}
+                              href={`${import.meta.env.BASE_URL}${item.url}`}
                               className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
-                                {/* <img src={item.icon} className="w-4 h-4"/> */}
                                 <DynamicIcon name={item.class} className="w-4 h-4" />
                               </div>
                               <div className="flex-1 min-w-0">
