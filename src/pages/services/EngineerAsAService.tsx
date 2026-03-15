@@ -10,6 +10,7 @@ import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import SeoTags from "@/components/SeoTags";
 
 export async function loader() {
   try {
@@ -308,9 +309,13 @@ const EngineerAsAService = () => {
       </div>
     );
   };
-
   return (
     <>
+    <SeoTags
+        title={loaderData?.data?.data?.seo?.title}
+        description={loaderData?.data?.data?.seo?.description}
+        ogImage={loaderData?.data?.data?.seo?.og_image}
+      />
       {/* ====== HERO SECTION ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{
         background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)"
@@ -378,7 +383,7 @@ const EngineerAsAService = () => {
             {/* Right Side - Content */}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-              <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-lg text-justify">
+              <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-lg text-left">
                 {loaderData?.data?.data?.banner_section?.banner_description}
               </p>
               <p className="text-base font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
@@ -586,7 +591,7 @@ const EngineerAsAService = () => {
                       }} />
                     </div>
 
-                    <p className="text-muted-foreground text-sm leading-[1.75] text-justify">{pillar.description}</p>
+                    <p className="text-muted-foreground text-sm leading-[1.75] text-left">{pillar.description}</p>
 
                     {/* Bottom metric bar */}
                     <div className="mt-5 flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-all duration-500">
@@ -685,7 +690,7 @@ const EngineerAsAService = () => {
                         {service.title}
                       </h3>
 
-                      <p className="text-muted-foreground text-[13px] sm:text-[13px] lg:text-[15px] leading-[1.7] lg:leading-[1.75] text-justify">
+                      <p className="text-muted-foreground text-[13px] sm:text-[13px] lg:text-[15px] leading-[1.7] lg:leading-[1.75] text-left">
                         {service.description}
                       </p>
 
@@ -812,7 +817,7 @@ const EngineerAsAService = () => {
 
                     <h3 className="text-base font-bold text-foreground mb-2 tracking-tight" dangerouslySetInnerHTML={{ __html: step.title }} />
                     <div className="w-8 h-[1px] mb-2 opacity-40" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
-                    <p className="text-muted-foreground text-sm leading-[1.7] text-justify flex-grow">{step.description}</p>
+                    <p className="text-muted-foreground text-sm leading-[1.7] text-left flex-grow">{step.description}</p>
                   </div>
                 </div>
               </div>
@@ -984,7 +989,7 @@ const EngineerAsAService = () => {
                       }} />
                     </div>
 
-                    <p className="text-muted-foreground text-sm leading-[1.75] text-justify">{advantage.description}</p>
+                    <p className="text-muted-foreground text-sm leading-[1.75] text-left">{advantage.description}</p>
                   </div>
                 </div>
               </div>
@@ -1128,7 +1133,7 @@ const EngineerAsAService = () => {
                     <h3 className="text-xl font-bold text-foreground">{model.title}</h3>
                   </div>
 
-                  <p className="text-muted-foreground text-sm leading-[1.8] text-justify">{model.description}</p>
+                  <p className="text-muted-foreground text-sm leading-[1.8] text-left">{model.description}</p>
                   {/* {model.subtext && (
                     <p className="text-muted-foreground text-sm leading-[1.8] mt-3 text-justify">{model.subtext}</p>
                   )} */}
@@ -1215,7 +1220,7 @@ const EngineerAsAService = () => {
                     <DynamicIcon name={item.icon} className="w-5 h-5" />
                   </div>
                   <h3 className="text-sm lg:text-base font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground text-xs lg:text-sm leading-[1.7] text-justify">{item.description}</p>
+                  <p className="text-muted-foreground text-xs lg:text-sm leading-[1.7] text-left">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -1283,7 +1288,7 @@ const EngineerAsAService = () => {
                 {loaderData?.data?.data?.services_get_started_section?.small_heading}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.services_get_started_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-              <p className="text-muted-foreground text-base mb-4 text-justify">
+              <p className="text-muted-foreground text-base mb-4 text-left">
                 {loaderData?.data?.data?.services_get_started_section?.paragraph}
               </p>
               <div className="space-y-2">

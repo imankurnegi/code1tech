@@ -112,6 +112,24 @@ export const api = {
     return response.json();
   },
 
+  getPrivacyPolicyData: async () => {
+    const response = await fetch(`${BASE_URL}/privacy-policy`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch Privacy Policy data");
+    }
+
+    return response.json();
+  },
+
+  getTermsCondition: async () => {
+    const response = await fetch(`${BASE_URL}/terms-conditions`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch Terms & Conditions data");
+    }
+
+    return response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",

@@ -7,6 +7,7 @@ import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
+import SeoTags from "@/components/SeoTags";
 
 export async function loader() {
   try {
@@ -555,6 +556,11 @@ const AIMLSolutions = () => {
 
   return (
     <>
+    <SeoTags
+                title={loaderData?.data?.data?.seo?.title}
+                description={loaderData?.data?.data?.seo?.description}
+                ogImage={loaderData?.data?.data?.seo?.og_image}
+              />
       {/* ── HERO ── */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)" }}>
         <NetworkCanvas />

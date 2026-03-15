@@ -42,13 +42,13 @@ const Index = () => {
   const homepageData = loaderData?.homeData;
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
   const contactFormFields = loaderData?.contactFormFields ?? null;
-
+  
   return (
     <>
       <SeoTags
-        title="Code1Tech - Your Trusted Partner for Custom Software Solutions"
-        description="Code1Tech is a leading software development company specializing in custom software solutions, AI accelerators, and enterprise technology services. We help businesses innovate and grow with cutting-edge technology."
-        ogImage="https://lovable.dev/opengraph-image-p98pqg.png"
+        title={homepageData?.data?.seo?.title}
+        description={homepageData?.data?.seo?.description}
+        ogImage={homepageData?.data?.seo?.og_image}
       />
         {/* {isLoading ? (
           <div className="flex justify-center items-center h-screen">

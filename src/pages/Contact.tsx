@@ -91,12 +91,12 @@ const Contact = () => {
     createObserver(brandsRef, setIsBrandsVisible);
     return () => observers.forEach(obs => obs.disconnect());
   }, []);
-
+  
   return <>
     <SeoTags
-        title={"Contact Us - Code1Tech"}
-        description={"Get in touch with Code1Tech for expert software development, AI solutions, and digital transformation services. We're here to help your business thrive in the digital age."}
-        ogImage="https://lovable.dev/opengraph-image-p98pqg.png"
+        title={loaderData?.contactData?.data?.seo?.title}
+        description={loaderData?.contactData?.data?.seo?.description}
+        ogImage={loaderData?.contactData?.data?.seo?.og_image}
       />
     {/* ========== HERO SECTION ========== */}
     <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 lg:pt-24" style={{

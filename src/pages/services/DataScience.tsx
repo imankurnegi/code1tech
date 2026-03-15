@@ -14,6 +14,7 @@ import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm"
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
+import SeoTags from "@/components/SeoTags";
 
 export async function loader() {
   try {
@@ -775,9 +776,14 @@ const DataScience = () => {
       </div>
     );
   };
-
+  
   return (
     <>
+        <SeoTags
+                    title={loaderData?.data?.data?.seo?.title}
+                    description={loaderData?.data?.data?.seo?.description}
+                    ogImage={loaderData?.data?.data?.seo?.og_image}
+                  />
       {/* ===== 1. HERO / BANNER ===== */}
       <section
         className="relative py-8 lg:py-12 overflow-hidden"
@@ -1253,7 +1259,7 @@ const DataScience = () => {
                     </div>
                     <div>
                       <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed text-justify">{item.description}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed text-left">{item.description}</p>
                       <div className="mt-3 w-8 h-px group-hover:w-16 transition-all duration-500" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
                     </div>
                   </div>
@@ -1433,7 +1439,7 @@ const DataScience = () => {
                 style={{ ...cardStyle, transitionDelay: `${300 + index * 100}ms` }}
               >
                 <Quote className="w-8 h-8 text-accent/30 mb-4" />
-                <p className="text-foreground/90 text-sm leading-relaxed mb-4 italic text-justify">"{t.quote}"</p>
+                <p className="text-foreground/90 text-sm leading-relaxed mb-4 italic text-left">"{t.quote}"</p>
                 <div className="flex items-center gap-2">
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-accent text-accent" />)}

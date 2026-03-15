@@ -20,6 +20,7 @@ import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
+import SeoTags from "@/components/SeoTags";
 
 export async function loader() {
   try {
@@ -416,6 +417,7 @@ const engagementModels = loaderData?.data?.data?.data_engineers_engagement_model
 const advancedCapabilities = loaderData?.data?.data?.industries?.map((industry: any) => ({
   icon: industry.sdb.data_engineers_capabilities.icon,
   title: industry.post_title,
+  contentTitle: industry.sdb.data_engineers_capabilities.content_heading,
   subtitle: industry.sdb.data_engineers_capabilities.content,
   liveText: industry.sdb.data_engineers_capabilities.live_text,
   items: industry.sdb.data_engineers_capabilities.right_blocks.map((block: any) => ({ label: block.heading, details: block.content }))
@@ -479,6 +481,11 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
 
   return (
     <>
+    <SeoTags
+            title={loaderData?.data?.data?.seo?.title}
+            description={loaderData?.data?.data?.seo?.description}
+            ogImage={loaderData?.data?.data?.seo?.og_image}
+          />
       {/* ====== HERO ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)" }}>
         <NetworkCanvas />
@@ -711,7 +718,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                       style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.3)" }}>
                       {(() => {const Icon = advancedCapabilities[activeCapTab].icon;return <DynamicIcon name={Icon} className="w-5 h-5" />;})()}
                     </div>
-                    <h3 className="text-base font-bold text-foreground mb-2 leading-snug">{advancedCapabilities[activeCapTab].title}</h3>
+                    <h3 className="text-base font-bold text-foreground mb-2 leading-snug">{advancedCapabilities[activeCapTab].contentTitle}</h3>
                     <div className="w-8 h-[2px] mb-3" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
                     <p className="text-sm text-muted-foreground leading-relaxed">{advancedCapabilities[activeCapTab].subtitle}</p>
                   </div>
@@ -1065,8 +1072,8 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
             </div>
             {/* Inline KPIs */}
             <div className="flex gap-8 shrink-0">
-              {[{ val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_1, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_1 }, { val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_2, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_2 }, { val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_3, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_3 }].map((k) =>
-              <div key={k.lbl} className="text-center">
+              {[{ val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_1, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_1 }, { val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_2, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_2 }, { val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_3, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_3 }].map((k, i) =>
+              <div key={i} className="text-center">
                   <div className="text-2xl lg:text-3xl font-black" style={{ background: "linear-gradient(135deg,#5FC2E3,#0077B6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{k.val}</div>
                   <div className="text-xs mt-1" style={{ color: "rgba(180,210,240,0.55)" }}>{k.lbl}</div>
                 </div>
@@ -1185,8 +1192,8 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
               </div>
               {/* Trust badges */}
               <div className="flex flex-wrap gap-2">
-                {loaderData?.data?.data?.digital_security_compliance_section?.tags?.map((badge) =>
-                <span key={badge} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.2)", color: "#5FC2E3" }}>
+                {loaderData?.data?.data?.digital_security_compliance_section?.tags?.map((badge, i) =>
+                <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.2)", color: "#5FC2E3" }}>
                     <Shield className="w-3 h-3" />
                     {badge.label}
                   </span>
@@ -1332,7 +1339,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
             <div className={`transition-all duration-700 ${visibleSections.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <span className="inline-block text-xs font-semibold tracking-[0.25em] text-accent/70 mb-3 uppercase">{loaderData?.data?.data?.services_get_started_section_section?.small_heading}</span>
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.services_get_started_section_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-              <p className="text-muted-foreground text-base mb-4 text-justify">
+              <p className="text-muted-foreground text-base mb-4 text-left">
                 {loaderData?.data?.data?.services_get_started_section_section?.paragraph}
               </p>
               <div className="space-y-2">

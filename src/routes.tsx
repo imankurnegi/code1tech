@@ -10,6 +10,8 @@ import EngineerAsAService, { loader as engServiceLoader } from "./pages/services
 import DataEngineering, { loader as dataEngineeringLoader } from "./pages/services/DataEngineering";
 import AIMLSolutions, { loader as AIMLSolutionsLoader } from "./pages/services/AIMLSolutions";
 import DataScience, { loader as dataScienceLoader } from "./pages/services/DataScience";
+import TermsConditions, {loader as dataTermsLoader} from "./pages/TermsConditions";
+import PrivacyPolicy, {loader as dataPrivacyLoader} from "./pages/PrivacyPolicy";
 
 export const routes = [
   {
@@ -41,7 +43,7 @@ export const routes = [
             errorElement: <ErrorPage />,
           },
           {
-            path: "teams",
+            path: "team",
             Component: Team,
             loader: teamLoader,
             errorElement: <ErrorPage />,
@@ -64,11 +66,22 @@ export const routes = [
             loader: AIMLSolutionsLoader,
             errorElement: <ErrorPage />,
           },
-
           {
             path: "services/data-science",
             Component: DataScience,
             loader: dataScienceLoader,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "terms-conditions",
+            Component: TermsConditions,
+            loader: dataTermsLoader,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "privacy-policy",
+            Component: PrivacyPolicy,
+            loader: dataPrivacyLoader,
             errorElement: <ErrorPage />,
           },
         ],

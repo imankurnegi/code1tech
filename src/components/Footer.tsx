@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Mail, ChevronDown, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
 
 interface FooterMenuItem {
   id: number;
@@ -365,9 +364,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <Link to={link.url} className="text-muted-foreground text-sm">
+                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm">
                       {link.title}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -396,9 +395,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
-                    <Link to={link.url} className="text-muted-foreground text-sm">
+                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm">
                       {link.title}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -559,7 +558,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
             <>
               <span className="hidden sm:block text-border">|</span>
               <a
-                href={footerSecData.legal_links.privacy_policy}
+                href={`${import.meta.env.BASE_URL}${footerSecData.legal_links.privacy_policy}`}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 Privacy Policy

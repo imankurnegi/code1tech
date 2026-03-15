@@ -5,6 +5,7 @@ import { Link, useLoaderData } from "react-router-dom";
 
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
+import SeoTags from "@/components/SeoTags";
 
 
   const getInitials = (name: string) => {
@@ -90,10 +91,13 @@ const Team = () => {
 
     return () => observer.disconnect();
   }, []);
-
-
   return (
       <>
+      <SeoTags
+              title={loaderData?.data?.seo?.title}
+              description={loaderData?.data?.seo?.description}
+              ogImage={loaderData?.data?.seo?.og_image}
+            />
         {/* Hero Section */}
         <section 
           ref={heroRef}

@@ -65,10 +65,10 @@ const About = () => {
   
   return <>
     <SeoTags
-      title="About Us"
-      description="Learn more about our company and team."
-      ogImage="https://lovable.dev/opengraph-image-p98pqg.png"
-    />
+        title={loaderData.aboutData?.data?.seo?.title}
+        description={loaderData.aboutData?.data?.seo?.description}
+        ogImage={loaderData.aboutData?.data?.seo?.og_image}
+      />
     {/* Hero Section - Matching Home page style */}
     <section ref={heroRef} className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 lg:pt-28" style={{
       background: "hsl(222 47% 5%)"
