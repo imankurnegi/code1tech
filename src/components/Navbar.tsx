@@ -4,29 +4,32 @@ import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
 import { useLocation } from "react-router-dom";
 
-interface NavMenuItem {
-  id: number;
+export interface MenuItem {
   title: string;
   url: string;
-  icon: string;
-  class: any;
-  subtitle: string;
-  children?: NavMenuItem[];
+  subtitle?: string;
+  class?: string;
+  children?: MenuItem[];
 }
 
-interface HeaderProps {
-  headerLogo: {
-    logo_id: number;
-    full: string;
-    medium: string;
-  };
-  navMenus: {
-    primary_menu: NavMenuItem[];
-    secondary_menu: NavMenuItem[];
-  };
+export interface HeaderData {
+  logo: string;
+  alt: string;
+  primary_menu: {
+    title: string;
+    url: string;
+    subtitle?: string;
+    class?: string;
+    children?: MenuItem[];
+  }[];
+  secondary_menu: MenuItem[];
 }
 
-const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
+export interface HeaderProps {
+  data?: HeaderData;
+}
+
+const Navbar = ({ data }: HeaderProps) => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -34,31 +37,18 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
 
-  const mainNavMenus = navMenus?.primary_menu || [];
-  const ctaMenus = navMenus?.secondary_menu || [];
-
-  // const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-  //   e.preventDefault();
-  //   const target = document.querySelector(href);
-  //   if (target) {
-  //     target.scrollIntoView({
-  //       behavior: "smooth",
-  //       block: "start"
-  //     });
-  //   }
-  //   setIsOpen(false);
-  //   setActiveDropdown(null);
-  // };
+  const mainNavMenus = data?.primary_menu || [];
+  const ctaMenus = data?.secondary_menu || [];
 
   // Scroll-spy: track all major sections on homepage
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    
+
     // Initial check
     handleScroll();
-    
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
@@ -66,8 +56,8 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled
-          ? "h-16 bg-[hsl(222_47%_6%/0.98)] backdrop-blur-xl border-b border-accent/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
-          : "h-20 bg-gradient-to-b from-[hsl(222_47%_5%)] via-[hsl(222_47%_5%/0.95)] to-transparent"
+        ? "h-16 bg-[hsl(222_47%_6%/0.98)] backdrop-blur-xl border-b border-accent/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]"
+        : "h-20 bg-gradient-to-b from-[hsl(222_47%_5%)] via-[hsl(222_47%_5%/0.95)] to-transparent"
         }`}
     >
       <div className="container mx-auto px-6 lg:px-12 h-full">
@@ -75,9 +65,9 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
           {/* Logo */}
           <a href="/" className="flex items-center group shrink-0">
             <img
-              alt="Code1 Tech Systems"
+              alt={data?.alt}
               className="h-10 w-auto transition-all duration-300 group-hover:brightness-110 brightness-110 contrast-110"
-              src={headerLogo?.full}
+              src={data?.logo}
             />
           </a>
 
@@ -113,8 +103,8 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                   {hasDropdown && link.children && (
                     <div
                       className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 ${isDropdownOpen
-                          ? "opacity-100 visible translate-y-0"
-                          : "opacity-0 invisible -translate-y-2"
+                        ? "opacity-100 visible translate-y-0"
+                        : "opacity-0 invisible -translate-y-2"
                         }`}
                     >
                       <div className="bg-background/95 backdrop-blur-xl rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-5 min-w-[320px]">
@@ -164,36 +154,36 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-5 shrink-0">
-            {ctaMenus.length > 0 && 
-  ctaMenus?.map((menu, index) => {
-    if (menu.class === "btn") {
-      return (
-        <a href={`${import.meta.env.BASE_URL}${menu.url}`} key={index}>
-          <Button
-          size="sm"
-          className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
-        >
-            <span className="relative z-10 flex items-center gap-2 text-primary-foreground">
-            {menu.title}
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-          </span>
-          <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-        </Button>
-          </a>
-      );
-    }
+            {ctaMenus.length > 0 &&
+              ctaMenus?.map((menu, index) => {
+                if (menu.class === "btn") {
+                  return (
+                    <a href={`${import.meta.env.BASE_URL}${menu.url}`} key={index}>
+                      <Button
+                        size="sm"
+                        className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
+                      >
+                        <span className="relative z-10 flex items-center gap-2 text-primary-foreground">
+                          {menu.title}
+                          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                        </span>
+                        <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                      </Button>
+                    </a>
+                  );
+                }
 
-    return (
-      <a
-        key={index}
-        href={`${import.meta.env.BASE_URL}${menu.url}`}
-        className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
-      >
-        {menu.title}
-      </a>
-    );
-  })
-}
+                return (
+                  <a
+                    key={index}
+                    href={`${import.meta.env.BASE_URL}${menu.url}`}
+                    className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
+                  >
+                    {menu.title}
+                  </a>
+                );
+              })
+            }
           </div>
 
           {/* Mobile Menu Button */}
@@ -249,8 +239,8 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
                     type="button"
                     onClick={() => setMobileDropdown(mobileDropdown === link.title ? null : link.title)}
                     className={`w-full relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between ${mobileDropdown === link.title
-                        ? "text-accent bg-accent/10"
-                        : "text-foreground/70 hover:text-foreground hover:bg-foreground/5"
+                      ? "text-accent bg-accent/10"
+                      : "text-foreground/70 hover:text-foreground hover:bg-foreground/5"
                       }`}
                   >
                     {link.title}
@@ -280,31 +270,31 @@ const Navbar = ({ headerLogo, navMenus }: HeaderProps) => {
           </div>
           <div className="flex flex-col gap-3 pt-5 mt-5 border-t border-border/10">
             {
-  ctaMenus.length > 0 &&
-  ctaMenus.map((menu, index) => {
-    return menu.class === "btn" ? (
-      <a
-        key={index}
-        href={`${import.meta.env.BASE_URL}${menu.url}`}
-        onClick={() => setIsOpen(false)}
-        className="w-full"
-      >
-        <Button className="w-full bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium py-3 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.2)] flex items-center justify-center gap-2">
-          {menu.title}
-          <ArrowRight className="w-4 h-4" />
-        </Button>
-      </a>
-    ) : (
-      <a
-        key={index}
-        href={`${import.meta.env.BASE_URL}${menu.url}`}
-        className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
-      >
-        {menu.title}
-      </a>
-    );
-  })
-}
+              ctaMenus.length > 0 &&
+              ctaMenus.map((menu, index) => {
+                return menu.class === "btn" ? (
+                  <a
+                    key={index}
+                    href={`${import.meta.env.BASE_URL}${menu.url}`}
+                    onClick={() => setIsOpen(false)}
+                    className="w-full"
+                  >
+                    <Button className="w-full bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium py-3 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.2)] flex items-center justify-center gap-2">
+                      {menu.title}
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </a>
+                ) : (
+                  <a
+                    key={index}
+                    href={`${import.meta.env.BASE_URL}${menu.url}`}
+                    className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
+                  >
+                    {menu.title}
+                  </a>
+                );
+              })
+            }
           </div>
         </div>
       </div>

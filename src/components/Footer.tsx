@@ -1,92 +1,103 @@
 import { useState } from "react";
 import { Mail, ChevronDown, Phone } from "lucide-react";
 
-interface FooterMenuItem {
-  id: number;
+export interface FooterMenuItem {
+  id: number | string;
   title: string;
   url: string;
 }
 
-interface FooterMenuSection {
+export interface FooterMenuSection {
   title: string;
   items: FooterMenuItem[];
 }
 
-interface FooterData {
-  footer_logo: {
-    id: number;
-    full: string;
-    medium: string;
-    alt: string;
-  };
-  footer_text: string;
-  copyright_text: string;
-  footer_menus: {
-    code: FooterMenuSection;
-    hire: FooterMenuSection;
-  };
-  social_links: {
-    linkedin: string;
-    instagram: string;
-    twitter: string;
-    facebook: string;
-    ambition_box: string;
-    pinterest: string;
-  };
-  legal_links: {
-    privacy_policy: string;
-  };
-  contact: {
-    email: string;
-    sales_email: string;
-    sales_number_1: string;
-    sales_number_2: string;
-    sales_number_3: string;
-    hr_number_1: string;
-    hr_number_2: string;
-    address: string;
-    address_2: string;
-    address_3: string;
-    address_heading_1: string;
-    address_heading_2: string;
-    address_heading_3: string;
-  };
+export interface FooterMenus {
+  code?: FooterMenuSection;
+  hire?: FooterMenuSection;
 }
 
-interface FooterProps {
-  footerSecData?: FooterData;
+export interface FooterContact {
+  address_heading_1?: string;
+  address?: string;
+  address_heading_2?: string;
+  address_2?: string;
+  address_heading_3?: string;
+  address_3?: string;
+
+  email?: string;
+  sales_email?: string;
+
+  sales_number_1?: string;
+  sales_number_2?: string;
+  sales_number_3?: string;
+
+  hr_number_1?: string;
+  hr_number_2?: string;
 }
 
-const Footer = ({ footerSecData }: FooterProps) => {
+export interface SocialLinks {
+  ambition_box?: string;
+  facebook?: string;
+  linkedin?: string;
+  instagram?: string;
+  twitter?: string;
+  pinterest?: string;
+}
+
+export interface FooterLogo {
+  full?: string;
+  alt?: string;
+}
+
+export interface LegalLinks {
+  privacy_policy?: string;
+}
+
+export interface FooterData {
+  footer_logo?: FooterLogo;
+  footer_text?: string;
+  contact?: FooterContact;
+  footer_menus?: FooterMenus;
+  social_links?: SocialLinks;
+  legal_links?: LegalLinks;
+  copyright_text?: string;
+}
+
+export interface FooterProps {
+  data?: FooterData;
+}
+
+const Footer = ({ data }: FooterProps) => {
   const [openSection, setOpenSection] = useState<string | null>(null);
 
-  const addresses = footerSecData?.contact
+  const addresses = data?.contact
     ? [
       {
-        label: footerSecData.contact.address_heading_1 || "",
-        address: footerSecData.contact.address || "",
+        label: data.contact.address_heading_1 || "",
+        address: data.contact.address || "",
       },
       {
-        label: footerSecData.contact.address_heading_2 || "",
-        address: footerSecData.contact.address_2 || "",
+        label: data.contact.address_heading_2 || "",
+        address: data.contact.address_2 || "",
       },
       {
-        label: footerSecData.contact.address_heading_3 || "",
-        address: footerSecData.contact.address_3 || "",
+        label: data.contact.address_heading_3 || "",
+        address: data.contact.address_3 || "",
       },
     ].filter((addr) => addr.address)
     : [];
 
-  const code1Links = footerSecData?.footer_menus?.code?.items || [];
+  const code1Links = data?.footer_menus?.code?.items || [];
 
-  const hireTalentLinks = footerSecData?.footer_menus?.hire?.items || [];
+  const hireTalentLinks = data?.footer_menus?.hire?.items || [];
 
-  const salesNumbers = footerSecData?.contact
-    ? [footerSecData.contact.sales_number_1, footerSecData.contact.sales_number_2, footerSecData.contact.sales_number_3].filter(Boolean)
+  const salesNumbers = data?.contact
+    ? [data.contact.sales_number_1, data.contact.sales_number_2, data.contact.sales_number_3].filter(Boolean)
     : [];
 
-  const hrNumbers = footerSecData?.contact
-    ? [footerSecData.contact.hr_number_1, footerSecData.contact.hr_number_2].filter(Boolean)
+  const hrNumbers = data?.contact
+    ? [data.contact.hr_number_1, data.contact.hr_number_2].filter(Boolean)
     : [];
 
   const toggleSection = (section: string) => {
@@ -100,15 +111,15 @@ const Footer = ({ footerSecData }: FooterProps) => {
         <div className="hidden md:block py-14 lg:py-16">
           {/* Top Section with Logo, Tagline and CTA */}
           <div className="mb-12 pb-10 border-b border-border/20">
-            {footerSecData?.footer_logo?.full && (
+            {data?.footer_logo?.full && (
               <img
-                alt={footerSecData.footer_logo.alt || "Code1 Tech Systems"}
-                src={footerSecData.footer_logo.full}
+                alt={data.footer_logo.alt || "Code1 Tech Systems"}
+                src={data.footer_logo.full}
                 className="h-12 w-auto object-contain mb-4"
               />
             )}
             <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
-              {footerSecData?.footer_text || ""}
+              {data?.footer_text || ""}
             </p>
           </div>
 
@@ -136,13 +147,13 @@ const Footer = ({ footerSecData }: FooterProps) => {
             {/* Code1 Links */}
             <div>
               <h4 className="text-foreground font-semibold text-base mb-5">
-                {footerSecData?.footer_menus?.code?.title || "Code1"}
+                {data?.footer_menus?.code?.title || "Code1"}
               </h4>
               <ul className="space-y-3">
                 {code1Links.map((link) => (
                   <li key={link.id}>
                     <a
-                      href={link.url}
+                      href={`${import.meta.env.BASE_URL}${link.url}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                     >
                       {link.title}
@@ -156,13 +167,13 @@ const Footer = ({ footerSecData }: FooterProps) => {
             {hireTalentLinks.length > 0 &&
               <div>
               <h4 className="text-foreground font-semibold text-base mb-5">
-                {footerSecData?.footer_menus?.hire?.title || "Hire Talent"}
+                {data?.footer_menus?.hire?.title || "Hire Talent"}
               </h4>
               <ul className="space-y-3">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
                     <a
-                      href={link.url}
+                      href={`${import.meta.env.BASE_URL}${link.url}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                     >
                       {link.title}
@@ -179,9 +190,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 Follow US
               </h4>
               <div className="flex items-center gap-2 mb-6 flex-wrap">
-                {footerSecData?.social_links?.ambition_box && (
+                {data?.social_links?.ambition_box && (
                   <a
-                    href={footerSecData.social_links.ambition_box}
+                    href={data.social_links.ambition_box}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
@@ -190,9 +201,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     <img src={`${import.meta.env.BASE_URL}/ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
                   </a>
                 )}
-                {footerSecData?.social_links?.facebook && (
+                {data?.social_links?.facebook && (
                   <a
-                    href={footerSecData.social_links.facebook}
+                    href={data.social_links.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
@@ -201,9 +212,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-facebook w-4 h-4 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                   </a>
                 )}
-                {footerSecData?.social_links?.linkedin && (
+                {data?.social_links?.linkedin && (
                   <a
-                    href={footerSecData.social_links.linkedin}
+                    href={data.social_links.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
@@ -212,9 +223,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                   </a>
                 )}
-                {footerSecData?.social_links?.instagram && (
+                {data?.social_links?.instagram && (
                   <a
-                    href={footerSecData.social_links.instagram}
+                    href={data.social_links.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
@@ -223,9 +234,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-instagram w-4 h-4 text-muted-foreground"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
                   </a>
                 )}
-                {footerSecData?.social_links?.twitter && (
+                {data?.social_links?.twitter && (
                   <a
-                    href={footerSecData.social_links.twitter}
+                    href={data.social_links.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
@@ -234,9 +245,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-twitter w-4 h-4 text-muted-foreground"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
                   </a>
                 )}
-                {footerSecData?.social_links?.pinterest && (
+                {data?.social_links?.pinterest && (
                   <a
-                    href={footerSecData.social_links.pinterest}
+                    href={data.social_links.pinterest}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
@@ -251,25 +262,25 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 Email:
               </h4>
               <div className="space-y-2">
-                {footerSecData?.contact?.email && (
+                {data?.contact?.email && (
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-accent" />
                     <a
-                      href={`mailto:${footerSecData.contact.email}`}
+                      href={`mailto:${data.contact.email}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                     >
-                      {footerSecData.contact.email}
+                      {data.contact.email}
                     </a>
                   </div>
                 )}
-                {footerSecData?.contact?.sales_email && (
+                {data?.contact?.sales_email && (
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4 text-accent" />
                     <a
-                      href={`mailto:${footerSecData.contact.sales_email}`}
+                      href={`mailto:${data.contact.sales_email}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                     >
-                      {footerSecData.contact.sales_email}
+                      {data.contact.sales_email}
                     </a>
                   </div>
                 )}
@@ -314,15 +325,15 @@ const Footer = ({ footerSecData }: FooterProps) => {
         <div className="md:hidden py-10">
           {/* Brand */}
           <div className="mb-8 pb-8 border-b border-border/20">
-            {footerSecData?.footer_logo?.full && (
+            {data?.footer_logo?.full && (
               <img
-                src={footerSecData.footer_logo.full}
-                alt={footerSecData.footer_logo.alt || "Code1 Tech Systems"}
+                src={data.footer_logo.full}
+                alt={data.footer_logo.alt || "Code1 Tech Systems"}
                 className="h-16 w-auto mb-4"
               />
             )}
             <p className="text-muted-foreground text-sm leading-relaxed">
-              {footerSecData?.footer_text || ""}
+              {data?.footer_text || ""}
             </p>
           </div>
 
@@ -350,7 +361,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
               className="w-full flex items-center justify-between py-4"
             >
               <span className="text-foreground font-semibold text-sm">
-                {footerSecData?.footer_menus?.code?.title || "Code1"}
+                {data?.footer_menus?.code?.title || "Code1"}
               </span>
               <ChevronDown
                 className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "code1" ? "rotate-180" : ""
@@ -381,7 +392,7 @@ const Footer = ({ footerSecData }: FooterProps) => {
               className="w-full flex items-center justify-between py-4"
             >
               <span className="text-foreground font-semibold text-sm">
-                {footerSecData?.footer_menus?.hire?.title || "Hire Talent"}
+                {data?.footer_menus?.hire?.title || "Hire Talent"}
               </span>
               <ChevronDown
                 className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "hireTalent" ? "rotate-180" : ""
@@ -424,14 +435,14 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 <div>
                   <p className="text-foreground text-sm font-medium mb-2">Email:</p>
                   <div className="space-y-2">
-                    {footerSecData?.contact?.email && (
-                      <a href={`mailto:${footerSecData.contact.email}`} className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <Mail className="w-4 h-4 text-accent" /> {footerSecData.contact.email}
+                    {data?.contact?.email && (
+                      <a href={`mailto:${data.contact.email}`} className="flex items-center gap-2 text-muted-foreground text-sm">
+                        <Mail className="w-4 h-4 text-accent" /> {data.contact.email}
                       </a>
                     )}
-                    {footerSecData?.contact?.sales_email && (
-                      <a href={`mailto:${footerSecData.contact.sales_email}`} className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <Mail className="w-4 h-4 text-accent" /> {footerSecData.contact.sales_email}
+                    {data?.contact?.sales_email && (
+                      <a href={`mailto:${data.contact.sales_email}`} className="flex items-center gap-2 text-muted-foreground text-sm">
+                        <Mail className="w-4 h-4 text-accent" /> {data.contact.sales_email}
                       </a>
                     )}
                   </div>
@@ -468,9 +479,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
           <div className="py-6">
             <p className="text-foreground text-sm font-medium mb-3">Follow US</p>
             <div className="flex items-center gap-2 flex-wrap">
-              {footerSecData?.social_links?.ambition_box && (
+              {data?.social_links?.ambition_box && (
                 <a
-                  href={footerSecData.social_links.ambition_box}
+                  href={data.social_links.ambition_box}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -479,9 +490,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                  <img src={`${import.meta.env.BASE_URL}/ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
                 </a>
               )}
-              {footerSecData?.social_links?.linkedin && (
+              {data?.social_links?.linkedin && (
                 <a
-                  href={footerSecData.social_links.linkedin}
+                  href={data.social_links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -490,9 +501,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
               )}
-              {footerSecData?.social_links?.facebook && (
+              {data?.social_links?.facebook && (
                 <a
-                  href={footerSecData.social_links.facebook}
+                  href={data.social_links.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -501,9 +512,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-facebook w-4 h-4 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
                 </a>
               )}
-              {footerSecData?.social_links?.linkedin && (
+              {data?.social_links?.linkedin && (
                 <a
-                  href={footerSecData.social_links.linkedin}
+                  href={data.social_links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -512,9 +523,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </a>
               )}
-              {footerSecData?.social_links?.instagram && (
+              {data?.social_links?.instagram && (
                 <a
-                  href={footerSecData.social_links.instagram}
+                  href={data.social_links.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -523,9 +534,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-instagram w-4 h-4 text-muted-foreground"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
                 </a>
               )}
-              {footerSecData?.social_links?.twitter && (
+              {data?.social_links?.twitter && (
                 <a
-                  href={footerSecData.social_links.twitter}
+                  href={data.social_links.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -534,9 +545,9 @@ const Footer = ({ footerSecData }: FooterProps) => {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-twitter w-4 h-4 text-muted-foreground"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
                 </a>
               )}
-              {footerSecData?.social_links?.pinterest && (
+              {data?.social_links?.pinterest && (
                 <a
-                  href={footerSecData.social_links.pinterest}
+                  href={data.social_links.pinterest}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
@@ -552,13 +563,13 @@ const Footer = ({ footerSecData }: FooterProps) => {
         {/* Bottom Bar */}
         <div className="py-6 border-t border-border/20 flex flex-col sm:flex-row items-center justify-center gap-4">
           <p className="text-xs text-muted-foreground">
-            {footerSecData?.copyright_text || ""}
+            {data?.copyright_text || ""}
           </p>
-          {footerSecData?.legal_links?.privacy_policy && (
+          {data?.legal_links?.privacy_policy && (
             <>
               <span className="hidden sm:block text-border">|</span>
               <a
-                href={`${import.meta.env.BASE_URL}${footerSecData.legal_links.privacy_policy}`}
+                href={`${import.meta.env.BASE_URL}${data.legal_links.privacy_policy}`}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 Privacy Policy
