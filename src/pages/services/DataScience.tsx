@@ -6,9 +6,8 @@ import {
   CheckCircle,
   Quote,
   Star,
-  TrendingUp,
 } from "lucide-react";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import dsIndustriesBgImg from "@/assets/ds-industries-bg.jpg";
 import { api } from "@/api";
@@ -1039,7 +1038,7 @@ const DataScience = () => {
       </section>
 
       {/* Inline CTA 1 */}
-      <InlineCTA text={pageData?.cta_section_heading} buttonText={pageData?.cta_text} image={''} />
+      <InlineCTA text={pageData?.cta_section_heading} buttonText={pageData?.cta_text} />
 
       {/* ===== 4. ADVANCED DATA SCIENCE SERVICES ===== */}
       <section className="py-8 lg:py-12" style={sectionBg2}>
@@ -1200,7 +1199,7 @@ const DataScience = () => {
       </section>
 
       {/* Inline CTA 2 */}
-      <InlineCTA text={howWeWorkSection?.cta_section_text} buttonText={howWeWorkSection?.cta_text} image={''} link={howWeWorkSection?.cta_url} />
+      <InlineCTA text={howWeWorkSection?.cta_section_text} buttonText={howWeWorkSection?.cta_text} link={howWeWorkSection?.cta_url} />
 
       {/* ===== 7. WHY CHOOSE US ===== */}
       <section className="py-14 lg:py-20 overflow-hidden" style={sectionBg3}>
@@ -1374,7 +1373,7 @@ const DataScience = () => {
       </section>
 
       {/* ===== 11. CASE STUDIES ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg3}>
+      {/* <section className="py-8 lg:py-12" style={sectionBg3}>
         <div className="container mx-auto px-4 lg:px-8">
           <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2
@@ -1408,7 +1407,7 @@ const DataScience = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ===== 12. TESTIMONIALS ===== */}
       <section className="py-8 lg:py-12" style={sectionBg2}>
