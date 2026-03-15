@@ -9,36 +9,35 @@ const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
-    const disableRightClick = (e: MouseEvent) => {
+    const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
     };
 
-    const disableDevTools = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "F12") {
         e.preventDefault();
       }
 
-      if (e.ctrlKey && e.shiftKey && e.key === "I") {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
         e.preventDefault();
       }
 
-      if (e.ctrlKey && e.shiftKey && e.key === "J") {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
         e.preventDefault();
       }
 
-      if (e.ctrlKey && e.key === "u") {
+      if (e.ctrlKey && e.key.toLowerCase() === "u") {
         e.preventDefault();
       }
     };
 
-    document.addEventListener("contextmenu", disableRightClick);
-    document.addEventListener("keydown", disableDevTools);
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("contextmenu", disableRightClick);
-      document.removeEventListener("keydown", disableDevTools);
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
