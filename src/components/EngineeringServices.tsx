@@ -1,21 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import engineerServiceImg from "@/assets/engineer-service.jpg";
-import dataSolutionsImg from "@/assets/data-solutions.jpg";
-import aiMachineLearningImg from "@/assets/ai-machine-learning.jpg";
 
 interface ServiceCategory {
-  term_id: number;
   name: string;
-  slug: string;
-  term_group: number;
-  term_taxonomy_id: number;
-  taxonomy: string;
   description: string;
-  parent: number;
-  count: number;
-  filter: string;
+  acf: {
+    card_image: string;
+    card_learn_more: string;
+  };
 }
 
 interface EngineeringData {
@@ -125,16 +118,13 @@ const useNetworkAnimation = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
 };
 
 const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
-  // Map images to service categories
-  const serviceImages = [engineerServiceImg, dataSolutionsImg, aiMachineLearningImg, dataSolutionsImg];
-  
   // Transform API data to match component structure
   const services = dataEngineering?.service_categories?.map((category, index) => ({
     tag: category.name.split(' ')[0].toUpperCase(),
     title: category.name,
     description: category.description,
-    image: serviceImages[index] || engineerServiceImg,
-    keyword: category.slug,
+    image: category.acf.card_image,
+    ctaLink: category.acf.card_learn_more,
   })) || [];
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -289,6 +279,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                   </p>
 
                   {/* CTA */}
+                  <a href={`${import.meta.env.BASE_URL}${service.ctaLink}`}>
                   <Button
                     variant="ghost"
                     className="group/btn p-0 h-auto text-foreground/70 hover:text-accent hover:bg-transparent"
@@ -296,6 +287,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                     Learn More
                     <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
+                  </a>
                 </div>
 
                 {/* Bottom accent line */}

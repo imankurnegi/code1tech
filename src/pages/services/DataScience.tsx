@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import dsIndustriesBgImg from "@/assets/ds-industries-bg.jpg";
 import { api } from "@/api";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
@@ -578,6 +577,7 @@ const DataScience = () => {
   const advanceDataHeading = pageData?.advanced_data_heading;
   const advanceDataDescription = pageData?.advanced_data_description;
   const industriesSectionHeading = pageData?.industries_section_heading;
+  const dsIndustriesBgImg = pageData?.data_science_background_image;
   const industriesSectionDescription = pageData?.industries_section_description;
   const techStackToolSection = pageData?.tech_stack_tools_section;
   const securityComplianceSection = pageData?.security_and_compliance_section;

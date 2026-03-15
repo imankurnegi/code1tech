@@ -3,7 +3,6 @@ import { ArrowRight, ChevronDown, ChevronUp, ChevronRight } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { api } from "@/api";
-import aimlAdvancedCaps from "@/assets/aiml-advanced-caps.jpg"
 import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
@@ -708,7 +707,7 @@ const AIMLSolutions = () => {
       {/* ── ADVANCED CAPABILITIES ── */}
       <section className="relative py-16 lg:py-24 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={aimlAdvancedCaps} alt="Advanced AI Capabilities" className="w-full h-full object-cover" style={{ filter: "brightness(0.25) saturate(0.7)" }} />
+          <img src={loaderData?.data?.data?.advanced_capabilities_section?.background_image?.url} alt={loaderData?.data?.data?.advanced_capabilities_section?.background_image?.alt} className="w-full h-full object-cover" style={{ filter: "brightness(0.25) saturate(0.7)" }} />
           <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(8,14,28,0.95) 0%, rgba(8,14,28,0.80) 50%, rgba(8,14,28,0.95) 100%)" }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(95,194,227,0.07) 0%, transparent 70%)" }} />
         </div>
