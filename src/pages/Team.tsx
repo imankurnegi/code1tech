@@ -200,7 +200,7 @@ const Team = () => {
           }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <Link to={loaderData?.data?.our_architects_section?.cta_url} className="block">
+            <Link to={loaderData?.data?.our_architects_section?.connection_section_url} className="block">
               <div
                 className={`relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-700 border border-border/10 hover:border-accent/20 ${bannerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{

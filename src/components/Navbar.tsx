@@ -40,6 +40,8 @@ const Navbar = ({ data }: HeaderProps) => {
   const mainNavMenus = data?.primary_menu || [];
   const ctaMenus = data?.secondary_menu || [];
 
+  console.log(data, 'nav')
+
   // Scroll-spy: track all major sections on homepage
   useEffect(() => {
     const handleScroll = () => {
@@ -88,7 +90,7 @@ const Navbar = ({ data }: HeaderProps) => {
                 >
                   <a
                     href={`${import.meta.env.BASE_URL}${link.url}`}
-                    className="relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent"
+                    className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
                     {hasDropdown && (
@@ -116,7 +118,7 @@ const Navbar = ({ data }: HeaderProps) => {
                             <a
                               key={item.title}
                               href={`${import.meta.env.BASE_URL}${item.url}`}
-                              className="group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300"
+                              className={`group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300 ${item.class === "disabled" ? "pointer-events-none" : ""}`}
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
                                 <DynamicIcon name={item.class} className="w-4 h-4" />
@@ -225,7 +227,7 @@ const Navbar = ({ data }: HeaderProps) => {
                   <a
                     key={link.title}
                     href={`${import.meta.env.BASE_URL}${link.url}`}
-                    className="relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5"
+                    className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5 ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
                   </a>
@@ -256,7 +258,7 @@ const Navbar = ({ data }: HeaderProps) => {
                             setIsOpen(false);
                             setMobileDropdown(null);
                           }}
-                          className="flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-foreground/70 hover:text-accent hover:bg-accent/5 transition-all duration-200"
+                          className={`flex items-center gap-3 py-2.5 px-3 rounded-lg text-sm text-foreground/70 hover:text-accent hover:bg-accent/5 transition-all duration-200 ${item.class === "disabled" ? "pointer-events-none" : ""}`}
                         >
                           <DynamicIcon name={item.class} className="w-4 h-4 text-accent/70" />
                           <span>{item.title}</span>

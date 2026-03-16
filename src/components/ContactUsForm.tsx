@@ -15,7 +15,7 @@ const contactSchema = z.object({
   lastName: z.string().trim().min(1, "Please enter your last name").max(50, "Last name must be less than 50 characters"),
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
   phone: z.string().trim().min(1, "Please enter your phone number").max(20, "Phone number must be less than 20 characters"),
-  company: z.string().trim().max(100, "Company name must be less than 100 characters").optional(),
+  subject: z.string().trim().optional(),
   message: z.string().trim().min(10, "Please share a bit more about your needs").max(1000, "Message must be less than 1000 characters"),
   captcha: z.string().min(1, "Please enter captcha")
 });
@@ -47,7 +47,7 @@ const FIELD_NAME_TO_SCHEMA_KEY: Record<string, keyof ContactFormData> = {
   "last-name": "lastName",
   "email": "email",
   "phone": "phone",
-  "company-name": "company",
+  "subject": "subject",
   "message": "message",
 };
 
@@ -242,7 +242,7 @@ const [captchaError, setCaptchaError] = useState("");
         {contactFormFields.row5?.map((field) => {
           const schemaKey = FIELD_NAME_TO_SCHEMA_KEY[field.field_name];
           if (!schemaKey) return null;
-          const isOptional = field.field_name === "company-name";
+          const isOptional = field.field_name === "subject";
           return (
             <div key={field.field_name} className="mb-5">
               <label htmlFor={field.field_name} className="block text-sm font-medium text-foreground mb-2">

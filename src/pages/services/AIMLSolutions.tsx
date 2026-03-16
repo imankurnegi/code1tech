@@ -500,7 +500,7 @@ const AIMLSolutions = () => {
           formData.append("last-name", data.lastName);
           formData.append("email", data.email);
           formData.append("phone", data.phone);
-          formData.append("company-name", data.company ?? "");
+          formData.append("subject", data.subject ?? "");
           formData.append("message", data.message);
           await api.submitContactForm(formData);
         };
