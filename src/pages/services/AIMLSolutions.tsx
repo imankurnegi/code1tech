@@ -738,7 +738,7 @@ const AIMLSolutions = () => {
                 <span className="text-4xl font-bold font-mono select-none" style={{ WebkitTextStroke: "1px rgba(95,194,227,0.18)", color: "transparent" }}>0{i + 1}</span>
               </div>
               <div>
-                <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300">{box.box_title}</h3>
+                <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: box.box_title}}></h3>
                 <div dangerouslySetInnerHTML={{ __html: he.decode(box.box_description) }} />
               </div>
             </div>
@@ -882,8 +882,7 @@ const AIMLSolutions = () => {
                       style={{ background: `linear-gradient(90deg, ${color}40, transparent)` }} />
 
                     {/* Description */}
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10 flex-1">
-                      {model.desc}
+                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10 flex-1" dangerouslySetInnerHTML={{ __html: model.desc}}>
                     </p>
                   </div>
                 );
@@ -1085,8 +1084,7 @@ const AIMLSolutions = () => {
                   </div>
 
                   {/* Title */}
-                  <h3 className="relative z-10 text-sm font-bold text-foreground mb-2 group-hover:text-white transition-colors duration-300 leading-snug">
-                    {item.title}
+                  <h3 className="relative z-10 text-sm font-bold text-foreground mb-2 group-hover:text-white transition-colors duration-300 leading-snug" dangerouslySetInnerHTML={{ __html: item.title}}>
                   </h3>
 
                   {/* Divider */}
@@ -1208,7 +1206,7 @@ const AIMLSolutions = () => {
                 <div className="p-3 rounded-xl bg-accent/10 text-accent w-fit mb-4">
                   <DynamicIcon name={item.icon} className="w-6 h-6" />
                 </div>
-                <h3 className="text-base font-semibold text-foreground mb-2">{item.heading}</h3>
+                <h3 className="text-base font-semibold text-foreground mb-2" dangerouslySetInnerHTML={{ __html: item.heading}}></h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
               </div>
             ))}

@@ -155,9 +155,7 @@ const Footer = ({ data }: FooterProps) => {
                     <a
                       href={`${import.meta.env.BASE_URL}${link.url}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                    >
-                      {link.title}
-                    </a>
+                     dangerouslySetInnerHTML={{ __html: link.title}}></a>
                   </li>
                 ))}
               </ul>
@@ -175,8 +173,7 @@ const Footer = ({ data }: FooterProps) => {
                     <a
                       href={`${import.meta.env.BASE_URL}${link.url}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                    >
-                      {link.title}
+                    dangerouslySetInnerHTML={{ __html: link.title}}>
                     </a>
                   </li>
                 ))}
@@ -375,8 +372,7 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm">
-                      {link.title}
+                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
                     </a>
                   </li>
                 ))}
@@ -406,8 +402,7 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
-                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm">
-                      {link.title}
+                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
                     </a>
                   </li>
                 ))}

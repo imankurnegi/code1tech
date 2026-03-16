@@ -110,9 +110,7 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
                   </div>
 
                   {/* Title */}
-                  <h3 className={`text-sm sm:text-lg font-bold mb-2 sm:mb-3 transition-colors duration-300 ${isHovered ? "text-foreground" : "text-foreground/90"}`}>
-                    {model.title}
-                  </h3>
+                  <h3 className={`text-sm sm:text-lg font-bold mb-2 sm:mb-3 transition-colors duration-300 ${isHovered ? "text-foreground" : "text-foreground/90"}`} dangerouslySetInnerHTML={{ __html: model.title}} />
 
                   {/* Description */}
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed flex-grow">

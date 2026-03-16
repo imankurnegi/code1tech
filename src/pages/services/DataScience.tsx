@@ -454,8 +454,7 @@ const AnalyticsSolutionsSection = ({
                       <h3
                         className="font-bold text-foreground leading-tight mb-5"
                         style={{ fontSize: "clamp(1.4rem, 2.2vw, 2rem)" }}
-                      >
-                        {solution.title}
+                       dangerouslySetInnerHTML={{ __html: solution.title}}>
                       </h3>
                       <p
                         className="text-muted-foreground text-sm lg:text-base leading-relaxed text-left"
@@ -1258,7 +1257,7 @@ const DataScience = () => {
                       <DynamicIcon name={item.icon} className="w-5 h-5 text-accent" />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
+                      <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
                       <p className="text-muted-foreground text-sm leading-relaxed text-left">{item.description}</p>
                       <div className="mt-3 w-8 h-px group-hover:w-16 transition-all duration-500" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
                     </div>

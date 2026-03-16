@@ -252,7 +252,7 @@ const serviceImages = data?.map((b: any) => b.image?.url) || [];
             }}>
               <DynamicIcon name={s.icon} className="w-4 h-4" />
             </div>
-            <span className="leading-tight hidden sm:block line-clamp-1">{s.title}</span>
+            <span className="leading-tight hidden sm:block line-clamp-1" dangerouslySetInnerHTML={{ __html: s.title}}></span>
             <span className="leading-tight sm:hidden">{s.title.split(" ").slice(0, 3).join(" ")}…</span>
           </button>
         ))}
@@ -602,7 +602,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
                       <DynamicIcon name={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.icon} className="w-5 h-5 text-accent" />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10">{loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.title}</h3>
+                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.title }}></h3>
                     <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.description }} />
                   </div>
                 </div>
@@ -618,7 +618,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
                       <DynamicIcon name={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.icon} className="w-5 h-5 text-accent" />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10">{loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.title}</h3>
+                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.title }}></h3>
                     <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.description }} />
                   </div>
                   {/* Image panel */}
@@ -718,7 +718,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                       style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.3)" }}>
                       {(() => {const Icon = advancedCapabilities[activeCapTab].icon;return <DynamicIcon name={Icon} className="w-5 h-5" />;})()}
                     </div>
-                    <h3 className="text-base font-bold text-foreground mb-2 leading-snug">{advancedCapabilities[activeCapTab].contentTitle}</h3>
+                    <h3 className="text-base font-bold text-foreground mb-2 leading-snug" dangerouslySetInnerHTML={{ __html: advancedCapabilities[activeCapTab].contentTitle}}></h3>
                     <div className="w-8 h-[2px] mb-3" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
                     <p className="text-sm text-muted-foreground leading-relaxed">{advancedCapabilities[activeCapTab].subtitle}</p>
                   </div>
@@ -734,9 +734,9 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                     style={{ border: "1px solid rgba(148,163,184,0.08)" }}>
                       <div className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#5FC2E3" }} />
-                        <span className="text-sm font-bold text-foreground/90">{item.label}</span>
+                        <span className="text-sm font-bold text-foreground/90" dangerouslySetInnerHTML={{ __html: item.label}}></span>
                       </div>
-                      <p className="text-[13px] text-muted-foreground leading-relaxed pl-3.5">{item.details}</p>
+                      <p className="text-[13px] text-muted-foreground leading-relaxed pl-3.5" dangerouslySetInnerHTML={{ __html: item.details}}></p>
                     </div>
                     )}
                 </div>
@@ -1006,11 +1006,11 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                   {/* Phase label */}
                   <span className="text-xs font-semibold tracking-widest text-accent/50 uppercase mb-1">{item.tag}</span>
                   {/* Title */}
-                  <h3 className="text-foreground font-bold text-base mb-3 group-hover:text-accent transition-colors duration-300">{item.title}</h3>
+                  <h3 className="text-foreground font-bold text-base mb-3 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
                   {/* Divider */}
                   <div className="w-8 h-px mb-4" style={{ background: "rgba(56,189,248,0.3)" }} />
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-[1.75] text-left flex-1">{item.description}</p>
+                  <p className="text-muted-foreground text-sm leading-[1.75] text-left flex-1"  dangerouslySetInnerHTML={{ __html: item.description}}></p>
                 </div>
               </div>
             )}
@@ -1038,7 +1038,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
             {techStack.map((stack, index) =>
             <div key={index} className={`group p-5 rounded-xl transition-all duration-500 hover:-translate-y-1 ${visibleSections.techstack ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
             style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(20px)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)", transitionDelay: `${index * 100}ms` }}>
-                <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-3">{stack.category}</h3>
+                <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-3" dangerouslySetInnerHTML={{__html: he.decode(stack.category)}}></h3>
                 <div className="w-8 h-[1px] mb-3 opacity-40" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
                 {/* <ul className="space-y-2">
                   {stack.items.map((item, i) =>
@@ -1111,7 +1111,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                       <DynamicIcon name={item.icon} />
                     </div>
                     {/* Title */}
-                    <h3 className="text-base lg:text-lg font-bold text-foreground leading-snug group-hover:text-[#5FC2E3] transition-colors duration-300">{item.title}</h3>
+                    <h3 className="text-base lg:text-lg font-bold text-foreground leading-snug group-hover:text-[#5FC2E3] transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
                     {/* Divider */}
                     <div className="w-10 h-px" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
                     {/* Description */}
@@ -1216,7 +1216,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                       <DynamicIcon name={item.icon} className="w-5 h-5 text-accent" />
                     </div>
                     <div>
-                      <h3 className="text-foreground font-semibold text-sm lg:text-base leading-snug group-hover:text-accent transition-colors duration-300">{item.title}</h3>
+                      <h3 className="text-foreground font-semibold text-sm lg:text-base leading-snug group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
                       <div className="mt-2 flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                         <span className="text-accent/60 text-xs font-medium">{item.label}</span>
@@ -1347,7 +1347,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                 <div key={index} className={`flex items-center gap-3 transition-all duration-500 ${visibleSections.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
                 style={{ transitionDelay: `${200 + index * 100}ms` }}>
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
-                    <span className="text-foreground/80">{item.list}</span>
+                    <span className="text-foreground/80" dangerouslySetInnerHTML={{ __html: item.list}}></span>
                   </div>
                 )}
               </div>

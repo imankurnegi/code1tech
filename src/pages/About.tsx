@@ -539,8 +539,7 @@ const About = () => {
                     <div className="w-9 h-9 rounded-md bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/20 flex items-center justify-center group-hover:border-accent/40 transition-colors flex-shrink-0">
                       <DynamicIcon name={approach.icon_class} className="w-4 h-4 text-accent" />
                     </div>
-                    <h3 className="text-base font-semibold text-foreground group-hover:text-accent transition-colors">
-                      {approach.heading}
+                    <h3 className="text-base font-semibold text-foreground group-hover:text-accent transition-colors" dangerouslySetInnerHTML={{ __html: approach.heading}}>
                     </h3>
                   </div>
 
