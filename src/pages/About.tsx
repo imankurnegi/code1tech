@@ -39,14 +39,22 @@ const About = () => {
   const [teamVisible, setTeamVisible] = useState(false);
   const [activeTab, setActiveTab] = useState("vision");
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLElement>(null);
   const visionRef = useRef<HTMLElement>(null);
   const valuesRef = useRef<HTMLElement>(null);
   const approachRef = useRef<HTMLElement>(null);
   const teamRef = useRef<HTMLElement>(null);
+  
   useEffect(() => {
+    setIsMounted(true);
     setHeroVisible(true);
+    setIntroVisible(true);
+    setVisionVisible(true);
+    setValuesVisible(true);
+    setApproachVisible(true);
+    setTeamVisible(true);
     const observers: IntersectionObserver[] = [];
     const createObserver = (ref: React.RefObject<HTMLElement>, setter: (v: boolean) => void) => {
       const observer = new IntersectionObserver(([entry]) => {
@@ -107,10 +115,10 @@ const About = () => {
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(12)].map((_, i) => <div key={i} className="absolute w-1 h-1 rounded-full bg-accent/20 animate-float" style={{
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          animationDelay: `${Math.random() * 5}s`,
-          animationDuration: `${6 + Math.random() * 4}s`
+          left: `${((i * 17) % 100)}%`,
+          top: `${((i * 23) % 100)}%`,
+          animationDelay: `${((i * 0.4) % 5)}s`,
+          animationDuration: `${6 + ((i * 0.3) % 4)}s`
         }} />)}
       </div>
 

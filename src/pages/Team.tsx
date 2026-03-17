@@ -56,6 +56,7 @@ const Team = () => {
    const [bannerVisible, setBannerVisible] = useState(false);
   const [engineersVisible, setEngineersVisible] = useState(false);
   const [engBannerVisible, setEngBannerVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
   const leadershipRef = useRef<HTMLElement>(null);
@@ -65,6 +66,7 @@ const Team = () => {
   const engBannerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    setIsMounted(true);
     window.scrollTo(0, 0);
     
     const observerOptions = {
