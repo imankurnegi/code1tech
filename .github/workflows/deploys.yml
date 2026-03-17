@@ -12,27 +12,25 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
-      # 1️⃣ Checkout
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node (use LTS instead of hardcoding 20)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           cache: 'npm'
 
-      # 3️⃣ Install deps
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      # 4️⃣ Build
       - name: Build React SSG
         run: npm run build:ssg
 
-      # 5️⃣ Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -40,7 +38,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy via rsync
       - name: Deploy via SFTP (rsync)
         run: |
           rsync -avz --delete \
