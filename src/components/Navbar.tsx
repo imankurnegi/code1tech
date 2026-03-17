@@ -89,7 +89,7 @@ const Navbar = ({ data }: HeaderProps) => {
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <Link
-                    to={`${import.meta.env.BASE_URL}${link.url}`}
+                    to={`/${import.meta.env.BASE_URL}${link.url}`}
                     className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
@@ -117,7 +117,7 @@ const Navbar = ({ data }: HeaderProps) => {
                           {link?.children?.map(item => (
                             <Link
                               key={item.title}
-                              to={`${import.meta.env.BASE_URL}${item.url}`}
+                              to={`/${import.meta.env.BASE_URL}${item.url}`}
                               className={`group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300 ${item.class === "disabled" ? "pointer-events-none" : ""}`}
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
