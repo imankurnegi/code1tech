@@ -12,37 +12,25 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
-      # 1️⃣ Checkout
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2️⃣ Node
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-      
-       # 3️⃣ Cache node_modules
-      - name: Cache node modules
-        id: cache-node
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 'lts/*'
+          cache: 'npm'
 
-      # 3️⃣ Install deps
       - name: Install dependencies
-        if: steps.cache-node.outputs.cache-hit != 'true'
-        run: npm install --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
-      # 5️⃣ Build
       - name: Build React SSG
         run: npm run build:ssg
 
-      # 6️⃣ Setup SSH key
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -50,7 +38,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
 
-      # 7️⃣ Deploy via rsync (KEY BASED)
       - name: Deploy via SFTP (rsync)
         run: |
           rsync -avz --delete \
