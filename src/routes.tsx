@@ -20,6 +20,7 @@ export const routes = [
     children: [
       {
         path: "",
+        id:"layout",
         Component: Layout,
         loader: layoutLoader,
         errorElement: <ErrorPage />,
