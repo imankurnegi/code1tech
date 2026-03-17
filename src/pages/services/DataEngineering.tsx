@@ -14,13 +14,14 @@ import {
 } from
 "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import { api } from "@/api";
+import { Link } from "react-router-dom";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
+import SeoTags from "@/components/SeoTags";
 import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
-import SeoTags from "@/components/SeoTags";
+import { api } from "@/api";
 
 export async function loader() {
   try {
@@ -350,7 +351,7 @@ const caseStudies = [
 // ══════════════════════════════════════════════════════════════
 
 const DataEngineering = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   const [activeCapTab, setActiveCapTab] = useState(0);
   const [capTabFading, setCapTabFading] = useState(false);
   const [indTab, setIndTab] = useState(0);

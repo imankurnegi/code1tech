@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowRight } from "lucide-react";
-import SeoTags from "@/components/SeoTags";
 import CertificationsSection from "@/components/CertificationsSection";
+import SeoTags from "@/components/SeoTags";
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 
 export async function loader() {
   try {
@@ -27,8 +28,9 @@ export async function loader() {
 }
 
 const About = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
+  const aboutData = loaderData?.aboutData?.data ?? {};
   const [heroVisible, setHeroVisible] = useState(false);
   const [introVisible, setIntroVisible] = useState(false);
   const [visionVisible, setVisionVisible] = useState(false);
