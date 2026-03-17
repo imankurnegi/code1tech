@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export interface MenuItem {
   title: string;
@@ -63,13 +63,13 @@ const Navbar = ({ data }: HeaderProps) => {
       <div className="container mx-auto px-6 lg:px-12 h-full">
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <Link to="/" className="flex items-center group shrink-0">
+          <a href="/" className="flex items-center group shrink-0">
             <img
               alt={data?.alt}
               className="h-10 w-auto transition-all duration-300 group-hover:brightness-110 brightness-110 contrast-110"
               src={data?.logo}
             />
-          </Link>
+          </a>
 
           {/* Desktop Navigation - Centered */}
           <div className="hidden lg:flex items-center justify-center flex-1 gap-10">
@@ -86,8 +86,8 @@ const Navbar = ({ data }: HeaderProps) => {
                   onMouseEnter={() => hasDropdown && setActiveDropdown(link.title)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link
-                    to={`${link?.url?.replace(/^\/+/, "")}`}
+                  <a
+                    href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
                     className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
@@ -97,7 +97,7 @@ const Navbar = ({ data }: HeaderProps) => {
                           }`}
                       />
                     )}
-                  </Link>
+                  </a>
 
                   {/* Mega Dropdown */}
                   {hasDropdown && link.children && (
@@ -113,9 +113,9 @@ const Navbar = ({ data }: HeaderProps) => {
 
                         <div className="grid grid-cols-1 gap-2 relative">
                           {link?.children?.map(item => (
-                            <Link
+                            <a
                               key={item.title}
-                              to={`${item?.url?.replace(/^\/+/, "")}`}
+                              href={`${import.meta.env.BASE_URL}${item?.url?.replace(/^\/+/, "")}`}
                               className={`group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300 ${item.class === "disabled" ? "pointer-events-none" : ""}`}
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
@@ -129,7 +129,7 @@ const Navbar = ({ data }: HeaderProps) => {
                                   {item.subtitle}
                                 </div>
                               </div>
-                            </Link>
+                            </a>
                           ))}
                         </div>
 
@@ -158,7 +158,7 @@ const Navbar = ({ data }: HeaderProps) => {
               ctaMenus?.map((menu, index) => {
                 if (menu.class === "btn") {
                   return (
-                    <Link to={`${menu?.url?.replace(/^\/+/, "")}`} key={index}>
+                    <a href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`} key={index}>
                       <Button
                         size="sm"
                         className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
@@ -169,18 +169,18 @@ const Navbar = ({ data }: HeaderProps) => {
                         </span>
                         <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                       </Button>
-                    </Link>
+                    </a>
                   );
                 }
 
                 return (
-                  <Link
+                  <a
                     key={index}
-                    to={`${menu?.url?.replace(/^\/+/, "")}`}
+                    href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
                     className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
                   >
                     {menu.title}
-                  </Link>
+                  </a>
                 );
               })
             }
@@ -222,13 +222,13 @@ const Navbar = ({ data }: HeaderProps) => {
               // Simple link (no dropdown) – always neutral style on mobile
               if (!hasDropdown) {
                 return (
-                  <Link
+                  <a
                     key={link.title}
-                    to={`${link?.url?.replace(/^\/+/, "")}`}
+                    href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
                     className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5 ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
-                  </Link>
+                  </a>
                 );
               }
 
@@ -249,9 +249,9 @@ const Navbar = ({ data }: HeaderProps) => {
                   {link.children && mobileDropdown === link.title && (
                     <div className="ml-4 mt-1 mb-2 flex flex-col gap-1 border-l border-accent/20 pl-3">
                       {link.children.map(item => (
-                        <Link
+                        <a
                           key={item.title}
-                          to={`${import.meta.env.BASE_URL}${item?.url?.replace(/^\/+/, "")}`}
+                          href={`${import.meta.env.BASE_URL}${item?.url?.replace(/^\/+/, "")}`}
                           onClick={e => {
                             setIsOpen(false);
                             setMobileDropdown(null);
@@ -260,7 +260,7 @@ const Navbar = ({ data }: HeaderProps) => {
                         >
                           <DynamicIcon name={item.class} className="w-4 h-4 text-accent/70" />
                           <span>{item.title}</span>
-                        </Link>
+                        </a>
                       ))}
                     </div>
                   )}
@@ -273,9 +273,9 @@ const Navbar = ({ data }: HeaderProps) => {
               ctaMenus.length > 0 &&
               ctaMenus.map((menu, index) => {
                 return menu.class === "btn" ? (
-                  <Link
+                  <a
                     key={index}
-                    to={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
+                    href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
                     onClick={() => setIsOpen(false)}
                     className="w-full"
                   >
@@ -283,15 +283,15 @@ const Navbar = ({ data }: HeaderProps) => {
                       {menu.title}
                       <ArrowRight className="w-4 h-4" />
                     </Button>
-                  </Link>
+                  </a>
                 ) : (
-                  <Link
+                  <a
                     key={index}
-                    to={`${menu?.url?.replace(/^\/+/, "")}`}
+                    href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
                     className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
                   >
                     {menu.title}
-                  </Link>
+                  </a>
                 );
               })
             }
