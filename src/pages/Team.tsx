@@ -151,7 +151,7 @@ const Team = () => {
               </div>
 
               {/* Leadership Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-10">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 lg:gap-10">
                 {loaderData?.data?.leadership_team_section.teams.length > 0 && loaderData?.data?.leadership_team_section?.teams?.map((member, index) => (
                   <TeamMemberCard key={index} member={member} index={index} isVisible={leadershipVisible} />
                 ))}
@@ -183,7 +183,7 @@ const Team = () => {
               </div>
 
               {/* Architects Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-10 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 lg:gap-10 max-w-4xl mx-auto">
                 {loaderData?.data?.our_architects_section?.teams.length > 0 && loaderData?.data?.our_architects_section?.teams.map((member, index) => (
                   <TeamMemberCard key={index} member={member} index={index} isVisible={architectsVisible} />
                 ))}
@@ -297,7 +297,7 @@ const Team = () => {
               </div>
 
               {/* Engineers Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-10 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-8 lg:gap-10 max-w-4xl mx-auto">
                 {loaderData?.data?.our_engineers_section?.teams.length > 0 && loaderData?.data?.our_engineers_section?.teams.map((member, index) => (
                   <TeamMemberCard key={index} member={member} index={index} isVisible={engineersVisible} />
                 ))}
