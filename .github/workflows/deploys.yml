@@ -15,34 +15,24 @@ jobs:
     steps:
       # 1️⃣ Checkout
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2️⃣ Node
+      # 2️⃣ Setup Node (use LTS instead of hardcoding 20)
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-      
-       # 3️⃣ Cache node_modules
-      - name: Cache node modules
-        id: cache-node
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 'lts/*'
+          cache: 'npm'
 
       # 3️⃣ Install deps
       - name: Install dependencies
-        if: steps.cache-node.outputs.cache-hit != 'true'
-        run: npm install --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
-      # 5️⃣ Build
+      # 4️⃣ Build
       - name: Build React SSG
         run: npm run build:ssg
 
-      # 6️⃣ Setup SSH key
+      # 5️⃣ Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -50,7 +40,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
 
-      # 7️⃣ Deploy via rsync (KEY BASED)
+      # 6️⃣ Deploy via rsync
       - name: Deploy via SFTP (rsync)
         run: |
           rsync -avz --delete \
