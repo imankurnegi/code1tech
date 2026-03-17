@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL || '';
+const BASE_URL = import.meta.env.VITE_API_URL || '';
 const TOKEN = import.meta.env.VITE_AUTH_TOKEN || '';
 
 const headers = {

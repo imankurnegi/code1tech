@@ -40,8 +40,6 @@ const Navbar = ({ data }: HeaderProps) => {
   const mainNavMenus = data?.primary_menu || [];
   const ctaMenus = data?.secondary_menu || [];
 
-  console.log(data, 'nav')
-
   // Scroll-spy: track all major sections on homepage
   useEffect(() => {
     const handleScroll = () => {
@@ -89,7 +87,7 @@ const Navbar = ({ data }: HeaderProps) => {
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <a
-                    href={`${import.meta.env.BASE_URL}${link.url}`}
+                    href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
                     className={`relative flex items-center gap-1 text-sm font-semibold tracking-wide transition-all duration-300 py-2 px-3 rounded-lg text-foreground hover:text-accent ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
@@ -117,7 +115,7 @@ const Navbar = ({ data }: HeaderProps) => {
                           {link?.children?.map(item => (
                             <a
                               key={item.title}
-                              href={`${import.meta.env.BASE_URL}${item.url}`}
+                              href={`${import.meta.env.BASE_URL}${item?.url?.replace(/^\/+/, "")}`}
                               className={`group/item flex items-start gap-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-300 ${item.class === "disabled" ? "pointer-events-none" : ""}`}
                             >
                               <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover/item:bg-accent/20 group-hover/item:shadow-[0_0_15px_rgba(0,194,255,0.2)] transition-all duration-300">
@@ -160,7 +158,7 @@ const Navbar = ({ data }: HeaderProps) => {
               ctaMenus?.map((menu, index) => {
                 if (menu.class === "btn") {
                   return (
-                    <a href={`${import.meta.env.BASE_URL}${menu.url}`} key={index}>
+                    <a href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`} key={index}>
                       <Button
                         size="sm"
                         className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
@@ -178,7 +176,7 @@ const Navbar = ({ data }: HeaderProps) => {
                 return (
                   <a
                     key={index}
-                    href={`${import.meta.env.BASE_URL}${menu.url}`}
+                    href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
                     className="text-sm font-semibold text-foreground hover:text-accent transition-colors duration-300"
                   >
                     {menu.title}
@@ -226,7 +224,7 @@ const Navbar = ({ data }: HeaderProps) => {
                 return (
                   <a
                     key={link.title}
-                    href={`${import.meta.env.BASE_URL}${link.url}`}
+                    href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
                     className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5 ${link.class === "disabled" ? "pointer-events-none" : ""}`}
                   >
                     {link.title}
@@ -253,7 +251,7 @@ const Navbar = ({ data }: HeaderProps) => {
                       {link.children.map(item => (
                         <a
                           key={item.title}
-                          href={`${import.meta.env.BASE_URL}${item.url}`}
+                          href={`${import.meta.env.BASE_URL}${item?.url?.replace(/^\/+/, "")}`}
                           onClick={e => {
                             setIsOpen(false);
                             setMobileDropdown(null);
@@ -277,7 +275,7 @@ const Navbar = ({ data }: HeaderProps) => {
                 return menu.class === "btn" ? (
                   <a
                     key={index}
-                    href={`${import.meta.env.BASE_URL}${menu.url}`}
+                    href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
                     onClick={() => setIsOpen(false)}
                     className="w-full"
                   >
@@ -289,7 +287,7 @@ const Navbar = ({ data }: HeaderProps) => {
                 ) : (
                   <a
                     key={index}
-                    href={`${import.meta.env.BASE_URL}${menu.url}`}
+                    href={`${import.meta.env.BASE_URL}${menu?.url?.replace(/^\/+/, "")}`}
                     className="py-3 px-4 text-base font-medium text-foreground/70 hover:text-foreground transition-colors duration-300"
                   >
                     {menu.title}

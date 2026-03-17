@@ -153,7 +153,7 @@ const Footer = ({ data }: FooterProps) => {
                 {code1Links.map((link) => (
                   <li key={link.id}>
                     <a
-                      href={`${import.meta.env.BASE_URL}${link.url}`}
+                      href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                      dangerouslySetInnerHTML={{ __html: link.title}}></a>
                   </li>
@@ -171,7 +171,7 @@ const Footer = ({ data }: FooterProps) => {
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
                     <a
-                      href={`${import.meta.env.BASE_URL}${link.url}`}
+                      href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                     dangerouslySetInnerHTML={{ __html: link.title}}>
                     </a>
@@ -195,7 +195,7 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Ambition Box"
                   >
-                    <img src={`${import.meta.env.BASE_URL}/ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
+                    <img src={`${import.meta.env.BASE_URL}ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
                   </a>
                 )}
                 {data?.social_links?.facebook && (
@@ -372,7 +372,7 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
+                    <a href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
                     </a>
                   </li>
                 ))}
@@ -402,7 +402,7 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
-                    <a href={`${import.meta.env.BASE_URL}${link.url}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
+                    <a href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
                     </a>
                   </li>
                 ))}
@@ -482,7 +482,7 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Ambition Box"
                 >
-                 <img src={`${import.meta.env.BASE_URL}/ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
+                 <img src={`${import.meta.env.BASE_URL}ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
                 </a>
               )}
               {data?.social_links?.linkedin && (
@@ -564,7 +564,7 @@ const Footer = ({ data }: FooterProps) => {
             <>
               <span className="hidden sm:block text-border">|</span>
               <a
-                href={`${import.meta.env.BASE_URL}${data.legal_links.privacy_policy}`}
+                href={`${import.meta.env.BASE_URL}${data.legal_links.privacy_policy.replace(/^\/+/, "")}`}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 Privacy Policy

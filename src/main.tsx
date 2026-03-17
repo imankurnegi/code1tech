@@ -6,6 +6,6 @@ import './index.css'
 export const createRoot = ViteReactSSG(
   { 
     routes,
-    basename: "/code1new/frontend" 
+    basename: import.meta.env.BASE_URL
   }
 )

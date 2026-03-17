@@ -22,7 +22,7 @@ Modern marketing site for Code1 Tech built with React, Vite, TypeScript, Tailwin
 Create a `.env.local` for local dev and `.env.production` for production:
 
 ```env
-VITE_BASE_URL="https://your-api.example.com/wp-json/v1"
+VITE_API_URL="https://your-api.example.com/wp-json/v1"
 VITE_AUTH_TOKEN="your-api-token"
 ```
 
