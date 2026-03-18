@@ -1,0 +1,89 @@
+{
+  "status": true,
+  "data": {
+    "form_heading": "Send us a <span>message</span>",
+    "form_paragraph": "Simply fill the form to tell us what's happening. A few details can help us understand your needs perfectly.",
+    "locations_group": {
+      "icon": "lucide-map-pin",
+      "heading": "Locations",
+      "sub_heading": "India HQ",
+      "address": "17, 18, 1st Floor, Milap Nagar, Tonk Road, Jaipur, (Raj), 302018",
+      "sub_heading_2": "USA Office",
+      "address_2": "5900 Balcones Drive, Suite 100, Austin, TX 78731"
+    },
+    "sales_group": {
+      "icon": "lucide-phone",
+      "heading": "Sales",
+      "phone_1": "+91-9782466568",
+      "phone_2": "+91-9950728600",
+      "phone_3": "+1 507-800-0999",
+      "email": "enquiry@code1.dev"
+    },
+    "career_group": {
+      "icon": "lucide-users",
+      "heading": "HR & Careers",
+      "phone_1": "+91-7014299593",
+      "phone_2": "+91-9799406682",
+      "email": "hrd@code1.dev"
+    },
+    "business_hours_group": {
+      "icon": "lucide-clock",
+      "heading": "Business Hours",
+      "option_1": "Monday-Friday | 10:00 AM - 7:00 PM (IST)",
+      "option_2": "Monday-Friday | 10:00 AM - 3:00 PM (EST)"
+    },
+    "map_group": {
+      "heading": "Find Us on <span>Map</span>",
+      "sub_heading": "Visit our headquarters in Jaipur, India",
+      "map_code": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14237.94627645815!2d75.798445!3d26.856278!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db5384ced4d91%3A0xacd0a27c1a859619!2sCode1%20Tech%20Systems!5e0!3m2!1sen!2sin!4v1773562586300!5m2!1sen!2sin\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "brand_group": {
+      "heading": "Building Success with <span>Global Brands</span>",
+      "sub_heading": "Trusted by leading enterprises worldwide"
+    },
+    "page_title": "Contact Us",
+    "page_content": "<p>Whether you have a question, ran into an issue, want to explore working together, or just need an honest answer from a real person, this is the right place to start.</p>\n",
+    "banner_image": "https://code1.dev/code1new/wp-content/uploads/2026/02/contact-hero-bg-Bun0rViD.webp",
+    "contact_help_section": {
+      "helop_bottom_section": [
+        {
+          "icon": "lucide-headphones",
+          "label": "24×7 Support"
+        },
+        {
+          "icon": "lucide-clock",
+          "label": "Fast SLA"
+        },
+        {
+          "icon": "lucide-shield",
+          "label": "Enterprise-Grade"
+        }
+      ],
+      "help_section_heading": "How Can We <span>Help?</span>",
+      "help_lists": [
+        {
+          "list_text": "You can ask us anything about our services or products"
+        },
+        {
+          "list_text": "Connect with us for any tech issues or support"
+        },
+        {
+          "list_text": "Strategic partnership, collaboration, or simply understanding"
+        },
+        {
+          "list_text": "Something else entirely"
+        }
+      ],
+      "help_comment": "If it matters to you, it matters to us.",
+      "help_section_paragraph": "You can contact us with anything that is bothering you. We help you manage your operations easily!"
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "https://code1.dev/code1new/wp-content/uploads/2026/02/contact-hero-bg-Bun0rViD.webp",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}

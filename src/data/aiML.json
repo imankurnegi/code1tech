@@ -1,0 +1,1360 @@
+{
+  "status": true,
+  "data": {
+    "section_tagline": "",
+    "box_data": [
+      {
+        "ID": 833,
+        "post_author": "1",
+        "post_date": "2026-03-13 04:06:44",
+        "post_date_gmt": "2026-03-13 04:06:44",
+        "post_content": "Fraud detection, risk scoring, algorithmic trading",
+        "post_title": "Banking & Finance",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "banking-finance",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 17:53:31",
+        "post_modified_gmt": "2026-03-14 17:53:31",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_industries&#038;p=833",
+        "menu_order": 0,
+        "post_type": "ai_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "ai_icon": "lucide-chart-column"
+        }
+      },
+      {
+        "ID": 834,
+        "post_author": "1",
+        "post_date": "2026-03-13 04:08:15",
+        "post_date_gmt": "2026-03-13 04:08:15",
+        "post_content": "Diagnostics, drug discovery, clinical NLP",
+        "post_title": "Healthcare & Life Sciences",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "healthcare-life-sciences",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 17:53:57",
+        "post_modified_gmt": "2026-03-14 17:53:57",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_industries&#038;p=834",
+        "menu_order": 0,
+        "post_type": "ai_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "ai_icon": "lucide-cpu"
+        }
+      },
+      {
+        "ID": 835,
+        "post_author": "1",
+        "post_date": "2026-03-13 04:08:56",
+        "post_date_gmt": "2026-03-13 04:08:56",
+        "post_content": "Demand forecasting, personalization, churn prevention",
+        "post_title": "Retail & E-Commerce",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "retail-e-commerce",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 17:54:18",
+        "post_modified_gmt": "2026-03-14 17:54:18",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_industries&#038;p=835",
+        "menu_order": 0,
+        "post_type": "ai_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "ai_icon": "lucide-layers"
+        }
+      },
+      {
+        "ID": 836,
+        "post_author": "1",
+        "post_date": "2026-03-13 04:09:44",
+        "post_date_gmt": "2026-03-13 04:09:44",
+        "post_content": "Predictive maintenance, defect detection, yield optimization\r\n\r\n",
+        "post_title": "Manufacturing",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "manufacturing",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 17:54:38",
+        "post_modified_gmt": "2026-03-14 17:54:38",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_industries&#038;p=836",
+        "menu_order": 0,
+        "post_type": "ai_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "ai_icon": "lucide-settings"
+        }
+      },
+      {
+        "ID": 837,
+        "post_author": "1",
+        "post_date": "2026-03-13 04:10:29",
+        "post_date_gmt": "2026-03-13 04:10:29",
+        "post_content": "Intelligent automation, AI-native product features",
+        "post_title": "Technology & SaaS",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "technology-saas",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 17:55:03",
+        "post_modified_gmt": "2026-03-14 17:55:03",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_industries&#038;p=837",
+        "menu_order": 0,
+        "post_type": "ai_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "ai_icon": "lucide-globe"
+        }
+      }
+    ],
+    "testimonials": [
+      {
+        "ID": 950,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:18:17",
+        "post_date_gmt": "2026-03-17 04:18:17",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">Code1 assessed our project nature and provided the consultation which helped us to pick the right professionals that could guarantee high-quality project outcomes without compromising our overall workforce hiring budget.</p>",
+        "post_title": "Harshdeep Singh",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "__trashed",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:19:22",
+        "post_modified_gmt": "2026-03-17 04:19:22",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=950",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Harshdeep Singh",
+          "company": "General Manager EMEA - Cloudwick"
+        }
+      },
+      {
+        "ID": 952,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:17:56",
+        "post_date_gmt": "2026-03-17 04:17:56",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">The team at Code1 was able to quickly understand the skill gap at our organization and helped us in the tech team building by providing the best industrial experts. Each of the engineers provided in the team carried the utmost qualifications and skills according to their respective skills.</p>",
+        "post_title": "Daniel Shaw",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "daniel-shaw",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:17:56",
+        "post_modified_gmt": "2026-03-17 04:17:56",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=952",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Daniel Shaw",
+          "company": "Operations & Sales Director - KPI Partners"
+        }
+      },
+      {
+        "ID": 951,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:17:06",
+        "post_date_gmt": "2026-03-17 04:17:06",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">We were in urgent need of specialized IT talent for our short-term project. As soon as we came in contact with Code1, our challenge of hiring the right person for the leading role was instantly solved.</p>",
+        "post_title": "Megha Jain",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "megha-jain",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:17:06",
+        "post_modified_gmt": "2026-03-17 04:17:06",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=951",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Megha Jain",
+          "company": "Offshore Center Director - Girnarsof"
+        }
+      }
+    ],
+    "frequently_asked_question": [
+      {
+        "ID": 786,
+        "post_author": "1",
+        "post_date": "2026-03-12 05:28:29",
+        "post_date_gmt": "2026-03-12 05:28:29",
+        "post_content": "<div class=\"px-5 pb-5 text-muted-foreground text-sm leading-relaxed\">Implementation times depend on the level of existing data maturity, the complexity of the underlying infrastructure, and the business's associated compliance requirements. A focused use case may move to production in 8-12 weeks. In contrast, a large-scale enterprise-wide AI programme will generally require multiple phases of implementation over a longer time frame, typically measured in months. We implement our solutions with a view to prioritising production deployment at the earliest possible opportunity, followed by ongoing optimisation processes.</div>",
+        "post_title": "How long does it take to deploy enterprise AI solutions?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "how-long-does-it-take-to-deploy-enterprise-ai-solutions",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-12 05:28:29",
+        "post_modified_gmt": "2026-03-12 05:28:29",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=786",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 787,
+        "post_author": "1",
+        "post_date": "2026-03-12 05:29:00",
+        "post_date_gmt": "2026-03-12 05:29:00",
+        "post_content": "<div class=\"px-5 pb-5 text-muted-foreground text-sm leading-relaxed\">Our governance frameworks provide structure for managing AI models through established processes, including model versioning, model lineage, access control, audit logging, and bias evaluation. Governance and compliance processes are embedded into the architecture before production installation; likewise, governance processes are not retrofitted to a system after deployment. By embedding good governance into the architecture, we can provide full traceability, regulatory compliance assurance, and complete operational transparency.</div>",
+        "post_title": "How do you ensure AI model governance?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "how-do-you-ensure-ai-model-governance",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-12 05:29:00",
+        "post_modified_gmt": "2026-03-12 05:29:00",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=787",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 788,
+        "post_author": "1",
+        "post_date": "2026-03-12 05:29:34",
+        "post_date_gmt": "2026-03-12 05:29:34",
+        "post_content": "<div class=\"px-5 pb-5 text-muted-foreground text-sm leading-relaxed\">Yes. Our engineering approach supports API-based integration layers and middleware solutions that enable newly developed AI systems to integrate with existing ERP, CRM, and DW (data warehousing) systems, delivering real-time analytics and insights from new AI systems without compromising the operation of existing systems.</div>",
+        "post_title": "Can AI integrate with legacy enterprise systems?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "can-ai-integrate-with-legacy-enterprise-systems",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-12 05:29:34",
+        "post_modified_gmt": "2026-03-12 05:29:34",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=788",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      }
+    ],
+    "industries_section_heading": "Industries <span>We Serve</span>",
+    "industries_section_description": "",
+    "testimonial_section_heading": "What Our <span>Clients Say</span>",
+    "faq_section_heading": "Frequently Asked <span>Questions</span>",
+    "ai_stack_section_heading": "AI <span>Technology Stack</span>",
+    "stacks_fields": [
+      {
+        "ID": 847,
+        "post_author": "1",
+        "post_date": "2026-03-13 05:09:40",
+        "post_date_gmt": "2026-03-13 05:09:40",
+        "post_content": "",
+        "post_title": "Frameworks",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "frameworks",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 09:31:15",
+        "post_modified_gmt": "2026-03-13 09:31:15",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_technology_stack&#038;p=847",
+        "menu_order": 0,
+        "post_type": "ai_technology_stack",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "ai_stack_post_fields": {
+            "stack_tools": [
+              {
+                "tool": "TensorFlow"
+              },
+              {
+                "tool": "PyTorch"
+              },
+              {
+                "tool": "Keras"
+              },
+              {
+                "tool": "Scikit-learn"
+              },
+              {
+                "tool": "Hugging Face"
+              }
+            ],
+            "stack_icon": "lucide-layers",
+            "category_label": "Stack Category"
+          }
+        }
+      },
+      {
+        "ID": 848,
+        "post_author": "1",
+        "post_date": "2026-03-13 05:11:21",
+        "post_date_gmt": "2026-03-13 05:11:21",
+        "post_content": "",
+        "post_title": "LLMs & GenAI",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "llms-genai",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 09:31:10",
+        "post_modified_gmt": "2026-03-13 09:31:10",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_technology_stack&#038;p=848",
+        "menu_order": 0,
+        "post_type": "ai_technology_stack",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "ai_stack_post_fields": {
+            "stack_tools": [
+              {
+                "tool": "GPT-4 / GPT-4o"
+              },
+              {
+                "tool": "Claude"
+              },
+              {
+                "tool": "Llama 3"
+              },
+              {
+                "tool": "Gemini"
+              },
+              {
+                "tool": "Mistral"
+              }
+            ],
+            "stack_icon": "lucide-brain",
+            "category_label": "Stack Category"
+          }
+        }
+      },
+      {
+        "ID": 849,
+        "post_author": "1",
+        "post_date": "2026-03-13 05:12:33",
+        "post_date_gmt": "2026-03-13 05:12:33",
+        "post_content": "",
+        "post_title": "MLOps",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "mlops",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 09:31:05",
+        "post_modified_gmt": "2026-03-13 09:31:05",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_technology_stack&#038;p=849",
+        "menu_order": 0,
+        "post_type": "ai_technology_stack",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "ai_stack_post_fields": {
+            "stack_tools": [
+              {
+                "tool": "MLflow"
+              },
+              {
+                "tool": "Kubeflow"
+              },
+              {
+                "tool": "DVC"
+              },
+              {
+                "tool": "Weights &amp; Biases"
+              },
+              {
+                "tool": "SageMaker"
+              }
+            ],
+            "stack_icon": "lucide-git-branch",
+            "category_label": "Stack Category"
+          }
+        }
+      },
+      {
+        "ID": 850,
+        "post_author": "1",
+        "post_date": "2026-03-13 05:13:47",
+        "post_date_gmt": "2026-03-13 05:13:47",
+        "post_content": "",
+        "post_title": "Data & Pipelines",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "data-pipelines",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 09:30:58",
+        "post_modified_gmt": "2026-03-13 09:30:58",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_technology_stack&#038;p=850",
+        "menu_order": 0,
+        "post_type": "ai_technology_stack",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "ai_stack_post_fields": {
+            "stack_tools": [
+              {
+                "tool": "Apache Spark"
+              },
+              {
+                "tool": "Airflow"
+              },
+              {
+                "tool": "dbt"
+              },
+              {
+                "tool": "Kafka"
+              },
+              {
+                "tool": "Databricks"
+              }
+            ],
+            "stack_icon": "lucide-chart-column",
+            "category_label": "Stack Category"
+          }
+        }
+      },
+      {
+        "ID": 851,
+        "post_author": "1",
+        "post_date": "2026-03-13 05:15:09",
+        "post_date_gmt": "2026-03-13 05:15:09",
+        "post_content": "",
+        "post_title": "Cloud Platforms",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "cloud-platforms",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 09:30:53",
+        "post_modified_gmt": "2026-03-13 09:30:53",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_technology_stack&#038;p=851",
+        "menu_order": 0,
+        "post_type": "ai_technology_stack",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "ai_stack_post_fields": {
+            "stack_tools": [
+              {
+                "tool": "AWS AI Services"
+              },
+              {
+                "tool": "Azure ML"
+              },
+              {
+                "tool": "Google Vertex AI"
+              },
+              {
+                "tool": "GCP AutoML"
+              }
+            ],
+            "stack_icon": "lucide-globe",
+            "category_label": "Stack Category"
+          }
+        }
+      },
+      {
+        "ID": 852,
+        "post_author": "1",
+        "post_date": "2026-03-13 05:16:24",
+        "post_date_gmt": "2026-03-13 05:16:24",
+        "post_content": "",
+        "post_title": "Deployment",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "deployment",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 09:30:37",
+        "post_modified_gmt": "2026-03-13 09:30:37",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ai_technology_stack&#038;p=852",
+        "menu_order": 0,
+        "post_type": "ai_technology_stack",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "ai_stack_post_fields": {
+            "stack_tools": [
+              {
+                "tool": "Docker"
+              },
+              {
+                "tool": "Kubernetes"
+              },
+              {
+                "tool": "FastAPI"
+              },
+              {
+                "tool": "TorchServe"
+              },
+              {
+                "tool": "Triton Inference Server"
+              }
+            ],
+            "stack_icon": "lucide-cpu",
+            "category_label": "Stack Category"
+          }
+        }
+      }
+    ],
+    "page_title": "AI ML Solutions",
+    "page_content": "",
+    "banner_section": {
+      "banner_image": {
+        "id": 735,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-hero-new-aiOMXeq3.webp",
+        "alt": "",
+        "title": "aiml-hero-new-aiOMXeq3",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "aiml-hero-new-aiOMXeq3-300x212.webp",
+            "width": 300,
+            "height": 212,
+            "mime-type": "image/webp",
+            "filesize": 7336
+          },
+          "large": {
+            "file": "aiml-hero-new-aiOMXeq3-1024x723.webp",
+            "width": 1024,
+            "height": 723,
+            "mime-type": "image/webp",
+            "filesize": 41610
+          },
+          "thumbnail": {
+            "file": "aiml-hero-new-aiOMXeq3-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 4254
+          },
+          "medium_large": {
+            "file": "aiml-hero-new-aiOMXeq3-768x542.webp",
+            "width": 768,
+            "height": 542,
+            "mime-type": "image/webp",
+            "filesize": 28254
+          }
+        },
+        "width": 1500,
+        "height": 1059,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-hero-new-aiOMXeq3-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-hero-new-aiOMXeq3-300x212.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-hero-new-aiOMXeq3-1024x723.webp"
+      },
+      "floating_badge_fields": [
+        {
+          "badge_heading": "98%",
+          "badge_text": "Model Accuracy"
+        },
+        {
+          "badge_heading": "150+",
+          "badge_text": "AI Models Deployed"
+        }
+      ],
+      "banner_heading": "AI &amp; Machine Learning Services for Enterprise-Scale <span>Intelligence</span>",
+      "banner_description": "To be effective at generating measurable business outcomes, advances in artificial intelligence (AI) and machine learning (ML) must move beyond a primarily experimental focus. Our AI and ML engineering company enables companies to implement scalable, secure, and production-level intelligence systems that fit seamlessly with their existing infrastructure.",
+      "highlighted_text": "Don't just follow guesswork! Scale with intelligent solutions designed for your business!",
+      "cta_text": "Schedule a Strategic Consultation",
+      "cta_url": "/contactus"
+    },
+    "stats_section": {
+      "stats_fields": [
+        {
+          "stats_numbers": "150+",
+          "stats_title": "AI Models Deployed"
+        },
+        {
+          "stats_numbers": "98%",
+          "stats_title": "Model Accuracy"
+        },
+        {
+          "stats_numbers": "40+",
+          "stats_title": "Enterprise Clients"
+        },
+        {
+          "stats_numbers": "5x",
+          "stats_title": "Efficiency Boost"
+        }
+      ]
+    },
+    "ai_ml_challenges_section": {
+      "section_heading": "Addressing Enterprise <span>AI &amp; ML Challenges</span>",
+      "box_fields": [
+        {
+          "image": {
+            "id": 736,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-1-D_3imTYh.webp",
+            "alt": "",
+            "title": "aiml-challenge-1-D_3imTYh",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "aiml-challenge-1-D_3imTYh-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 10252
+              },
+              "thumbnail": {
+                "file": "aiml-challenge-1-D_3imTYh-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4698
+              },
+              "medium_large": {
+                "file": "aiml-challenge-1-D_3imTYh-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 41382
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-1-D_3imTYh-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-1-D_3imTYh-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-1-D_3imTYh.webp"
+          },
+          "icon": "lucide-layers",
+          "title": "Fragmented Data &amp; Inconsistent Quality",
+          "description": "For the Enterprise AI system to operate effectively, you need a single source of clean and consistent data. When data is distributed across silos unmanaged, the quality of training data will be inconsistent and lead to unreliable training. If there are no standard pipelines or data governance models in place, then the outcomes of using that AI will be impossible to predict."
+        },
+        {
+          "image": {
+            "id": 738,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-2-DUSXWcUH.webp",
+            "alt": "",
+            "title": "aiml-challenge-2-DUSXWcUH",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "aiml-challenge-2-DUSXWcUH-300x200.webp",
+                "width": 300,
+                "height": 200,
+                "mime-type": "image/webp",
+                "filesize": 9432
+              },
+              "thumbnail": {
+                "file": "aiml-challenge-2-DUSXWcUH-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4418
+              }
+            },
+            "width": 768,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-2-DUSXWcUH-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-2-DUSXWcUH-300x200.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-2-DUSXWcUH.webp"
+          },
+          "icon": "lucide-shield",
+          "title": "Model Governance &amp; Version Control Gaps",
+          "description": "The challenges of auditing, reproducing, or improving a model without version control or documentation are increased, creating operational risk and compliance exposure. To help mitigate that risk, production-ready AI must include controlled experiments, model registries, approval workflows, traceable systems, accountability, and transparency to support regulatory alignment."
+        },
+        {
+          "image": {
+            "id": 737,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-3-BkdUCLfs.webp",
+            "alt": "",
+            "title": "aiml-challenge-3-BkdUCLfs",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "aiml-challenge-3-BkdUCLfs-300x200.webp",
+                "width": 300,
+                "height": 200,
+                "mime-type": "image/webp",
+                "filesize": 10404
+              },
+              "thumbnail": {
+                "file": "aiml-challenge-3-BkdUCLfs-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4532
+              }
+            },
+            "width": 768,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-3-BkdUCLfs-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-3-BkdUCLfs-300x200.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-challenge-3-BkdUCLfs.webp"
+          },
+          "icon": "lucide-zap",
+          "title": "Scalability &amp; Production Readiness Limitations",
+          "description": "Models developed for proof of concept are often ineffective when used at scale in production environments. This lack of scalable model deployment is usually due to inadequate infrastructure planning, inefficient model serving, and insufficient monitoring, leading to latency degradation in high-throughput environments."
+        }
+      ]
+    },
+    "core_services_section": {
+      "section_heading": "Core Services at Our <span>AI ML Solution Company!</span>",
+      "core_services": [
+        {
+          "image": {
+            "id": 752,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ai-strategy-SElbx13H.webp",
+            "alt": "",
+            "title": "core-ai-strategy-SElbx13H",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "core-ai-strategy-SElbx13H-300x150.webp",
+                "width": 300,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4606
+              },
+              "large": {
+                "file": "core-ai-strategy-SElbx13H-1024x512.webp",
+                "width": 1024,
+                "height": 512,
+                "mime-type": "image/webp",
+                "filesize": 25722
+              },
+              "thumbnail": {
+                "file": "core-ai-strategy-SElbx13H-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2654
+              },
+              "medium_large": {
+                "file": "core-ai-strategy-SElbx13H-768x384.webp",
+                "width": 768,
+                "height": 384,
+                "mime-type": "image/webp",
+                "filesize": 17436
+              }
+            },
+            "width": 1500,
+            "height": 750,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ai-strategy-SElbx13H-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ai-strategy-SElbx13H-300x150.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ai-strategy-SElbx13H-1024x512.webp"
+          },
+          "icon": "lucide-chart-column",
+          "title": "AI Strategy &amp; Roadmap Development",
+          "description": "Our Machine Learning Experts and Artificial Intelligence Specialists consider your company's data maturity when identifying your business's highest Impact Use Cases. We assist you in developing an AI Roadmap to help your company achieve its stated business objectives. We evaluate your ROI and your company's readiness to implement AI, while including Enterprise Technology as part of our Plan. This allows your company to move faster and operate more effectively by Aligning Governance and Risk Plans into Planning.",
+          "cta_text": "Discuss This Service",
+          "cta_url": "/contactus"
+        },
+        {
+          "image": {
+            "id": 751,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ml-model-8-y6o70w.webp",
+            "alt": "",
+            "title": "core-ml-model-8-y6o70w",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "core-ml-model-8-y6o70w-300x192.webp",
+                "width": 300,
+                "height": 192,
+                "mime-type": "image/webp",
+                "filesize": 9434
+              },
+              "thumbnail": {
+                "file": "core-ml-model-8-y6o70w-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 5298
+              },
+              "medium_large": {
+                "file": "core-ml-model-8-y6o70w-768x492.webp",
+                "width": 768,
+                "height": 492,
+                "mime-type": "image/webp",
+                "filesize": 31252
+              }
+            },
+            "width": 800,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ml-model-8-y6o70w-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ml-model-8-y6o70w-300x192.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-ml-model-8-y6o70w.webp"
+          },
+          "icon": "lucide-brain",
+          "title": "Custom Machine Learning Model Development",
+          "description": "Our machine learning design, training, and deployment services focus on creating models that meet actual enterprise requirements with high scalability and consistent performance. We offer a variety of machine learning solutions, including supervised and unsupervised learning, predictive analytics and forecasting tools, intelligent classification and anomaly-detection systems, and personalized recommendation engines that help companies uncover insights, automate decision-making, and create more personalized customer experiences.",
+          "cta_text": "Discuss This Service",
+          "cta_url": "/contactus"
+        },
+        {
+          "image": {
+            "id": 750,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-genai-nlp-DOntody-.webp",
+            "alt": "",
+            "title": "core-genai-nlp-DOntody-",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "core-genai-nlp-DOntody--300x139.webp",
+                "width": 300,
+                "height": 139,
+                "mime-type": "image/webp",
+                "filesize": 7136
+              },
+              "large": {
+                "file": "core-genai-nlp-DOntody--1024x475.webp",
+                "width": 1024,
+                "height": 475,
+                "mime-type": "image/webp",
+                "filesize": 42848
+              },
+              "thumbnail": {
+                "file": "core-genai-nlp-DOntody--150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 5554
+              },
+              "medium_large": {
+                "file": "core-genai-nlp-DOntody--768x356.webp",
+                "width": 768,
+                "height": 356,
+                "mime-type": "image/webp",
+                "filesize": 28446
+              },
+              "1536x1536": {
+                "file": "core-genai-nlp-DOntody--1536x712.webp",
+                "width": 1536,
+                "height": 712,
+                "mime-type": "image/webp",
+                "filesize": 76048
+              }
+            },
+            "width": 1920,
+            "height": 890,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-genai-nlp-DOntody--150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-genai-nlp-DOntody--300x139.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-genai-nlp-DOntody--1024x475.webp"
+          },
+          "icon": "lucide-message-square",
+          "title": "Generative AI &amp; NLP Solutions",
+          "description": "Most businesses use intelligent automation and language-based systems to increase productivity and improve customer relations. These systems include NLP, LLM integration, AI chatlines/support platforms, and automated summarization via document intelligence. To encourage responsible use of these technologies, businesses should establish governance, access control, and monitoring structures to manage and secure their AI systems effectively.",
+          "cta_text": "Discuss This Service",
+          "cta_url": "/contactus"
+        },
+        {
+          "image": {
+            "id": 749,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-computer-vision-CRCAltrH.webp",
+            "alt": "",
+            "title": "core-computer-vision-CRCAltrH",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "core-computer-vision-CRCAltrH-300x106.webp",
+                "width": 300,
+                "height": 106,
+                "mime-type": "image/webp",
+                "filesize": 6794
+              },
+              "large": {
+                "file": "core-computer-vision-CRCAltrH-1024x362.webp",
+                "width": 1024,
+                "height": 362,
+                "mime-type": "image/webp",
+                "filesize": 38450
+              },
+              "thumbnail": {
+                "file": "core-computer-vision-CRCAltrH-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 7038
+              },
+              "medium_large": {
+                "file": "core-computer-vision-CRCAltrH-768x271.webp",
+                "width": 768,
+                "height": 271,
+                "mime-type": "image/webp",
+                "filesize": 25478
+              }
+            },
+            "width": 1500,
+            "height": 530,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-computer-vision-CRCAltrH-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-computer-vision-CRCAltrH-300x106.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-computer-vision-CRCAltrH-1024x362.webp"
+          },
+          "icon": "lucide-eye",
+          "title": "Computer Vision Engineering",
+          "description": "With the help of Computer Vision technology, organizations can classify images, detect objects, perform real-time video analysis, and perform OCR-based document extraction. These Computer Vision inspection systems are designed to perform best in a High Throughput Delivery environment, enabling high productivity and/or low-latency processing while providing companies with reliable performance, thus enabling them to make faster, more efficient data-driven decisions.",
+          "cta_text": "Discuss This Service",
+          "cta_url": "/contactus"
+        },
+        {
+          "image": {
+            "id": 748,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-mlops-D9V4nB3E.webp",
+            "alt": "",
+            "title": "core-mlops-D9V4nB3E",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "core-mlops-D9V4nB3E-300x150.webp",
+                "width": 300,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 12452
+              },
+              "large": {
+                "file": "core-mlops-D9V4nB3E-1024x512.webp",
+                "width": 1024,
+                "height": 512,
+                "mime-type": "image/webp",
+                "filesize": 67686
+              },
+              "thumbnail": {
+                "file": "core-mlops-D9V4nB3E-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 6742
+              },
+              "medium_large": {
+                "file": "core-mlops-D9V4nB3E-768x384.webp",
+                "width": 768,
+                "height": 384,
+                "mime-type": "image/webp",
+                "filesize": 46572
+              }
+            },
+            "width": 1500,
+            "height": 750,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-mlops-D9V4nB3E-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-mlops-D9V4nB3E-300x150.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/core-mlops-D9V4nB3E-1024x512.webp"
+          },
+          "icon": "lucide-settings",
+          "title": "MLOps &amp; Production AI Enablement",
+          "description": "AI systems will only produce effective outputs through continuous monitoring, retraining, and management. With CI/CD pipelines for ML models, real-time model versioning and tracking, an automated model retraining process, and continuous performance monitoring (including drift detection), you will be able to maintain the stability and reliability of your models even as their underlying data and relationships change.",
+          "cta_text": "Discuss This Service",
+          "cta_url": "/contactus"
+        }
+      ],
+      "cta_main_text": "Stay competitive with the right services to keep your business intelligent!",
+      "cta_bottom_text": "Start Your AI Transformation",
+      "cta_text": "Talk to an AI Expert",
+      "cta_url": "/contactus"
+    },
+    "advanced_capabilities_section": {
+      "background_image": {
+        "id": 913,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-advanced-caps-BEGpGqUY.webp",
+        "alt": "",
+        "title": "aiml-advanced-caps-BEGpGqUY",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "aiml-advanced-caps-BEGpGqUY-300x150.webp",
+            "width": 300,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 13226
+          },
+          "thumbnail": {
+            "file": "aiml-advanced-caps-BEGpGqUY-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 6314
+          },
+          "medium_large": {
+            "file": "aiml-advanced-caps-BEGpGqUY-768x384.webp",
+            "width": 768,
+            "height": 384,
+            "mime-type": "image/webp",
+            "filesize": 58300
+          }
+        },
+        "width": 1024,
+        "height": 512,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-advanced-caps-BEGpGqUY-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-advanced-caps-BEGpGqUY-300x150.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-advanced-caps-BEGpGqUY.webp"
+      },
+      "section_heading": "Advanced Capabilities <span>(AI/Streaming)</span>",
+      "box_fields": [
+        {
+          "box_title": "Real-Time Streaming Intelligence",
+          "box_icon": "lucide-zap",
+          "box_description": "&lt;div&gt;&lt;p class=\"text-muted-foreground text-sm leading-relaxed mb-4\"&gt;We utilize artificial intelligence (AI) models and combine them with real-time data, allowing us to make decisions instantly.&lt;/p&gt;&lt;ul class=\"space-y-2 mb-4\"&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Streaming ingestion frameworks&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Event-driven architectures&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Low-latency model inference&lt;/li&gt;&lt;/ul&gt;&lt;p class=\"text-muted-foreground text-sm leading-relaxed\"&gt;This allows fraud detection, predictive maintenance, and real-time personalization at scale.&lt;/p&gt;&lt;/div&gt;"
+        },
+        {
+          "box_title": "Edge AI Deployment",
+          "box_icon": "lucide-globe",
+          "box_description": "&lt;div&gt;&lt;p class=\"text-muted-foreground text-sm leading-relaxed mb-4\"&gt;We deploy optimized artificial intelligence models for applications where latency is crucial at the edge of networks.&lt;/p&gt;&lt;ul class=\"space-y-2 mb-4\"&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Lightweight Model Optimisation&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Integrating Edge Devices&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Secured Synchronization to Centralized Systems&lt;/li&gt;&lt;/ul&gt;&lt;p class=\"text-muted-foreground text-sm leading-relaxed\"&gt;Our solutions reduce bandwidth usage and enable fast decisions based on aggregate data at the edge, helping you get the best results.&lt;/p&gt;&lt;/div&gt;"
+        },
+        {
+          "box_title": "Responsible AI &amp; Governance Frameworks",
+          "box_icon": "lucide-shield",
+          "box_description": "&lt;div&gt;&lt;p class=\"text-muted-foreground text-sm leading-relaxed mb-4\"&gt;An explanatory, secure, and audit-ready enterprise artificial intelligence (AI) system must have frameworks for:&lt;/p&gt;&lt;ul class=\"space-y-2 mb-4\"&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Detecting Bias&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Documenting Models and Audit Trails&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: rgb(95, 194, 227);\"&gt;&lt;/span&gt;Assessing Risk and Compliance&lt;/li&gt;&lt;/ul&gt;&lt;p class=\"text-muted-foreground text-sm leading-relaxed\"&gt;They will ensure compliance with regulations and long-term viability.&lt;/p&gt;&lt;/div&gt;"
+        }
+      ],
+      "cta_main_text": "Intelligent solutions to Keep Your Business Ahead",
+      "cta_bottom_text": "AI/ML experts offer a range of services that your business may need!",
+      "cta_text": " Book Strategy Call",
+      "cta_url": "/contactus"
+    },
+    "engagement_models_section": {
+      "main_heading": "Engagement Models at <span>AI/ML Engineering Company</span>",
+      "left_side_image": {
+        "id": 780,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-engagement-new-Ce90h-G1.webp",
+        "alt": "",
+        "title": "aiml-engagement-new-Ce90h-G1",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "aiml-engagement-new-Ce90h-G1-300x300.webp",
+            "width": 300,
+            "height": 300,
+            "mime-type": "image/webp",
+            "filesize": 8638
+          },
+          "thumbnail": {
+            "file": "aiml-engagement-new-Ce90h-G1-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 2940
+          },
+          "medium_large": {
+            "file": "aiml-engagement-new-Ce90h-G1-768x768.webp",
+            "width": 768,
+            "height": 768,
+            "mime-type": "image/webp",
+            "filesize": 39998
+          }
+        },
+        "width": 1024,
+        "height": 1024,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-engagement-new-Ce90h-G1-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-engagement-new-Ce90h-G1-300x300.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/aiml-engagement-new-Ce90h-G1.webp"
+      },
+      "left_image_data": "<p>Advisory · Augmentation · Delivery · Managed</p><p>AdvisoryAugmentationDeliveryManaged</p>",
+      "right_side_box": [
+        {
+          "icon": "lucide-chart-column",
+          "title": "AI Strategic Advisory",
+          "description": "We assist you in developing an AI strategy that is directly aligned with your strategic business. We evaluate opportunities, feasibility, and data readiness, and develop a tangible roadmap to help you successfully implement your AI program and create value."
+        },
+        {
+          "icon": "lucide-users",
+          "title": "Flexible Engineering Augmentation",
+          "description": "With our skilled engineers as part of your internal team, you can expand your AI capabilities and provide direct support to your developers. As an engineering augmentation partner, we&#039;ll work alongside your team to accelerate project delivery, fill skill gaps, and ensure you create high-quality AI solutions."
+        },
+        {
+          "icon": "lucide-briefcase",
+          "title": "End-to-End AI Program Delivery",
+          "description": "We handle the entire AI Development Life Cycle, including architectural design &amp; data preparation, development of the model(s), integration of the model into production, testing on the model, and delivering to production via a deployment model."
+        },
+        {
+          "icon": "lucide-settings",
+          "title": "Managed AI Services",
+          "description": "Once deployed, we provide managed services for your AI systems to ensure optimal performance long after deployment. We continuously monitor models post-deployment, optimize their performance through update processes, and implement governance processes to ensure your AI solutions remain secure, accurate, and ready to deliver business value."
+        }
+      ],
+      "cta_highlighted_text": "Choose a Team That Works According to Your Needs!",
+      "cta_bottom_text": "With different hiring models, we ensure you get a team that sticks to your business needs.",
+      "cta_text": "Get a Free AI Assessment",
+      "cta_url": "/contactus"
+    },
+    "how_our_engineers_work_section": {
+      "main_heading": "How Our <span>AI/ML Engineers Work</span>",
+      "box_fields": [
+        {
+          "icon": "lucide-chart-column",
+          "title": "Discovery and Assessment",
+          "description": "First, we work with you to clarify your business goals and determine how AI can provide real value to your company. We review your current data, assess your infrastructure, and conduct a feasibility analysis to identify the best options for implementing AI to maximize benefits.",
+          "bottom_text": "DISCOVERY"
+        },
+        {
+          "icon": "lucide-brain",
+          "title": "Architecture Design",
+          "description": "We create a machine learning architecture for future expansion and long-term reliability. We include safe data processing, a model management environment, and rules to ensure systems maintain performance levels, comply with regulations, and run reliably.",
+          "bottom_text": "ARCHITECTURE"
+        },
+        {
+          "icon": "lucide-cpu",
+          "title": "Model Development",
+          "description": "Our team enhances AI models through multiple rounds of training, testing, and validation. We also, each time we train a model, continually add to our libraries of algorithms, tune various parameters used in the models, and measure how accurately the model predicts.",
+          "bottom_text": "MODEL"
+        },
+        {
+          "icon": "lucide-git-branch",
+          "title": "Deployment and Integration",
+          "description": "Once the models are trained and ready for production, we put them into a CI/CD pipeline for a smooth, fully automated deployment process. We build models that integrate with your existing systems, applications, and workflows to improve efficiency and productivity.",
+          "bottom_text": "DEPLOYMENT"
+        },
+        {
+          "icon": "lucide-settings",
+          "title": "Monitoring and Optimisation",
+          "description": "We track model performance and look for anything that deviates from what we expect, including performance drops, changes in the data used, and inconsistencies in how the system operates, so that we can re-train, improve accuracy, and optimize performance.",
+          "bottom_text": "MONITORING"
+        }
+      ]
+    },
+    "why_choose_ai_ml_section": {
+      "main_heading": "Why Choose Code1 Tech Systems as Your <span>AI &amp; ML Partner</span>",
+      "small_box": [
+        {
+          "numbers": "150+",
+          "text": "AI Models Deployed"
+        },
+        {
+          "numbers": "98%",
+          "text": "Model Accuracy"
+        },
+        {
+          "numbers": "40+",
+          "text": "Enterprise Clients"
+        }
+      ],
+      "big_box": [
+        {
+          "icon": "lucide-chart-column",
+          "title": "Business-First AI Strategy",
+          "description": "Every AI engagement starts with your business objectives — not the technology. We identify where AI creates measurable value before writing a single line of code.",
+          "bottom_text": "CORE DIFFERENTIATOR"
+        },
+        {
+          "icon": "lucide-award",
+          "title": "Proven AI Deployment Experience",
+          "description": "150+ AI models deployed across enterprise environments. We bring production-tested engineering rigour to every project, not just proof-of-concept thinking.",
+          "bottom_text": "CORE DIFFERENTIATOR"
+        },
+        {
+          "icon": "lucide-shield",
+          "title": "Scalable &amp; Secure AI Architecture",
+          "description": "Systems designed for real-world scale from day one — with enterprise-grade security, access controls, and compliance baked into the architecture.",
+          "bottom_text": "CORE DIFFERENTIATOR"
+        },
+        {
+          "icon": "lucide-clock",
+          "title": "Transparent &amp; Agile Delivery",
+          "description": "Sprint-based delivery with continuous stakeholder visibility, documented milestones, and no black boxes — so you stay informed at every stage.",
+          "bottom_text": "CORE DIFFERENTIATOR"
+        }
+      ],
+      "cta_highlighted_text": "Ready to Build AI That Drives Real Results?",
+      "cta_bottom_text": "Talk to an AI architect. No commitment required.",
+      "cta_text": "Get a Free AI Assessment",
+      "cta_url": "/contactus"
+    },
+    "security_and_compliance_section": {
+      "section_heading": "Security &amp; <span>Compliance</span>",
+      "box_fields": [
+        {
+          "icon": "lucide-shield",
+          "heading": "E2E Data Protection",
+          "description": "Throughout all phases of the AI lifecycle, all data is encrypted both at rest and in transit over the internet. Any integrations with third-party APIs are secured with strict access control measures. This ensures that sensitive data is protected and that the security of the AI systems and the data pipelines they use is maintained."
+        },
+        {
+          "icon": "lucide-layers",
+          "heading": "Access Control and Governance",
+          "description": "An RBAC system based on a least-privilege model grants users only the access they need to perform their tasks, providing a high level of governance via improved traceability while reducing the risk of users gaining unauthorized access to all or part of the system and/or its data."
+        },
+        {
+          "icon": "lucide-circle-check-big",
+          "heading": "Compliance, Monitoring &amp; Risk Management",
+          "description": "Ongoing logging, audit trails, and incident response procedures provide appropriate levels of operational transparency while aligning AI implementations with applicable regulations (e.g., GDPR, HIPAA, CCPA), enabling the management of overall and individual project risks while maintaining compliance and business continuity."
+        }
+      ]
+    },
+    "key_benefits_section": {
+      "section_heading": "Key <span>Benefits</span>",
+      "key_box_fields": [
+        {
+          "icon": "lucide-zap",
+          "title": "Reduced Processing Latency",
+          "description": "Artificial Intelligence-enhanced automation reduces data processing latency, enabling more immediate response times for systems and greater operational efficiency in data-driven workflows."
+        },
+        {
+          "icon": "lucide-chart-column",
+          "title": "Improved Forecast Accuracy",
+          "description": "Machine Learning (ML) models will use large datasets to perform pattern recognition and assist in developing accurate forecasts of demand, risk, and market trends."
+        },
+        {
+          "icon": "lucide-settings",
+          "title": "Maximised Resource Utilization",
+          "description": "AI will use operational data to analyse resource distribution, eliminate waste, and optimise the effectiveness of people, infrastructure, and processes."
+        },
+        {
+          "icon": "lucide-layers",
+          "title": "Scalable Technology Structures",
+          "description": "AI architecture designed with engineering principles enables scalability as a business expands, allowing larger datasets, user bases, and workloads to be processed without sacrificing performance."
+        },
+        {
+          "icon": "lucide-brain",
+          "title": "Accelerated Decision-Making Through Data",
+          "description": "AI Analytics quickly turns unstructured data into actionable insights, enabling improved decision-making from leadership through real-time data/facts."
+        }
+      ]
+    },
+    "services_get_started_section": {
+      "heading": "Ready to Build <span>Intelligent AI Solutions?</span>",
+      "paragraph": "Whether you're just starting your AI journey or looking to scale existing systems, our team of AI specialists is ready to help you define, build, and deploy solutions that drive measurable business outcomes.",
+      "lists": null,
+      "buttons": [
+        {
+          "cta_text": "Book a Strategy Call",
+          "cta_url": "/contactus"
+        },
+        {
+          "cta_text": "Get Free AI Assessment",
+          "cta_url": "/contactus"
+        }
+      ],
+      "small_heading": ""
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}

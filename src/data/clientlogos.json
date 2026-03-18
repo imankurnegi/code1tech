@@ -1,0 +1,77 @@
+{
+  "status": true,
+  "data": [
+    {
+      "id": 803,
+      "title": "CX Data",
+      "url": "#",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/03/levelshift.png"
+    },
+    {
+      "id": 802,
+      "title": "Level Shift",
+      "url": "#",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/03/level.png"
+    },
+    {
+      "id": 798,
+      "title": "C5I",
+      "url": "#",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/03/course5i.png"
+    },
+    {
+      "id": 511,
+      "title": "Xebia",
+      "url": "#",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/02/xebia.png"
+    },
+    {
+      "id": 509,
+      "title": "Celebal Technologies",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/02/celebal-technologies.png"
+    },
+    {
+      "id": 506,
+      "title": "GIRNARSOFT",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/01/Girnarsoft.png.png"
+    },
+    {
+      "id": 504,
+      "title": "ANVIZENT",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/01/anvizent.png.png"
+    },
+    {
+      "id": 503,
+      "title": "KPI PARTNERS",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/02/kpi.png"
+    },
+    {
+      "id": 502,
+      "title": "CLOUDWICK",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/01/cloudwick.png.png"
+    },
+    {
+      "id": 501,
+      "title": "MATELLIO",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/01/matellio.png.png"
+    },
+    {
+      "id": 500,
+      "title": "NAGARRO",
+      "url": "",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/01/nagarro.png.png"
+    },
+    {
+      "id": 499,
+      "title": "DELOITTE",
+      "url": "#",
+      "image": "https://code1.dev/code1new/wp-content/uploads/2026/01/deloitte.png.png"
+    }
+  ]
+}
