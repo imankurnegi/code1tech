@@ -1,0 +1,869 @@
+{
+  "status": true,
+  "data": {
+    "page_title": "The People Behind <span>Code1 Tech</span>",
+    "page_content": "<p>A passionate team of leaders, architects, and engineers committed to transforming ideas into exceptional digital solutions.</p>\n",
+    "banner_image": "https://code1.dev/code1new/wp-content/uploads/2026/02/team-hero-bg-BTCsiK51.webp",
+    "leadership_team_section": {
+      "heading": "Our <span>Leadership Team</span>",
+      "description": "The team believes in leading with clarity, trust, and empathy. With transparency and tech development at our core, we listen to our clients and teams to create an environment where ideas grow, challenges are met head-on, and progress feels purposeful. We believe every problem brings an opportunity to invent, develop, and transform.",
+      "teams": [
+        {
+          "image": {
+            "id": 577,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/bhagesh-B_axwI8n.webp",
+            "alt": "",
+            "title": "bhagesh-B_axwI8n",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "bhagesh-B_axwI8n-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 4990
+              },
+              "large": {
+                "file": "bhagesh-B_axwI8n-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 22476
+              },
+              "thumbnail": {
+                "file": "bhagesh-B_axwI8n-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2206
+              },
+              "medium_large": {
+                "file": "bhagesh-B_axwI8n-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 15614
+              }
+            },
+            "width": 1080,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/bhagesh-B_axwI8n-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/bhagesh-B_axwI8n-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/bhagesh-B_axwI8n-1024x1024.webp"
+          },
+          "name": "Bhagesh",
+          "designation": "Director"
+        },
+        {
+          "image": {
+            "id": 578,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/tanisha-CkIlC9RT.webp",
+            "alt": "",
+            "title": "tanisha-CkIlC9RT",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "tanisha-CkIlC9RT-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 4908
+              },
+              "large": {
+                "file": "tanisha-CkIlC9RT-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 25236
+              },
+              "thumbnail": {
+                "file": "tanisha-CkIlC9RT-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2160
+              },
+              "medium_large": {
+                "file": "tanisha-CkIlC9RT-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 17646
+              }
+            },
+            "width": 1080,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/tanisha-CkIlC9RT-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/tanisha-CkIlC9RT-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/tanisha-CkIlC9RT-1024x1024.webp"
+          },
+          "name": "Tanisha",
+          "designation": "Business Delivery Head"
+        },
+        {
+          "image": {
+            "id": 579,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/mukesh-1UkOSX5o.webp",
+            "alt": "",
+            "title": "mukesh-1UkOSX5o",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "mukesh-1UkOSX5o-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 4722
+              },
+              "large": {
+                "file": "mukesh-1UkOSX5o-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 25434
+              },
+              "thumbnail": {
+                "file": "mukesh-1UkOSX5o-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2108
+              },
+              "medium_large": {
+                "file": "mukesh-1UkOSX5o-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 17002
+              }
+            },
+            "width": 1080,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/mukesh-1UkOSX5o-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/mukesh-1UkOSX5o-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/mukesh-1UkOSX5o-1024x1024.webp"
+          },
+          "name": "Mukesh",
+          "designation": "Finance Head"
+        },
+        {
+          "image": {
+            "id": 580,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/shanu-B32JnvYQ.webp",
+            "alt": "",
+            "title": "shanu-B32JnvYQ",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "shanu-B32JnvYQ-300x251.webp",
+                "width": 300,
+                "height": 251,
+                "mime-type": "image/webp",
+                "filesize": 5424
+              },
+              "thumbnail": {
+                "file": "shanu-B32JnvYQ-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2794
+              },
+              "medium_large": {
+                "file": "shanu-B32JnvYQ-768x642.webp",
+                "width": 768,
+                "height": 642,
+                "mime-type": "image/webp",
+                "filesize": 17084
+              }
+            },
+            "width": 1024,
+            "height": 856,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/shanu-B32JnvYQ-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/shanu-B32JnvYQ-300x251.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/shanu-B32JnvYQ.webp"
+          },
+          "name": "Shanu",
+          "designation": "Human Resources Manager"
+        },
+        {
+          "image": {
+            "id": 581,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhilash-D10Mv3hz.webp",
+            "alt": "",
+            "title": "abhilash-D10Mv3hz",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "abhilash-D10Mv3hz-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5578
+              },
+              "thumbnail": {
+                "file": "abhilash-D10Mv3hz-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2510
+              },
+              "medium_large": {
+                "file": "abhilash-D10Mv3hz-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 21266
+              }
+            },
+            "width": 1024,
+            "height": 1024,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhilash-D10Mv3hz-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhilash-D10Mv3hz-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhilash-D10Mv3hz.webp"
+          },
+          "name": "Abhilash",
+          "designation": "Delivery Manager"
+        },
+        {
+          "image": {
+            "id": 582,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/rajat-CKr4lcpn.webp",
+            "alt": "",
+            "title": "rajat-CKr4lcpn",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "rajat-CKr4lcpn-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5376
+              },
+              "large": {
+                "file": "rajat-CKr4lcpn-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 30044
+              },
+              "thumbnail": {
+                "file": "rajat-CKr4lcpn-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2364
+              },
+              "medium_large": {
+                "file": "rajat-CKr4lcpn-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 18984
+              }
+            },
+            "width": 1080,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/rajat-CKr4lcpn-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/rajat-CKr4lcpn-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/rajat-CKr4lcpn-1024x1024.webp"
+          },
+          "name": "Rajat",
+          "designation": "Technical Lead"
+        },
+        {
+          "image": {
+            "id": 583,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/darshan-DUYskbKj.webp",
+            "alt": "",
+            "title": "darshan-DUYskbKj",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "darshan-DUYskbKj-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5266
+              },
+              "large": {
+                "file": "darshan-DUYskbKj-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 20594
+              },
+              "thumbnail": {
+                "file": "darshan-DUYskbKj-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2468
+              },
+              "medium_large": {
+                "file": "darshan-DUYskbKj-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 14496
+              }
+            },
+            "width": 1080,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/darshan-DUYskbKj-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/darshan-DUYskbKj-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/darshan-DUYskbKj-1024x1024.webp"
+          },
+          "name": "Darshan",
+          "designation": "Sales Lead"
+        },
+        {
+          "image": {
+            "id": 584,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/ruchita-B4AT7cIt.webp",
+            "alt": "",
+            "title": "ruchita-B4AT7cIt",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ruchita-B4AT7cIt-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 7220
+              },
+              "large": {
+                "file": "ruchita-B4AT7cIt-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 35568
+              },
+              "thumbnail": {
+                "file": "ruchita-B4AT7cIt-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2986
+              },
+              "medium_large": {
+                "file": "ruchita-B4AT7cIt-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 24568
+              }
+            },
+            "width": 1080,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/ruchita-B4AT7cIt-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/ruchita-B4AT7cIt-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/ruchita-B4AT7cIt-1024x1024.webp"
+          },
+          "name": "Ruchita",
+          "designation": "Growth Manager"
+        }
+      ]
+    },
+    "our_architects_section": {
+      "connection_section_url": "/contactus",
+      "heading": "Our <span>Architects</span>",
+      "description": "The tech architects working with us love tackling challenges and turning them into clear, practical solutions. Our team focuses on building strong, scalable, and secure systems that are easy to maintain. Our team works closely with clients and developers to deliver solutions that address today's challenges and prepare for what lies ahead!",
+      "teams": [
+        {
+          "image": {
+            "id": 585,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/vivek-CotsRWgb.webp",
+            "alt": "",
+            "title": "vivek-CotsRWgb",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "vivek-CotsRWgb-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 4970
+              },
+              "thumbnail": {
+                "file": "vivek-CotsRWgb-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2258
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/vivek-CotsRWgb-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/vivek-CotsRWgb-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/vivek-CotsRWgb.webp"
+          },
+          "name": "Vivek",
+          "designation": "AWS Solution Architect"
+        },
+        {
+          "image": {
+            "id": 586,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/gursimran-DKoAEMvt.webp",
+            "alt": "",
+            "title": "gursimran-DKoAEMvt",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "gursimran-DKoAEMvt-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5668
+              },
+              "thumbnail": {
+                "file": "gursimran-DKoAEMvt-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2582
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/gursimran-DKoAEMvt-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/gursimran-DKoAEMvt-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/gursimran-DKoAEMvt.webp"
+          },
+          "name": "Gur Simran",
+          "designation": "GCP Solution Architect"
+        },
+        {
+          "image": {
+            "id": 587,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/mohit-B7mnNvN3.webp",
+            "alt": "",
+            "title": "mohit-B7mnNvN3",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "mohit-B7mnNvN3-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 4846
+              },
+              "thumbnail": {
+                "file": "mohit-B7mnNvN3-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2352
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/mohit-B7mnNvN3-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/mohit-B7mnNvN3-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/mohit-B7mnNvN3.webp"
+          },
+          "name": "Vivek",
+          "designation": "Azure Solution Architect"
+        },
+        {
+          "image": {
+            "id": 588,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/rahul-DVyfKKGw.webp",
+            "alt": "",
+            "title": "rahul-DVyfKKGw",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "rahul-DVyfKKGw-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5122
+              },
+              "thumbnail": {
+                "file": "rahul-DVyfKKGw-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2292
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/rahul-DVyfKKGw-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/rahul-DVyfKKGw-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/rahul-DVyfKKGw.webp"
+          },
+          "name": "Rahul",
+          "designation": "Infra Architect"
+        }
+      ],
+      "connect_section_heading": "Top Architects Shaping <span>Your Project</span>",
+      "connect_section_text": "Connects Architects",
+      "connect_section_image": {
+        "id": 589,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/architects-banner-DV-paCJ3.webp",
+        "alt": "",
+        "title": "architects-banner-DV-paCJ3",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "architects-banner-DV-paCJ3-300x300.webp",
+            "width": 300,
+            "height": 300,
+            "mime-type": "image/webp",
+            "filesize": 8598
+          },
+          "thumbnail": {
+            "file": "architects-banner-DV-paCJ3-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 3514
+          }
+        },
+        "width": 768,
+        "height": 768,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/architects-banner-DV-paCJ3-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/architects-banner-DV-paCJ3-300x300.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/architects-banner-DV-paCJ3.webp"
+      }
+    },
+    "our_engineers_section": {
+      "heading": "Our <span>Engineers</span>",
+      "description": "We are proud to have a team of enthusiastic engineers who are willing to experiment and explore. They are hands-on, curious, and deeply committed to quality. Whether we're discussing data, AI, analytics, or an enterprise platform, the experts bring craftsmanship and new ideas to every build. With experience in Python, SAP IBP, Adobe, Power BI, and data science, our team turns challenges into solutions.",
+      "teams": [
+        {
+          "image": {
+            "id": 590,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/supriyo-CEykT8W6.webp",
+            "alt": "",
+            "title": "supriyo-CEykT8W6",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "supriyo-CEykT8W6-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 6028
+              },
+              "thumbnail": {
+                "file": "supriyo-CEykT8W6-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2742
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/supriyo-CEykT8W6-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/supriyo-CEykT8W6-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/supriyo-CEykT8W6.webp"
+          },
+          "name": "Supriyo",
+          "designation": "Sr. Data Engineer"
+        },
+        {
+          "image": {
+            "id": 591,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/ashutosh-BVQ_nq9I.webp",
+            "alt": "",
+            "title": "ashutosh-BVQ_nq9I",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ashutosh-BVQ_nq9I-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 4912
+              },
+              "thumbnail": {
+                "file": "ashutosh-BVQ_nq9I-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2242
+              },
+              "medium_large": {
+                "file": "ashutosh-BVQ_nq9I-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 14754
+              }
+            },
+            "width": 1024,
+            "height": 1024,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/ashutosh-BVQ_nq9I-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/ashutosh-BVQ_nq9I-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/ashutosh-BVQ_nq9I.webp"
+          },
+          "name": "Ashutosh",
+          "designation": "Sr. Adobe Engineer"
+        },
+        {
+          "image": {
+            "id": 592,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhay-B42P0jFz.webp",
+            "alt": "",
+            "title": "abhay-B42P0jFz",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "abhay-B42P0jFz-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5886
+              },
+              "thumbnail": {
+                "file": "abhay-B42P0jFz-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2656
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhay-B42P0jFz-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhay-B42P0jFz-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/abhay-B42P0jFz.webp"
+          },
+          "name": "Abhay",
+          "designation": "Backend Engineer"
+        },
+        {
+          "image": {
+            "id": 593,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/chandra-z6AFrsbp.webp",
+            "alt": "",
+            "title": "chandra-z6AFrsbp",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "chandra-z6AFrsbp-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5578
+              },
+              "thumbnail": {
+                "file": "chandra-z6AFrsbp-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2710
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/chandra-z6AFrsbp-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/chandra-z6AFrsbp-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/chandra-z6AFrsbp.webp"
+          },
+          "name": "Chandra",
+          "designation": "Power BI Engineer"
+        },
+        {
+          "image": {
+            "id": 594,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/nitin-DeC1odU7.webp",
+            "alt": "",
+            "title": "nitin-DeC1odU7",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "nitin-DeC1odU7-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5896
+              },
+              "thumbnail": {
+                "file": "nitin-DeC1odU7-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2674
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/nitin-DeC1odU7-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/nitin-DeC1odU7-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/nitin-DeC1odU7.webp"
+          },
+          "name": "Nitin",
+          "designation": "Sr. Python Engineer"
+        },
+        {
+          "image": {
+            "id": 595,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/sachin-M-Ad7EHB.webp",
+            "alt": "",
+            "title": "sachin-M-Ad7EHB",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "sachin-M-Ad7EHB-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5382
+              },
+              "thumbnail": {
+                "file": "sachin-M-Ad7EHB-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2584
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/sachin-M-Ad7EHB-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/sachin-M-Ad7EHB-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/sachin-M-Ad7EHB.webp"
+          },
+          "name": "Sachin",
+          "designation": "Sr. SAP IBP Engineer"
+        },
+        {
+          "image": {
+            "id": 596,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/rakesh-PEdpsPwL.webp",
+            "alt": "",
+            "title": "rakesh-PEdpsPwL",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "rakesh-PEdpsPwL-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 7264
+              },
+              "thumbnail": {
+                "file": "rakesh-PEdpsPwL-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2856
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/rakesh-PEdpsPwL-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/rakesh-PEdpsPwL-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/rakesh-PEdpsPwL.webp"
+          },
+          "name": "Rakesh",
+          "designation": "Sr. Data Engineer"
+        },
+        {
+          "image": {
+            "id": 597,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/divyavijay-DnC5ZIi_.webp",
+            "alt": "",
+            "title": "divyavijay-DnC5ZIi_",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "divyavijay-DnC5ZIi_-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 5932
+              },
+              "thumbnail": {
+                "file": "divyavijay-DnC5ZIi_-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2708
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/divyavijay-DnC5ZIi_-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/divyavijay-DnC5ZIi_-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/divyavijay-DnC5ZIi_.webp"
+          },
+          "name": "Divyavijay",
+          "designation": "Sr. Data Scientist"
+        }
+      ],
+      "connect_section_heading": "Top Engineers Building <span>Robust Solutions</span>",
+      "connect_section_text": "Work With Our Engineers",
+      "connect_section_image": {
+        "id": 598,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/engineers-banner-QU4yznvw.webp",
+        "alt": "",
+        "title": "engineers-banner-QU4yznvw",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "engineers-banner-QU4yznvw-300x300.webp",
+            "width": 300,
+            "height": 300,
+            "mime-type": "image/webp",
+            "filesize": 11248
+          },
+          "thumbnail": {
+            "file": "engineers-banner-QU4yznvw-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 4588
+          }
+        },
+        "width": 768,
+        "height": 768,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/engineers-banner-QU4yznvw-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/engineers-banner-QU4yznvw-300x300.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/engineers-banner-QU4yznvw.webp"
+      },
+      "cta_url": "/contactus"
+    },
+    "join_us_section": {
+      "heading": "Want to Join Our Team?",
+      "description": "We're always looking for talented individuals who share our passion for technology and innovation.",
+      "button_label": "Explore Opportunities",
+      "button_url": "/contactus"
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "https://code1.dev/code1new/wp-content/uploads/2026/02/team-hero-bg-BTCsiK51.webp",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}

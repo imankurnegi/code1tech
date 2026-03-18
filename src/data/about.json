@@ -1,0 +1,606 @@
+{
+  "status": true,
+  "data": {
+    "paragraph_below_client_logo": "We partner with trailblazers across Finance, Healthcare, Retail, Manufacturing, Energy, and Tech Startups companies who share our passion for progress.",
+    "what_can_we_do_section": {
+      "heading": "We Have the <span>Systems</span>, <span>Strategy</span>, and <span>Velocity</span> to Make It a Reality",
+      "description": "<p>At Code1 Tech Systems, we help organizations operate more intelligently, automate more smartly, and scale frictionlessly. Whether you are streamlining workflows, developing products powered by AI, or penetrating new markets, we have professionals who can work side by side with you to make change possible and practical.</p>\n<p>Our mission is simple: turn complexity into clarity and innovation into results.</p>\n<p class=\"text-base lg:text-lg font-medium text-foreground\">We don&#8217;t just build technology. We build awareness.</p>\n",
+      "button_label": "Learn What We Can Do for You",
+      "button_url": "/contactus",
+      "image": {
+        "ID": 556,
+        "id": 556,
+        "title": "about-intro-visual-DFBoLwt_",
+        "filename": "about-intro-visual-DFBoLwt_.webp",
+        "filesize": 67592,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_.webp",
+        "link": "https://code1.dev/code1new/about/about-intro-visual-dfbolwt_/",
+        "alt": "",
+        "author": "1",
+        "description": "",
+        "caption": "",
+        "name": "about-intro-visual-dfbolwt_",
+        "status": "inherit",
+        "uploaded_to": 517,
+        "date": "2026-02-22 12:41:09",
+        "modified": "2026-02-22 12:41:09",
+        "menu_order": 0,
+        "mime_type": "image/webp",
+        "type": "image",
+        "subtype": "webp",
+        "icon": "https://code1.dev/code1new/wp-includes/images/media/default.png",
+        "width": 1024,
+        "height": 1024,
+        "sizes": {
+          "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_-150x150.webp",
+          "thumbnail-width": 150,
+          "thumbnail-height": 150,
+          "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_-300x300.webp",
+          "medium-width": 300,
+          "medium-height": 300,
+          "medium_large": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_-768x768.webp",
+          "medium_large-width": 768,
+          "medium_large-height": 768,
+          "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_.webp",
+          "large-width": 1024,
+          "large-height": 1024,
+          "1536x1536": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_.webp",
+          "1536x1536-width": 1024,
+          "1536x1536-height": 1024,
+          "2048x2048": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-intro-visual-DFBoLwt_.webp",
+          "2048x2048-width": 1024,
+          "2048x2048-height": 1024
+        }
+      }
+    },
+    "our_vision_section": {
+      "vision_heading": "Our <span>Vision & Mission</span>",
+      "vision_tab_label": "Vision",
+      "vision_tab_icon_class": "lucide-eye",
+      "vision_tab_left_image": {
+        "ID": 558,
+        "id": 558,
+        "title": "vision-mission-visual-D-HsBrav",
+        "filename": "vision-mission-visual-D-HsBrav.webp",
+        "filesize": 98936,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav.webp",
+        "link": "https://code1.dev/code1new/about/vision-mission-visual-d-hsbrav/",
+        "alt": "",
+        "author": "1",
+        "description": "",
+        "caption": "",
+        "name": "vision-mission-visual-d-hsbrav",
+        "status": "inherit",
+        "uploaded_to": 517,
+        "date": "2026-02-22 12:45:33",
+        "modified": "2026-02-22 12:45:33",
+        "menu_order": 0,
+        "mime_type": "image/webp",
+        "type": "image",
+        "subtype": "webp",
+        "icon": "https://code1.dev/code1new/wp-includes/images/media/default.png",
+        "width": 1500,
+        "height": 1000,
+        "sizes": {
+          "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav-150x150.webp",
+          "thumbnail-width": 150,
+          "thumbnail-height": 150,
+          "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav-300x200.webp",
+          "medium-width": 300,
+          "medium-height": 200,
+          "medium_large": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav-768x512.webp",
+          "medium_large-width": 768,
+          "medium_large-height": 512,
+          "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav-1024x683.webp",
+          "large-width": 1024,
+          "large-height": 683,
+          "1536x1536": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav.webp",
+          "1536x1536-width": 1500,
+          "1536x1536-height": 1000,
+          "2048x2048": "https://code1.dev/code1new/wp-content/uploads/2026/02/vision-mission-visual-D-HsBrav.webp",
+          "2048x2048-width": 1500,
+          "2048x2048-height": 1000
+        }
+      },
+      "vision_tab_left_image_icon": "lucide-eye",
+      "vision_tab_left_image_heading": "Global Innovation",
+      "vision_tab_left_image_content": "Empowering businesses worldwide",
+      "vision_tab_content_icon": "lucide-eye",
+      "vision_tab_content_heading": "Vision",
+      "vision_tab_content_description": "<p>To facilitate global businesses in making greater strides with fewer resources, leveraging smart, scalable, and deeply human technology.</p>\n<p>We envision a world where innovation is not only a possibility for larger organizations, but for any organization with the courage to act on it.</p>\n",
+      "vision_tab_content_bottom_text": "Driving innovation at every scale",
+      "mission_tab_label": "Mission",
+      "mission_tab_icon_class": "lucide-rocket",
+      "mission_tab_left_image": {
+        "ID": 557,
+        "id": 557,
+        "title": "mission-visual-CLxNhjWM",
+        "filename": "mission-visual-CLxNhjWM.webp",
+        "filesize": 31706,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM.webp",
+        "link": "https://code1.dev/code1new/about/mission-visual-clxnhjwm/",
+        "alt": "",
+        "author": "1",
+        "description": "",
+        "caption": "",
+        "name": "mission-visual-clxnhjwm",
+        "status": "inherit",
+        "uploaded_to": 517,
+        "date": "2026-02-22 12:43:19",
+        "modified": "2026-02-22 12:43:19",
+        "menu_order": 0,
+        "mime_type": "image/webp",
+        "type": "image",
+        "subtype": "webp",
+        "icon": "https://code1.dev/code1new/wp-includes/images/media/default.png",
+        "width": 1024,
+        "height": 1024,
+        "sizes": {
+          "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM-150x150.webp",
+          "thumbnail-width": 150,
+          "thumbnail-height": 150,
+          "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM-300x300.webp",
+          "medium-width": 300,
+          "medium-height": 300,
+          "medium_large": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM-768x768.webp",
+          "medium_large-width": 768,
+          "medium_large-height": 768,
+          "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM.webp",
+          "large-width": 1024,
+          "large-height": 1024,
+          "1536x1536": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM.webp",
+          "1536x1536-width": 1024,
+          "1536x1536-height": 1024,
+          "2048x2048": "https://code1.dev/code1new/wp-content/uploads/2026/02/mission-visual-CLxNhjWM.webp",
+          "2048x2048-width": 1024,
+          "2048x2048-height": 1024
+        }
+      },
+      "mission_tab_left_image_icon": "lucide-rocket",
+      "mission_tab_left_image_heading": "Driving Progress",
+      "mission_tab_left_image_content": "Building tomorrow's solutions",
+      "mission_tab_content_icon": "lucide-rocket",
+      "mission_tab_content_heading": "Mission",
+      "mission_tab_content_description": "<p class=\"text-muted-foreground text-sm leading-relaxed\">To allow progressive organizations to harness the power of AI, automation, and data to:</p>\r\n<ul class=\"space-y-3\"><li class=\"flex items-start gap-3 group/item\"><div class=\"mt-1 flex-shrink-0\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check w-5 h-5 text-accent opacity-80 group-hover/item:opacity-100 transition-opacity\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"m9 12 2 2 4-4\"></path></svg></div><span class=\"text-muted-foreground leading-relaxed\">Discover new operational efficiencies and growth opportunities.</span></li><li class=\"flex items-start gap-3 group/item\"><div class=\"mt-1 flex-shrink-0\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check w-5 h-5 text-accent opacity-80 group-hover/item:opacity-100 transition-opacity\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"m9 12 2 2 4-4\"></path></svg></div><span class=\"text-muted-foreground leading-relaxed\">Make daily operational and decision-making simpler.</span></li><li class=\"flex items-start gap-3 group/item\"><div class=\"mt-1 flex-shrink-0\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check w-5 h-5 text-accent opacity-80 group-hover/item:opacity-100 transition-opacity\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"m9 12 2 2 4-4\"></path></svg></div><span class=\"text-muted-foreground leading-relaxed\">Empower teams with solutions that enhance success.</span></li><li class=\"flex items-start gap-3 group/item\"><div class=\"mt-1 flex-shrink-0\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check w-5 h-5 text-accent opacity-80 group-hover/item:opacity-100 transition-opacity\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"m9 12 2 2 4-4\"></path></svg></div><span class=\"text-muted-foreground leading-relaxed\">Deliver meaningful value through intelligent transformation.</span></li></ul>",
+      "mission_tab_content_bottom_text": "Your business deserves technology that looks out for you.",
+      "bottom_button_label": "Let's Design Your Growth Strategy",
+      "bottom_button_url": "/contactus"
+    },
+    "page_title": "Building the Future of <span>Business <br>Together</span>",
+    "page_content": "<p>At Code1 Tech Systems, we make great ideas become real outcomes. From AI to automation to global outsourcing, we help bold businesses simplify, scale, and lead with confidence.</p>\n",
+    "banner_image": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-hero-bg-C6cZbWUx.webp",
+    "our_values_section": {
+      "our_values_heading": "Our <span>Values</span>",
+      "our_values_sub_heading": "<span class=\"text-accent\">Integrity</span> | <span class=\"text-accent\">Ingenuity</span> | <span class=\"text-accent\">Partnership</span> | <span class=\"text-accent\">Impact</span>",
+      "our_values_blocks": [
+        {
+          "image": {
+            "id": 561,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-integrity-BuzPJLdz.webp",
+            "alt": "",
+            "title": "value-integrity-BuzPJLdz",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "value-integrity-BuzPJLdz-300x169.webp",
+                "width": 300,
+                "height": 169,
+                "mime-type": "image/webp",
+                "filesize": 4714
+              },
+              "large": {
+                "file": "value-integrity-BuzPJLdz-1024x576.webp",
+                "width": 1024,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 29120
+              },
+              "thumbnail": {
+                "file": "value-integrity-BuzPJLdz-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2996
+              },
+              "medium_large": {
+                "file": "value-integrity-BuzPJLdz-768x432.webp",
+                "width": 768,
+                "height": 432,
+                "mime-type": "image/webp",
+                "filesize": 19036
+              },
+              "1536x1536": {
+                "file": "value-integrity-BuzPJLdz-1536x864.webp",
+                "width": 1536,
+                "height": 864,
+                "mime-type": "image/webp",
+                "filesize": 49422
+              }
+            },
+            "width": 1920,
+            "height": 1080,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-integrity-BuzPJLdz-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-integrity-BuzPJLdz-300x169.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-integrity-BuzPJLdz-1024x576.webp"
+          },
+          "icon_class": "lucide-shield",
+          "heading": "Integrity",
+          "content": "We value being honest and following through with what we say. When we say we&#039;re going to do something, we mean it and we do it."
+        },
+        {
+          "image": {
+            "id": 562,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-ingenuity-MKrEohBx.webp",
+            "alt": "",
+            "title": "value-ingenuity-MKrEohBx",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "value-ingenuity-MKrEohBx-300x171.webp",
+                "width": 300,
+                "height": 171,
+                "mime-type": "image/webp",
+                "filesize": 3254
+              },
+              "large": {
+                "file": "value-ingenuity-MKrEohBx-1024x585.webp",
+                "width": 1024,
+                "height": 585,
+                "mime-type": "image/webp",
+                "filesize": 18746
+              },
+              "thumbnail": {
+                "file": "value-ingenuity-MKrEohBx-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 2588
+              },
+              "medium_large": {
+                "file": "value-ingenuity-MKrEohBx-768x439.webp",
+                "width": 768,
+                "height": 439,
+                "mime-type": "image/webp",
+                "filesize": 12468
+              },
+              "1536x1536": {
+                "file": "value-ingenuity-MKrEohBx-1536x878.webp",
+                "width": 1536,
+                "height": 878,
+                "mime-type": "image/webp",
+                "filesize": 31998
+              }
+            },
+            "width": 1920,
+            "height": 1097,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-ingenuity-MKrEohBx-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-ingenuity-MKrEohBx-300x171.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-ingenuity-MKrEohBx-1024x585.webp"
+          },
+          "icon_class": "lucide-lightbulb",
+          "heading": "Ingenuity",
+          "content": "We&#039;ll never just take the easy way out. We look for ways to solve problems that are truly creative, smarter, and more effective every time."
+        },
+        {
+          "image": {
+            "id": 563,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-partnership-DvWruBLX.webp",
+            "alt": "",
+            "title": "value-partnership-DvWruBLX",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "value-partnership-DvWruBLX-300x171.webp",
+                "width": 300,
+                "height": 171,
+                "mime-type": "image/webp",
+                "filesize": 10406
+              },
+              "large": {
+                "file": "value-partnership-DvWruBLX-1024x585.webp",
+                "width": 1024,
+                "height": 585,
+                "mime-type": "image/webp",
+                "filesize": 57292
+              },
+              "thumbnail": {
+                "file": "value-partnership-DvWruBLX-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 5018
+              },
+              "medium_large": {
+                "file": "value-partnership-DvWruBLX-768x439.webp",
+                "width": 768,
+                "height": 439,
+                "mime-type": "image/webp",
+                "filesize": 41990
+              }
+            },
+            "width": 1344,
+            "height": 768,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-partnership-DvWruBLX-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-partnership-DvWruBLX-300x171.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-partnership-DvWruBLX-1024x585.webp"
+          },
+          "icon_class": "lucide-users",
+          "heading": "Partnership",
+          "content": "We think of our clients as partners, not customers. When you grow, we grow; together every step of the way."
+        },
+        {
+          "image": {
+            "id": 576,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-impact-3pdSPV44-1.webp",
+            "alt": "",
+            "title": "value-impact-3pdSPV44 (1)",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "value-impact-3pdSPV44-1-300x170.webp",
+                "width": 300,
+                "height": 170,
+                "mime-type": "image/webp",
+                "filesize": 4936
+              },
+              "thumbnail": {
+                "file": "value-impact-3pdSPV44-1-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3844
+              },
+              "medium_large": {
+                "file": "value-impact-3pdSPV44-1-768x434.webp",
+                "width": 768,
+                "height": 434,
+                "mime-type": "image/webp",
+                "filesize": 20284
+              }
+            },
+            "width": 1024,
+            "height": 579,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-impact-3pdSPV44-1-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-impact-3pdSPV44-1-300x170.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/value-impact-3pdSPV44-1.webp"
+          },
+          "icon_class": "lucide-target",
+          "heading": "Impact",
+          "content": "Every project we take on must create real, measurable value. If it doesn&#039;t create forward momentum in your business, it&#039;s not good enough for us."
+        }
+      ]
+    },
+    "our_work_approach_section": {
+      "our_work_heading": "Our <span>Work Approach</span>",
+      "our_work_paragraph": "You have a unique way of running your business, and we believe technology should adapt to you, not the other way around.",
+      "left_image": {
+        "id": 564,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/approach-consulting-YYw-OxYf.webp",
+        "alt": "",
+        "title": "approach-consulting-YYw-OxYf",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "approach-consulting-YYw-OxYf-300x169.webp",
+            "width": 300,
+            "height": 169,
+            "mime-type": "image/webp",
+            "filesize": 5178
+          },
+          "large": {
+            "file": "approach-consulting-YYw-OxYf-1024x576.webp",
+            "width": 1024,
+            "height": 576,
+            "mime-type": "image/webp",
+            "filesize": 43414
+          },
+          "thumbnail": {
+            "file": "approach-consulting-YYw-OxYf-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 3494
+          },
+          "medium_large": {
+            "file": "approach-consulting-YYw-OxYf-768x432.webp",
+            "width": 768,
+            "height": 432,
+            "mime-type": "image/webp",
+            "filesize": 27320
+          },
+          "1536x1536": {
+            "file": "approach-consulting-YYw-OxYf-1536x864.webp",
+            "width": 1536,
+            "height": 864,
+            "mime-type": "image/webp",
+            "filesize": 78010
+          }
+        },
+        "width": 1920,
+        "height": 1080,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/approach-consulting-YYw-OxYf-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/approach-consulting-YYw-OxYf-300x169.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/approach-consulting-YYw-OxYf-1024x576.webp"
+      },
+      "left_image_icon_class": "lucide-target",
+      "bottom_button_url": "/contactus",
+      "left_image_text": "Client-Centric Models",
+      "bottom_button_label": "Let's talk about your next project",
+      "approach_blocks": [
+        {
+          "icon_class": "lucide-briefcase",
+          "heading": "Project-Based Engagements",
+          "content": "Fast wins for defined objectives, made for businesses testing new ideas or launching quickly."
+        },
+        {
+          "icon_class": "lucide-users-round",
+          "heading": "Dedicated Teams",
+          "content": "Your very own engineers and experts. Fully embedded, fully accountable, and 100% dedicated to your success."
+        },
+        {
+          "icon_class": "lucide-message-square",
+          "heading": "Consulting &amp; Advisory",
+          "content": "We do not just advise but experience the process with you to plan, implement, and optimize."
+        },
+        {
+          "icon_class": "lucide-layers",
+          "heading": "Hybrid Models",
+          "content": "Partner with us for the right balance of control and ease of convenience. We let you build your team that works exactly like you wish!"
+        }
+      ]
+    },
+    "certifications_section": {
+      "certification_icon_class": "lucide-award",
+      "certification_label": "CERTIFICATIONS",
+      "certification_heading": "Recognized For <span>Excellence</span>",
+      "certification_content": "Our certifications reflect our unwavering commitment to security, quality, and compliance giving you confidence that your data and projects are in trusted hands.",
+      "certifications_blocks": [
+        {
+          "certification_image": {
+            "id": 565,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc.webp",
+            "alt": "",
+            "title": "cert-iso27001-Dantzspc",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-iso27001-Dantzspc-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 21554
+              },
+              "thumbnail": {
+                "file": "cert-iso27001-Dantzspc-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 8464
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc.webp"
+          },
+          "certification_validity": "ISO 27001:2022",
+          "certification_label": "Information Security Management"
+        },
+        {
+          "certification_image": {
+            "id": 566,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem.webp",
+            "alt": "",
+            "title": "cert-iso9001-BC7qDQem",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-iso9001-BC7qDQem-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 20522
+              },
+              "thumbnail": {
+                "file": "cert-iso9001-BC7qDQem-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 7594
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem.webp"
+          },
+          "certification_validity": "ISO 9001:2015",
+          "certification_label": "Quality Management System"
+        },
+        {
+          "certification_image": {
+            "id": 567,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z.png",
+            "alt": "",
+            "title": "cert-iso20000-Bd2gN13Z",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-iso20000-Bd2gN13Z-300x300.png",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/png",
+                "filesize": 64298
+              },
+              "thumbnail": {
+                "file": "cert-iso20000-Bd2gN13Z-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/png",
+                "filesize": 22519
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z-150x150.png",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z-300x300.png",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z.png"
+          },
+          "certification_validity": "ISO 20000-1:2018",
+          "certification_label": "IT Service Management"
+        },
+        {
+          "certification_image": {
+            "id": 568,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK.webp",
+            "alt": "",
+            "title": "cert-cmmi-CQiuYGfK",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-cmmi-CQiuYGfK-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 8802
+              },
+              "thumbnail": {
+                "file": "cert-cmmi-CQiuYGfK-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4044
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK.webp"
+          },
+          "certification_validity": "CMMI Level 3",
+          "certification_label": "Capability Maturity Model"
+        }
+      ]
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "https://code1.dev/code1new/wp-content/uploads/2026/02/about-hero-bg-C6cZbWUx.webp",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}

@@ -1,0 +1,1376 @@
+{
+  "status": true,
+  "data": {
+    "cta_section_heading": "Onboard Data Science Experts to Make the Best of your Data!",
+    "cta_text": " Request a Consultation",
+    "cta_url": "/contactus",
+    "section_tagline": "Sector Intelligence",
+    "box_data": [
+      {
+        "ID": 823,
+        "post_author": "1",
+        "post_date": "2026-03-13 03:42:32",
+        "post_date_gmt": "2026-03-13 03:42:32",
+        "post_content": "",
+        "post_title": "Finance & Fintech",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "finance-fintech",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:41:58",
+        "post_modified_gmt": "2026-03-13 07:41:58",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=science_industries&#038;p=823",
+        "menu_order": 0,
+        "post_type": "science_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_industries_we_serve": {
+            "lists": [
+              {
+                "list": "Fraud detection using anomaly detection models"
+              },
+              {
+                "list": "Credit scoring with explainable ML"
+              },
+              {
+                "list": "Customer churn prediction"
+              }
+            ],
+            "icon": "lucide-dollar-sign"
+          }
+        }
+      },
+      {
+        "ID": 828,
+        "post_author": "1",
+        "post_date": "2026-03-13 03:48:02",
+        "post_date_gmt": "2026-03-13 03:48:02",
+        "post_content": "",
+        "post_title": "Healthcare & Life Sciences",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "healthcare-life-sciences",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:42:39",
+        "post_modified_gmt": "2026-03-13 07:42:39",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=science_industries&#038;p=828",
+        "menu_order": 0,
+        "post_type": "science_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_industries_we_serve": {
+            "lists": [
+              {
+                "list": "Predictive modeling for patient outcomes"
+              },
+              {
+                "list": "NLP for clinical documentation"
+              },
+              {
+                "list": "Medical image analysis (radiology, pathology)"
+              }
+            ],
+            "icon": "lucide-heart-pulse"
+          }
+        }
+      },
+      {
+        "ID": 829,
+        "post_author": "1",
+        "post_date": "2026-03-13 03:48:55",
+        "post_date_gmt": "2026-03-13 03:48:55",
+        "post_content": "",
+        "post_title": "Retail & eCommerce",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "retail-ecommerce",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 08:20:55",
+        "post_modified_gmt": "2026-03-13 08:20:55",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=science_industries&#038;p=829",
+        "menu_order": 0,
+        "post_type": "science_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_industries_we_serve": {
+            "lists": [
+              {
+                "list": "Recommendation engines"
+              },
+              {
+                "list": "Dynamic pricing optimization"
+              },
+              {
+                "list": "Inventory demand forecasting"
+              }
+            ],
+            "icon": "lucide-shopping-cart"
+          }
+        }
+      },
+      {
+        "ID": 830,
+        "post_author": "1",
+        "post_date": "2026-03-13 03:49:46",
+        "post_date_gmt": "2026-03-13 03:49:46",
+        "post_content": "",
+        "post_title": "Manufacturing & Logistics",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "manufacturing-logistics",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 08:21:36",
+        "post_modified_gmt": "2026-03-13 08:21:36",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=science_industries&#038;p=830",
+        "menu_order": 0,
+        "post_type": "science_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_industries_we_serve": {
+            "lists": [
+              {
+                "list": "Predictive maintenance"
+              },
+              {
+                "list": "Route and fleet optimization"
+              },
+              {
+                "list": "Real-time quality control via computer vision"
+              }
+            ],
+            "icon": "lucide-factory"
+          }
+        }
+      },
+      {
+        "ID": 831,
+        "post_author": "1",
+        "post_date": "2026-03-13 03:50:36",
+        "post_date_gmt": "2026-03-13 03:50:36",
+        "post_content": "",
+        "post_title": "Technology & SaaS",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "technology-saas",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 08:22:19",
+        "post_modified_gmt": "2026-03-13 08:22:19",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=science_industries&#038;p=831",
+        "menu_order": 0,
+        "post_type": "science_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_industries_we_serve": {
+            "lists": [
+              {
+                "list": "Product analytics"
+              },
+              {
+                "list": "User segmentation and lifetime value modeling"
+              },
+              {
+                "list": "Experimentation frameworks (A/B testing)"
+              }
+            ],
+            "icon": "lucide-code-xml"
+          }
+        }
+      }
+    ],
+    "case_studies": [
+      {
+        "ID": 711,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:46:14",
+        "post_date_gmt": "2026-03-11 11:46:14",
+        "post_content": "<div class=\"flex items-start gap-2\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-trending-up w-4 h-4 text-accent flex-shrink-0 mt-0.5\"><polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\"></polyline><polyline points=\"16 7 22 7 22 13\"></polyline></svg><p class=\"text-sm text-muted-foreground\">65% reduction in fraudulent transactions within 6 months</p></div>",
+        "post_title": "AI-Powered Fraud Detection for a Leading Bank",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "ai-powered-fraud-detection-for-a-leading-bank",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 11:47:10",
+        "post_modified_gmt": "2026-03-11 11:47:10",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=case_studies&#038;p=711",
+        "menu_order": 0,
+        "post_type": "case_studies",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "card_image": false,
+          "hover_icon": "lucide-dollar-sign",
+          "value_1": "",
+          "value_1_text": "",
+          "value_2": "",
+          "value_2_text": ""
+        }
+      },
+      {
+        "ID": 712,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:48:22",
+        "post_date_gmt": "2026-03-11 11:48:22",
+        "post_content": "<div class=\"flex items-start gap-2\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-trending-up w-4 h-4 text-accent flex-shrink-0 mt-0.5\"><polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\"></polyline><polyline points=\"16 7 22 7 22 13\"></polyline></svg><p class=\"text-sm text-muted-foreground\">45% improvement in early diagnosis accuracy</p></div>",
+        "post_title": "Predictive Patient Analytics for Healthcare Network",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "predictive-patient-analytics-for-healthcare-network",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 11:48:22",
+        "post_modified_gmt": "2026-03-11 11:48:22",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=case_studies&#038;p=712",
+        "menu_order": 0,
+        "post_type": "case_studies",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "card_image": false,
+          "hover_icon": "lucide-heart-pulse",
+          "value_1": "",
+          "value_1_text": "",
+          "value_2": "",
+          "value_2_text": ""
+        }
+      },
+      {
+        "ID": 713,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:49:17",
+        "post_date_gmt": "2026-03-11 11:49:17",
+        "post_content": "<div class=\"flex items-start gap-2\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-trending-up w-4 h-4 text-accent flex-shrink-0 mt-0.5\"><polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\"></polyline><polyline points=\"16 7 22 7 22 13\"></polyline></svg><p class=\"text-sm text-muted-foreground\">28% increase in inventory efficiency and revenue</p></div>",
+        "post_title": "Demand Forecasting for Global Retail Chain",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "demand-forecasting-for-global-retail-chain",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 11:49:17",
+        "post_modified_gmt": "2026-03-11 11:49:17",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=case_studies&#038;p=713",
+        "menu_order": 0,
+        "post_type": "case_studies",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "card_image": false,
+          "hover_icon": "lucide-shopping-cart",
+          "value_1": "",
+          "value_1_text": "",
+          "value_2": "",
+          "value_2_text": ""
+        }
+      }
+    ],
+    "testimonials": [
+      {
+        "ID": 950,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:18:17",
+        "post_date_gmt": "2026-03-17 04:18:17",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">Code1 assessed our project nature and provided the consultation which helped us to pick the right professionals that could guarantee high-quality project outcomes without compromising our overall workforce hiring budget.</p>",
+        "post_title": "Harshdeep Singh",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "__trashed",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:19:22",
+        "post_modified_gmt": "2026-03-17 04:19:22",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=950",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Harshdeep Singh",
+          "company": "General Manager EMEA - Cloudwick"
+        }
+      },
+      {
+        "ID": 952,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:17:56",
+        "post_date_gmt": "2026-03-17 04:17:56",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">The team at Code1 was able to quickly understand the skill gap at our organization and helped us in the tech team building by providing the best industrial experts. Each of the engineers provided in the team carried the utmost qualifications and skills according to their respective skills.</p>",
+        "post_title": "Daniel Shaw",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "daniel-shaw",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:17:56",
+        "post_modified_gmt": "2026-03-17 04:17:56",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=952",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Daniel Shaw",
+          "company": "Operations & Sales Director - KPI Partners"
+        }
+      },
+      {
+        "ID": 951,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:17:06",
+        "post_date_gmt": "2026-03-17 04:17:06",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">We were in urgent need of specialized IT talent for our short-term project. As soon as we came in contact with Code1, our challenge of hiring the right person for the leading role was instantly solved.</p>",
+        "post_title": "Megha Jain",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "megha-jain",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:17:06",
+        "post_modified_gmt": "2026-03-17 04:17:06",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=951",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Megha Jain",
+          "company": "Offshore Center Director - Girnarsof"
+        }
+      }
+    ],
+    "frequently_asked_question": [
+      {
+        "ID": 727,
+        "post_author": "1",
+        "post_date": "2026-03-11 12:18:18",
+        "post_date_gmt": "2026-03-11 12:18:18",
+        "post_content": "Analytics is the process of analyzing historical data to develop insights into trends, which helps predict future events based on sound judgment and evidence. While data analysis can provide insight using this method, data science focuses on more than just number-based datasets, leveraging advanced technologies to develop predictive models that consider many different variables within those datasets.",
+        "post_title": "What is the difference between data science and analytics?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "what-is-the-difference-between-data-science-and-analytics",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 12:18:18",
+        "post_modified_gmt": "2026-03-11 12:18:18",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=727",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 728,
+        "post_author": "1",
+        "post_date": "2026-03-11 12:18:56",
+        "post_date_gmt": "2026-03-11 12:18:56",
+        "post_content": "It typically takes 6 to 12 weeks to complete the analysis and build a solution that fits your business needs. Still, from there it's anyone's guess - getting everything up and running, verified, and tweaked to get the most out of it can take a few months, and all depends on how ready your business is to move forward.",
+        "post_title": "How long does it take to implement data science solutions?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "how-long-does-it-take-to-implement-data-science-solutions",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 12:18:56",
+        "post_modified_gmt": "2026-03-11 12:18:56",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=728",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 729,
+        "post_author": "1",
+        "post_date": "2026-03-11 12:19:16",
+        "post_date_gmt": "2026-03-11 12:19:16",
+        "post_content": "Surely. We deploy properly engineered data solutions to your existing or future data warehouse, lake, or cloud platform. You get special attention to create solutions that are compatible, scalable, and provide minimal disruption to your existing solution.",
+        "post_title": "Can data science work with existing data systems?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "can-data-science-work-with-existing-data-systems",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 12:19:16",
+        "post_modified_gmt": "2026-03-11 12:19:16",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=729",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 730,
+        "post_author": "1",
+        "post_date": "2026-03-11 12:19:31",
+        "post_date_gmt": "2026-03-11 12:19:31",
+        "post_content": "The truth is just about any industry can benefit from data science, whether you're in finance, healthcare, retail, manufacturing, or tech - if you can improve forecasting, catch fraud, personalise your marketing, get more out of your operations, better maintain equipment, or just stay on top of regulations, data science can give you a much needed boost.",
+        "post_title": "What industries benefit most from data science?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "what-industries-benefit-most-from-data-science",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 12:19:31",
+        "post_modified_gmt": "2026-03-11 12:19:31",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=730",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      }
+    ],
+    "advanced_data_heading": "Advanced Data Science Services for <span>Your Business</span>",
+    "advanced_data_description": "With constant learning and upgrades, our Data Science Services team ensures you get solutions that don't just make your business profitable today, but they grow as you expand.",
+    "case_study_section_heading": "<span>Case Studies</span>",
+    "industries_section_heading": "Industries <span>We Serve</span>",
+    "industries_section_description": "Our experts work across various business verticals and apply domain-specific knowledge with flexible technology.",
+    "testimonial_section_heading": "What Our <span>Clients Say</span>",
+    "faq_section_heading": "Frequently Asked <span>Question</span>",
+    "ds_blocks": [
+      {
+        "ID": 868,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:15:37",
+        "post_date_gmt": "2026-03-13 07:15:37",
+        "post_content": "BI solutions make it easy to establish work environments that deliver consistent, reliable insights.",
+        "post_title": "Business Intelligence (BI) Solutions",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "business-intelligence-bi-solutions",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:23:21",
+        "post_modified_gmt": "2026-03-13 07:23:21",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ds_business&#038;p=868",
+        "menu_order": 0,
+        "post_type": "ds_business",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_services_for_your_business": {
+            "cards": [
+              {
+                "heading": "Actionable Dashboards &amp; Reporting",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Real-time dashboards tailored to business roles&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Executive, operational, and KPI-driven reporting&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Trusted metrics aligned with decision workflows&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "Data Visualization &amp; Insights",
+                "lists": "<p>&lt;ul class=\"space-y-2\"&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Power BI, Tableau, and Looker implementations&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Clear, intuitive storytelling with data&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Embedded analytics for faster insight adoption&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</p>"
+              },
+              {
+                "heading": "Enterprise BI &amp; Self-Service Analytics",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Centralized, governed reporting environments&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Role-based access and data governance&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Scalable self-service analytics for business teams&lt;/span&gt;&lt;/li&gt;</p>"
+              }
+            ],
+            "bottom_link_text": "Explore Business Intelligence Services",
+            "bottom_link_url": "contact",
+            "icon": "lucide-chart-column"
+          }
+        }
+      },
+      {
+        "ID": 872,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:26:02",
+        "post_date_gmt": "2026-03-13 07:26:02",
+        "post_content": "With advanced analytics solutions, we help organizations anticipate trends and improve decision-making.",
+        "post_title": "Predictive & Advanced Analytics",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "predictive-advanced-analytics",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:26:02",
+        "post_modified_gmt": "2026-03-13 07:26:02",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ds_business&#038;p=872",
+        "menu_order": 0,
+        "post_type": "ds_business",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_services_for_your_business": {
+            "cards": [
+              {
+                "heading": "Predictive Modeling &amp; Forecasting",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Demand and capacity forecasting&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Revenue, churn, and growth prediction&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "Machine Learning &amp; Statistical Modeling",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Supervised and unsupervised learning models&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;AI-driven insights aligned with business objectives&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "Prescriptive Analytics for Decision Support",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Scenario modeling for informed planning&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Optimization strategies to support decision-making&lt;/span&gt;&lt;/li&gt;</p>"
+              }
+            ],
+            "bottom_link_text": "Explore Predictive Analytics Services",
+            "bottom_link_url": "contact",
+            "icon": "lucide-chart-line"
+          }
+        }
+      },
+      {
+        "ID": 877,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:28:07",
+        "post_date_gmt": "2026-03-13 07:28:07",
+        "post_content": "Our machine learning solutions support automation, predictive decision-making, and operational efficiency while integrating with existing systems.",
+        "post_title": "Machine Learning Solution",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "machine-learning-solution",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:28:07",
+        "post_modified_gmt": "2026-03-13 07:28:07",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ds_business&#038;p=877",
+        "menu_order": 0,
+        "post_type": "ds_business",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_services_for_your_business": {
+            "cards": [
+              {
+                "heading": "Model Development &amp; Training",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Supervised and unsupervised learning models&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Feature engineering and data preparation workflows&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "Model Deployment &amp; Integration",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;API-based model serving&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Integration with enterprise applications and data platforms&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "MLOps &amp; Lifecycle Management",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;CI/CD pipelines for ML models&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Model monitoring, retraining, and performance governance&lt;/span&gt;&lt;/li&gt;</p>"
+              }
+            ],
+            "bottom_link_text": "",
+            "bottom_link_url": "",
+            "icon": "lucide-brain"
+          }
+        }
+      },
+      {
+        "ID": 879,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:30:48",
+        "post_date_gmt": "2026-03-13 07:30:48",
+        "post_content": "We design and implement big data analytics solutions that support large-scale analytics and real-time data processing.",
+        "post_title": "Big Data Solutions",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "big-data-solutions",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:30:48",
+        "post_modified_gmt": "2026-03-13 07:30:48",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=ds_business&#038;p=879",
+        "menu_order": 0,
+        "post_type": "ds_business",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_science_services_for_your_business": {
+            "cards": [
+              {
+                "heading": "Big Data Architecture &amp; Implementation",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Hadoop, Spark, and Kafka ecosystems&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Cloud-native big data platforms&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "Data Processing &amp; Real-Time Analytics",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Batch and streaming analytics pipelines&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Reliable processing of large data volumes&lt;/span&gt;&lt;/li&gt;</p>"
+              },
+              {
+                "heading": "Scalable &amp; Secure Big Data Platforms",
+                "lists": "<p>&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;AWS, Azure, and GCP environments&lt;/span&gt;&lt;/li&gt;&lt;li class=\"flex items-start gap-2 text-sm text-foreground/75\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-4 h-4 text-accent/50 flex-shrink-0 mt-0.5\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;span&gt;Performance optimization, governance, and compliance&lt;/span&gt;&lt;/li&gt;</p>"
+              }
+            ],
+            "bottom_link_text": "Explore Big Data Solutions",
+            "bottom_link_url": "contact",
+            "icon": "lucide-database"
+          }
+        }
+      }
+    ],
+    "data_science_background_image": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-industries-bg-C0O702go.webp",
+    "page_title": "Data Science",
+    "page_content": "",
+    "banner_section": {
+      "banner_image": {
+        "id": 648,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-science-hero-CFISTIAm.webp",
+        "alt": "",
+        "title": "data-science-hero-CFISTIAm",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "data-science-hero-CFISTIAm-300x169.webp",
+            "width": 300,
+            "height": 169,
+            "mime-type": "image/webp",
+            "filesize": 10200
+          },
+          "thumbnail": {
+            "file": "data-science-hero-CFISTIAm-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 5266
+          },
+          "medium_large": {
+            "file": "data-science-hero-CFISTIAm-768x432.webp",
+            "width": 768,
+            "height": 432,
+            "mime-type": "image/webp",
+            "filesize": 35968
+          }
+        },
+        "width": 1024,
+        "height": 576,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-science-hero-CFISTIAm-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-science-hero-CFISTIAm-300x169.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-science-hero-CFISTIAm.webp"
+      },
+      "floating_badge_fields": [
+        {
+          "badge_heading": "95%",
+          "badge_text": "Accuracy Rate"
+        },
+        {
+          "badge_heading": "200+",
+          "badge_text": "Models Deployed"
+        }
+      ],
+      "banner_heading": "Data Science Services for <span>Smarter Business Decisions</span>",
+      "banner_description": "We help businesses turn data into reliable insights that support confident, data-driven decisions. The data science services are designed to cater to your business objectives, integrate with existing systems, and deliver measurable results.",
+      "highlighted_text": "Applied data science solutions built for real-world decisions, not experiments!",
+      "cta_text": "Talk to a Data Science Expert",
+      "cta_url": "/contactus"
+    },
+    "stats_section": {
+      "stats_fields": [
+        {
+          "stats_numbers": "200+",
+          "stats_title": "Models Deployed"
+        },
+        {
+          "stats_numbers": "95%",
+          "stats_title": "Prediction Accuracy"
+        },
+        {
+          "stats_numbers": "50+",
+          "stats_title": "Enterprise Clients"
+        },
+        {
+          "stats_numbers": "3x",
+          "stats_title": "ROI Improvement"
+        }
+      ]
+    },
+    "business_challenges_section_section": {
+      "section_heading": "Data Analytics Solutions for Your <span>Business Challenges</span>",
+      "business_challenges_fields": [
+        {
+          "slide_top_description": "Our analytical solutions can provide the data you need to address your specific problems or challenges, so you can move your business forward.",
+          "slide_heading": "Revenue Growth Optimization Solutions",
+          "slide_image": {
+            "id": 654,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-revenue-growth-BSggkDfB.webp",
+            "alt": "",
+            "title": "ds-revenue-growth-BSggkDfB",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-revenue-growth-BSggkDfB-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 7394
+              },
+              "thumbnail": {
+                "file": "ds-revenue-growth-BSggkDfB-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3596
+              },
+              "medium_large": {
+                "file": "ds-revenue-growth-BSggkDfB-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 24490
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-revenue-growth-BSggkDfB-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-revenue-growth-BSggkDfB-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-revenue-growth-BSggkDfB.webp"
+          },
+          "slide_icon": "lucide-trending-up",
+          "slide_description": "Sustainable revenue growth only comes about when you&#039;re making decisions based on solid data insight rather than just winging it. Our team helps your crew get a grip on what&#039;s driving your performance today and where future growth opportunities lie.",
+          "slide_bottom_data": "&lt;div class=\"flex flex-col gap-3\" style=\"opacity: 1; transform: translateY(0px); transition: opacity 0.5s 0.25s, transform 0.5s 0.25s;\"&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Predictive sales forecasting and demand modeling&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Customer segmentation and lifetime value optimization&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Personalized recommendation systems&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Churn prediction and retention strategies&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;A/B testing frameworks for conversion optimization&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;"
+        },
+        {
+          "slide_top_description": "Our analytical solutions can provide the data you need to address your specific problems or challenges, so you can move your business forward.",
+          "slide_heading": "Operational Intelligence Solutions",
+          "slide_image": {
+            "id": 653,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-operational-intel-1gg4Vg7T.webp",
+            "alt": "",
+            "title": "ds-operational-intel-1gg4Vg7T",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-operational-intel-1gg4Vg7T-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 11128
+              },
+              "thumbnail": {
+                "file": "ds-operational-intel-1gg4Vg7T-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4892
+              },
+              "medium_large": {
+                "file": "ds-operational-intel-1gg4Vg7T-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 39504
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-operational-intel-1gg4Vg7T-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-operational-intel-1gg4Vg7T-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-operational-intel-1gg4Vg7T.webp"
+          },
+          "slide_icon": "lucide-activity",
+          "slide_description": "The operations team stacks a large amount of data, and the values come from knowing what to act on. Our solutions help your team to monitor performance, reduce inefficiencies, and respond to change faster.",
+          "slide_bottom_data": "&lt;div class=\"flex flex-col gap-3\" style=\"opacity: 1; transform: translateY(0px); transition: opacity 0.5s 0.25s, transform 0.5s 0.25s;\"&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Real-time performance monitoring and KPI tracking&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Automated reporting and alerting systems&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Supply chain and inventory optimization&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Process automation and workflow intelligence&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Resource allocation and capacity planning&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;"
+        },
+        {
+          "slide_top_description": "Our analytical solutions can provide the data you need to address your specific problems or challenges, so you can move your business forward.",
+          "slide_heading": "Customer Experience Solutions",
+          "slide_image": {
+            "id": 652,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-customer-exp-CLG6d7Fh.webp",
+            "alt": "",
+            "title": "ds-customer-exp-CLG6d7Fh",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-customer-exp-CLG6d7Fh-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 9220
+              },
+              "thumbnail": {
+                "file": "ds-customer-exp-CLG6d7Fh-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4570
+              },
+              "medium_large": {
+                "file": "ds-customer-exp-CLG6d7Fh-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 36986
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-customer-exp-CLG6d7Fh-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-customer-exp-CLG6d7Fh-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-customer-exp-CLG6d7Fh.webp"
+          },
+          "slide_icon": "lucide-users",
+          "slide_description": "Our organization helps you to understand the way your customers behave, what they are saying about you, and what barriers they may encounter when dealing with your business by incorporating your customers&#039; feedback into the product development process, which leads to improved experiences for your customers and creates a greater feeling of being heard from you.",
+          "slide_bottom_data": "&lt;div class=\"flex flex-col gap-3\" style=\"opacity: 1; transform: translateY(0px); transition: opacity 0.5s 0.25s, transform 0.5s 0.25s;\"&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Embedded analytics in customer-facing applications&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Personalized dashboards based on user behavior&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Sentiment analysis of customer feedback&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Customer journey mapping and touchpoint optimization&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Real-time customer support analytics&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;"
+        },
+        {
+          "slide_top_description": "Our analytical solutions can provide the data you need to address your specific problems or challenges, so you can move your business forward.",
+          "slide_heading": "Risk Management &amp; Compliance Solutions",
+          "slide_image": {
+            "id": 651,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-risk-mgmt-CnYknLFs.webp",
+            "alt": "",
+            "title": "ds-risk-mgmt-CnYknLFs",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-risk-mgmt-CnYknLFs-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 7240
+              },
+              "thumbnail": {
+                "file": "ds-risk-mgmt-CnYknLFs-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3384
+              },
+              "medium_large": {
+                "file": "ds-risk-mgmt-CnYknLFs-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 33566
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-risk-mgmt-CnYknLFs-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-risk-mgmt-CnYknLFs-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-risk-mgmt-CnYknLFs.webp"
+          },
+          "slide_icon": "lucide-shield-check",
+          "slide_description": "We can make risk management easy. Our solution is vigilant, ensuring visibility, accuracy, and trust in your data. We help you stay prepared, detecting issues early while supporting regulatory and governance requirements.",
+          "slide_bottom_data": "&lt;div class=\"flex flex-col gap-3\" style=\"opacity: 1; transform: translateY(0px); transition: opacity 0.5s 0.25s, transform 0.5s 0.25s;\"&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Fraud detection and anomaly monitoring&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Data governance and privacy compliance (GDPR, CCPA)&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Financial risk modeling and stress testing&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Security analytics and threat detection&lt;/span&gt;&lt;/div&gt;&lt;div class=\"flex items-start gap-3\"&gt;&lt;div class=\"w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5\" style=\"background: rgba(95, 194, 227, 0.1); border: 1px solid rgba(95, 194, 227, 0.3);\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-circle-check-big w-3 h-3 text-accent\"&gt;&lt;path d=\"M21.801 10A10 10 0 1 1 17 3.335\"&gt;&lt;/path&gt;&lt;path d=\"m9 11 3 3L22 4\"&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/div&gt;&lt;span class=\"text-foreground/75 text-sm leading-snug\"&gt;Audit trail management and regulatory reporting&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;"
+        }
+      ]
+    },
+    "data_science_services_we_offer_section": {
+      "heading": "Data Science <span>Services We Offer</span>",
+      "paragraph": "Our team works well with data, making it easier to manage solutions and operations. We help you use your data for the best results.",
+      "blocks": [
+        {
+          "title": "Data Science Consulting",
+          "paragraph": "If you need a single ML model to fix a real business problem, or you need a team to work on a full data science initiative, and don&#039;t want to guess how to proceed, our analysts and data scientists can help. We assist you with a clear roadmap, choose the right tech stack, and take practical paths to turn your data into something useful.",
+          "image": {
+            "id": 656,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-consulting-CPEObs1u.webp",
+            "alt": "",
+            "title": "ds-consulting-CPEObs1u",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-consulting-CPEObs1u-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 9210
+              },
+              "thumbnail": {
+                "file": "ds-consulting-CPEObs1u-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4104
+              },
+              "medium_large": {
+                "file": "ds-consulting-CPEObs1u-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 37396
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-consulting-CPEObs1u-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-consulting-CPEObs1u-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-consulting-CPEObs1u.webp"
+          }
+        },
+        {
+          "title": "Data Science Solution Implementation",
+          "paragraph": "We will execute your planned approach. Our knowledgeable team can create industry-based solutions that support better decision-making, improve efficiencies, reduce manual processes, increase safety, and enhance customer satisfaction. We will begin with a proof-of-concept (PoC) or minimum viable product (MVP) assessment before transitioning the solution to full-scale deployment.",
+          "image": {
+            "id": 658,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-implementation-CpXtg7-1.webp",
+            "alt": "",
+            "title": "ds-implementation-CpXtg7-1",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-implementation-CpXtg7-1-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 11066
+              },
+              "thumbnail": {
+                "file": "ds-implementation-CpXtg7-1-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4850
+              },
+              "medium_large": {
+                "file": "ds-implementation-CpXtg7-1-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 40398
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-implementation-CpXtg7-1-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-implementation-CpXtg7-1-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-implementation-CpXtg7-1.webp"
+          }
+        },
+        {
+          "title": "Data Science Solution Upgrade",
+          "paragraph": "If the existing system(s) you have are not aligned with your new objectives, we can provide strategic guidance and hands-on implementation. We will be able to provide assistance with all aspects of upgrading your current system(s), including designing new ML models, adding new software features and modules to existing solutions, upgrading the ML capabilities of existing systems, and helping you develop a solution that fits your business needs.",
+          "image": {
+            "id": 660,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-upgrade-B0PXsw3q.webp",
+            "alt": "",
+            "title": "ds-upgrade-B0PXsw3q",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-upgrade-B0PXsw3q-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 9454
+              },
+              "thumbnail": {
+                "file": "ds-upgrade-B0PXsw3q-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4588
+              },
+              "medium_large": {
+                "file": "ds-upgrade-B0PXsw3q-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 33686
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-upgrade-B0PXsw3q-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-upgrade-B0PXsw3q-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-upgrade-B0PXsw3q.webp"
+          }
+        },
+        {
+          "title": "Data Science Solution Support",
+          "paragraph": "We understand your solutions aren&#039;t just about timely deployment; they need constant maintenance. We monitor your ML models for accuracy, performance, and reliability. We resolve your problems fast and help you focus on your business while ensuring your solutions run smoothly.",
+          "image": {
+            "id": 662,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-support-DJQg3IN4.webp",
+            "alt": "",
+            "title": "ds-support-DJQg3IN4",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "ds-support-DJQg3IN4-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 8342
+              },
+              "thumbnail": {
+                "file": "ds-support-DJQg3IN4-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4190
+              },
+              "medium_large": {
+                "file": "ds-support-DJQg3IN4-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 27698
+              }
+            },
+            "width": 800,
+            "height": 600,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-support-DJQg3IN4-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-support-DJQg3IN4-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-support-DJQg3IN4.webp"
+          }
+        }
+      ]
+    },
+    "our_process_section": {
+      "section_heading": "Our Process: From Idea to <span>Impact</span>",
+      "short_description": "Our data science team doesn't just build models. We build momentum! Our process is transparent and value-driven.",
+      "box_fields": [
+        {
+          "box_icon": "lucide-search",
+          "box_title": "Discovery &amp; Alignment",
+          "box_description": "We start by getting to know your business inside and out, understanding your existing data assets and how you&#039;re using AI in your day-to-day operations. We really want to find that sweet spot between what&#039;s doable, what&#039;s got some real value, and what&#039;s worth the risk."
+        },
+        {
+          "box_icon": "lucide-database",
+          "box_title": "Data Exploration &amp; Modeling",
+          "box_description": "Our team of data scientists will kick things off by getting a real close-up look at the data you&#039;ve got, building some new features, and experimenting with different models to come up with a prototype that&#039;s fast-moving, reliable, and basically easy to explain."
+        },
+        {
+          "box_icon": "lucide-cpu",
+          "box_title": "Deployment &amp; Integration",
+          "box_description": "We build our models using things like APIs, dashboards, edge deployments - basically whatever fits in with your existing cloud or on-premises infrastructure."
+        },
+        {
+          "box_icon": "lucide-activity",
+          "box_title": "Monitoring &amp; Continuous Learning",
+          "box_description": "As your business grows and evolves, so too does your model. Our team is always keeping an eye on accuracy and fairness, and whether or not models are drifting away from their original purpose, and will retrain and re-adjust models so they continue to meet your needs."
+        }
+      ]
+    },
+    "how_we_work_section": {
+      "tag_line": "How We Work With You",
+      "section_heading": "Our Data Science <span>Engagement Models",
+      "section_description": "We know that every business is different, so we've developed flexible engagement models tailored to your unique needs, capabilities, and goals.",
+      "section_image": {
+        "id": 680,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-engage-visual-CQHwpdm4.webp",
+        "alt": "",
+        "title": "ds-engage-visual-CQHwpdm4",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "ds-engage-visual-CQHwpdm4-300x225.webp",
+            "width": 300,
+            "height": 225,
+            "mime-type": "image/webp",
+            "filesize": 4296
+          },
+          "thumbnail": {
+            "file": "ds-engage-visual-CQHwpdm4-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 2342
+          },
+          "medium_large": {
+            "file": "ds-engage-visual-CQHwpdm4-768x576.webp",
+            "width": 768,
+            "height": 576,
+            "mime-type": "image/webp",
+            "filesize": 14336
+          }
+        },
+        "width": 1024,
+        "height": 768,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-engage-visual-CQHwpdm4-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-engage-visual-CQHwpdm4-300x225.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-engage-visual-CQHwpdm4.webp"
+      },
+      "image_highlighted_text": " 3 Flexible Models",
+      "image_simple_text": "EaaS · Project-Based · Managed Analytics",
+      "right_side_fields": [
+        {
+          "box_icon": "lucide-users",
+          "box_heading": "Engineer-as-a-Service (EaaS)",
+          "box_description": "Think of it like hiring a team of top-notch data scientists and engineers to work with you as a fully-fledged extension of your own team."
+        },
+        {
+          "box_icon": "lucide-target",
+          "box_heading": "Project-Based Data Science Solutions",
+          "box_description": "You can work with a team that works for you under a clearly defined scope, timelines, and deliverables."
+        },
+        {
+          "box_icon": "lucide-settings",
+          "box_heading": "Managed Analytics Services",
+          "box_description": "We help you with ongoing monitoring, optimization, and continuous improvement of analytics solutions."
+        }
+      ],
+      "cta_section_text": "Hire Data Science Experts to Support Your Project!",
+      "cta_text": "Talk to an Expert",
+      "cta_url": "/contactus"
+    },
+    "why_choose_section": {
+      "left_top_tagline": "Our Differentiators",
+      "section_heading": "Why Choose <span>Code1</span> for Data Science Services",
+      "section_description": "Equip your business with data-driven decision frameworks and accelerators to streamline operations and ensure a well-defined workflow.",
+      "section_image": {
+        "id": 681,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-why-choose-DOd2uA2w.webp",
+        "alt": "",
+        "title": "ds-why-choose-DOd2uA2w",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "ds-why-choose-DOd2uA2w-300x300.webp",
+            "width": 300,
+            "height": 300,
+            "mime-type": "image/webp",
+            "filesize": 8940
+          },
+          "thumbnail": {
+            "file": "ds-why-choose-DOd2uA2w-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 3432
+          },
+          "medium_large": {
+            "file": "ds-why-choose-DOd2uA2w-768x768.webp",
+            "width": 768,
+            "height": 768,
+            "mime-type": "image/webp",
+            "filesize": 37622
+          }
+        },
+        "width": 1024,
+        "height": 1024,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-why-choose-DOd2uA2w-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-why-choose-DOd2uA2w-300x300.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/ds-why-choose-DOd2uA2w.webp"
+      },
+      "image_data": [
+        {
+          "numbers": "200+",
+          "data": "Models Deployed"
+        },
+        {
+          "numbers": "95%",
+          "data": "Prediction Accuracy"
+        },
+        {
+          "numbers": "50+",
+          "data": "Enterprise Clients"
+        }
+      ],
+      "right_box_data": [
+        {
+          "box_icon": "lucide-lightbulb",
+          "box_title": "Business-First Data Science Approach",
+          "box_description": "We focus on utilizing data science with a clear business purpose. The models, dashboards, and insights we evaluate are judged on real results - their impact on revenue, costs, or how well they help us steer clear of big risks. We put our focus where it counts: getting our analytics out there, and making sure they actually do some good in the real world, whether that&#039;s helping make better day-to-day decisions, or strategic ones too."
+        },
+        {
+          "box_icon": "lucide-brain",
+          "box_title": "Experienced Data Scientists &amp; Engineers",
+          "box_description": "Our team has a track record of delivering top-notch solutions to businesses of all sizes - from startups to big, established enterprises across a wide range of industries. We can work with any level of data maturity, whatever technical setup you&#039;ve got, and whatever constraints your organisation might be under - all while maintaining our usual level of quality and accountability."
+        },
+        {
+          "box_icon": "lucide-shield-check",
+          "box_title": "Scalable, Secure &amp; Compliant Solutions",
+          "box_description": "Our engineers design data science solutions that can grow as fast as you need them to, while still keeping security, governance, and all the compliance requirements your enterprise needs under control. The architectures we create support just the right level of access, and we help get you in line with whatever regulations you need to follow - that way, the insights remain safe and sustainable, even as your data, users, and business grow."
+        }
+      ]
+    },
+    "tech_stack_tools_section": {
+      "section_heading": "Tech Stack &amp; <span>Tools</span>",
+      "section_description": "Our team of data science engineers leverages proven technologies across the full data science lifecycle.",
+      "box_fields": [
+        {
+          "heading": "Languages",
+          "text": "Python, R, SQL, Scala"
+        },
+        {
+          "heading": "Analytics Libraries",
+          "text": "Pandas, NumPy, Scikit-learn, XGBoost"
+        },
+        {
+          "heading": "Visualization",
+          "text": "Power BI, Tableau, Seaborn, Plotly, Matplotlib"
+        },
+        {
+          "heading": "Experimentation",
+          "text": "Jupyter, Databricks, MLflow, A/B Testing frameworks"
+        }
+      ]
+    },
+    "security_and_compliance_section": {
+      "section_heading": "Security and <span>Compliance</span> (NDA)",
+      "box_fields": [
+        {
+          "icon": "lucide-file-check",
+          "heading": "Regulatory &amp; Data Privacy Compliance",
+          "description": "Our data science services are built to meet the tough standards of global and regional data protection laws - think GDPR, HIPAA, CCPA &amp; India&#039;s Digital Personal Data Protection Act from 2023. These are the rules we need to follow to ensure data is processed fairly, people can give consent, and personal data is kept safe across all industries. You can&#039;t just collect &amp; use people&#039;s data without following the rules."
+        },
+        {
+          "icon": "lucide-lock",
+          "heading": "Information Security &amp; Infrastructure Standards",
+          "description": "We stick to stuff like ISO/IEC 27001 &amp; SOC 2 to check our security controls are in place, we&#039;re managing our risks, &amp; our cloud operations are secure. When a client needs to hand over payment details, we&#039;re compliant with the Payment Card Industry Security Standards Council (PCI DSS) to ensure transactions are encrypted, access is restricted, and we&#039;re on top of potential vulnerabilities."
+        },
+        {
+          "icon": "lucide-shield-check",
+          "heading": "Secure Data &amp; Model Management Practices",
+          "description": "We use these fancy role-based access controls, anonymization techniques, secure MLOps pipelines, DevSecOps practices &amp; regular penetration testing to ensure the solutions we build keep our clients&#039; data safe. All this to avoid data breaches, or someone getting a hold of it and using it for something nasty, while still being able to scale up safely and keep people&#039;s trust."
+        }
+      ]
+    },
+    "services_get_started_section": {
+      "heading": "Get Started with <span>Data Science Services</span>",
+      "paragraph": "Let's discuss how our data science expertise can help you unlock actionable insights and drive measurable business outcomes.",
+      "lists": [
+        {
+          "list": "Free data readiness assessment"
+        },
+        {
+          "list": "Custom analytics roadmap"
+        },
+        {
+          "list": "NDA-protected consultation"
+        }
+      ],
+      "buttons": [
+        {
+          "cta_text": "Request a Consultation",
+          "cta_url": "/contactus"
+        },
+        {
+          "cta_text": "Talk to a Data Science Expert",
+          "cta_url": "/contactus"
+        }
+      ],
+      "small_heading": ""
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}

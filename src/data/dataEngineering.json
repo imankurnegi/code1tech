@@ -1,0 +1,1766 @@
+{
+  "status": true,
+  "data": {
+    "heading": "Advanced Data Engineering <span>Capabilities</span>",
+    "paragraph": "To provide your business with real-time intelligence, operational stability, and future-ready infrastructure that grows alongside your company, we give you an advanced set of data engineering skills.",
+    "industries": [
+      {
+        "ID": 649,
+        "post_author": "1",
+        "post_date": "2026-03-11 07:51:56",
+        "post_date_gmt": "2026-03-11 07:51:56",
+        "post_content": "",
+        "post_title": "Real-Time Data",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "real-time-data",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 07:28:50",
+        "post_modified_gmt": "2026-03-14 07:28:50",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_capabilities&#038;p=649",
+        "menu_order": 0,
+        "post_type": "data_capabilities",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_capabilities": {
+            "icon": "lucide-radio",
+            "content": "Move from reactive reporting to real-time decision-making with modern streaming architectures built for speed and scale.",
+            "live_text": "Live Streaming Ready",
+            "right_blocks": [
+              {
+                "heading": "Event Streaming Frameworks",
+                "content": "Kafka-powered and cloud-native streaming ecosystems. Event-driven architecture for instant data flow."
+              },
+              {
+                "heading": "Low-Latency Ingestion",
+                "content": "High-speed ingestion pipelines. Near real-time synchronization across systems."
+              },
+              {
+                "heading": "IoT &amp; Telemetry Pipelines",
+                "content": "Sensor and device data processing. Scalable telemetry data architecture."
+              },
+              {
+                "heading": "Real-Time Analytics Enablement",
+                "content": "Streaming dashboards and live reporting. Operational intelligence for instant action."
+              }
+            ],
+            "content_heading": "Real-Time Data &amp; Streaming Solutions"
+          }
+        }
+      },
+      {
+        "ID": 650,
+        "post_author": "1",
+        "post_date": "2026-03-11 07:57:35",
+        "post_date_gmt": "2026-03-11 07:57:35",
+        "post_content": "",
+        "post_title": "DataOps",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "dataops",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 07:29:28",
+        "post_modified_gmt": "2026-03-14 07:29:28",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_capabilities&#038;p=650",
+        "menu_order": 0,
+        "post_type": "data_capabilities",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_capabilities": {
+            "icon": "lucide-settings",
+            "content": "Ensure reliability, performance, and optimization long after deployment with structured DataOps practices.",
+            "live_text": "SLA-Backed Operations",
+            "right_blocks": [
+              {
+                "heading": "Pipeline Monitoring",
+                "content": "Proactive monitoring and alerting systems. Automated anomaly detection."
+              },
+              {
+                "heading": "SLA-Backed Support",
+                "content": "Defined service levels and uptime guarantees. Dedicated engineering assistance."
+              },
+              {
+                "heading": "Cloud Cost Optimization",
+                "content": "Resource utilization audits. Intelligent workload scaling strategies."
+              },
+              {
+                "heading": "Continuous Performance Tuning",
+                "content": "Pipeline efficiency improvements. Query and workload optimization."
+              },
+              {
+                "heading": "Observability Frameworks",
+                "content": "End-to-end data visibility. Logging, tracing, and metrics tracking."
+              }
+            ],
+            "content_heading": "DataOps &amp; Managed Data Engineering"
+          }
+        }
+      },
+      {
+        "ID": 692,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:02:20",
+        "post_date_gmt": "2026-03-11 11:02:20",
+        "post_content": "",
+        "post_title": "AI-Ready Data Infrastructure",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "ai-ready-data-infrastructure",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 07:30:15",
+        "post_modified_gmt": "2026-03-14 07:30:15",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_capabilities&#038;p=692",
+        "menu_order": 0,
+        "post_type": "data_capabilities",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_capabilities": {
+            "icon": "lucide-brain",
+            "content": "Your AI is only as strong as your data foundation. We engineer infrastructure that supports scalable, production-grade AI deployment.",
+            "live_text": "AI Production Ready",
+            "right_blocks": [
+              {
+                "heading": "Feature Store Implementation",
+                "content": "Centralized feature management. Reusable, version-controlled ML features."
+              },
+              {
+                "heading": "ML Data Pipeline Engineering",
+                "content": "Training and inference pipelines. Automated data validation workflows."
+              },
+              {
+                "heading": "Vector Database Integration",
+                "content": "Semantic search enablement. Embedding storage and retrieval optimization."
+              },
+              {
+                "heading": "Retrieval-Augmented Generation (RAG) Architecture",
+                "content": "Context-aware AI system design. Knowledge base integration for LLM applications."
+              },
+              {
+                "heading": "MLOps Pipeline Integration",
+                "content": "CI/CD for ML models. Model monitoring and lifecycle governance."
+              }
+            ],
+            "content_heading": "AI-Ready Data Infrastructure"
+          }
+        }
+      },
+      {
+        "ID": 693,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:03:53",
+        "post_date_gmt": "2026-03-11 11:03:53",
+        "post_content": "",
+        "post_title": "Data Warehousing",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "data-warehousing",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 07:30:40",
+        "post_modified_gmt": "2026-03-14 07:30:40",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_capabilities&#038;p=693",
+        "menu_order": 0,
+        "post_type": "data_capabilities",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_capabilities": {
+            "icon": "lucide-hard-drive",
+            "content": "Build high-performance, scalable data foundations for analytics and AI.",
+            "live_text": "Cloud Native",
+            "right_blocks": [
+              {
+                "heading": "Modern Cloud Warehousing",
+                "content": "Snowflake implementations. Google BigQuery deployments. Amazon Redshift optimization."
+              },
+              {
+                "heading": "Lakehouse Engineering",
+                "content": "Databricks Lakehouse architecture. Unified analytics across structured and unstructured data."
+              },
+              {
+                "heading": "Performance Engineering",
+                "content": "Query optimization. Workload management and cost-performance balance."
+              }
+            ],
+            "content_heading": "Data Warehousing &amp; Lakehouse Architecture"
+          }
+        }
+      },
+      {
+        "ID": 694,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:05:08",
+        "post_date_gmt": "2026-03-11 11:05:08",
+        "post_content": "",
+        "post_title": "Data Modelling",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "data-modelling",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 07:31:13",
+        "post_modified_gmt": "2026-03-14 07:31:13",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_capabilities&#038;p=694",
+        "menu_order": 0,
+        "post_type": "data_capabilities",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_capabilities": {
+            "icon": "lucide-git-branch",
+            "content": "Design scalable, governed data structures that power accurate analytics, reporting, and AI initiatives.",
+            "live_text": "Scalable by Design",
+            "right_blocks": [
+              {
+                "heading": "Enterprise Data Modeling",
+                "content": "Conceptual, logical, and physical data models. Dimensional and normalized schema design."
+              },
+              {
+                "heading": "Scalable Architecture Design",
+                "content": "Data mesh and domain-driven architectures. Cloud-native and hybrid environment planning."
+              },
+              {
+                "heading": "Governance &amp; Metadata Management",
+                "content": "Data lineage and catalog integration. Standardized data definitions and stewardship."
+              }
+            ],
+            "content_heading": "Data Modelling &amp; Architecture"
+          }
+        }
+      },
+      {
+        "ID": 695,
+        "post_author": "1",
+        "post_date": "2026-03-11 11:06:19",
+        "post_date_gmt": "2026-03-11 11:06:19",
+        "post_content": "",
+        "post_title": "Cloud Data Migration",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "cloud-data-migration",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-14 07:31:43",
+        "post_modified_gmt": "2026-03-14 07:31:43",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_capabilities&#038;p=695",
+        "menu_order": 0,
+        "post_type": "data_capabilities",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_capabilities": {
+            "icon": "lucide-zap",
+            "content": "Seamlessly transition legacy systems to modern, cloud-native platforms built for agility and performance.",
+            "live_text": "Migration Ready",
+            "right_blocks": [
+              {
+                "heading": "Warehouse-to-Cloud Migration",
+                "content": "Legacy database assessment and migration strategy. Secure, low-risk cloud transitions."
+              },
+              {
+                "heading": "Platform Modernization",
+                "content": "Re-architecting monolithic systems. Containerization and microservices enablement."
+              },
+              {
+                "heading": "Optimization &amp; Cost Engineering",
+                "content": "Performance benchmarking and tuning. Cloud cost monitoring and right-sizing strategies."
+              }
+            ],
+            "content_heading": "Cloud Data Migration &amp; Modernization"
+          }
+        }
+      }
+    ],
+    "industries_heading": "Industries We <span>Support</span>",
+    "industries_paragraph": "Specialized data engineering solutions tailored to the unique infrastructure and compliance demands of each sector.",
+    "industries_industries": [
+      {
+        "ID": 753,
+        "post_author": "1",
+        "post_date": "2026-03-11 15:56:50",
+        "post_date_gmt": "2026-03-11 15:56:50",
+        "post_content": "",
+        "post_title": "Finance & Fintech",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "finance-fintech",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 16:03:15",
+        "post_modified_gmt": "2026-03-11 16:03:15",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_industries&#038;p=753",
+        "menu_order": 0,
+        "post_type": "data_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_industries": {
+            "icon": "lucide-dollar-sign",
+            "image": {
+              "id": 754,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-finance-MnK9Aef.webp",
+              "alt": "",
+              "title": "industry-finance&#8211;MnK9Aef",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "industry-finance-MnK9Aef-300x150.webp",
+                  "width": 300,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 11920
+                },
+                "large": {
+                  "file": "industry-finance-MnK9Aef-1024x512.webp",
+                  "width": 1024,
+                  "height": 512,
+                  "mime-type": "image/webp",
+                  "filesize": 74426
+                },
+                "thumbnail": {
+                  "file": "industry-finance-MnK9Aef-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 6872
+                },
+                "medium_large": {
+                  "file": "industry-finance-MnK9Aef-768x384.webp",
+                  "width": 768,
+                  "height": 384,
+                  "mime-type": "image/webp",
+                  "filesize": 48938
+                }
+              },
+              "width": 1500,
+              "height": 750,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-finance-MnK9Aef-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-finance-MnK9Aef-300x150.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-finance-MnK9Aef-1024x512.webp"
+            },
+            "active_text": "Active Sector",
+            "sub_heading": "Data Engineering Capabilities",
+            "lists": [
+              {
+                "list": "Real-time fraud detection pipelines"
+              },
+              {
+                "list": "Secure transaction data platforms"
+              },
+              {
+                "list": "Risk analytics infrastructure"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID": 755,
+        "post_author": "1",
+        "post_date": "2026-03-11 16:04:49",
+        "post_date_gmt": "2026-03-11 16:04:49",
+        "post_content": "",
+        "post_title": "Healthcare & Life Sciences",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "healthcare-life-sciences",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 16:04:49",
+        "post_modified_gmt": "2026-03-11 16:04:49",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_industries&#038;p=755",
+        "menu_order": 0,
+        "post_type": "data_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_industries": {
+            "icon": "lucide-stethoscope",
+            "image": {
+              "id": 756,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-healthcare-B_LTTa5A.webp",
+              "alt": "",
+              "title": "industry-healthcare-B_LTTa5A",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "industry-healthcare-B_LTTa5A-300x94.webp",
+                  "width": 300,
+                  "height": 94,
+                  "mime-type": "image/webp",
+                  "filesize": 4680
+                },
+                "large": {
+                  "file": "industry-healthcare-B_LTTa5A-1024x319.webp",
+                  "width": 1024,
+                  "height": 319,
+                  "mime-type": "image/webp",
+                  "filesize": 27622
+                },
+                "thumbnail": {
+                  "file": "industry-healthcare-B_LTTa5A-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 3898
+                },
+                "medium_large": {
+                  "file": "industry-healthcare-B_LTTa5A-768x240.webp",
+                  "width": 768,
+                  "height": 240,
+                  "mime-type": "image/webp",
+                  "filesize": 18320
+                }
+              },
+              "width": 1500,
+              "height": 468,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-healthcare-B_LTTa5A-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-healthcare-B_LTTa5A-300x94.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-healthcare-B_LTTa5A-1024x319.webp"
+            },
+            "active_text": "Active Sector",
+            "sub_heading": "Data Engineering Capabilities",
+            "lists": [
+              {
+                "list": "PHI-compliant data lakes"
+              },
+              {
+                "list": "Clinical data integration"
+              },
+              {
+                "list": "Real-time patient monitoring systems"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID": 757,
+        "post_author": "1",
+        "post_date": "2026-03-11 16:06:12",
+        "post_date_gmt": "2026-03-11 16:06:12",
+        "post_content": "",
+        "post_title": "Retail & eCommerce",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "retail-ecommerce",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 16:06:12",
+        "post_modified_gmt": "2026-03-11 16:06:12",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_industries&#038;p=757",
+        "menu_order": 0,
+        "post_type": "data_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_industries": {
+            "icon": "lucide-shopping-cart",
+            "image": {
+              "id": 758,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-retail-xeHuqzen.webp",
+              "alt": "",
+              "title": "industry-retail-xeHuqzen",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "industry-retail-xeHuqzen-300x113.webp",
+                  "width": 300,
+                  "height": 113,
+                  "mime-type": "image/webp",
+                  "filesize": 6292
+                },
+                "large": {
+                  "file": "industry-retail-xeHuqzen-1024x385.webp",
+                  "width": 1024,
+                  "height": 385,
+                  "mime-type": "image/webp",
+                  "filesize": 32938
+                },
+                "thumbnail": {
+                  "file": "industry-retail-xeHuqzen-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 4592
+                },
+                "medium_large": {
+                  "file": "industry-retail-xeHuqzen-768x289.webp",
+                  "width": 768,
+                  "height": 289,
+                  "mime-type": "image/webp",
+                  "filesize": 22180
+                }
+              },
+              "width": 1500,
+              "height": 564,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-retail-xeHuqzen-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-retail-xeHuqzen-300x113.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-retail-xeHuqzen-1024x385.webp"
+            },
+            "active_text": "Active Sector",
+            "sub_heading": "Data Engineering Capabilities",
+            "lists": [
+              {
+                "list": "Customer 360 architecture"
+              },
+              {
+                "list": "Demand forecasting pipelines"
+              },
+              {
+                "list": "Personalization infrastructure"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID": 759,
+        "post_author": "1",
+        "post_date": "2026-03-11 16:08:02",
+        "post_date_gmt": "2026-03-11 16:08:02",
+        "post_content": "",
+        "post_title": "Manufacturing & Logistics",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "manufacturing-logistics",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 16:08:02",
+        "post_modified_gmt": "2026-03-11 16:08:02",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_industries&#038;p=759",
+        "menu_order": 0,
+        "post_type": "data_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_industries": {
+            "icon": "lucide-factory",
+            "image": {
+              "id": 760,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-manufacturing-CS0kV0qF.webp",
+              "alt": "",
+              "title": "industry-manufacturing-CS0kV0qF",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "industry-manufacturing-CS0kV0qF-300x169.webp",
+                  "width": 300,
+                  "height": 169,
+                  "mime-type": "image/webp",
+                  "filesize": 13070
+                },
+                "large": {
+                  "file": "industry-manufacturing-CS0kV0qF-1024x576.webp",
+                  "width": 1024,
+                  "height": 576,
+                  "mime-type": "image/webp",
+                  "filesize": 85750
+                },
+                "thumbnail": {
+                  "file": "industry-manufacturing-CS0kV0qF-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 6804
+                },
+                "medium_large": {
+                  "file": "industry-manufacturing-CS0kV0qF-768x432.webp",
+                  "width": 768,
+                  "height": 432,
+                  "mime-type": "image/webp",
+                  "filesize": 55428
+                },
+                "1536x1536": {
+                  "file": "industry-manufacturing-CS0kV0qF-1536x864.webp",
+                  "width": 1536,
+                  "height": 864,
+                  "mime-type": "image/webp",
+                  "filesize": 148150
+                }
+              },
+              "width": 1920,
+              "height": 1080,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-manufacturing-CS0kV0qF-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-manufacturing-CS0kV0qF-300x169.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-manufacturing-CS0kV0qF-1024x576.webp"
+            },
+            "active_text": "Active Sector",
+            "sub_heading": "Data Engineering Capabilities",
+            "lists": [
+              {
+                "list": "IoT telemetry ingestion"
+              },
+              {
+                "list": "Predictive maintenance systems"
+              },
+              {
+                "list": "Supply chain visibility platforms"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "ID": 761,
+        "post_author": "1",
+        "post_date": "2026-03-11 16:09:30",
+        "post_date_gmt": "2026-03-11 16:09:30",
+        "post_content": "",
+        "post_title": "Technology & SaaS",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "technology-saas",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 16:09:30",
+        "post_modified_gmt": "2026-03-11 16:09:30",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=data_industries&#038;p=761",
+        "menu_order": 0,
+        "post_type": "data_industries",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "data_engineers_industries": {
+            "icon": "lucide-monitor",
+            "image": {
+              "id": 762,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-technology-CTJwsmgw.webp",
+              "alt": "",
+              "title": "industry-technology-CTJwsmgw",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "industry-technology-CTJwsmgw-300x129.webp",
+                  "width": 300,
+                  "height": 129,
+                  "mime-type": "image/webp",
+                  "filesize": 9240
+                },
+                "large": {
+                  "file": "industry-technology-CTJwsmgw-1024x439.webp",
+                  "width": 1024,
+                  "height": 439,
+                  "mime-type": "image/webp",
+                  "filesize": 63706
+                },
+                "thumbnail": {
+                  "file": "industry-technology-CTJwsmgw-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 5824
+                },
+                "medium_large": {
+                  "file": "industry-technology-CTJwsmgw-768x329.webp",
+                  "width": 768,
+                  "height": 329,
+                  "mime-type": "image/webp",
+                  "filesize": 40840
+                }
+              },
+              "width": 1500,
+              "height": 643,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-technology-CTJwsmgw-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-technology-CTJwsmgw-300x129.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/industry-technology-CTJwsmgw-1024x439.webp"
+            },
+            "active_text": "Active Sector",
+            "sub_heading": "Data Engineering Capabilities",
+            "lists": [
+              {
+                "list": "Product analytics pipelines"
+              },
+              {
+                "list": "Multi-tenant data platforms"
+              },
+              {
+                "list": "Real-time usage analytics"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "voices_heading": "Voices of <span>Confidence</span>",
+    "voices_testimonials": [
+      {
+        "ID": 950,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:18:17",
+        "post_date_gmt": "2026-03-17 04:18:17",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">Code1 assessed our project nature and provided the consultation which helped us to pick the right professionals that could guarantee high-quality project outcomes without compromising our overall workforce hiring budget.</p>",
+        "post_title": "Harshdeep Singh",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "__trashed",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:19:22",
+        "post_modified_gmt": "2026-03-17 04:19:22",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=950",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Harshdeep Singh",
+          "company": "General Manager EMEA - Cloudwick"
+        }
+      },
+      {
+        "ID": 952,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:17:56",
+        "post_date_gmt": "2026-03-17 04:17:56",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">The team at Code1 was able to quickly understand the skill gap at our organization and helped us in the tech team building by providing the best industrial experts. Each of the engineers provided in the team carried the utmost qualifications and skills according to their respective skills.</p>",
+        "post_title": "Daniel Shaw",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "daniel-shaw",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:17:56",
+        "post_modified_gmt": "2026-03-17 04:17:56",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=952",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Daniel Shaw",
+          "company": "Operations & Sales Director - KPI Partners"
+        }
+      },
+      {
+        "ID": 951,
+        "post_author": "1",
+        "post_date": "2026-03-17 04:17:06",
+        "post_date_gmt": "2026-03-17 04:17:06",
+        "post_content": "<p class=\"text-muted-foreground text-sm leading-relaxed flex-1 mb-6\">We were in urgent need of specialized IT talent for our short-term project. As soon as we came in contact with Code1, our challenge of hiring the right person for the leading role was instantly solved.</p>",
+        "post_title": "Megha Jain",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "megha-jain",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-17 04:17:06",
+        "post_modified_gmt": "2026-03-17 04:17:06",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=testimonials&#038;p=951",
+        "menu_order": 0,
+        "post_type": "testimonials",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "acf": {
+          "designation": "Megha Jain",
+          "company": "Offshore Center Director - Girnarsof"
+        }
+      }
+    ],
+    "frequently_asked_question": [
+      {
+        "ID": 773,
+        "post_author": "1",
+        "post_date": "2026-03-11 17:56:14",
+        "post_date_gmt": "2026-03-11 17:56:14",
+        "post_content": "Code1 Tech Systems provides organizations with a centralized, high-quality data platform that breaks down data barriers and inconsistencies. This allows leaders to see their data in real-time, along with accurate forecasts and actionable insights. This allows leadership teams to make decisions quickly and intelligently, using actual data, no matter which department they are in.",
+        "post_title": "How do your data engineering services enhance my business decision-making processes?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "how-do-your-data-engineering-services-enhance-my-business-decision-making-processes",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 17:56:14",
+        "post_modified_gmt": "2026-03-11 17:56:14",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=773",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 774,
+        "post_author": "1",
+        "post_date": "2026-03-11 17:56:33",
+        "post_date_gmt": "2026-03-11 17:56:33",
+        "post_content": "Code1 Tech Systems uses new ETL/ELT frameworks to combine structured/unstructured data from legacy systems, APIs, SaaS apps, and IoT devices with an existing database. The team ensures minimal to no downtime during the migration to this centralized data ecosystem and provides assistance with data cleansing and standardization.",
+        "post_title": "How do you handle data integration from diverse sources, including legacy systems?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "how-do-you-handle-data-integration-from-diverse-sources-including-legacy-systems",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 17:56:33",
+        "post_modified_gmt": "2026-03-11 17:56:33",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=774",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      },
+      {
+        "ID": 775,
+        "post_author": "1",
+        "post_date": "2026-03-11 17:56:52",
+        "post_date_gmt": "2026-03-11 17:56:52",
+        "post_content": "Security is integrated into all levels of an organization. Code1 incorporates role-based access control, encryption, data masking, auditing logs, and ISO-compliant governance frameworks into its systems. By ensuring these mechanisms protect sensitive and mission-critical information, compliance with regulatory standards such as GDPR and HIPAA will be maximized by all parties involved.",
+        "post_title": "How do you ensure the security and compliance of data pipelines?",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "how-do-you-ensure-the-security-and-compliance-of-data-pipelines",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-11 17:56:52",
+        "post_modified_gmt": "2026-03-11 17:56:52",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=faq&#038;p=775",
+        "menu_order": 0,
+        "post_type": "faq",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw"
+      }
+    ],
+    "faq_section_heading": "Frequently Asked <span>Questions</span>",
+    "page_title": "Data Engineering",
+    "page_content": "",
+    "banner_section": {
+      "banner_image": {
+        "id": 636,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-engineering-hero-9Vo-DfXM.webp",
+        "alt": "",
+        "title": "data-engineering-hero-9Vo-DfXM",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "data-engineering-hero-9Vo-DfXM-300x169.webp",
+            "width": 300,
+            "height": 169,
+            "mime-type": "image/webp",
+            "filesize": 13694
+          },
+          "thumbnail": {
+            "file": "data-engineering-hero-9Vo-DfXM-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 7056
+          },
+          "medium_large": {
+            "file": "data-engineering-hero-9Vo-DfXM-768x432.webp",
+            "width": 768,
+            "height": 432,
+            "mime-type": "image/webp",
+            "filesize": 53240
+          }
+        },
+        "width": 1024,
+        "height": 576,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-engineering-hero-9Vo-DfXM-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-engineering-hero-9Vo-DfXM-300x169.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-engineering-hero-9Vo-DfXM.webp"
+      },
+      "floating_badge_fields": [
+        {
+          "badge_heading": "ISO",
+          "badge_text": "27001 Certified"
+        },
+        {
+          "badge_heading": "70+",
+          "badge_text": "Data Engineers"
+        }
+      ],
+      "banner_heading": "Data Engineering Services to <span>Modernize and Transform</span> Your Data",
+      "banner_description": "Data engineers at Code1 understand that, as cloud adoption accelerates, architectural complexity is also increasing. When you operate data lake without an appropriate governance framework, the data becomes 'swampy' over time and does not produce the expected returns. It's essential to remember that being data-driven does not only mean collecting data; it also requires an architecture that will allow you to easily scale.",
+      "highlighted_text": "Modernize your data infrastructure with engineers who've done it before!",
+      "cta_text": "Get Started",
+      "cta_url": "/contactus"
+    },
+    "stats_section": {
+      "stats_fields": [
+        {
+          "stats_numbers": "70+",
+          "stats_title": "Data Engineers"
+        },
+        {
+          "stats_numbers": "200+",
+          "stats_title": "Projects Delivered"
+        },
+        {
+          "stats_numbers": "98%",
+          "stats_title": "Client Retention"
+        },
+        {
+          "stats_numbers": "40%",
+          "stats_title": "Cost Savings Achieved"
+        }
+      ]
+    },
+    "data_engineers_data_challenges_section": {
+      "heading": "Addressing <span>Enterprise Data Challenges</span>",
+      "blocks": [
+        {
+          "image": {
+            "id": 638,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-1-C266taB0.webp",
+            "alt": "",
+            "title": "de-cta-1-C266taB0",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-cta-1-C266taB0-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 16306
+              },
+              "thumbnail": {
+                "file": "de-cta-1-C266taB0-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 6246
+              }
+            },
+            "width": 512,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-1-C266taB0-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-1-C266taB0-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-1-C266taB0.webp"
+          },
+          "icon": "lucide-activity",
+          "title": "Improving Data Reliability",
+          "description": "Our team makes sure your data is consistent, doesn&#039;t let your pipeline down, and that the data that&#039;s making your business decisions is actually trustworthy. We do all this with the help of some fancy observation tools, monitoring your systems, and setting up automatic checks to catch any problems before they become a big deal. Which means you get good, reliable data that lets you make smart decisions."
+        },
+        {
+          "image": {
+            "id": 639,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-2-FLvKLjPR.webp",
+            "alt": "",
+            "title": "de-cta-2-FLvKLjPR",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-cta-2-FLvKLjPR-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 15302
+              },
+              "thumbnail": {
+                "file": "de-cta-2-FLvKLjPR-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 5386
+              }
+            },
+            "width": 512,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-2-FLvKLjPR-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-2-FLvKLjPR-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-2-FLvKLjPR.webp"
+          },
+          "icon": "lucide-link2",
+          "title": "Cutting Down on Data Silos",
+          "description": "To ensure that data is moving freely between departments, we create architectures that simplify working together while maintaining an organized, orderly data environment. We implement tools such as a data mesh or unified platform to allow for easy access to data without duplicating efforts or causing issues with other teams."
+        },
+        {
+          "image": {
+            "id": 640,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-3-BPcOPg58.webp",
+            "alt": "",
+            "title": "de-cta-3-BPcOPg58",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-cta-3-BPcOPg58-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 8068
+              },
+              "thumbnail": {
+                "file": "de-cta-3-BPcOPg58-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3632
+              }
+            },
+            "width": 512,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-3-BPcOPg58-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-3-BPcOPg58-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-cta-3-BPcOPg58.webp"
+          },
+          "icon": "lucide-brain",
+          "title": "Enabling AI &amp; Advanced Analytics",
+          "description": "We help get your data into a clean, usable shape, making it easy to build all sorts of models and pipelines to support your AI and analytics projects. It&#039;s all about getting high-quality data flowing into systems that can turn it into insights and decisions that drive your business forward."
+        }
+      ]
+    },
+    "data_engineers_consultation_section": {
+      "heading": "Let's Understand Your Business Challenges!",
+      "content": "Talk to our data engineering experts to help you find solutions that make your business operations easy.",
+      "cta_text": "Request a Consultation",
+      "cta_url": "/contactus"
+    },
+    "data_engineers_service_we_offer_section": {
+      "heading": "Data Engineering <span>Services We Offer</span>",
+      "paragraph": "To manage your growing data ecosystems with precision, we design systems that scale your business.",
+      "blocks": [
+        {
+          "title": "Data Platform Advisory Services",
+          "icon": "lucide-target",
+          "image": {
+            "id": 641,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-advisory-Bj_TJPLe.webp",
+            "alt": "",
+            "title": "de-service-advisory-Bj_TJPLe",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-service-advisory-Bj_TJPLe-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 7778
+              },
+              "thumbnail": {
+                "file": "de-service-advisory-Bj_TJPLe-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3646
+              },
+              "medium_large": {
+                "file": "de-service-advisory-Bj_TJPLe-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 29244
+              }
+            },
+            "width": 1024,
+            "height": 768,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-advisory-Bj_TJPLe-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-advisory-Bj_TJPLe-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-advisory-Bj_TJPLe.webp"
+          },
+          "description": "<p class=\"ql-align-justify\">&lt;p class=\"text-muted-foreground text-sm lg:text-base leading-relaxed text-justify mb-7\"&gt;We can help with comprehensive architecture services, like doing an architecture assessment to see where you are now, drawing up a roadmap to get you up to speed with the latest and greatest, figuring out the best way to move to the cloud, taking a closer look at the technology you're using, and figuring out where it can be improved.&lt;/p&gt;</p><p class=\"ql-align-justify\">&lt;div class=\"grid grid-cols-2 gap-2\"&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Architecture Assessments&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Cloud Migration Planning&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Technology Evaluation&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Roadmap Development&lt;/div&gt;&lt;/div&gt;</p>"
+        },
+        {
+          "title": "Data Platform Modernization &amp; Migration",
+          "icon": "lucide-cloud",
+          "image": {
+            "id": 922,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-modernization-DuXEKePc.webp",
+            "alt": "",
+            "title": "de-service-modernization-DuXEKePc",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-service-modernization-DuXEKePc-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 10832
+              },
+              "thumbnail": {
+                "file": "de-service-modernization-DuXEKePc-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4986
+              },
+              "medium_large": {
+                "file": "de-service-modernization-DuXEKePc-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 42388
+              }
+            },
+            "width": 1024,
+            "height": 768,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-modernization-DuXEKePc-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-modernization-DuXEKePc-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-modernization-DuXEKePc.webp"
+          },
+          "description": "&lt;p class=\"text-muted-foreground text-sm leading-relaxed text-left mb-7\"&gt;Our team specializes in transforming outdated infrastructure into cutting-edge data platforms that are optimized for speed and future growth. We provide services like seamless warehouse to cloud migrations, latency house deployments, creating data mesh architectures, creating hybrid/multi-cloud platforms and improving the efficiency of existing infrastructure.&lt;/p&gt;&lt;div class=\"grid grid-cols-2 gap-2\"&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Cloud Data Warehouse Migrations&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Data Mesh Architecture&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Hybrid/Multi-Cloud Platforms&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Legacy Modernization&lt;/div&gt;&lt;/div&gt;"
+        },
+        {
+          "title": "Data Pipeline Development Services",
+          "icon": "lucide-workflow",
+          "image": {
+            "id": 923,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-pipeline-DghvfFHH.webp",
+            "alt": "",
+            "title": "de-service-pipeline-DghvfFHH",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-service-pipeline-DghvfFHH-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 8562
+              },
+              "thumbnail": {
+                "file": "de-service-pipeline-DghvfFHH-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3934
+              },
+              "medium_large": {
+                "file": "de-service-pipeline-DghvfFHH-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 33152
+              }
+            },
+            "width": 1024,
+            "height": 768,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-pipeline-DghvfFHH-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-pipeline-DghvfFHH-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-pipeline-DghvfFHH.webp"
+          },
+          "description": "&lt;p class=\"text-muted-foreground text-sm leading-relaxed text-left mb-7\"&gt;Our data engineers develop robust, automated ET/ELT pipelines to deliver reliable, timely data ingestion, transformation, and integration with existing enterprise systems. We will work with you to design and implement effective processes to deliver clean, accurate, real-time data for analysis and to support business decisions.&lt;/p&gt;&lt;div class=\"grid grid-cols-2 gap-2\"&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Automated ETL/ELT Pipelines&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Real-Time Data Ingestion&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Enterprise System Integration&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Data Quality Automation&lt;/div&gt;&lt;/div&gt;"
+        },
+        {
+          "title": "Data Governance and Security Engineering",
+          "icon": "lucide-shield",
+          "image": {
+            "id": 924,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-governance-D_9qFmIE.webp",
+            "alt": "",
+            "title": "de-service-governance-D_9qFmIE",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-service-governance-D_9qFmIE-300x225.webp",
+                "width": 300,
+                "height": 225,
+                "mime-type": "image/webp",
+                "filesize": 7260
+              },
+              "thumbnail": {
+                "file": "de-service-governance-D_9qFmIE-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3600
+              },
+              "medium_large": {
+                "file": "de-service-governance-D_9qFmIE-768x576.webp",
+                "width": 768,
+                "height": 576,
+                "mime-type": "image/webp",
+                "filesize": 24670
+              }
+            },
+            "width": 1024,
+            "height": 768,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-governance-D_9qFmIE-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-governance-D_9qFmIE-300x225.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-service-governance-D_9qFmIE.webp"
+          },
+          "description": "&lt;p class=\"text-muted-foreground text-sm leading-relaxed text-left mb-7\"&gt;We create superior governance structures, access control systems, encryption standards, and compliance-mandated architecture frameworks to ensure the overall quality of your data; that your data complies with all governing bodies; and that all data within your enterprise system has an enterprise-class level of security.&lt;/p&gt;&lt;div class=\"grid grid-cols-2 gap-2\"&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Access Control Systems&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Encryption Standards&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Compliance Frameworks&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm text-muted-foreground\"&gt;&lt;div class=\"w-1.5 h-1.5 rounded-full flex-shrink-0\" style=\"background: linear-gradient(135deg, rgb(95, 194, 227), rgb(0, 119, 182));\"&gt;&lt;/div&gt;Governance Structures&lt;/div&gt;&lt;/div&gt;"
+        }
+      ]
+    },
+    "data_engineers_for_the_reliable_services_section": {
+      "heading": "Data Engineers for the Reliable Services",
+      "content": "Connect with Data Engineering Professionals for Solutions that make your business operations convenient!",
+      "cta_text": "Schedule a Walkthrough",
+      "cta_url": "/contactus"
+    },
+    "data_engineers_engagement_models_section": {
+      "tag_heading": "How We Work with Clients",
+      "heading": "Our Data Engineering <span>Engagement Models</span>",
+      "cards": [
+        {
+          "tag": "Flexible",
+          "image": {
+            "id": 706,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-ondemand-C-4I2Ll.webp",
+            "alt": "",
+            "title": "de-engage-ondemand-C&#8211;4I2Ll",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-engage-ondemand-C-4I2Ll-300x192.webp",
+                "width": 300,
+                "height": 192,
+                "mime-type": "image/webp",
+                "filesize": 7346
+              },
+              "thumbnail": {
+                "file": "de-engage-ondemand-C-4I2Ll-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 3872
+              },
+              "medium_large": {
+                "file": "de-engage-ondemand-C-4I2Ll-768x492.webp",
+                "width": 768,
+                "height": 492,
+                "mime-type": "image/webp",
+                "filesize": 24130
+              }
+            },
+            "width": 800,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-ondemand-C-4I2Ll-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-ondemand-C-4I2Ll-300x192.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-ondemand-C-4I2Ll.webp"
+          },
+          "icon": "lucide-users",
+          "title": "On-Demand Data Engineers",
+          "paragraph": "You can hire data engineer experts for solutions that need fixing or to give you an extra pair of hands on a project. We don&#039;t tie you up in long-term contracts; you get the help you need, whether you want to scale up or down.",
+          "lists": "&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(56, 189, 248);\"&gt;&lt;/span&gt;No long-term contracts&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(56, 189, 248);\"&gt;&lt;/span&gt;Scale up or down instantly&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(56, 189, 248);\"&gt;&lt;/span&gt;Expert-matched hiring&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(56, 189, 248);\"&gt;&lt;/span&gt;Project or hourly basis&lt;/div&gt;"
+        },
+        {
+          "tag": "Dedicated",
+          "image": {
+            "id": 708,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-offshore-7uhDqOpa.webp",
+            "alt": "",
+            "title": "de-engage-offshore-7uhDqOpa",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-engage-offshore-7uhDqOpa-300x192.webp",
+                "width": 300,
+                "height": 192,
+                "mime-type": "image/webp",
+                "filesize": 9534
+              },
+              "thumbnail": {
+                "file": "de-engage-offshore-7uhDqOpa-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 5358
+              },
+              "medium_large": {
+                "file": "de-engage-offshore-7uhDqOpa-768x492.webp",
+                "width": 768,
+                "height": 492,
+                "mime-type": "image/webp",
+                "filesize": 41518
+              }
+            },
+            "width": 800,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-offshore-7uhDqOpa-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-offshore-7uhDqOpa-300x192.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-offshore-7uhDqOpa.webp"
+          },
+          "icon": "lucide-globe",
+          "title": "Dedicated Offshore/Nearshore Teams",
+          "paragraph": "We put together a team of engineers who work exclusively on your projects, aligned with your business&#039;s operations. The team is tailored to fit your culture and strategy. You get a team that will work with you to deliver your project.",
+          "lists": "&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(96, 165, 250);\"&gt;&lt;/span&gt;Culture-aligned teams&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(96, 165, 250);\"&gt;&lt;/span&gt;Exclusive project focus&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(96, 165, 250);\"&gt;&lt;/span&gt;Nearshore time-zone overlap&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(96, 165, 250);\"&gt;&lt;/span&gt;Strategy-driven team design&lt;/div&gt;"
+        },
+        {
+          "tag": "Managed",
+          "image": {
+            "id": 710,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-managed-CKZyN2I9.webp",
+            "alt": "",
+            "title": "de-engage-managed-CKZyN2I9",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "de-engage-managed-CKZyN2I9-300x192.webp",
+                "width": 300,
+                "height": 192,
+                "mime-type": "image/webp",
+                "filesize": 7518
+              },
+              "thumbnail": {
+                "file": "de-engage-managed-CKZyN2I9-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4312
+              },
+              "medium_large": {
+                "file": "de-engage-managed-CKZyN2I9-768x492.webp",
+                "width": 768,
+                "height": 492,
+                "mime-type": "image/webp",
+                "filesize": 30200
+              }
+            },
+            "width": 800,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-managed-CKZyN2I9-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-managed-CKZyN2I9-300x192.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/de-engage-managed-CKZyN2I9.webp"
+          },
+          "icon": "lucide-headphones",
+          "title": "Fully Managed Data Engineering",
+          "paragraph": "Our engineers take care of the architecture, the pipelines, the monitoring, and the governance, so you don&#039;t have to worry about them. This means you are free to focus on your core business, without the extra operational burden on your internal teams.",
+          "lists": "&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(14, 165, 233);\"&gt;&lt;/span&gt;End-to-end ownership&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(14, 165, 233);\"&gt;&lt;/span&gt;Pipeline &amp;amp; architecture ops&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(14, 165, 233);\"&gt;&lt;/span&gt;24/7 monitoring &amp;amp; SLA&lt;/div&gt;&lt;div class=\"flex items-center gap-2 text-sm font-medium\" style=\"color: rgb(203, 213, 225);\"&gt;&lt;span class=\"w-1.5 h-1.5 rounded-full shrink-0\" style=\"background: rgb(14, 165, 233);\"&gt;&lt;/span&gt;Governance &amp;amp; compliance built-in&lt;/div&gt;"
+        }
+      ]
+    },
+    "our_engineering_process_section": {
+      "heading": "Our Engineering <span>Process</span>",
+      "paragraph": "A structured, repeatable delivery model from discovery to continuous support engineered for reliability at scale.",
+      "cards": [
+        {
+          "icon": "lucide-target",
+          "tag": "Phase 1",
+          "title": "Figuring Out the Architecture",
+          "content": "The experts assess your current situation, all your existing systems, the maturity of your data, your security, the risks you're exposed to, and where your system is faulty. This helps us map your needs and the workflow."
+        },
+        {
+          "icon": "lucide-map-pin",
+          "tag": "PHASE 2",
+          "title": "Building the Right Blueprint",
+          "content": "We create architectures and plans that align with your business goals and ensure compliance with applicable rules and regulations."
+        },
+        {
+          "icon": "lucide-wrench",
+          "tag": "Phase 3",
+          "title": "Engineering &amp; Deployment",
+          "content": "Our engineers build, move, integrate, and test the data pipelines and platforms you need, then deploy them to production with a focus on getting it right, not just getting it done."
+        },
+        {
+          "icon": "lucide-activity",
+          "tag": "Phase 4",
+          "title": "Support and Maintenance",
+          "content": "Continuous monitoring is a big part of what we do, as is making sure your data performs well, your systems are reliable, and your cloud costs are under control."
+        }
+      ]
+    },
+    "data_engineers_hire_experts_section": {
+      "heading": "Hire Experts to Grow Your Business Solutions!",
+      "content": "Choose our team and be a part of the development process all the while.",
+      "cta_text": "Explore Managed Services",
+      "cta_url": "/contactus"
+    },
+    "data_engineering_technology_stack_section": {
+      "heading": "Our Data Engineering <span>Technology Stack</span>",
+      "stack_lists": [
+        {
+          "title": "Cloud Platforms",
+          "content": "&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;AWS (S3, Glue, Redshift, EMR)&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Google Cloud (BigQuery, Dataflow)&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Azure (ADF, Synapse, ADLS)&lt;/li&gt;"
+        },
+        {
+          "title": "Data Warehousing",
+          "content": "&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Snowflake&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Amazon Redshift&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Google BigQuery&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Azure Synapse&lt;/li&gt;"
+        },
+        {
+          "title": "ETL/ELT Tools",
+          "content": "&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Apache Airflow&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;DBT&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Talend&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Azure Data Factory&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Fivetran&lt;/li&gt;"
+        },
+        {
+          "title": "Streaming",
+          "content": "&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Apache Kafka&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Apache Spark Streaming&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;AWS Kinesis&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Google Pub/Sub&lt;/li&gt;"
+        },
+        {
+          "title": "Data Lakes",
+          "content": "&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Delta Lake&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Apache Iceberg&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Apache Hudi&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;AWS Lake Formation&lt;/li&gt;"
+        },
+        {
+          "title": "Languages &amp; Frameworks",
+          "content": "&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Python&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;SQL&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Scala&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;PySpark&lt;/li&gt;&lt;li class=\"flex items-center gap-2 text-sm text-foreground/70\"&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-server w-3 h-3 text-accent/50 flex-shrink-0\"&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"2\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;rect width=\"20\" height=\"8\" x=\"2\" y=\"14\" rx=\"2\" ry=\"2\"&gt;&lt;/rect&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"6\" y2=\"6\"&gt;&lt;/line&gt;&lt;line x1=\"6\" x2=\"6.01\" y1=\"18\" y2=\"18\"&gt;&lt;/line&gt;&lt;/svg&gt;Java&lt;/li&gt;"
+        }
+      ]
+    },
+    "data_engineers_benefits_of_choosing_section": {
+      "heading": "Benefits of Choosing <span>Code1 Tech Systems</span>",
+      "paragraph": "A partner built for engineering complexity not just delivery.",
+      "count_number_1": "70+",
+      "count_text_1": "Data Engineers",
+      "count_number_2": "5×",
+      "count_text_2": "Faster Pipelines",
+      "count_number_3": "99.9%",
+      "count_text_3": "SLA Uptime",
+      "cards": [
+        {
+          "icon": "lucide-users",
+          "title": "70+ Skilled Engineers &amp; Data Specialists",
+          "content": "We have a full suite of experience in all aspects of data engineering and analytics, from defining your business&#039;s data strategy to architecting the platform.",
+          "tag": "Core Differentiator"
+        },
+        {
+          "icon": "lucide-layers",
+          "title": "End-to-End Data Engineering Expertise",
+          "content": "We take care of all your business needs, from data strategy and architecture design to pipeline development, cloud migration, and ongoing governance and optimization.",
+          "tag": "Core Differentiator"
+        },
+        {
+          "icon": "lucide-globe",
+          "title": "Strong Experience in Various Industries",
+          "content": "Our experts have collaborated on solutions across industries, including healthcare, finance, retail, manufacturing, and technology. We let organizations modernize their data ecosystems, improve decision-making, and accelerate digital transformation initiatives.",
+          "tag": "Core Differentiator"
+        }
+      ],
+      "bottom_bullets": [
+        {
+          "label": "Certified Data Engineers"
+        },
+        {
+          "label": "Agile Delivery"
+        },
+        {
+          "label": "No Long-Term Lock-In"
+        },
+        {
+          "label": "24/7 Support"
+        },
+        {
+          "label": "ISO 27001 Compliant"
+        }
+      ]
+    },
+    "digital_security_compliance_section": {
+      "heading": "Security &amp; <span>Compliance</span>",
+      "paragraph": "Enterprise-grade confidentiality, regulatory compliance, and incident response built into every engagement.",
+      "tags": [
+        {
+          "label": "ISO 27001"
+        },
+        {
+          "label": "GDPR"
+        },
+        {
+          "label": "HIPAA"
+        },
+        {
+          "label": "CCPA"
+        },
+        {
+          "label": "SOC 2"
+        }
+      ],
+      "content_blocks": [
+        {
+          "icon": "lucide-shield",
+          "title": "Confidentiality &amp; Data Protection",
+          "label": "Contractually Binding",
+          "content": "The technical and personal information distributed with our service providers in connection with the Data Engineering Services is confidential. Our experts will apply appropriate industry-standard security controls, including encryption (at rest and in transit), user/role-based restricted access to confidential data, and a least-privilege access model. Confidential Information may not be used for any other (non-contracted) purpose, distributed in any way, or copied for any purpose other than to fulfill the agreed-upon contractual service."
+        },
+        {
+          "icon": "lucide-lock",
+          "title": "Regulatory Compliance &amp; Secure Handling",
+          "label": "Contractually Binding",
+          "content": "Our Data engineers adhere to all relevant data protection/privacy laws, including GDPR, HIPAA, CCPA, and PIPEDA (as applicable). Data must be processed only in an authorised environment, and no one has access to any client data without the client&#039;s appropriate written approval. Upon exit from the contract, we either securely return client data or permanently destroy it, as confirmed in writing."
+        },
+        {
+          "icon": "lucide-triangle-alert",
+          "title": "Incident Response &amp; Ongoing Obligations",
+          "label": "Contractually Binding",
+          "content": "We have an established formal incident response plan, and we will notify you as soon as possible (within 48 hours) when we suspect or confirm that your data has been breached. All confidentiality obligations shall survive the termination of the agreement for a period of five years after termination or indefinitely with respect to any trade secrets. You shall have the right to conduct audits of the security and compliance controls with reasonable notice."
+        }
+      ]
+    },
+    "certifications_section": {
+      "certification_icon_class": "lucide-award",
+      "certification_label": "Certifications",
+      "certification_heading": "Recognized For <span>Excellence</span>",
+      "certification_content": "Our certifications reflect our unwavering commitment to security, quality, and compliance giving you confidence that your data and projects are in trusted hands.",
+      "certifications_blocks": [
+        {
+          "certification_image": {
+            "id": 565,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc.webp",
+            "alt": "",
+            "title": "cert-iso27001-Dantzspc",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-iso27001-Dantzspc-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 21554
+              },
+              "thumbnail": {
+                "file": "cert-iso27001-Dantzspc-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 8464
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso27001-Dantzspc.webp"
+          },
+          "certification_validity": "ISO 27001:2022",
+          "certification_label": "Information Security Management"
+        },
+        {
+          "certification_image": {
+            "id": 566,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem.webp",
+            "alt": "",
+            "title": "cert-iso9001-BC7qDQem",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-iso9001-BC7qDQem-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 20522
+              },
+              "thumbnail": {
+                "file": "cert-iso9001-BC7qDQem-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 7594
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso9001-BC7qDQem.webp"
+          },
+          "certification_validity": "ISO 9001:2015",
+          "certification_label": "Quality Management System"
+        },
+        {
+          "certification_image": {
+            "id": 567,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z.png",
+            "alt": "",
+            "title": "cert-iso20000-Bd2gN13Z",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-iso20000-Bd2gN13Z-300x300.png",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/png",
+                "filesize": 64298
+              },
+              "thumbnail": {
+                "file": "cert-iso20000-Bd2gN13Z-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/png",
+                "filesize": 22519
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z-150x150.png",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z-300x300.png",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-iso20000-Bd2gN13Z.png"
+          },
+          "certification_validity": "ISO 20000-1:2018",
+          "certification_label": "IT Service Management"
+        },
+        {
+          "certification_image": {
+            "id": 568,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK.webp",
+            "alt": "",
+            "title": "cert-cmmi-CQiuYGfK",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "cert-cmmi-CQiuYGfK-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 8802
+              },
+              "thumbnail": {
+                "file": "cert-cmmi-CQiuYGfK-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4044
+              }
+            },
+            "width": 500,
+            "height": 500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/02/cert-cmmi-CQiuYGfK.webp"
+          },
+          "certification_validity": "CMMI Level 3",
+          "certification_label": "Capability Maturity Model"
+        }
+      ]
+    },
+    "services_get_started_section_section": {
+      "heading": "Ready to <span>Transform Your Data Infrastructure?</span>",
+      "paragraph": "Get in touch with our data engineering team to discuss how we can modernize your data systems and accelerate your data-driven initiatives.",
+      "lists": [
+        {
+          "list": "70+ certified data engineers"
+        },
+        {
+          "list": "ISO 27001 certified security"
+        },
+        {
+          "list": "Flexible engagement models"
+        },
+        {
+          "list": "Cloud-native &amp; modern stack"
+        },
+        {
+          "list": "End-to-end data solutions"
+        }
+      ],
+      "buttons": null,
+      "small_heading": "Get In Touch"
+    },
+    "data_engineers_security_brief_cta_section": {
+      "heading": "Solutions That Abide by Industry Standards",
+      "content": "Choose a team that delivers solutions, sticking to global and local compliances.",
+      "cta_text": "Get a Security Brief",
+      "cta_url": "/contactus"
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "https://code1.dev/code1new/wp-content/uploads/2026/03/data-engineering-hero-9Vo-DfXM.webp",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}

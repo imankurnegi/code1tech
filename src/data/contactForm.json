@@ -1,0 +1,61 @@
+{
+  "heading": "Send us a message",
+  "paragraph": "Simply fill the form to tell us what's happening. A few details can help us understand your needs perfectly.",
+  "row1": [
+    {
+      "field_name": "your-name",
+      "type": "text",
+      "label": "First Name*",
+      "placeholder": "John Smith"
+    }
+  ],
+  "row2": [
+    {
+      "field_name": "last-name",
+      "type": "text",
+      "label": "Last Name*",
+      "placeholder": "John Smith"
+    }
+  ],
+  "row3": [
+    {
+      "field_name": "email",
+      "type": "email",
+      "label": "Email*",
+      "placeholder": "john@company.com"
+    }
+  ],
+  "row4": [
+    {
+      "field_name": "phone",
+      "type": "tel",
+      "label": "Phone Number*",
+      "placeholder": "Your phone number"
+    }
+  ],
+  "row5": [
+    {
+      "field_name": "subject",
+      "type": "text",
+      "label": "Subject",
+      "placeholder": "Subject"
+    }
+  ],
+  "row6": [
+    {
+      "field_name": "message",
+      "type": "textarea",
+      "label": "message",
+      "placeholder": "Tell us about your project or challenge..."
+    }
+  ],
+  "row7": [
+    {
+      "field_name": "user_location",
+      "type": "hidden",
+      "label": "user_location"
+    }
+  ],
+  "button_text": "Let's Build Something Together",
+  "bottom_text": "We usually respond within 24 hours"
+}

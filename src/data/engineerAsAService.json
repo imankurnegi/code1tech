@@ -1,0 +1,694 @@
+{
+  "status": true,
+  "data": {
+    "service_section_heading": "Our EaaS Services",
+    "eng_services_data": [
+      {
+        "ID": 862,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:09:42",
+        "post_date_gmt": "2026-03-13 07:09:42",
+        "post_content": "",
+        "post_title": "On-Demand Engineers",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "on-demand-engineers",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 11:36:51",
+        "post_modified_gmt": "2026-03-13 11:36:51",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=engineer_services&#038;p=862",
+        "menu_order": 0,
+        "post_type": "engineer_services",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "engineer_service_post_fields": {
+            "service_box_icon": "lucide-users",
+            "service_box_description": "Quickly scale your engineering capacity with ready-to-help professionals for short or long-term engagements; our vetting has identified full-stack developers, data engineers, and QA resources who we can seamlessly integrate into your workflow, processes, and culture to maintain consistency, delivery, and standards while saving time and cost that comes from regular hiring processes.",
+            "box_tags_fields": [
+              {
+                "tag": "Seamless Integration"
+              },
+              {
+                "tag": "Cost Savings"
+              },
+              {
+                "tag": "Rapid Scaling"
+              }
+            ],
+            "service_box_image": {
+              "id": 889,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-ondemand-By6bTBKC.webp",
+              "alt": "",
+              "title": "eaas-ondemand-By6bTBKC",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "eaas-ondemand-By6bTBKC-300x200.webp",
+                  "width": 300,
+                  "height": 200,
+                  "mime-type": "image/webp",
+                  "filesize": 12292
+                },
+                "thumbnail": {
+                  "file": "eaas-ondemand-By6bTBKC-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 6328
+                }
+              },
+              "width": 768,
+              "height": 512,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-ondemand-By6bTBKC-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-ondemand-By6bTBKC-300x200.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-ondemand-By6bTBKC.webp"
+            }
+          }
+        }
+      },
+      {
+        "ID": 865,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:14:30",
+        "post_date_gmt": "2026-03-13 07:14:30",
+        "post_content": "",
+        "post_title": "Offshore & Nearshore Setup",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "offshore-nearshore-setup",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 11:37:21",
+        "post_modified_gmt": "2026-03-13 11:37:21",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=engineer_services&#038;p=865",
+        "menu_order": 0,
+        "post_type": "engineer_services",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "engineer_service_post_fields": {
+            "service_box_icon": "lucide-building2",
+            "service_box_description": "Suppose you need to stand up or ramp up operations through offshore and nearshore delivery centres, even in the GCC, through Centers of Excellence. In that case, we will own the infrastructure, staffing, and governance while providing transparent oversight and compliance. This model will allow you to optimize, access global talent, and maintain operational effectiveness.",
+            "box_tags_fields": [
+              {
+                "tag": "Global Talent"
+              },
+              {
+                "tag": "Transparent Oversight"
+              },
+              {
+                "tag": "Operational Effectiveness"
+              }
+            ],
+            "service_box_image": {
+              "id": 866,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-offshore-Dk1wTTLb.webp",
+              "alt": "",
+              "title": "eaas-offshore-Dk1wTTLb",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "eaas-offshore-Dk1wTTLb-300x200.webp",
+                  "width": 300,
+                  "height": 200,
+                  "mime-type": "image/webp",
+                  "filesize": 8036
+                },
+                "thumbnail": {
+                  "file": "eaas-offshore-Dk1wTTLb-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 4160
+                }
+              },
+              "width": 768,
+              "height": 512,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-offshore-Dk1wTTLb-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-offshore-Dk1wTTLb-300x200.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-offshore-Dk1wTTLb.webp"
+            }
+          }
+        }
+      },
+      {
+        "ID": 870,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:18:45",
+        "post_date_gmt": "2026-03-13 07:18:45",
+        "post_content": "",
+        "post_title": "Managed Services for Engineering",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "managed-services-for-engineering",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 07:18:45",
+        "post_modified_gmt": "2026-03-13 07:18:45",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=engineer_services&#038;p=870",
+        "menu_order": 0,
+        "post_type": "engineer_services",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "engineer_service_post_fields": {
+            "service_box_icon": "lucide-headphones",
+            "service_box_description": "Our managed services will work with you to ensure delivery reliability, operational excellence, and measured assessments. We will take full ownership of execution, SLAs, and performance assessments to let you focus on strategy and innovation. At the same time, we provide reliable productivity, compliance, and consistency in the engineering quality delivered to you.",
+            "box_tags_fields": [
+              {
+                "tag": "Delivery Reliability"
+              },
+              {
+                "tag": " SLA-Driven"
+              },
+              {
+                "tag": "Operational Excellence"
+              }
+            ],
+            "service_box_image": {
+              "id": 871,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-managed-CSMwFS8V.webp",
+              "alt": "",
+              "title": "eaas-managed-CSMwFS8V",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "eaas-managed-CSMwFS8V-300x225.webp",
+                  "width": 300,
+                  "height": 225,
+                  "mime-type": "image/webp",
+                  "filesize": 11456
+                },
+                "thumbnail": {
+                  "file": "eaas-managed-CSMwFS8V-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 5438
+                },
+                "medium_large": {
+                  "file": "eaas-managed-CSMwFS8V-768x576.webp",
+                  "width": 768,
+                  "height": 576,
+                  "mime-type": "image/webp",
+                  "filesize": 40244
+                }
+              },
+              "width": 800,
+              "height": 600,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-managed-CSMwFS8V-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-managed-CSMwFS8V-300x225.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-managed-CSMwFS8V.webp"
+            }
+          }
+        }
+      },
+      {
+        "ID": 867,
+        "post_author": "1",
+        "post_date": "2026-03-13 07:16:41",
+        "post_date_gmt": "2026-03-13 07:16:41",
+        "post_content": "",
+        "post_title": "Tech Team Building",
+        "post_excerpt": "",
+        "post_status": "publish",
+        "comment_status": "closed",
+        "ping_status": "closed",
+        "post_password": "",
+        "post_name": "tech-team-building",
+        "to_ping": "",
+        "pinged": "",
+        "post_modified": "2026-03-13 11:37:58",
+        "post_modified_gmt": "2026-03-13 11:37:58",
+        "post_content_filtered": "",
+        "post_parent": 0,
+        "guid": "https://code1.dev/code1new/?post_type=engineer_services&#038;p=867",
+        "menu_order": 0,
+        "post_type": "engineer_services",
+        "post_mime_type": "",
+        "comment_count": "0",
+        "filter": "raw",
+        "sdb": {
+          "engineer_service_post_fields": {
+            "service_box_icon": "lucide-user-plus",
+            "service_box_description": "We work with our clients to build bespoke engineering team extensions as an actual part of your organisation. We can provide a single independent engineer or workable teams by building team integration, cultural fit, product/tool integration, and measuring performance effectiveness for sustainable capability development and delivery.",
+            "box_tags_fields": [
+              {
+                "tag": "Cultural Fit"
+              },
+              {
+                "tag": "Team Integration"
+              },
+              {
+                "tag": "Sustainable Delivery"
+              }
+            ],
+            "service_box_image": {
+              "id": 869,
+              "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-teambuilding-BIqxQ-pd.webp",
+              "alt": "",
+              "title": "eaas-teambuilding-BIqxQ-pd",
+              "caption": "",
+              "description": "",
+              "sizes": {
+                "medium": {
+                  "file": "eaas-teambuilding-BIqxQ-pd-300x225.webp",
+                  "width": 300,
+                  "height": 225,
+                  "mime-type": "image/webp",
+                  "filesize": 6454
+                },
+                "thumbnail": {
+                  "file": "eaas-teambuilding-BIqxQ-pd-150x150.webp",
+                  "width": 150,
+                  "height": 150,
+                  "mime-type": "image/webp",
+                  "filesize": 3298
+                },
+                "medium_large": {
+                  "file": "eaas-teambuilding-BIqxQ-pd-768x576.webp",
+                  "width": 768,
+                  "height": 576,
+                  "mime-type": "image/webp",
+                  "filesize": 23692
+                }
+              },
+              "width": 800,
+              "height": 600,
+              "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-teambuilding-BIqxQ-pd-150x150.webp",
+              "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-teambuilding-BIqxQ-pd-300x225.webp",
+              "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-teambuilding-BIqxQ-pd.webp"
+            }
+          }
+        }
+      }
+    ],
+    "engineer_service_bottom_highlighted_text": "Let's build your dream engineering team.",
+    "engineer_service_bottom_text": "Partner with the right engineers who understand your business and treat it like their own.",
+    "engineer_service_cta_text": "Book Consultation",
+    "engineer_service_cta_url": "/contactus",
+    "page_title": "Engineer as a Service",
+    "page_content": "",
+    "banner_section": {
+      "banner_image": {
+        "id": 632,
+        "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-hero-visual-Blo6SIkf.webp",
+        "alt": "",
+        "title": "eaas-hero-visual-Blo6SIkf",
+        "caption": "",
+        "description": "",
+        "sizes": {
+          "medium": {
+            "file": "eaas-hero-visual-Blo6SIkf-300x300.webp",
+            "width": 300,
+            "height": 300,
+            "mime-type": "image/webp",
+            "filesize": 16546
+          },
+          "thumbnail": {
+            "file": "eaas-hero-visual-Blo6SIkf-150x150.webp",
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 5802
+          },
+          "medium_large": {
+            "file": "eaas-hero-visual-Blo6SIkf-768x768.webp",
+            "width": 768,
+            "height": 768,
+            "mime-type": "image/webp",
+            "filesize": 62802
+          }
+        },
+        "width": 974,
+        "height": 974,
+        "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-hero-visual-Blo6SIkf-150x150.webp",
+        "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-hero-visual-Blo6SIkf-300x300.webp",
+        "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/eaas-hero-visual-Blo6SIkf.webp"
+      },
+      "floating_badge_fields": [
+        {
+          "badge_heading": "Top 3%",
+          "badge_text": "Global Talent"
+        },
+        {
+          "badge_heading": "72h",
+          "badge_text": "Onboarding"
+        }
+      ],
+      "banner_heading": "Engineer as a Service <span>On-Demand Engineers</span> &amp; Staff Augmentation",
+      "banner_description": "Want to build your tech team quickly, without spending time hiring? With Code1 Tech, scaling your engineering capacity with on-demand engineers who integrate into your team is effortless. Whether you need expertise for a few weeks or need an entire Centre of Excellence setup, your Engineer as a Service (EaaS) is the one-stop shop for speed, quality, and flexibility.",
+      "highlighted_text": "Onboard your first engineer within 72 hours!",
+      "cta_text": "Get Started",
+      "cta_url": "/contactus"
+    },
+    "stats_section": {
+      "stats_fields": [
+        {
+          "stats_numbers": "500+",
+          "stats_title": "Engineers Deployed"
+        },
+        {
+          "stats_numbers": "72h",
+          "stats_title": "Avg. Onboarding"
+        },
+        {
+          "stats_numbers": "98%",
+          "stats_title": "Client Retention"
+        },
+        {
+          "stats_numbers": "40%",
+          "stats_title": "Cost Savings"
+        }
+      ]
+    },
+    "engineer_as_a_service_page_section": {
+      "perfect_match_heading": "What Makes Code1 Tech Team a <span>Perfect Match</span> for Your Next Project?",
+      "perfect_match_description": "The EaaS model centers around three fundamental pillars designed to improve your business's operations, resource management, and efficiency!",
+      "box_fields": [
+        {
+          "box_image": {
+            "id": 642,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-speed-B6pK06Bn.webp",
+            "alt": "",
+            "title": "pillar-speed-B6pK06Bn",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "pillar-speed-B6pK06Bn-300x300.webp",
+                "width": 300,
+                "height": 300,
+                "mime-type": "image/webp",
+                "filesize": 20152
+              },
+              "large": {
+                "file": "pillar-speed-B6pK06Bn-1024x1024.webp",
+                "width": 1024,
+                "height": 1024,
+                "mime-type": "image/webp",
+                "filesize": 162666
+              },
+              "thumbnail": {
+                "file": "pillar-speed-B6pK06Bn-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 5646
+              },
+              "medium_large": {
+                "file": "pillar-speed-B6pK06Bn-768x768.webp",
+                "width": 768,
+                "height": 768,
+                "mime-type": "image/webp",
+                "filesize": 103864
+              }
+            },
+            "width": 1500,
+            "height": 1500,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-speed-B6pK06Bn-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-speed-B6pK06Bn-300x300.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-speed-B6pK06Bn-1024x1024.webp"
+          },
+          "badge_heading": "72h",
+          "badge_text": "Onboarding",
+          "box_heading": "Speed",
+          "box_icon": "lucide-zap",
+          "box_description": "Acquire engineering talent in a snap. We&#039;ll match and have qualified engineers onboarded at high speed within 72 hours, resulting in minimal disruption and faster delivery. From the time we present your first shortlist to getting started on the project, our streamlined process allows you to scale at the speed your business requires.",
+          "box_bottom_text": "Onboarding"
+        },
+        {
+          "box_image": {
+            "id": 643,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-quality-UHDvIttx.webp",
+            "alt": "",
+            "title": "pillar-quality-UHDvIttx",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "pillar-quality-UHDvIttx-300x240.webp",
+                "width": 300,
+                "height": 240,
+                "mime-type": "image/webp",
+                "filesize": 10012
+              },
+              "thumbnail": {
+                "file": "pillar-quality-UHDvIttx-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4796
+              }
+            },
+            "width": 640,
+            "height": 512,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-quality-UHDvIttx-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-quality-UHDvIttx-300x240.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-quality-UHDvIttx.webp"
+          },
+          "badge_heading": "Top 3%",
+          "badge_text": "Global Talent",
+          "box_heading": "Quality",
+          "box_icon": "lucide-award",
+          "box_description": "You gain access to the top 3% of engineering talent globally, rigorously vetted for technical ability, problem-solving skills, and effective communication. Each candidate has undergone multi-level evaluations to ensure they can deliver high-quality solutions and collaborate effectively with your in-house product teams.",
+          "box_bottom_text": "Global Talent"
+        },
+        {
+          "box_image": {
+            "id": 644,
+            "url": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-flexibility-z8URW-gZ.webp",
+            "alt": "",
+            "title": "pillar-flexibility-z8URW-gZ",
+            "caption": "",
+            "description": "",
+            "sizes": {
+              "medium": {
+                "file": "pillar-flexibility-z8URW-gZ-300x263.webp",
+                "width": 300,
+                "height": 263,
+                "mime-type": "image/webp",
+                "filesize": 11264
+              },
+              "large": {
+                "file": "pillar-flexibility-z8URW-gZ-1024x898.webp",
+                "width": 1024,
+                "height": 898,
+                "mime-type": "image/webp",
+                "filesize": 51570
+              },
+              "thumbnail": {
+                "file": "pillar-flexibility-z8URW-gZ-150x150.webp",
+                "width": 150,
+                "height": 150,
+                "mime-type": "image/webp",
+                "filesize": 4772
+              },
+              "medium_large": {
+                "file": "pillar-flexibility-z8URW-gZ-768x674.webp",
+                "width": 768,
+                "height": 674,
+                "mime-type": "image/webp",
+                "filesize": 35594
+              },
+              "1536x1536": {
+                "file": "pillar-flexibility-z8URW-gZ-1536x1347.webp",
+                "width": 1536,
+                "height": 1347,
+                "mime-type": "image/webp",
+                "filesize": 83356
+              }
+            },
+            "width": 1751,
+            "height": 1536,
+            "thumbnail": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-flexibility-z8URW-gZ-150x150.webp",
+            "medium": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-flexibility-z8URW-gZ-300x263.webp",
+            "large": "https://code1.dev/code1new/wp-content/uploads/2026/03/pillar-flexibility-z8URW-gZ-1024x898.webp"
+          },
+          "badge_heading": "5+",
+          "badge_text": "Engagement Models",
+          "box_heading": "Flexibility",
+          "box_icon": "lucide-settings",
+          "box_description": "Adjust your engineering capacity with ease, with a range of engagement options, i.e., on-demand, contract hire, CoE, or managed services. Whether you want to bring in one expert or several experts, you only pay for what you need or fits with your project.",
+          "box_bottom_text": "Engagement Models"
+        }
+      ],
+      "how_we_work_box": [
+        {
+          "box_icon": "lucide-search",
+          "box_heading": "Discovery &amp; Needs Assessment",
+          "box_description": "We take into consideration your objectives, technology stack, and talent requirements for defining skills, timelines, and preferences for engagement."
+        },
+        {
+          "box_icon": "lucide-user-check",
+          "box_heading": "Talent Selection",
+          "box_description": "Get ready for your shortlist of vetted engineers from our global network (only the top 3% make it past our screening for technical and soft skills)."
+        },
+        {
+          "box_icon": "lucide-rocket",
+          "box_heading": "Onboarding &amp; Synchronized",
+          "box_description": "We manage the onboarding, handle tool setup, and recast your workflow so the engineers will be productive on day one."
+        },
+        {
+          "box_icon": "lucide-trending-up",
+          "box_heading": "Ongoing Support &amp; Scaling",
+          "box_description": "Ongoing support, tracking performance, and scaling talent access for individual contributors to full CoEs."
+        }
+      ],
+      "how_we_work_heading": "Our EaaS <span>Process</span> — How We Work",
+      "how_we_bottom_highlighted_text": "Experience seamless scaling with Code1 Tech.",
+      "how_we_bottom_text": "Onboard the right team in easy steps so that your project is never delayed.",
+      "how_we_cta_text": "Start Onboarding",
+      "how_we_cta_url": "/contactus",
+      "advanced_solutions_heading": "Solve Problems with <span>Advanced Solutions</span> with Code1 Tech!",
+      "advanced_solutions_box": [
+        {
+          "box_icon": "lucide-globe",
+          "box_heading": "Global Talent Pool",
+          "box_description": "Leverage a worldwide pool of adept engineers from Asia, Europe, and the GCC. We introduce you to accomplished professionals from various backgrounds who are prepared to coordinate across different time zones and provide a scalable experience through all phases of your project."
+        },
+        {
+          "box_icon": "lucide-clipboard-list",
+          "box_heading": "End-to-End Management",
+          "box_description": "Let us do the heavy lifting. From sourcing and onboarding personnel to HR administration, payroll, and compliance, we take care of it all. You can focus on building your business while we operate smoothly and efficiently."
+        },
+        {
+          "box_icon": "lucide-piggy-bank",
+          "box_heading": "Cost Savings",
+          "box_description": "Spend smarter, not more. Our globally based hiring models and flexible engagement structures can save you up to 40% in costs while providing high-quality engineers, without the commitment of traditional hiring."
+        },
+        {
+          "box_icon": "lucide-scaling",
+          "box_heading": "Scalable Models",
+          "box_description": "Grow on your terms. Whether you require one engineer or an entire team, you can easily add or reduce resources as your project needs change, without any restrictions. We understand business needs change and let you scale accordingly."
+        },
+        {
+          "box_icon": "lucide-target",
+          "box_heading": "SLA-Driven Quality",
+          "box_description": "We believe in measurable results. All engagements come with clearly defined SLAs to ensure that we have met the expectations of consistent performance over time, timely delivery, and total accountability, so you can be sure to achieve your business goals."
+        },
+        {
+          "box_icon": "lucide-heart",
+          "box_heading": "Cultural Fit",
+          "box_description": "Collaboration works best when teams connect. Our engineers are trained to communicate, work with each other, and demonstrate exemplary delivery skills to ensure your engineers will fit seamlessly into your culture and add value to your existing team."
+        }
+      ],
+      "pricing_engagement_section": [
+        {
+          "heading": "On-Demand / Hourly",
+          "icon": "lucide-clock",
+          "description": "If you are looking for expertise for short-term needs or ad-hoc projects, our on-demand model can help you engage engineers without hurting your budget. This is a pay-as-you-go approach where you are billed only for the time invested, with no hidden costs.rnrnIf you are looking for assistance for quick fixes, prototypes, or capacity boosts, our engineer-on-demand model gives you access to skilled talent while keeping the costs lean and predictable."
+        },
+        {
+          "heading": "Monthly Retainer",
+          "icon": "lucide-dollar-sign",
+          "description": "For projects with consistent capacity, we have a monthly retainer arrangement where you pay a fixed cost per month for an agreed number of engineers or FTEs. This allows you the benefit of predictable monthly costs, continuity, and dedicated resources, all of which are advantageous for teams doing product development, project support, or iterative cycles of delivery."
+        },
+        {
+          "heading": "lucide-file-text",
+          "icon": "Contract-to-Hire (C2H)",
+          "description": "Want to make sure it&#039;s the right long-term fit before making the commitment? Our Contract-to-Hire helps you enjoy the best of both worlds, an interim arrangement that offers both the flexibility of short engagement and the option for a clear transition to a full-time hire. You get to assess technical talent, check if they fit in the team, and monitor performance accurately before making a long-term commitment; all of which help reduce some of the risks and costs associated with traditional recruiting."
+        },
+        {
+          "heading": "Project / Fixed Price",
+          "icon": "lucide-briefcase",
+          "description": "For projects with clear deliverables or milestones, our project pricing model is straightforward and gives you peace of mind. We work with you up front to define the deliverables, milestones, and acceptance criteria so that you can know with confidence that deliverables are on time and on budget. Payments are linked to milestones, so you are assured that outcomes are achieved according to plan and without unexpected costs."
+        },
+        {
+          "heading": "Managed Services",
+          "icon": "lucide-chart-no-axes-column-increasing",
+          "description": "Our Managed Services focus on outcomes and the results of your dedicated services, not hours. Price is tied to agreed SLAs and performance metrics of your choosing, like uptime, defect rates, or productivity thresholds. You will have complete transparency into delivery metrics, while we take on full operational responsibility for quality, governance, and efficiency. Partners who are looking for long-term stability, scalability, and ongoing enhancement will find the Managed Services model to be a strong fit."
+        }
+      ],
+      "pricing_high_text": "Let's discuss the right pricing model for your business. ",
+      "pricing_bottom_text": "Hire engineers to work with you like you want.",
+      "pricing_cta_text": "Connect With Us",
+      "pricing_cta_url": "/contactus",
+      "security_section_heading": "<span>Security</span> and Compliance (NDA)",
+      "security_cta_bottom_text": "Scale Your Team with Vetted Engineers Today!",
+      "security_section_description": "All engagements prioritize data security and confidentiality with rigorous frameworks and international compliance standards.",
+      "security_section_box": [
+        {
+          "box_icon": "lucide-shield",
+          "box_title": "Non-Disclosure Agreements",
+          "box_description": "Before engagements, all Engineers, Partners, and Support staff sign stringent NDAs to ensure your intellectual property is protected throughout the project lifecycle."
+        },
+        {
+          "box_icon": "lucide-lock",
+          "box_title": "Data Protection",
+          "box_description": "We are GDPR, ISO-certified, and industry best practices compliant at all times to ensure the ongoing protection of your data and systems."
+        },
+        {
+          "box_icon": "lucide-eye",
+          "box_title": "Access Control",
+          "box_description": "Role-based access controls, encrypted communication channels, and secure development environments mitigate risks and ensure responsible handling of your information."
+        },
+        {
+          "box_icon": "lucide-file-check",
+          "box_title": "Auditing and Transparency",
+          "box_description": "Regular auditing, compliance checks, and transparent reporting offer full visibility on the handling of your data to offer peace of mind for our customers."
+        }
+      ],
+      "security_bottom_info": "Your confidence is of the highest priority. Whether you are engaging a single engineer or designing a full Centre of Excellence, your data, Intellectual Property, and operational integrity are all protected under Code1 Tech's compliance-first model.",
+      "security_highlighted_text": "Ready to Build Your Dream Engineering Team?",
+      "security_cta_text": " Request a Consultation",
+      "security_cta_url": "/contactus",
+      "pricing_section_description": "Flexible staff augmentation pricing to accommodate your timelines, budgets, and project complexity.",
+      "pricing_section_heading": "Pricing &amp; <span>Engagement Models</span>"
+    },
+    "services_get_started_section": {
+      "heading": "Ready to Build Your <span>Dream Engineering Team?</span>",
+      "paragraph": "Get in touch with our team to discuss how Engineer as a Service can accelerate your projects and optimize your engineering capacity.",
+      "lists": [
+        {
+          "list": "Onboard engineers within 72 hours"
+        },
+        {
+          "list": "Access to top 3% global talent"
+        },
+        {
+          "list": "Flexible engagement models"
+        },
+        {
+          "list": "Full compliance and security"
+        },
+        {
+          "list": "End-to-end management"
+        }
+      ],
+      "buttons": null,
+      "small_heading": "Get In Touch"
+    },
+    "seo": {
+      "title": "",
+      "description": "",
+      "keyword": "",
+      "og_image": "",
+      "noindex": "",
+      "nofollow": ""
+    }
+  }
+}
