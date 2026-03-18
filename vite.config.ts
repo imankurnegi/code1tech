@@ -26,11 +26,8 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-
-    ssgOptions: {
-      script: "async",
-      formatting: "none",
-      dirStyle: "nested",
-    },
+    build: {
+    manifest: false, // 👈 important
+  },
   };
 });
