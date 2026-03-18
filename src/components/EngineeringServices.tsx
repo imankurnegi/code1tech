@@ -279,7 +279,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                   </p>
 
                   {/* CTA */}
-                  <a href={`${import.meta.env.BASE_URL}${service.ctaLink}`}>
+                  <a href={`${import.meta.env.BASE_URL}${service.ctaLink?.replace(/^\/+/, "")}`}>
                   <Button
                     variant="ghost"
                     className="group/btn p-0 h-auto text-foreground/70 hover:text-accent hover:bg-transparent"

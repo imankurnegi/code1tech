@@ -441,7 +441,7 @@ const HiringProcess = ({ dataHiring }: HiringProcessProps) => {
               }`}
               onClick={() => {
                 if (dataHiring.section_cta_url) {
-                  window.location.href = dataHiring.section_cta_url;
+                  window.location.href = `${import.meta.env.BASE_URL}${dataHiring.section_cta_url?.replace(/^\/+/, "")}`;
                 }
               }}
             >

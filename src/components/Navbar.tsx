@@ -63,7 +63,7 @@ const Navbar = ({ data }: HeaderProps) => {
       <div className="container mx-auto px-6 lg:px-12 h-full">
         <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <a href="/" className="flex items-center group shrink-0">
+          <a href={`${import.meta.env.BASE_URL}`} className="flex items-center group shrink-0">
             <img
               alt={data?.alt}
               className="h-10 w-auto transition-all duration-300 group-hover:brightness-110 brightness-110 contrast-110"
