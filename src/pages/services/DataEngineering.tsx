@@ -188,12 +188,12 @@ const InlineCTA = ({ title, subtitle, cta, ctaLink }: {title: string;subtitle: s
         </div>
 
         {/* Button */}
-        <Link to={ctaLink} className="flex-shrink-0 relative z-10">
+            <a href={`${import.meta.env.BASE_URL}${ctaLink?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10">
           <Button size="lg" className="group font-semibold px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {cta} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
-        </Link>
+        </a>
       </div>
     </div>
   </div>;
@@ -527,11 +527,11 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
               <p className="text-sm font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
                 {loaderData?.data?.data?.banner_section?.highlighted_text}
               </p>
-              <Link to={loaderData?.data?.data?.banner_section?.cta_url}>
+              <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.banner_section?.cta_url?.replace(/^\/+/, "")}`}>
                 <Button size="lg" className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                   {loaderData?.data?.data?.banner_section?.cta_text} <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
 
