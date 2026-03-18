@@ -183,7 +183,7 @@ const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
               className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
               onClick={() => {
                 if (dataWhyBusinesses.section_cta_url) {
-                  window.location.href = dataWhyBusinesses.section_cta_url;
+                  window.location.href = `${import.meta.env.BASE_URL}${dataWhyBusinesses.section_cta_url?.replace(/^\/+/, "")}`;
                 }
               }}
             >

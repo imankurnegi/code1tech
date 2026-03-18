@@ -312,7 +312,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
               <Button size="lg" className="relative group w-full sm:w-auto rounded-full px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{
               background: "linear-gradient(135deg, hsl(205 100% 35%), hsl(194 68% 55%))",
               boxShadow: "0 4px 25px hsla(205, 100%, 35%, 0.35)"
-            }} onClick={() => window.location.href = dataTrusted?.cta_url}>
+            }} onClick={() => window.location.href = `${import.meta.env.BASE_URL}${dataTrusted?.cta_url?.replace(/^\/+/, "")}`}>
                 {/* Hover glow effect */}
                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
                 boxShadow: "0 0 35px hsla(194, 68%, 55%, 0.45), 0 0 70px hsla(194, 68%, 55%, 0.25)"

@@ -56,6 +56,7 @@ const Team = () => {
    const [bannerVisible, setBannerVisible] = useState(false);
   const [engineersVisible, setEngineersVisible] = useState(false);
   const [engBannerVisible, setEngBannerVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
   const leadershipRef = useRef<HTMLElement>(null);
@@ -65,6 +66,7 @@ const Team = () => {
   const engBannerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    setIsMounted(true);
     window.scrollTo(0, 0);
     
     const observerOptions = {
@@ -336,7 +338,7 @@ const Team = () => {
                 {/* Radial glow on hover */}
                 <div className="absolute top-1/2 right-1/3 translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-accent/0 group-hover:bg-accent/5 blur-3xl transition-all duration-1000 pointer-events-none" />
 
-                <div className="flex flex-row lg:flex-row items-center relative z-10">
+                <div className="flex flex-col lg:flex-row items-center relative z-10">
                   {/* Left - Image with geometric accent (hidden on mobile, shown sm+) */}
                   <div className="hidden sm:flex relative w-full lg:w-[28%] h-[170px] lg:h-[210px] flex-shrink-0 items-center justify-center">
                     {/* Orbiting dot */}
@@ -408,7 +410,7 @@ const Team = () => {
               <p className="text-muted-foreground mb-6">
                 {loaderData?.data?.join_us_section?.description}
               </p>
-              <Link to={`/${loaderData?.data?.join_us_section?.button_url}`} className="inline-flex items-center">
+              <Link to={`${loaderData?.data?.join_us_section?.button_url}`} className="inline-flex items-center">
                 <Button variant="hero" size="lg" className="group">
                   {loaderData?.data?.join_us_section?.button_label}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

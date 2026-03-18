@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
   BarChart3,
@@ -11,10 +11,11 @@ import { useEffect, useState, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { api } from "@/api";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
-import SeoTags from "@/components/SeoTags";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 
 export async function loader() {
   try {
@@ -563,7 +564,7 @@ const AnalyticsSolutionsSection = ({
 };
 
 const DataScience = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const contactFormFields = loaderData?.contactFormFields ?? null;

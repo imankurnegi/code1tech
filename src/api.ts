@@ -71,7 +71,18 @@ export const api = {
       throw new Error("Failed to fetch data engineering data");
     }
 
-    return response.json();
+    const text = await response.text();
+    
+    // Check if response is HTML (error page) instead of JSON
+    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+      throw new Error("API returned HTML instead of JSON - check API endpoint");
+    }
+    
+    try {
+      return JSON.parse(text);
+    } catch (parseError) {
+      throw new Error(`Failed to parse JSON response: ${parseError}`);
+    }
   },
 
   getEngineerAsAService: async () => {

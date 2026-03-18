@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowRight } from "lucide-react";
-import SeoTags from "@/components/SeoTags";
 import CertificationsSection from "@/components/CertificationsSection";
+import SeoTags from "@/components/SeoTags";
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 
 export async function loader() {
   try {
@@ -27,8 +28,9 @@ export async function loader() {
 }
 
 const About = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   const clientLogosData = loaderData?.clientLogos?.data ?? [];
+  const aboutData = loaderData?.aboutData?.data ?? {};
   const [heroVisible, setHeroVisible] = useState(false);
   const [introVisible, setIntroVisible] = useState(false);
   const [visionVisible, setVisionVisible] = useState(false);
@@ -37,14 +39,22 @@ const About = () => {
   const [teamVisible, setTeamVisible] = useState(false);
   const [activeTab, setActiveTab] = useState("vision");
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLElement>(null);
   const visionRef = useRef<HTMLElement>(null);
   const valuesRef = useRef<HTMLElement>(null);
   const approachRef = useRef<HTMLElement>(null);
   const teamRef = useRef<HTMLElement>(null);
+  
   useEffect(() => {
+    setIsMounted(true);
     setHeroVisible(true);
+    setIntroVisible(true);
+    setVisionVisible(true);
+    setValuesVisible(true);
+    setApproachVisible(true);
+    setTeamVisible(true);
     const observers: IntersectionObserver[] = [];
     const createObserver = (ref: React.RefObject<HTMLElement>, setter: (v: boolean) => void) => {
       const observer = new IntersectionObserver(([entry]) => {
@@ -105,10 +115,10 @@ const About = () => {
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(12)].map((_, i) => <div key={i} className="absolute w-1 h-1 rounded-full bg-accent/20 animate-float" style={{
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          animationDelay: `${Math.random() * 5}s`,
-          animationDuration: `${6 + Math.random() * 4}s`
+          left: `${((i * 17) % 100)}%`,
+          top: `${((i * 23) % 100)}%`,
+          animationDelay: `${((i * 0.4) % 5)}s`,
+          animationDuration: `${6 + ((i * 0.3) % 4)}s`
         }} />)}
       </div>
 
@@ -205,7 +215,7 @@ const About = () => {
               </p> */}
             </div>
 
-            <Link to={`/${loaderData.aboutData?.data?.what_can_we_do_section?.button_url}`}>
+            <Link to={`${loaderData.aboutData?.data?.what_can_we_do_section?.button_url}`}>
               <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
                 {loaderData.aboutData?.data?.what_can_we_do_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -390,7 +400,7 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-12 transition-all duration-700 delay-300 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to={`/${loaderData.aboutData?.data?.our_vision_section?.bottom_button_url}`}>
+          <Link to={`${loaderData.aboutData?.data?.our_vision_section?.bottom_button_url}`}>
             <Button variant="hero" size="lg" className="group">
               {loaderData.aboutData?.data?.our_vision_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -555,7 +565,7 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-8 transition-all duration-700 delay-400 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to={`/${loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_url}`}>
+          <Link to={`${loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_url}`}>
             <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
               {loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
