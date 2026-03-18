@@ -1,13 +1,23 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown, ChevronUp, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  CheckCircle,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  Quote,
+  Star,
+} from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { api } from "@/api";
-import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
-import SeoTags from "@/components/SeoTags";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 
 export async function loader() {
   try {
@@ -489,7 +499,7 @@ const RevealGrid = ({ children, className = "", staggerMs = 100 }: { children: R
 
 
 const AIMLSolutions = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   const [isVisible, setIsVisible] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const contactFormFields = loaderData?.contactFormFields ?? null;
