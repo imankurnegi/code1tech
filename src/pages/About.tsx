@@ -214,13 +214,12 @@ const About = () => {
                 We don't just build technology. We build awareness.
               </p> */}
             </div>
-
-            <Link to={`${loaderData.aboutData?.data?.what_can_we_do_section?.button_url}`}>
+            <a href={`${import.meta.env.BASE_URL}${loaderData.aboutData?.data?.what_can_we_do_section?.button_url?.replace(/^\/+/, "")}`}>
               <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
                 {loaderData.aboutData?.data?.what_can_we_do_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile image - shown below text on smaller screens */}
@@ -400,12 +399,12 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-12 transition-all duration-700 delay-300 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to={`${loaderData.aboutData?.data?.our_vision_section?.bottom_button_url}`}>
+            <a href={`${import.meta.env.BASE_URL}${loaderData.aboutData?.data?.our_vision_section?.bottom_button_url?.replace(/^\/+/, "")}`}>
             <Button variant="hero" size="lg" className="group">
               {loaderData.aboutData?.data?.our_vision_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </section>
@@ -565,12 +564,12 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-8 transition-all duration-700 delay-400 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to={`${loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_url}`}>
+            <a href={`${import.meta.env.BASE_URL}${loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_url?.replace(/^\/+/, "")}`}>
             <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
               {loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </section>

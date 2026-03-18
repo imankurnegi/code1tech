@@ -389,8 +389,7 @@ const EngineerAsAService = () => {
               <p className="text-base font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
                 {loaderData?.data?.data?.banner_section?.highlighted_text}
               </p>
-              
-              <Link to={loaderData?.data?.data?.banner_section?.cta_url}>
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.banner_section?.cta_url?.replace(/^\/+/, "")}`}>
               <Button 
                 size="lg"
                 className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
@@ -398,7 +397,7 @@ const EngineerAsAService = () => {
                   {loaderData?.data?.data?.banner_section?.cta_text}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>
-             </Link>
+             </a>
                </div>
           </div>
 
@@ -704,10 +703,9 @@ const EngineerAsAService = () => {
                           </span>
                         ))}
                       </div>
-
-                      <Link to={service.link} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
+            <a href={`${import.meta.env.BASE_URL}${service.link?.replace(/^\/+/, "")}`} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
                         <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      </a>
                     </div>
 
                     {/* Image region — visible on all breakpoints */}
@@ -756,12 +754,12 @@ const EngineerAsAService = () => {
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{loaderData?.data?.data?.engineer_service_bottom_highlighted_text}</h3>
                 <p className="text-muted-foreground text-sm mt-1">{loaderData?.data?.data?.engineer_service_bottom_text}</p>
               </div>
-              <Link to={loaderData?.data?.data?.engineer_service_cta_url} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_service_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
                 <Button size="lg" className="group font-semibold w-full sm:w-auto px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
                   style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
                   {loaderData?.data?.data?.engineer_service_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -843,12 +841,12 @@ const EngineerAsAService = () => {
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_bottom_highlighted_text}</h3>
                 <p className="text-muted-foreground text-sm mt-1">{loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_bottom_text}</p>
               </div>
-              <Link to={loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_cta_url} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
                 <Button size="lg" className="group font-semibold w-full sm:w-auto px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
                   style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
                   {loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -1160,7 +1158,7 @@ const EngineerAsAService = () => {
                 <p className="text-lg sm:text-xl font-bold text-foreground mb-1">{loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_high_text}</p>
                 <p className="text-sm text-muted-foreground">{loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_bottom_text}</p>
               </div>
-              <Link to={loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_cta_url} className="flex-shrink-0">
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0">
                 <Button
                   size="lg"
                   className="group w-full sm:w-auto font-semibold px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]"
@@ -1169,7 +1167,7 @@ const EngineerAsAService = () => {
                   {loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_cta_text}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -1261,12 +1259,12 @@ const EngineerAsAService = () => {
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{loaderData?.data?.data?.engineer_as_a_service_page_section?.security_highlighted_text}</h3>
               <p className="text-muted-foreground text-sm mt-1">{loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_bottom_text}</p>
             </div>
-            <Link to={loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_url} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
               <Button size="lg" className="group font-semibold w-full sm:w-auto px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
                 style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
                 {loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

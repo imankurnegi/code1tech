@@ -200,12 +200,12 @@ const InlineCTA = ({ text, buttonText, link = "/contact" }: { text: string; butt
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{text}</h3>
         </div>
         {/* Button */}
-        <Link to={link} className="flex-shrink-0 relative z-10">
+            <a href={`${import.meta.env.BASE_URL}${link?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10">
           <Button size="lg" className="group font-semibold px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {buttonText} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
-        </Link>
+        </a>
       </div>
     </div>
   </div>
@@ -896,7 +896,7 @@ const DataScience = () => {
               <p className="text-sm font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
                 {banner?.highlighted_text}
               </p>
-              <Link to={banner?.cta_url || "#"}>
+            <a href={`${import.meta.env.BASE_URL}${banner?.cta_url?.replace(/^\/+/, "")}`}>
                 <Button
                   size="lg"
                   className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
@@ -904,7 +904,7 @@ const DataScience = () => {
                   {banner?.cta_text}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -1111,9 +1111,9 @@ const DataScience = () => {
                 {/* CTA link */}
                 {service.cta && (
                   <div>
-                    <Link to={service.ctaUrl || "#"} className="inline-flex items-center gap-2 text-accent text-sm font-medium hover:gap-3 transition-all duration-300">
+            <a href={`${import.meta.env.BASE_URL}${service.ctaUrl?.replace(/^\/+/, "")}`} className="inline-flex items-center gap-2 text-accent text-sm font-medium hover:gap-3 transition-all duration-300">
                       {service.cta} <ArrowRight className="w-4 h-4" />
-                    </Link>
+                    </a>
                   </div>
                 )}
               </div>
@@ -1522,7 +1522,7 @@ const DataScience = () => {
                 ))}
               </div>
               <div className="flex flex-wrap gap-4">
-                <Link to={servicesGetStarted?.buttons[0]?.cta_url || "#"}>
+            <a href={`${import.meta.env.BASE_URL}${servicesGetStarted?.buttons[0]?.cta_url?.replace(/^\/+/, "")}`}>
                   <Button
                     size="lg"
                     className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
@@ -1530,8 +1530,8 @@ const DataScience = () => {
                     {servicesGetStarted?.buttons[0]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                   </Button>
-                </Link>
-                <Link to={servicesGetStarted?.buttons[1]?.cta_url || "#" }>
+                </a>
+            <a href={`${import.meta.env.BASE_URL}${servicesGetStarted?.buttons[1]?.cta_url?.replace(/^\/+/, "")}`}>
                   <Button
                     size="lg"
                     variant="outline"
@@ -1540,7 +1540,7 @@ const DataScience = () => {
                     {servicesGetStarted?.buttons[1]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
 
