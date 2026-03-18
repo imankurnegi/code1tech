@@ -1,7 +1,6 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useLocation, ScrollRestoration } from "react-router-dom";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
-import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 
 export async function loader() {
@@ -10,13 +9,13 @@ export async function loader() {
     return data;
   } catch (error) {
     console.error("Failed to load layout data for SSG", error);
-    return {
-      data: null
-    };
+    return { data: null };
   }
 }
+
 const Layout = () => {
   const loaderData = useLoaderData() as any;
+  const location = useLocation(); // Current route track karne ke liye
 
   const headerData = {
     logo: loaderData?.data?.full,
@@ -24,6 +23,7 @@ const Layout = () => {
     primary_menu: loaderData?.data?.primary_menu,
     secondary_menu: loaderData?.data?.secondary_menu
   }
+
   const footerData = {
     footer_logo: loaderData?.data?.footer_logo,
     footer_menus: loaderData?.data?.footer_menus,
@@ -33,8 +33,14 @@ const Layout = () => {
     legal_links: loaderData?.data?.legal_links,
     footer_text: loaderData?.data?.footer_text
   }
+
   return (
-    <div className="min-h-screen bg-background">
+    /* key={location.pathname} add karne se Back button press karne par 
+       React ko pata chalta hai ki use child components re-sync karne hain */
+    <div key={location.pathname} className="min-h-screen bg-background">
+      {/* Har page change par scroll top par laane ke liye */}
+      <ScrollRestoration />
+      
       <Navbar data={headerData} />
       <main>
         <Outlet />
@@ -43,4 +49,5 @@ const Layout = () => {
     </div>
   );
 };
+
 export default Layout;

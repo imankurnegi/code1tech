@@ -2,31 +2,21 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
-
-const queryClient = new QueryClient();
+import { Outlet, ScrollRestoration } from "react-router-dom"; // ScrollRestoration add kiya
+import { useEffect, useState } from "react";
 
 const App = () => {
+  // QueryClient ko state mein rakha taaki hydration issue na aaye
+  const [queryClient] = useState(() => new QueryClient());
+
   useEffect(() => {
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-    };
-
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "F12") {
-        e.preventDefault();
-      }
-
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
-        e.preventDefault();
-      }
-
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
-        e.preventDefault();
-      }
-
-      if (e.ctrlKey && e.key.toLowerCase() === "u") {
+      if (
+        e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && ["i", "j"].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.key.toLowerCase() === "u")
+      ) {
         e.preventDefault();
       }
     };
@@ -39,15 +29,18 @@ const App = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        {/* ScrollRestoration ensure karega ki back aane par page top par ho aur stack update ho */}
+        <ScrollRestoration /> 
         <Outlet />
       </TooltipProvider>
     </QueryClientProvider>
-  )
+  );
 };
 
 export default App;
