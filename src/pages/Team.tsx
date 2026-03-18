@@ -202,7 +202,7 @@ const Team = () => {
           }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <Link to={loaderData?.data?.our_architects_section?.connection_section_url} className="block">
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.our_architects_section?.connection_section_url?.replace(/^\/+/, "")}`} className="block">
               <div
                 className={`relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-700 border border-border/10 hover:border-accent/20 ${bannerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{
@@ -273,7 +273,7 @@ const Team = () => {
                   @keyframes float { 0%, 100% { transform: translateY(0); opacity: 0.3; } 50% { transform: translateY(-12px); opacity: 0.6; } }
                 `}</style>
               </div>
-            </Link>
+            </a>
           </div>
         </section>
         {/* Engineers Section */}
@@ -316,7 +316,7 @@ const Team = () => {
           }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <Link to={loaderData?.data?.our_engineers_section?.cta_url} className="block">
+            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.our_engineers_section?.cta_url?.replace(/^\/+/, "")}`} className="block">
               <div
                 className={`relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-700 border border-border/10 hover:border-accent/20 ${engBannerVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{
@@ -391,7 +391,7 @@ const Team = () => {
                 {/* Bottom accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent group-hover:via-accent/70 transition-all duration-700" />
               </div>
-            </Link>
+            </a>
           </div>
         </section>
 
@@ -410,12 +410,12 @@ const Team = () => {
               <p className="text-muted-foreground mb-6">
                 {loaderData?.data?.join_us_section?.description}
               </p>
-              <Link to={`${loaderData?.data?.join_us_section?.button_url}`} className="inline-flex items-center">
+              <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.join_us_section?.button_url?.replace(/^\/+/, "")}`} className="inline-flex items-center">
                 <Button variant="hero" size="lg" className="group">
                   {loaderData?.data?.join_us_section?.button_label}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
 
