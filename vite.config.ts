@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
 
     server: {
       host: "::",
-      port: 3000,
+      port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
     },
 
     build: {
@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
     },
 
     ssr: {
-      // SSG ke liye in libraries ka bundle hona zaroori hai
+      // SSR ke liye in libraries ka bundle hona zaroori hai
       noExternal: [
         "@tanstack/react-query", 
         "react-router-dom", 
@@ -35,19 +35,6 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
       extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
-    },
-
-    ssgOptions: {
-      script: "async",
-      formatting: "none",
-      dirStyle: "nested",
-      onFinished() { 
-        console.log("🚀 SSG Build Completed Successfully!"); 
-      },
-      onPageRenderError: (route, err) => {
-        console.error(`❌ Error rendering route ${route}:`, err);
-        return err;
-      },
     },
   };
 });
