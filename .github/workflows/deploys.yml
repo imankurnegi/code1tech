@@ -38,14 +38,16 @@ jobs:
       - name: Ensure .htaccess exists
         run: |
           if [ ! -f .htaccess ]; then
-            echo "<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /code1new/frontend/
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /code1new/frontend/index.html [L]
-</IfModule>" > .htaccess
+            cat << 'EOF' > .htaccess
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /code1new/frontend/
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /code1new/frontend/index.html [L]
+</IfModule>
+EOF
             echo ".htaccess file created."
           else
             echo ".htaccess already exists."
