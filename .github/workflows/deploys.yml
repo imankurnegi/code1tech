@@ -57,10 +57,14 @@ jobs:
           rsync -avz server-prod.js \
             ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/public_html/code1new/frontend/server-prod.js
 
-      # 7️⃣ Deployment Info
+      # 7️⃣ Start Node.js server in background (auto)
+      - name: Start Node.js server
+        run: |
+          ssh ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} \
+          "cd /home/pm36sc96i3w0/public_html/code1new/frontend && nohup node server-prod.js > server.log 2>&1 &"
+
+      # 8️⃣ Deployment Info
       - name: Deployment Info
         run: |
-          echo "✅ Deployment complete. SSR files uploaded to /code1new/frontend/"
-          echo "⚠️ Start Node.js manually on shared hosting (Hostinger / GoDaddy):"
-          echo "   node server-prod.js"
-          echo "💡 Manually create .htaccess in /code1new/frontend/ for SPA routing"
+          echo "✅ SSR Deployment complete. Files uploaded to /code1new/frontend/"
+          echo "📄 Node.js server started in background (logs: server.log)"
