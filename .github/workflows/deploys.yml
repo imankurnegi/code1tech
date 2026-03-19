@@ -11,8 +11,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
-      # 1️⃣ Checkout code
+      # 1️⃣ Checkout repo
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -31,7 +34,24 @@ jobs:
       - name: Build React SSR
         run: npm run build
 
-      # 5️⃣ Setup SSH for SFTP
+      # 5️⃣ Ensure .htaccess exists (SPA fallback)
+      - name: Ensure .htaccess exists
+        run: |
+          if [ ! -f .htaccess ]; then
+            echo "<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /code1new/frontend/
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /code1new/frontend/index.html [L]
+</IfModule>" > .htaccess
+            echo ".htaccess file created."
+          else
+            echo ".htaccess already exists."
+          fi
+
+      # 6️⃣ Setup SSH for SFTP
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -39,10 +59,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy files via SFTP
+      # 7️⃣ Deploy files via SFTP
       - name: Deploy dist and server-prod.js via SFTP
         run: |
-          # Create remote directories if they don't exist
+          # Create remote directories if not exist
           ssh ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} "mkdir -p /home/pm36sc96i3w0/code1new/frontend/dist/client /home/pm36sc96i3w0/code1new/frontend/dist/server"
 
           # Upload client dist
@@ -61,10 +81,10 @@ jobs:
           rsync -avz .htaccess \
             ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/.htaccess
 
-      # 7️⃣ Info / Reminder
-      - name: Final Info
+      # 8️⃣ Final info
+      - name: Deployment Info
         run: |
           echo "✅ Deployment complete. Files uploaded to /code1new/frontend/"
-          echo "⚠️ Remember: Start Node.js app via Hostinger / GoDaddy Node.js panel:"
+          echo "⚠️ Remember: Start Node.js app manually via Hostinger / GoDaddy Node.js panel:"
           echo "   node server-prod.js"
-          echo "Port will be assigned by panel automatically."
+          echo "Port will be assigned automatically by panel."
