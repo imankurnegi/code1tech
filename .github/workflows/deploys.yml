@@ -4,27 +4,34 @@ on:
   push:
     branches:
       - main
+  repository_dispatch:
+    types: [wp-content-updated]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      # 4️⃣ Build React SSR
       - name: Build React SSR
         run: npm run build
 
+      # 5️⃣ Setup SSH for SFTP
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -32,8 +39,12 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
 
+      # 6️⃣ Deploy files via SFTP
       - name: Deploy dist and server-prod.js via SFTP
         run: |
+          # Create remote directories if they don't exist
+          ssh ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} "mkdir -p /home/pm36sc96i3w0/code1new/frontend/dist/client /home/pm36sc96i3w0/code1new/frontend/dist/server"
+
           # Upload client dist
           rsync -avz --delete dist/client/ \
             ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/dist/client
@@ -50,9 +61,10 @@ jobs:
           rsync -avz .htaccess \
             ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/.htaccess
 
-      - name: Info
+      # 7️⃣ Info / Reminder
+      - name: Final Info
         run: |
-          echo "✅ Files deployed to /code1new/frontend/"
-          echo "⚠️ Start Node.js app manually via Hostinger / GoDaddy Node.js panel:"
+          echo "✅ Deployment complete. Files uploaded to /code1new/frontend/"
+          echo "⚠️ Remember: Start Node.js app via Hostinger / GoDaddy Node.js panel:"
           echo "   node server-prod.js"
-          echo "Port will be assigned by panel."
+          echo "Port will be assigned by panel automatically."
