@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HelmetProvider } from "react-helmet-async";
 import { Outlet, ScrollRestoration } from "react-router-dom"; // ScrollRestoration add kiya
 import { useEffect, useState } from "react";
 
@@ -31,15 +32,17 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        {/* ScrollRestoration ensure karega ki back aane par page top par ho aur stack update ho */}
-        <ScrollRestoration /> 
-        <Outlet />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          {/* ScrollRestoration ensure karega ki back aane par page top par ho aur stack update ho */}
+          <ScrollRestoration />
+          <Outlet />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 

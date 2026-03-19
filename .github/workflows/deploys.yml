@@ -1,19 +1,13 @@
-name: Deploy React SSG to Code1tech Frontend (SFTP)
+name: Build & Deploy React + Vite SSR to code1new/frontend
 
 on:
   push:
     branches:
       - main
 
-  repository_dispatch:
-    types: [wp-content-updated]
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
@@ -22,14 +16,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '18'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Build React SSG
-        run: npm run build:ssg
+      - name: Build React SSR
+        run: npm run build
 
       - name: Setup SSH
         run: |
@@ -38,8 +32,27 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SFTP_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy via SFTP (rsync)
+      - name: Deploy dist and server-prod.js via SFTP
         run: |
-          rsync -avz --delete \
-          dist/ \
-          ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/public_html/code1new/frontend
+          # Upload client dist
+          rsync -avz --delete dist/client/ \
+            ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/dist/client
+
+          # Upload server dist
+          rsync -avz --delete dist/server/ \
+            ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/dist/server
+
+          # Upload server-prod.js
+          rsync -avz server-prod.js \
+            ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/server-prod.js
+
+          # Upload .htaccess
+          rsync -avz .htaccess \
+            ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/.htaccess
+
+      - name: Info
+        run: |
+          echo "✅ Files deployed to /code1new/frontend/"
+          echo "⚠️ Start Node.js app manually via Hostinger / GoDaddy Node.js panel:"
+          echo "   node server-prod.js"
+          echo "Port will be assigned by panel."
