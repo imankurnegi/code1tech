@@ -35,7 +35,7 @@ jobs:
       - name: Ensure .htaccess exists
         run: |
           if [ ! -f .htaccess ]; then
-            cat <<EOF > .htaccess
+            cat <<'EOF' > .htaccess
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /code1new/frontend/
@@ -79,7 +79,7 @@ EOF
           rsync -avz .htaccess \
             ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/home/pm36sc96i3w0/code1new/frontend/.htaccess
 
-      # 8️⃣ Final info
+      # 8️⃣ Deployment Info
       - name: Deployment Info
         run: |
           echo "✅ Deployment complete. Files uploaded to /code1new/frontend/"
