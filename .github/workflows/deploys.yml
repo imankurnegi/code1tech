@@ -1,4 +1,4 @@
-name: Deploy React SSR/Vite to Code1tech Frontend (VPS)
+name: Deploy React SSR to Code1tech Frontend (VPS)
 
 on:
   push:
@@ -28,7 +28,11 @@ jobs:
 
       # 4️⃣ Build SSR (client + server)
       - name: Build SSR
-        run: npm run build
+        run: npm run build || { echo 'Build failed'; exit 1; }
+
+      # 4.1️⃣ Optional: List build output for debugging
+      - name: List build output
+        run: ls -R
 
       # 5️⃣ Setup SSH
       - name: Setup SSH
@@ -38,25 +42,30 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy SSR files via SFTP/rsync
+      # 6️⃣ Deploy SSR files via rsync
       - name: Deploy SSR files
         run: |
           # Create remote directories
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/frontend/dist/client /var/www/frontend/dist/server"
 
           # Upload client dist
-          rsync -avz --delete dist/client/ \
+          rsync -avz --delete ./dist/client/ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/client
 
           # Upload server dist
-          rsync -avz --delete dist/server/ \
+          rsync -avz --delete ./dist/server/ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/server
 
           # Upload server entry file
-          rsync -avz server-prod.js \
+          rsync -avz ./server-prod.js \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server-prod.js
 
-      # 7️⃣ Start / Restart Node.js SSR with PM2
+      # 7️⃣ Install PM2 on VPS (if not installed)
+      - name: Install PM2 on VPS
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "npm install -g pm2 || echo 'PM2 already installed'"
+
+      # 8️⃣ Start / Restart Node.js SSR with PM2
       - name: Restart PM2 server
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
@@ -65,7 +74,7 @@ jobs:
             pm2 reload react-ssr || pm2 start server-prod.js --name react-ssr --watch \
           "
 
-      # 8️⃣ Deployment Info
+      # 9️⃣ Deployment Info
       - name: Deployment Info
         run: |
           echo "✅ SSR Deployment complete. Files uploaded to /var/www/frontend/"
