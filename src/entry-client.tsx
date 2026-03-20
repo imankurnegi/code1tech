@@ -23,7 +23,7 @@ if (dehydratedState) {
 hydrateRoot(
   document.getElementById("root") as HTMLElement,
   <HelmetProvider>
-    <BrowserRouter basename="/frontend/">
+    <BrowserRouter basename="/">
     <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <App />

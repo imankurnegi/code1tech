@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Link } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useTypingAnimation } from "@/hooks/use-typing-animation";
 import HeroGlowBackground from "./HeroGlowBackground";
 import ClientsLogoSlider from "./ClientsLogoSlider";
 import { addClassToSpan } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface HeroSectionProps {
   dataBanner?: {
@@ -108,10 +109,10 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
           {/* CTA Button - appears after first typing completes */}
           <div className={`transition-all duration-700 ease-out px-4 sm:px-0 ${showCTA ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'}`}>
             <Button variant="hero" size="xl" className="group w-full sm:w-auto text-sm sm:text-base" asChild>
-              <a href={buttonUrl}>
+              <Link to={buttonUrl}>
                 {buttonText}
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-              </a>
+              </Link>
             </Button>
           </div>
 

@@ -22,7 +22,7 @@ if (!isProduction) {
   const compression = (await import('compression')).default
   const sirv = (await import('sirv')).default
   app.use(compression())
-  app.use("/frontend/", sirv('./dist/client', { extensions: [] }))
+  app.use("/", sirv('./dist/client', { extensions: [] }))
 }
 
 // SSR handler
