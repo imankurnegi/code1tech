@@ -57,8 +57,8 @@ jobs:
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/server
 
           # Upload server entry file
-          rsync -avz server-prod.js \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server-prod.js
+          rsync -avz server.js \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server.js
 
       # 7️⃣ Start / Restart Node.js SSR with PM2
       - name: Restart PM2 server
@@ -66,7 +66,7 @@ jobs:
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
             cd /var/www/frontend && \
             pm2 describe react-ssr > /dev/null 2>&1 && \
-            pm2 reload react-ssr || pm2 start server-prod.js --name react-ssr --watch \
+            pm2 reload react-ssr || pm2 start server.js --name react-ssr --watch \
           "
 
       # 8️⃣ Deployment Info
