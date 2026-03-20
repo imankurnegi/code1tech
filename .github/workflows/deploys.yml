@@ -22,19 +22,17 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      # 3️⃣ Install dependencies (only for build)
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+      # 3️⃣ Install dependencies and build SSR
+      - name: Install dependencies & Build SSR
+        run: |
+          npm ci --legacy-peer-deps
+          npm run build:ssr
 
-      # 4️⃣ Build SSR (client + server)
-      - name: Build SSR
-        run: npm run build:ssr
-
-      # 4.1️⃣ List build output (optional, debug)
+      # 4️⃣ List dist (optional, debug)
       - name: List build output
         run: ls -R dist
 
-      # 5️⃣ Setup SSH key for VPS
+      # 5️⃣ Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -42,11 +40,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy SSR files via rsync (only build, no package.json)
+      # 6️⃣ Deploy dist + server.js to VPS
       - name: Deploy SSR files
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/frontend/dist/client /var/www/frontend/dist/server"
-
+          
           rsync -avz --delete ./dist/client/ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/client
 
@@ -56,7 +54,7 @@ jobs:
           rsync -avz server.js \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server.js
 
-      # 7️⃣ Restart PM2 server in production mode
+      # 7️⃣ Restart PM2 with NODE_ENV=production
       - name: Restart PM2 server
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
@@ -70,4 +68,4 @@ jobs:
       - name: Deployment Info
         run: |
           echo "✅ SSR Deployment complete. Files uploaded to /var/www/frontend/"
-          echo "📄 PM2 process 'react-ssr' is running on VPS in production mode"
+          echo "📄 PM2 process 'react-ssr' is running on VPS"
