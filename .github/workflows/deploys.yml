@@ -1,9 +1,9 @@
-name: Deploy React SSR to Code1tech Frontend (VPS)
+name: Deploy React SSR to VPS
 
 on:
   push:
     branches:
-      - staging       # deploy from staging branch
+      - staging
   workflow_dispatch:
 
 jobs:
@@ -28,13 +28,13 @@ jobs:
 
       # 4️⃣ Build SSR (client + server)
       - name: Build SSR
-        run: npm run build
+        run: npm run build:ssr
 
-      # 4a️⃣ Debug build output
+      # 4.1️⃣ List output (optional, debug)
       - name: List build output
-        run: ls -R
+        run: ls -R dist
 
-      # 5️⃣ Setup SSH for VPS
+      # 5️⃣ Setup SSH key for VPS
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -57,7 +57,7 @@ jobs:
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/server
 
           # Upload server entry file
-          rsync -avz ./server-prod.js \
+          rsync -avz server-prod.js \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server-prod.js
 
       # 7️⃣ Start / Restart Node.js SSR with PM2
