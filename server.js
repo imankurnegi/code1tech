@@ -5,21 +5,17 @@ const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 3000
 const base = process.env.BASE || '/'
 
-// Preload template in production
-const templateHtml = isProduction
-  ? await fs.readFile('./dist/client/index.html', 'utf-8')
-  : null
-
 const app = express()
 
+// Production: serve built client files
 if (isProduction) {
-  // Production middlewares
   const compression = (await import('compression')).default
   const sirv = (await import('sirv')).default
+
   app.use(compression())
   app.use(base, sirv('./dist/client', { extensions: [] }))
 } else {
-  // Dev mode: Vite server
+  // Development: use Vite dev server
   const { createServer } = await import('vite')
   const vite = await createServer({
     server: { middlewareMode: true },
@@ -40,11 +36,14 @@ app.use('*', async (req, res, next) => {
     let template, render
 
     if (isProduction) {
-      template = templateHtml
+      // Production: import built SSR entry-server.js
+      template = await fs.readFile('./dist/client/index.html', 'utf-8')
       render = (await import('./dist/server/entry-server.js')).render
     } else {
-      const vite = globalThis.vite // Dev Vite server
-      template = await fs.readFile('./index.html', 'utf-8')
+      // Dev: load Vite modules
+      const fsDefault = fs
+      template = await fsDefault.readFile('./index.html', 'utf-8')
+      const vite = globalThis.viteDevServer || await import('vite')
       template = await vite.transformIndexHtml(url, template)
       render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
     }
@@ -60,7 +59,7 @@ app.use('*', async (req, res, next) => {
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {
-    if (!isProduction && globalThis.vite) globalThis.vite.ssrFixStacktrace(e)
+    console.error(e)
     res.status(500).end(e.stack)
   }
 })
