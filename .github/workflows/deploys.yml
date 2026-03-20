@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      # 3️⃣ Install dependencies (for build only)
+      # 3️⃣ Install dependencies (only for build)
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
@@ -30,7 +30,7 @@ jobs:
       - name: Build SSR
         run: npm run build:ssr
 
-      # 4.1️⃣ List output (debug)
+      # 4.1️⃣ List build output (optional, debug)
       - name: List build output
         run: ls -R dist
 
@@ -42,38 +42,32 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy SSR files via rsync
+      # 6️⃣ Deploy SSR files via rsync (only build, no package.json)
       - name: Deploy SSR files
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/frontend/dist/client /var/www/frontend/dist/server"
 
-          # Upload built client and server
           rsync -avz --delete ./dist/client/ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/client
 
           rsync -avz --delete ./dist/server/ \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/server
 
-          # Upload server entry file
           rsync -avz server.js \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server.js
 
-          # Upload package.json + lockfile (for production deps)
-          rsync -avz package.json package-lock.json \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/
-
-      # 7️⃣ Install production deps + Restart PM2 with NODE_ENV=production
+      # 7️⃣ Restart PM2 server in production mode
       - name: Restart PM2 server
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
             cd /var/www/frontend && \
-            npm install --omit=dev --legacy-peer-deps && \
-            pm2 describe react-ssr > /dev/null 2>&1 && \
-            pm2 restart react-ssr --update-env || pm2 start server.js --name react-ssr --watch --update-env \
+            NODE_ENV=production pm2 describe react-ssr > /dev/null 2>&1 && \
+            NODE_ENV=production pm2 restart react-ssr --update-env || \
+            NODE_ENV=production pm2 start server.js --name react-ssr --watch \
           "
 
       # 8️⃣ Deployment Info
       - name: Deployment Info
         run: |
           echo "✅ SSR Deployment complete. Files uploaded to /var/www/frontend/"
-          echo "📄 PM2 process 'react-ssr' is running on VPS with NODE_ENV=production"
+          echo "📄 PM2 process 'react-ssr' is running on VPS in production mode"
