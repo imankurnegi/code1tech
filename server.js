@@ -5,24 +5,28 @@ const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 3000
 const base = process.env.BASE || '/'
 
-const templateHtml = isProduction ? await fs.readFile('./dist/client/index.html', 'utf-8') : ''
+// Preload template in production
+const templateHtml = isProduction
+  ? await fs.readFile('./dist/client/index.html', 'utf-8')
+  : null
 
 const app = express()
 
-let vite
-if (!isProduction) {
+if (isProduction) {
+  // Production middlewares
+  const compression = (await import('compression')).default
+  const sirv = (await import('sirv')).default
+  app.use(compression())
+  app.use(base, sirv('./dist/client', { extensions: [] }))
+} else {
+  // Dev mode: Vite server
   const { createServer } = await import('vite')
-  vite = await createServer({
+  const vite = await createServer({
     server: { middlewareMode: true },
     appType: 'custom',
     base,
   })
   app.use(vite.middlewares)
-} else {
-  const compression = (await import('compression')).default
-  const sirv = (await import('sirv')).default
-  app.use(compression())
-  app.use("/", sirv('./dist/client', { extensions: [] }))
 }
 
 // SSR handler
@@ -35,24 +39,28 @@ app.use('*', async (req, res, next) => {
     const url = req.originalUrl
     let template, render
 
-    if (!isProduction) {
+    if (isProduction) {
+      template = templateHtml
+      render = (await import('./dist/server/entry-server.js')).render
+    } else {
+      const vite = globalThis.vite // Dev Vite server
       template = await fs.readFile('./index.html', 'utf-8')
       template = await vite.transformIndexHtml(url, template)
       render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
-    } else {
-      template = templateHtml
-      render = (await import('./dist/server/entry-server.js')).render
     }
 
     const rendered = await render(url)
     const html = template
       .replace('<!--app-head-->', rendered.head ?? '')
       .replace('<!--app-html-->', rendered.html ?? '')
-      .replace('<!--app-state-->', `<script>window.__REACT_QUERY_STATE__ = ${rendered.state.replace(/</g, '\\u003c')}</script>`)
+      .replace(
+        '<!--app-state-->',
+        `<script>window.__REACT_QUERY_STATE__ = ${rendered.state.replace(/</g, '\\u003c')}</script>`
+      )
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {
-    vite?.ssrFixStacktrace(e)
+    if (!isProduction && globalThis.vite) globalThis.vite.ssrFixStacktrace(e)
     res.status(500).end(e.stack)
   }
 })
