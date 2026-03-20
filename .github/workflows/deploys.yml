@@ -1,4 +1,4 @@
-name: Deploy React SSR to Code1tech Frontend (VPS)
+name: Deploy React SSR/Vite to Code1tech Frontend (VPS)
 
 on:
   push:
