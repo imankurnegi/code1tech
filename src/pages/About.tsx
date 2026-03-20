@@ -5,32 +5,14 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowRight } from "lucide-react";
-import CertificationsSection from "@/components/CertificationsSection";
 import SeoTags from "@/components/SeoTags";
+import CertificationsSection from "@/components/CertificationsSection";
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
-import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
-
-export async function loader() {
-  try {
-    const aboutData = await api.getAboutData();
-    const clientLogos = await api.getClientLogos();
-
-    return { aboutData, clientLogos };
-  } catch (error) {
-    console.error("Failed to load about page SSG data", error);
-    return {
-      aboutData: null,
-      clientLogos: { data: [] },
-    };
-  }
-}
+import { useQuery } from "@tanstack/react-query";
 
 const About = () => {
-  const loaderData = useSafeLoaderData();
-  const clientLogosData = loaderData?.clientLogos?.data ?? [];
-  const aboutData = loaderData?.aboutData?.data ?? {};
   const [heroVisible, setHeroVisible] = useState(false);
   const [introVisible, setIntroVisible] = useState(false);
   const [visionVisible, setVisionVisible] = useState(false);
@@ -39,22 +21,30 @@ const About = () => {
   const [teamVisible, setTeamVisible] = useState(false);
   const [activeTab, setActiveTab] = useState("vision");
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLElement>(null);
   const visionRef = useRef<HTMLElement>(null);
   const valuesRef = useRef<HTMLElement>(null);
   const approachRef = useRef<HTMLElement>(null);
   const teamRef = useRef<HTMLElement>(null);
-  
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["aboutPageData"],
+    queryFn: async () => {
+      const [aboutData, clientLogos] = await Promise.all([
+        api.getAboutData(),
+        api.getClientLogos(),
+      ]);
+
+      return {
+        aboutData,
+        clientLogos,
+      };
+    },
+  });
+
   useEffect(() => {
-    setIsMounted(true);
     setHeroVisible(true);
-    setIntroVisible(true);
-    setVisionVisible(true);
-    setValuesVisible(true);
-    setApproachVisible(true);
-    setTeamVisible(true);
     const observers: IntersectionObserver[] = [];
     const createObserver = (ref: React.RefObject<HTMLElement>, setter: (v: boolean) => void) => {
       const observer = new IntersectionObserver(([entry]) => {
@@ -72,13 +62,20 @@ const About = () => {
     createObserver(teamRef, setTeamVisible);
     return () => observers.forEach(o => o.disconnect());
   }, []);
-  
+
+  if (isLoading) return null;
+  if (error) return null;
+  if(!data) return null;
+
+  const about = data?.aboutData?.data;
+  const clientLogosData = data?.clientLogos?.data ?? [];
+
   return <>
     <SeoTags
-        title={loaderData.aboutData?.data?.seo?.title}
-        description={loaderData.aboutData?.data?.seo?.description}
-        ogImage={loaderData.aboutData?.data?.seo?.og_image}
-      />
+      title={about?.seo?.title}
+      description={about?.seo?.description}
+      ogImage={about?.seo?.og_image}
+    />
     {/* Hero Section - Matching Home page style */}
     <section ref={heroRef} className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 lg:pt-28" style={{
       background: "hsl(222 47% 5%)"
@@ -86,7 +83,7 @@ const About = () => {
 
       {/* Background Image with improved visibility */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-45" style={{
-        backgroundImage: `url(${loaderData.aboutData?.data?.banner_image})`
+        backgroundImage: `url(${about?.banner_image})`
       }} />
 
       {/* Subtle gradient overlay (top-to-bottom) instead of heavy dark shade */}
@@ -115,18 +112,18 @@ const About = () => {
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(12)].map((_, i) => <div key={i} className="absolute w-1 h-1 rounded-full bg-accent/20 animate-float" style={{
-          left: `${((i * 17) % 100)}%`,
-          top: `${((i * 23) % 100)}%`,
-          animationDelay: `${((i * 0.4) % 5)}s`,
-          animationDuration: `${6 + ((i * 0.3) % 4)}s`
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 5}s`,
+          animationDuration: `${6 + Math.random() * 4}s`
         }} />)}
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-6 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-6 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: addClassToSpan(about?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.page_content }}>
+          <p className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: about?.page_content }}>
           </p>
         </div>
       </div>
@@ -146,7 +143,7 @@ const About = () => {
         <div className="text-center mt-10 animate-fade-in">
 
           <p className="text-muted-foreground max-w-3xl mx-auto text-base sm:text-lg">
-            {loaderData.aboutData?.data?.paragraph_below_client_logo}
+            {about?.paragraph_below_client_logo}
           </p>
         </div>
       </div>
@@ -184,7 +181,7 @@ const About = () => {
             {/* Image with gradient blending */}
             <div className="relative h-full flex items-start pt-2">
               <div className="relative w-full">
-                <img src={loaderData.aboutData?.data?.what_can_we_do_section?.image?.url} alt={loaderData.aboutData?.data?.what_can_we_do_section?.image?.alt} className="w-full h-auto object-cover rounded-l-2xl" />
+                <img src={about?.what_can_we_do_section?.image?.url} alt={about?.what_can_we_do_section?.image?.alt} className="w-full h-auto object-cover rounded-l-2xl" />
                 {/* Left fade - blends image into text area */}
                 <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[hsl(222_47%_5%)] via-[hsl(222_47%_5%/0.7)] to-transparent pointer-events-none" />
                 {/* Top fade */}
@@ -201,11 +198,11 @@ const About = () => {
 
           {/* Text content - primary container */}
           <div className="relative z-10 lg:max-w-[60%]">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-tight tracking-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.what_can_we_do_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-6 leading-tight tracking-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(about?.what_can_we_do_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
 
             <div className="space-y-4 mb-8">
-              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.what_can_we_do_section?.description }}>
-                
+              <p className="text-base lg:text-lg text-foreground/90 leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: about?.what_can_we_do_section?.description }}>
+
               </p>
               {/* <p className="text-base lg:text-lg text-foreground/90 leading-relaxed">
                 Our mission is simple: turn complexity into clarity and innovation into results.
@@ -214,9 +211,10 @@ const About = () => {
                 We don't just build technology. We build awareness.
               </p> */}
             </div>
-            <Link to={loaderData.aboutData?.data?.what_can_we_do_section?.button_url}>
+
+            <Link to={`/${about?.what_can_we_do_section?.button_url}`}>
               <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
-                {loaderData.aboutData?.data?.what_can_we_do_section?.button_label}
+                {about?.what_can_we_do_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -225,7 +223,7 @@ const About = () => {
           {/* Mobile image - shown below text on smaller screens */}
           <div className="lg:hidden mt-8">
             <div className="relative">
-              <img src={loaderData.aboutData?.data?.what_can_we_do_section?.image?.url} alt={loaderData.aboutData?.data?.what_can_we_do_section?.image?.alt} className="w-full h-auto object-cover rounded-xl" />
+              <img src={about?.what_can_we_do_section?.image?.url} alt={about?.what_can_we_do_section?.image?.alt} className="w-full h-auto object-cover rounded-xl" />
               {/* Soft gradient overlays for mobile */}
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(222_47%_5%)] via-transparent to-[hsl(222_47%_5%/0.3)] pointer-events-none rounded-xl" />
             </div>
@@ -245,8 +243,8 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-10 lg:mb-14 transition-all duration-700 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.our_vision_section?.vision_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
-            </h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(about?.our_vision_section?.vision_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
+          </h2>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
@@ -263,10 +261,10 @@ const About = () => {
 
             <div className="relative h-full rounded-2xl overflow-hidden border border-border/20 group-hover:border-primary/30 transition-all duration-500 group-hover:shadow-[0_25px_60px_rgba(0,78,158,0.15)]">
               {/* Vision Image */}
-              <img src={loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image?.url} alt={loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image?.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "vision" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
+              <img src={about?.our_vision_section?.vision_tab_left_image?.url} alt={about?.our_vision_section?.vision_tab_left_image?.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "vision" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
 
               {/* Mission Image */}
-              <img src={loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image?.url} alt={loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image?.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "mission" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
+              <img src={about?.our_vision_section?.mission_tab_left_image?.url} alt={about?.our_vision_section?.mission_tab_left_image?.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${activeTab === "mission" ? "opacity-100 scale-100" : "opacity-0 scale-105"}`} />
 
               {/* Subtle overlay for depth */}
               <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent pointer-events-none" />
@@ -276,14 +274,14 @@ const About = () => {
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl backdrop-blur-sm border flex items-center justify-center transition-all duration-300 ${activeTab === "vision" ? "bg-primary/20 border-primary/30" : "bg-accent/20 border-accent/30"}`}>
-                    {activeTab === "vision" ? <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image_icon} className="w-5 h-5 text-accent" />  : <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image_icon} className="w-5 h-5 text-accent" />}
+                    {activeTab === "vision" ? <DynamicIcon name={about?.our_vision_section?.vision_tab_left_image_icon} className="w-5 h-5 text-accent" /> : <DynamicIcon name={about?.our_vision_section?.mission_tab_left_image_icon} className="w-5 h-5 text-accent" />}
                   </div>
                   <div>
                     <p className="text-sm text-accent font-medium">
-                      {activeTab === "vision" ? loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image_heading : loaderData.aboutData?.data?.our_vision_section?.mission_tab_left_image_heading}
+                      {activeTab === "vision" ? about?.our_vision_section?.vision_tab_left_image_heading : about?.our_vision_section?.mission_tab_left_image_heading}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {activeTab === "vision" ? loaderData.aboutData?.data?.our_vision_section?.vision_tab_left_image_content : loaderData.aboutData?.data?.our_vision_section.mission_tab_left_image_content}
+                      {activeTab === "vision" ? about?.our_vision_section?.vision_tab_left_image_content : about?.our_vision_section.mission_tab_left_image_content}
                     </p>
                   </div>
                 </div>
@@ -297,12 +295,12 @@ const About = () => {
               {/* Tab Triggers */}
               <TabsList className="w-full bg-card/30 backdrop-blur-xl border border-border/20 p-1.5 rounded-xl mb-6 h-auto flex-shrink-0">
                 <TabsTrigger value="vision" className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-primary/20 data-[state=active]:border-primary/40 data-[state=active]:shadow-[0_0_15px_rgba(0,78,158,0.2)] border border-transparent transition-all duration-300 hover:bg-card/50 hover:text-foreground">
-                  <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.vision_tab_icon_class} className="w-4 h-4" />
-                  <span className="font-semibold">{loaderData.aboutData?.data?.our_vision_section?.vision_tab_label}</span>
+                  <DynamicIcon name={about?.our_vision_section?.vision_tab_icon_class} className="w-4 h-4" />
+                  <span className="font-semibold">{about?.our_vision_section?.vision_tab_label}</span>
                 </TabsTrigger>
                 <TabsTrigger value="mission" className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-muted-foreground data-[state=active]:text-foreground data-[state=active]:bg-accent/20 data-[state=active]:border-accent/40 data-[state=active]:shadow-[0_0_15px_rgba(95,194,227,0.2)] border border-transparent transition-all duration-300 hover:bg-card/50 hover:text-foreground">
-                  <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.mission_tab_icon_class} className="w-4 h-4" />
-                  <span className="font-semibold">{loaderData.aboutData?.data?.our_vision_section?.mission_tab_label}</span>
+                  <DynamicIcon name={about?.our_vision_section?.mission_tab_icon_class} className="w-4 h-4" />
+                  <span className="font-semibold">{about?.our_vision_section?.mission_tab_label}</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -317,16 +315,16 @@ const About = () => {
                       {/* Vision Header */}
                       <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 rounded-xl bg-primary/20 backdrop-blur-sm border border-primary/30 flex items-center justify-center shadow-[0_0_20px_rgba(0,78,158,0.2)]">
-                          <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_icon} className="w-6 h-6 text-accent" />
+                          <DynamicIcon name={about?.our_vision_section?.vision_tab_content_icon} className="w-6 h-6 text-accent" />
                         </div>
                         <div>
-                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_heading}</h3>
+                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{about?.our_vision_section?.vision_tab_content_heading}</h3>
                           <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-accent rounded-full mt-1" />
                         </div>
                       </div>
 
                       {/* Vision Content */}
-                      <div className="space-y-4 flex-1" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_description }}>
+                      <div className="space-y-4 flex-1" dangerouslySetInnerHTML={{ __html: about?.our_vision_section?.vision_tab_content_description }}>
                         {/* <p className="text-muted-foreground leading-relaxed text-base lg:text-lg text-justify">
                           To facilitate global businesses in making greater strides with fewer resources, leveraging smart, scalable, and deeply human technology.
                         </p>
@@ -339,7 +337,7 @@ const About = () => {
                       <div className="mt-auto pt-6 border-t border-border/20">
                         <div className="flex items-center gap-2 text-accent text-sm">
                           <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_hsl(var(--accent))]" />
-                          <span>{loaderData.aboutData?.data?.our_vision_section?.vision_tab_content_bottom_text}</span>
+                          <span>{about?.our_vision_section?.vision_tab_content_bottom_text}</span>
                         </div>
                       </div>
                     </CardContent>
@@ -358,18 +356,18 @@ const About = () => {
                       {/* Mission Header */}
                       <div className="flex items-center gap-4 mb-6">
                         <div className="w-12 h-12 rounded-xl bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center shadow-[0_0_20px_rgba(95,194,227,0.2)]">
-                          <DynamicIcon name={loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_icon} className="w-6 h-6 text-accent" />
+                          <DynamicIcon name={about?.our_vision_section?.mission_tab_content_icon} className="w-6 h-6 text-accent" />
                         </div>
                         <div>
-                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_heading}</h3>
+                          <h3 className="text-2xl sm:text-3xl font-bold text-foreground">{about?.our_vision_section?.mission_tab_content_heading}</h3>
                           <div className="w-16 h-0.5 bg-gradient-to-r from-accent to-primary rounded-full mt-1" />
                         </div>
                       </div>
 
                       {/* Mission Content */}
-                      <div className="space-y-4 flex-1" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_description }}>
+                      <div className="space-y-4 flex-1" dangerouslySetInnerHTML={{ __html: about?.our_vision_section?.mission_tab_content_description }}>
                         {/* <p className="text-muted-foreground leading-relaxed text-base lg:text-lg">
-                          {loaderData.aboutData?.data?.our_vision_section.mission_tab_content_description}
+                          {about?.our_vision_section.mission_tab_content_description}
                         </p> */}
 
                         {/* Enhanced bullet points */}
@@ -386,7 +384,7 @@ const About = () => {
                       {/* Decorative accent */}
                       <div className="mt-auto pt-4 border-t border-border/20">
                         <p className="text-muted-foreground text-sm">
-                          {loaderData.aboutData?.data?.our_vision_section?.mission_tab_content_bottom_text}
+                          {about?.our_vision_section?.mission_tab_content_bottom_text}
                         </p>
                       </div>
                     </CardContent>
@@ -399,9 +397,9 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-12 transition-all duration-700 delay-300 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <Link to={loaderData.aboutData?.data?.our_vision_section?.bottom_button_url}>
+          <Link to={`/${about?.our_vision_section?.bottom_button_url}`}>
             <Button variant="hero" size="lg" className="group">
-              {loaderData.aboutData?.data?.our_vision_section?.bottom_button_label}
+              {about?.our_vision_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
@@ -436,9 +434,9 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-12 lg:mb-16 transition-all duration-700 ${valuesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(loaderData.aboutData?.data?.our_values_section?.our_values_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} >
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(about?.our_values_section?.our_values_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} >
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground" dangerouslySetInnerHTML={{ __html: loaderData.aboutData?.data?.our_values_section?.our_values_sub_heading }}></p>
+          <p className="text-lg sm:text-xl text-muted-foreground" dangerouslySetInnerHTML={{ __html: about?.our_values_section?.our_values_sub_heading }}></p>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto mt-4">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
@@ -448,7 +446,7 @@ const About = () => {
 
         {/* Values Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {loaderData.aboutData?.data?.our_values_section?.our_values_blocks.length > 0 && loaderData.aboutData?.data?.our_values_section?.our_values_blocks.map((value, index) => {
+          {about?.our_values_section?.our_values_blocks.length > 0 && about?.our_values_section?.our_values_blocks.map((value, index) => {
             const isHovered = hoveredValue === index;
             return <div key={index} onMouseEnter={() => setHoveredValue(index)} onMouseLeave={() => setHoveredValue(null)} className={`group relative transition-all duration-500 ${valuesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-2" : ""}`} style={{
               transitionDelay: `${200 + index * 100}ms`
@@ -477,7 +475,7 @@ const About = () => {
                     {value.heading}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: value.content }}>
-                    
+
                   </p>
                 </div>
 
@@ -500,11 +498,11 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData.aboutData?.data?.our_work_approach_section?.our_work_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} >
-            
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(about?.our_work_approach_section?.our_work_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} >
+
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto">
-            {loaderData.aboutData?.data?.our_work_approach_section?.our_work_paragraph}
+            {about?.our_work_approach_section?.our_work_paragraph}
           </p>
         </div>
 
@@ -518,7 +516,7 @@ const About = () => {
               <div className="absolute -inset-2 bg-gradient-to-br from-primary/10 via-accent/5 to-transparent blur-xl opacity-60" />
 
               <div className="relative h-full rounded-xl overflow-hidden border border-border/20">
-                <img src={loaderData.aboutData?.data?.our_work_approach_section?.left_image.large} alt={loaderData.aboutData?.data?.our_work_approach_section?.left_image.alt} className="w-full h-full object-cover" />
+                <img src={about?.our_work_approach_section?.left_image.large} alt={about?.our_work_approach_section?.left_image.alt} className="w-full h-full object-cover" />
                 {/* Soft overlay for blending */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[hsl(222_47%_5%/0.3)]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[hsl(222_47%_5%/0.4)] via-transparent to-transparent" />
@@ -526,8 +524,8 @@ const About = () => {
                 {/* Floating label */}
                 <div className="absolute bottom-4 left-4 px-4 py-2 rounded-lg bg-card/60 backdrop-blur-sm border border-accent/20">
                   <div className="flex items-center gap-2">
-                    <DynamicIcon name={loaderData.aboutData?.data?.our_work_approach_section?.left_image_icon_class} className="w-4 h-4 text-accent" />
-                    <span className="text-sm font-medium text-foreground">{loaderData.aboutData?.data?.our_work_approach_section?.left_image_text}</span>
+                    <DynamicIcon name={about?.our_work_approach_section?.left_image_icon_class} className="w-4 h-4 text-accent" />
+                    <span className="text-sm font-medium text-foreground">{about?.our_work_approach_section?.left_image_text}</span>
                   </div>
                 </div>
               </div>
@@ -536,7 +534,7 @@ const About = () => {
 
           {/* Right - 2x2 Cards Grid */}
           <div className="lg:w-[60%] grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {loaderData.aboutData?.data?.our_work_approach_section?.approach_blocks.length > 0 && loaderData.aboutData?.data?.our_work_approach_section?.approach_blocks.map((approach, index) => {
+            {about?.our_work_approach_section?.approach_blocks.length > 0 && about?.our_work_approach_section?.approach_blocks.map((approach, index) => {
               return <div key={index} className={`group relative transition-all duration-500 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{
                 transitionDelay: `${150 + index * 75}ms`
               }}>
@@ -548,7 +546,7 @@ const About = () => {
                     <div className="w-9 h-9 rounded-md bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/20 flex items-center justify-center group-hover:border-accent/40 transition-colors flex-shrink-0">
                       <DynamicIcon name={approach.icon_class} className="w-4 h-4 text-accent" />
                     </div>
-                    <h3 className="text-base font-semibold text-foreground group-hover:text-accent transition-colors" dangerouslySetInnerHTML={{ __html: approach.heading}}>
+                    <h3 className="text-base font-semibold text-foreground group-hover:text-accent transition-colors" dangerouslySetInnerHTML={{ __html: approach.heading }}>
                     </h3>
                   </div>
 
@@ -564,9 +562,9 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-8 transition-all duration-700 delay-400 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <Link to={loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_url}>
+          <Link to={`/${about?.our_work_approach_section?.bottom_button_url}`}>
             <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
-              {loaderData.aboutData?.data?.our_work_approach_section?.bottom_button_label}
+              {about?.our_work_approach_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
@@ -575,7 +573,7 @@ const About = () => {
     </section>
 
     {/* Certifications Section */}
-    <CertificationsSection certificationData={loaderData.aboutData?.data?.certifications_section} sectionRef={teamRef} isVisible={teamVisible} />
+    <CertificationsSection certificationData={about?.certifications_section} sectionRef={teamRef} isVisible={teamVisible} />
   </>;
 };
 export default About;

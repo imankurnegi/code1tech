@@ -24,6 +24,8 @@ export const useTypingAnimation = ({
   const tick = useCallback(() => {
     const currentPhrase = phrases[phraseIndex];
     
+    if (!currentPhrase) return;
+    
     if (isDeleting) {
       setDisplayText(currentPhrase.substring(0, displayText.length - 1));
     } else {
@@ -33,6 +35,8 @@ export const useTypingAnimation = ({
 
   useEffect(() => {
     const currentPhrase = phrases[phraseIndex];
+    
+    if (!currentPhrase) return;
     
     let timeout: NodeJS.Timeout;
 

@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
-import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 import { api } from "@/api";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import SeoTags from "@/components/SeoTags";
@@ -10,31 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 
-export async function loader() {
-  try {
-    const contactData = await api.getContactData();
-    const clientLogos = await api.getClientLogos();
-    const contactFormFields = await api.getContactFormFields();
-
-    return {
-      contactData,
-      clientLogos,
-      contactFormFields
-    };
-  } catch (error) {
-    console.error("Failed to load contact page SSG data", error);
-    return {
-      contactData: null,
-      clientLogos: { data: [] },
-      contactFormFields: null
-    };
-  }
-}
-
 const Contact = () => {
-  
-  const loaderData = useSafeLoaderData();
-
   const [isHeroVisible, setIsHeroVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLocationsVisible, setIsLocationsVisible] = useState(false);
@@ -44,8 +19,23 @@ const Contact = () => {
   const locationsRef = useRef<HTMLElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
 
-  const clientLogosData = loaderData?.clientLogos?.data ?? [];
-  const contactFormFields = loaderData?.contactFormFields ?? null;
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["contactPageData"],
+    queryFn: async () => {
+      const [contactData, clientLogos, contactFormFields] =
+        await Promise.all([
+          api.getContactData(),
+          api.getClientLogos(),
+          api.getContactFormFields(),
+        ]);
+
+      return {
+        contactData,
+        clientLogos,
+        contactFormFields,
+      };
+    },
+  });
 
   const handleFormSubmit = async (data: ContactFormData) => {
     const formData = new FormData();
@@ -58,16 +48,23 @@ const Contact = () => {
     await api.submitContactForm(formData);
   };
 
-  const salesNumbers = [loaderData?.contactData?.data?.sales_group?.phone_1, loaderData?.contactData?.data?.sales_group?.phone_2, loaderData?.contactData?.data?.sales_group?.phone_3].filter((n): n is string => !!n);
-  const hrNumbers = [loaderData?.contactData?.data?.career_group?.phone_1, loaderData?.contactData?.data?.career_group?.phone_2].filter((n): n is string => !!n);
+  if (isLoading) return null;
+  if (error) return null;
+
+  const contact = data?.contactData?.data;
+  const clientLogosData = data?.clientLogos?.data ?? [];
+  const contactFormFields = data?.contactFormFields ?? null;
+
+  const salesNumbers = [contact?.sales_group?.phone_1, contact?.sales_group?.phone_2, contact?.sales_group?.phone_3].filter((n): n is string => !!n);
+  const hrNumbers = [contact?.career_group?.phone_1, contact?.career_group?.phone_2].filter((n): n is string => !!n);
 
   const officeLocations = [{
-    city: loaderData?.contactData?.data?.locations_group?.sub_heading,
-    address: loaderData?.contactData?.data?.locations_group?.address,
+    city: contact?.locations_group?.sub_heading,
+    address: contact?.locations_group?.address,
     country: "India"
   }, {
-    city: loaderData?.contactData?.data?.locations_group?.sub_heading_2,
-    address: loaderData?.contactData?.data?.locations_group?.address_2,
+    city: contact?.locations_group?.sub_heading_2,
+    address: contact?.locations_group?.address_2,
     country: "USA"
   }];
 
@@ -94,9 +91,9 @@ const Contact = () => {
   
   return <>
     <SeoTags
-        title={loaderData?.contactData?.data?.seo?.title}
-        description={loaderData?.contactData?.data?.seo?.description}
-        ogImage={loaderData?.contactData?.data?.seo?.og_image}
+        title={contact?.seo?.title}
+        description={contact?.seo?.description}
+        ogImage={contact?.seo?.og_image}
       />
     {/* ========== HERO SECTION ========== */}
     <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 lg:pt-24" style={{
@@ -109,7 +106,7 @@ const Contact = () => {
 
       {/* Background Image with improved visibility */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style={{
-        backgroundImage: `url(${loaderData?.contactData?.data?.banner_image || ""})`
+        backgroundImage: `url(${contact?.banner_image || ""})`
       }} />
 
       {/* Subtle gradient overlay instead of heavy dark shade */}
@@ -138,9 +135,9 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`max-w-4xl mx-auto transition-all duration-1000 ${isHeroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <h1 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
+                  <h1 dangerouslySetInnerHTML={{ __html: addClassToSpan(contact?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
           </h1>
-          <p dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.page_content || "" }} className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed text-center"></p>
+          <p dangerouslySetInnerHTML={{ __html: contact?.page_content || "" }} className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed text-center"></p>
         </div>
       </div>
 
@@ -345,10 +342,10 @@ const Contact = () => {
               <div className="relative z-10 flex flex-col justify-center h-full py-4">
                 {/* Header Section */}
                 <div className="mb-8">
-                  <h3 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.contact_help_section?.help_section_heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                  <h3 dangerouslySetInnerHTML={{ __html: addClassToSpan(contact?.contact_help_section?.help_section_heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
                   </h3>
                   <p className="text-muted-foreground text-base lg:text-lg leading-relaxed">
-                    {loaderData?.contactData?.data?.contact_help_section?.help_section_paragraph}
+                    {contact?.contact_help_section?.help_section_paragraph}
                   </p>
                 </div>
 
@@ -360,7 +357,7 @@ const Contact = () => {
                 {/* Bullet points with enhanced styling */}
                 <ul className="space-y-6 mb-8">
                   {
-                    loaderData?.contactData?.data?.contact_help_section?.help_lists?.length > 0 && loaderData?.contactData?.data?.contact_help_section?.help_lists?.map((point: any, index: number) => (
+                    contact?.contact_help_section?.help_lists?.length > 0 && contact?.contact_help_section?.help_lists?.map((point: any, index: number) => (
 
                       <li key={index} className="flex items-start gap-4 group">
                         <div className="w-8 h-8 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-300 group-hover:bg-accent/20 group-hover:border-accent/50 group-hover:shadow-[0_0_15px_rgba(95,194,227,0.2)]">
@@ -373,7 +370,7 @@ const Contact = () => {
                 </ul>
 
                 {/* Subtle emphasis line */}
-                <p className="text-muted-foreground/80 text-sm italic mb-8 text-center">{loaderData?.contactData?.data?.contact_help_section?.help_comment}</p>
+                <p className="text-muted-foreground/80 text-sm italic mb-8 text-center">{contact?.contact_help_section?.help_comment}</p>
 
                 {/* Divider */}
                 <div className="relative h-px mb-8">
@@ -383,7 +380,7 @@ const Contact = () => {
                 {/* Trust row with enhanced styling */}
                 <div className="flex flex-wrap justify-center gap-4 lg:gap-5 mt-4">
                   {
-                    loaderData?.contactData?.data?.contact_help_section?.helop_bottom_section?.length > 0 && loaderData?.contactData?.data?.contact_help_section?.helop_bottom_section?.map((item: any, index: number) => (
+                    contact?.contact_help_section?.helop_bottom_section?.length > 0 && contact?.contact_help_section?.helop_bottom_section?.map((item: any, index: number) => (
                       <div key={index} className="flex items-center gap-2.5 px-5 py-3 rounded-xl bg-accent/8 border border-accent/20 transition-all duration-300 hover:bg-accent/15 hover:border-accent/40">
                         <DynamicIcon name={item.icon} className="w-5 h-5 text-accent" />
                         <span className="text-sm font-medium text-foreground">{item.label}</span>
@@ -534,9 +531,9 @@ const Contact = () => {
               <Card className="relative h-full bg-card/20 backdrop-blur-xl border-border/20 overflow-hidden transition-all duration-500 group-hover:border-accent/40 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_rgba(95,194,227,0.15)]">
                 <CardContent className="p-6 lg:p-8">
                   <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                    <DynamicIcon name={loaderData?.contactData?.data?.locations_group?.icon} className="w-7 h-7 text-accent" />
+                    <DynamicIcon name={contact?.locations_group?.icon} className="w-7 h-7 text-accent" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{loaderData?.contactData?.data?.locations_group?.heading}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{contact?.locations_group?.heading}</h3>
                   <div className="space-y-4">
                     {officeLocations.length > 0 && officeLocations.map((location, index) => <div key={index} className="pb-4 border-b border-border/20 last:border-0 last:pb-0">
                       <p className="font-semibold text-foreground mb-1">{location.city}</p>
@@ -553,9 +550,9 @@ const Contact = () => {
               <Card className="relative h-full bg-card/20 backdrop-blur-xl border-border/20 overflow-hidden transition-all duration-500 group-hover:border-primary/40 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_rgba(0,78,158,0.15)]">
                 <CardContent className="p-6 lg:p-8">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                    <DynamicIcon name={loaderData?.contactData?.data?.sales_group?.icon} className="w-7 h-7 text-primary" />
+                    <DynamicIcon name={contact?.sales_group?.icon} className="w-7 h-7 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">{loaderData?.contactData?.data?.sales_group?.heading}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">{contact?.sales_group?.heading}</h3>
                   <div className="space-y-3 mb-6">
                     {salesNumbers.length > 0 && salesNumbers.map((num, index) => <a key={index} href={`tel:${String(num).replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Phone className="w-4 h-4 text-accent" />
@@ -563,9 +560,9 @@ const Contact = () => {
                     </a>)}
                   </div>
                   <div className="pt-4 border-t border-border/20">
-                    <a href={`mailto:${loaderData?.contactData?.data?.sales_group?.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+                    <a href={`mailto:${contact?.sales_group?.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Mail className="w-4 h-4 text-accent" />
-                      <span className="text-sm">{loaderData?.contactData?.data?.sales_group?.email}</span>
+                      <span className="text-sm">{contact?.sales_group?.email}</span>
                     </a>
                   </div>
                 </CardContent>
@@ -578,9 +575,9 @@ const Contact = () => {
               <Card className="relative h-full bg-card/20 backdrop-blur-xl border-border/20 overflow-hidden transition-all duration-500 group-hover:border-accent/40 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_rgba(95,194,227,0.15)]">
                 <CardContent className="p-6 lg:p-8">
                   <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                    <DynamicIcon name={loaderData?.contactData?.data?.career_group?.icon} className="w-7 h-7 text-accent" />
+                    <DynamicIcon name={contact?.career_group?.icon} className="w-7 h-7 text-accent" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{loaderData?.contactData?.data?.career_group?.heading}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">{contact?.career_group?.heading}</h3>
                   <div className="space-y-3 mb-6">
                     {hrNumbers.length > 0 && hrNumbers.map((num, index) => <a key={index} href={`tel:${String(num).replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Phone className="w-4 h-4 text-accent" />
@@ -588,9 +585,9 @@ const Contact = () => {
                     </a>)}
                   </div>
                   <div className="pt-4 border-t border-border/20">
-                    <a href={`mailto:${loaderData?.contactData?.data?.career_group?.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+                    <a href={`mailto:${contact?.career_group?.email}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                       <Mail className="w-4 h-4 text-accent" />
-                      <span className="text-sm">{loaderData?.contactData?.data?.career_group?.email}</span>
+                      <span className="text-sm">{contact?.career_group?.email}</span>
                     </a>
                   </div>
                 </CardContent>
@@ -603,12 +600,12 @@ const Contact = () => {
             <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 blur-sm pointer-events-none" />
             <div className="relative bg-card/20 backdrop-blur-xl border border-border/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-center gap-4 group-hover:border-accent/30 transition-colors">
               <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                <DynamicIcon name={loaderData?.contactData?.data?.business_hours_group?.icon} className="w-6 h-6 text-accent" />
+                <DynamicIcon name={contact?.business_hours_group?.icon} className="w-6 h-6 text-accent" />
               </div>
               <div className="text-center sm:text-left">
-                <p className="text-foreground font-semibold text-lg">{loaderData?.contactData?.data?.business_hours_group?.heading}</p>
-                <p className="text-muted-foreground">{loaderData?.contactData?.data?.business_hours_group?.option_1}</p>
-                <p className="text-muted-foreground">{loaderData?.contactData?.data?.business_hours_group?.option_2}</p>
+                <p className="text-foreground font-semibold text-lg">{contact?.business_hours_group?.heading}</p>
+                <p className="text-muted-foreground">{contact?.business_hours_group?.option_1}</p>
+                <p className="text-muted-foreground">{contact?.business_hours_group?.option_2}</p>
               </div>
             </div>
           </div>
@@ -623,13 +620,13 @@ const Contact = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
-            <h2 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.map_group?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
-            <p className="text-muted-foreground">{loaderData?.contactData?.data?.map_group?.sub_heading}</p>
+            <h2 dangerouslySetInnerHTML={{ __html: addClassToSpan(contact?.map_group?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
+            <p className="text-muted-foreground">{contact?.map_group?.sub_heading}</p>
           </div>
 
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/20 group">
             <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 blur-sm pointer-events-none" />
-            <div dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.map_group?.map_code || "" }}></div>
+            <div dangerouslySetInnerHTML={{ __html: contact?.map_group?.map_code || "" }}></div>
           </div>
         </div>
       </div>
@@ -644,8 +641,8 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={brandsRef} className={`text-center mb-10 transition-all duration-700 ${isBrandsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h2 dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.contactData?.data?.brand_group?.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
-          <p className="text-muted-foreground">{loaderData?.contactData?.data?.brand_group?.sub_heading}</p>
+          <h2 dangerouslySetInnerHTML={{ __html: addClassToSpan(contact?.brand_group?.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"></h2>
+          <p className="text-muted-foreground">{contact?.brand_group?.sub_heading}</p>
           {/* Glowing divider */}
           <div className="relative w-24 sm:w-32 h-px mx-auto mt-6">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />

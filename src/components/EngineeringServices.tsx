@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 interface ServiceCategory {
   name: string;
@@ -280,7 +279,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                   </p>
 
                   {/* CTA */}
-                  <Link to={service.ctaLink}>
+                  <a href={`${import.meta.env.BASE_URL}${service.ctaLink}`}>
                   <Button
                     variant="ghost"
                     className="group/btn p-0 h-auto text-foreground/70 hover:text-accent hover:bg-transparent"
@@ -288,7 +287,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                     Learn More
                     <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
-                  </Link>
+                  </a>
                 </div>
 
                 {/* Bottom accent line */}

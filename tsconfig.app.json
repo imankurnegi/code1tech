@@ -14,10 +14,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* JSON Support - Yeh add karna zaroori hai */
-    "resolveJsonModule": true, 
-    "esModuleInterop": true,
-
     /* Linting */
     "strict": false,
     "noUnusedLocals": false,

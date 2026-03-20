@@ -1,11 +1,33 @@
-import { hydrateRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { routes } from './routes';
-import './index.css';
+import { hydrateRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import App from "./App";
+import "./index.css";
+import {
+  QueryClient,
+  QueryClientProvider,
+  hydrate,
+} from "@tanstack/react-query";
+import ScrollToTop from "./components/ScrollToTop";
 
-const router = createBrowserRouter(routes);
+const queryClient = new QueryClient();
+
+const rawState = (window as any).__REACT_QUERY_STATE__;
+
+const dehydratedState = typeof rawState === 'string' ? JSON.parse(rawState) : rawState;
+
+if (dehydratedState) {
+  hydrate(queryClient, dehydratedState);
+}
 
 hydrateRoot(
-  document.getElementById('root')!,
-  <RouterProvider router={router} />
+  document.getElementById("root") as HTMLElement,
+  <HelmetProvider>
+    <BrowserRouter basename="/frontend/">
+    <ScrollToTop />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </BrowserRouter>
+  </HelmetProvider>
 );

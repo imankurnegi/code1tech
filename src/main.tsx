@@ -1,11 +1,10 @@
-import { hydrateRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { routes } from './routes';
-import './index.css';
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./index.css";
 
-const router = createBrowserRouter(routes);
-
-hydrateRoot(
-  document.getElementById('root')!,
-  <RouterProvider router={router} />
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <App />
+  </BrowserRouter>
 );

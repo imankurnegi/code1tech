@@ -14,28 +14,14 @@ import {
 } from
 "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
-import SeoTags from "@/components/SeoTags";
+import { Link, useLoaderData } from "react-router-dom";
+import { api } from "@/api";
 import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
-import { api } from "@/api";
-
-export async function loader() {
-  try {
-    const data = await api.getDataEngineering();
-    const contactFormFields = await api.getContactFormFields();
-    return { data, contactFormFields };
-  } catch (error) {
-    console.error("Failed to load data engineering data", error);
-    return {
-      data: null,
-      contactFormFields: null,
-    };
-  }
-}
+import SeoTags from "@/components/SeoTags";
+import { useQuery } from "@tanstack/react-query";
 
 // ── Animated Network Canvas ──
 const NetworkCanvas = () => {
@@ -48,7 +34,6 @@ const NetworkCanvas = () => {
     let animationId: number;
     const nodes: Array<{x: number;y: number;vx: number;vy: number;size: number;}> = [];
     const resize = () => {
-      if (typeof window === 'undefined') return;
       const dpr = window.devicePixelRatio || 1;
       canvas.width = canvas.offsetWidth * dpr;
       canvas.height = canvas.offsetHeight * dpr;
@@ -56,7 +41,7 @@ const NetworkCanvas = () => {
     };
     const initNodes = () => {
       nodes.length = 0;
-      const count = typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 45;
+      const count = window.innerWidth < 768 ? 20 : 45;
       for (let i = 0; i < count; i++) {
         nodes.push({ x: Math.random() * canvas.offsetWidth, y: Math.random() * canvas.offsetHeight, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, size: Math.random() * 2 + 0.5 });
       }
@@ -189,7 +174,7 @@ const InlineCTA = ({ title, subtitle, cta, ctaLink }: {title: string;subtitle: s
         </div>
 
         {/* Button */}
-            <Link to={ctaLink} className="flex-shrink-0 relative z-10">
+        <Link to={ctaLink} className="flex-shrink-0 relative z-10">
           <Button size="lg" className="group font-semibold px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {cta} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -352,12 +337,10 @@ const caseStudies = [
 // ══════════════════════════════════════════════════════════════
 
 const DataEngineering = () => {
-  const loaderData = useSafeLoaderData();
   const [activeCapTab, setActiveCapTab] = useState(0);
   const [capTabFading, setCapTabFading] = useState(false);
   const [indTab, setIndTab] = useState(0);
   const [indFading, setIndFading] = useState(false);
-  const contactFormFields = loaderData?.contactFormFields ?? null;
   
   const handleIndTabChange = (i: number) => {
     if (i === indTab) return;
@@ -404,7 +387,28 @@ const DataEngineering = () => {
       };
 
       
-const engagementModels = loaderData?.data?.data?.data_engineers_engagement_models_section?.cards?.map((item) => {
+      const { data, isLoading, error } = useQuery({
+    queryKey: ["dataEngineeringPage"],
+    queryFn: async () => {
+      const [serviceData, contactFormFields] = await Promise.all([
+        api.getDataEngineering(),
+        api.getContactFormFields(),
+      ]);
+
+      return {
+        serviceData,
+        contactFormFields,
+      };
+    },
+  });
+
+  if (isLoading) return null;
+  if (error) return null;
+
+  const servicePage = data?.serviceData?.data;
+  const contactFormFields = data?.contactFormFields ?? null;
+
+const engagementModels = servicePage?.data_engineers_engagement_models_section?.cards?.map((item) => {
   return {
     icon: item.icon,
     title: item.title,
@@ -416,7 +420,7 @@ const engagementModels = loaderData?.data?.data?.data_engineers_engagement_model
   }
 }) || [];
 
-const advancedCapabilities = loaderData?.data?.data?.industries?.map((industry: any) => ({
+const advancedCapabilities = servicePage?.industries?.map((industry: any) => ({
   icon: industry.sdb.data_engineers_capabilities.icon,
   title: industry.post_title,
   contentTitle: industry.sdb.data_engineers_capabilities.content_heading,
@@ -425,7 +429,7 @@ const advancedCapabilities = loaderData?.data?.data?.industries?.map((industry: 
   items: industry.sdb.data_engineers_capabilities.right_blocks.map((block: any) => ({ label: block.heading, details: block.content }))
 })) || [];
 
-const industriesData = loaderData?.data?.data.industries_industries?.map((industry: any) => ({
+const industriesData = servicePage.industries_industries?.map((industry: any) => ({
   icon: industry.sdb.data_engineers_industries.icon,
   title: industry.post_title,
   image: industry.sdb.data_engineers_industries.image?.url || '',
@@ -434,7 +438,7 @@ const industriesData = loaderData?.data?.data.industries_industries?.map((indust
   activeText: industry.sdb.data_engineers_industries.active_text
 })) || [];
 
-const engineeringProcess = loaderData?.data?.data?.our_engineering_process_section?.cards?.map((card: any) => ({
+const engineeringProcess = servicePage?.our_engineering_process_section?.cards?.map((card: any) => ({
   step: card.step,
   icon: card.icon,
   title: card.title,
@@ -442,14 +446,14 @@ const engineeringProcess = loaderData?.data?.data?.our_engineering_process_secti
   tag: card.tag
 })) || [];
 
-const techStack = loaderData?.data?.data?.data_engineering_technology_stack_section?.stack_lists?.map((list: any) => ({
+const techStack = servicePage?.data_engineering_technology_stack_section?.stack_lists?.map((list: any) => ({
   category: list.title,
   items: list.content
 })) || [
 // { category: "Cloud Platforms", items: ["AWS (S3, Glue, Redshift, EMR)", "Google Cloud (BigQuery, Dataflow)", "Azure (ADF, Synapse, ADLS)"] },
 ];
 
-const whyChooseItems = loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.cards?.map((card: any) => ({
+const whyChooseItems = servicePage?.data_engineers_benefits_of_choosing_section?.cards?.map((card: any) => ({
   icon: card.icon,
   title: card.title,
   description: card.content,
@@ -457,7 +461,7 @@ const whyChooseItems = loaderData?.data?.data?.data_engineers_benefits_of_choosi
 })) || [];
 
 
-const securityItems = loaderData?.data?.data?.digital_security_compliance_section?.content_blocks?.map((item) =>{
+const securityItems = servicePage?.digital_security_compliance_section?.content_blocks?.map((item) =>{
   return { 
     icon: item.icon, 
     title: item.title, 
@@ -466,7 +470,7 @@ const securityItems = loaderData?.data?.data?.digital_security_compliance_sectio
 }
 }) || [];
 
-const testimonials = loaderData?.data?.data?.voices_testimonials?.map((item: any) => ({
+const testimonials = servicePage?.voices_testimonials?.map((item: any) => ({
   quote: item.post_content,
   name: item.post_title,
   role: item.acf.designation,
@@ -474,7 +478,7 @@ const testimonials = loaderData?.data?.data?.voices_testimonials?.map((item: any
 })) || [];
 
 
-const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
+const faqs = servicePage?.frequently_asked_question?.map((item) => {
   return {
     q: item.post_title,
     a: item.post_content
@@ -484,9 +488,9 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
   return (
     <>
     <SeoTags
-            title={loaderData?.data?.data?.seo?.title}
-            description={loaderData?.data?.data?.seo?.description}
-            ogImage={loaderData?.data?.data?.seo?.og_image}
+            title={servicePage?.seo?.title}
+            description={servicePage?.seo?.description}
+            ogImage={servicePage?.seo?.og_image}
           />
       {/* ====== HERO ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)" }}>
@@ -501,36 +505,36 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
             <div className={`relative transition-all duration-500 ease-out ${isVisible ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-12 scale-95"}`}>
               <div className="relative">
                 <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: "0 25px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(95, 194, 227, 0.1)" }}>
-                  <img src={loaderData?.data?.data?.banner_section?.banner_image?.url} 
-                    alt={loaderData?.data?.data?.banner_section?.banner_image?.alt}  className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
+                  <img src={servicePage?.banner_section?.banner_image?.url} 
+                    alt={servicePage?.banner_section?.banner_image?.alt}  className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-70" />
                   <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
                 </div>
                 <div className="absolute -top-3 -left-3 w-20 h-20 border-t-2 border-l-2 border-accent/40 rounded-tl-3xl" style={{ animation: "pulse 3s ease-in-out infinite" }} />
                 <div className="absolute -bottom-3 -right-3 w-20 h-20 border-b-2 border-r-2 border-accent/40 rounded-br-3xl" style={{ animation: "pulse 3s ease-in-out infinite", animationDelay: "1.5s" }} />
                 <div className={`absolute -right-4 top-1/4 p-4 rounded-xl backdrop-blur-xl transition-all duration-1000 hidden sm:block ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ background: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(95, 194, 227, 0.2)", boxShadow: "0 10px 40px rgba(0, 0, 0, 0.4)", transitionDelay: "600ms", animation: "float 6s ease-in-out infinite" }}>
-                  <div className="text-2xl font-bold text-accent font-mono">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[1]?.badge_heading}</div>
-                  <div className="text-xs text-muted-foreground">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[1]?.badge_text}</div>
+                  <div className="text-2xl font-bold text-accent font-mono">{servicePage?.banner_section?.floating_badge_fields && servicePage.banner_section.floating_badge_fields[1]?.badge_heading}</div>
+                  <div className="text-xs text-muted-foreground">{servicePage?.banner_section?.floating_badge_fields && servicePage.banner_section.floating_badge_fields[1]?.badge_text}</div>
                 </div>
                 <div className={`absolute -left-4 bottom-1/4 p-4 rounded-xl backdrop-blur-xl transition-all duration-1000 hidden sm:block ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ background: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(95, 194, 227, 0.2)", boxShadow: "0 10px 40px rgba(0, 0, 0, 0.4)", transitionDelay: "800ms", animation: "float 5s ease-in-out infinite", animationDelay: "2s" }}>
-                  <div className="text-2xl font-bold text-accent font-mono">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[0]?.badge_heading}</div>
-                  <div className="text-xs text-muted-foreground">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[0]?.badge_text}</div>
+                  <div className="text-2xl font-bold text-accent font-mono">{servicePage?.banner_section?.floating_badge_fields && servicePage.banner_section.floating_badge_fields[0]?.badge_heading}</div>
+                  <div className="text-xs text-muted-foreground">{servicePage?.banner_section?.floating_badge_fields && servicePage.banner_section.floating_badge_fields[0]?.badge_text}</div>
                 </div>
               </div>
             </div>
 
             {/* Right – Content */}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-snug mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-snug mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-                {loaderData?.data?.data?.banner_section?.banner_description}
+                {servicePage?.banner_section?.banner_description}
               </p>
               <p className="text-sm font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
-                {loaderData?.data?.data?.banner_section?.highlighted_text}
+                {servicePage?.banner_section?.highlighted_text}
               </p>
-              <Link to={loaderData?.data?.data?.banner_section?.cta_url}>
+              <Link to={servicePage?.banner_section?.cta_url}>
                 <Button size="lg" className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
-                  {loaderData?.data?.data?.banner_section?.cta_text} <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
+                  {servicePage?.banner_section?.cta_text} <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
               </Link>
             </div>
@@ -539,10 +543,10 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
           {/* Stats Bar */}
           <div className={`mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 p-4 sm:p-6 rounded-2xl backdrop-blur-2xl transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(95,194,227,0.04) 50%, rgba(255,255,255,0.03) 100%)", border: "1px solid rgba(95, 194, 227, 0.15)", boxShadow: "0 10px 40px rgba(0, 0, 0, 0.35)", transitionDelay: "1000ms" }}>
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[0]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[0]?.stats_title} delay={1100} isVisible={isVisible} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[1]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[1]?.stats_title} delay={1250} isVisible={isVisible} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[2]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[2]?.stats_title} delay={1400} isVisible={isVisible} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[3]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[3]?.stats_title} delay={1550} isVisible={isVisible} />
+            <AnimatedStat value={servicePage?.stats_section?.stats_fields[0]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[0]?.stats_title} delay={1100} isVisible={isVisible} />
+            <AnimatedStat value={servicePage?.stats_section?.stats_fields[1]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[1]?.stats_title} delay={1250} isVisible={isVisible} />
+            <AnimatedStat value={servicePage?.stats_section?.stats_fields[2]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[2]?.stats_title} delay={1400} isVisible={isVisible} />
+            <AnimatedStat value={servicePage?.stats_section?.stats_fields[3]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[3]?.stats_title} delay={1550} isVisible={isVisible} />
           </div>
         </div>
         <style>{`
@@ -556,18 +560,18 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
         <PulsingGlow className="top-1/4 right-0 w-[500px] h-[400px]" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-14 transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.data_engineers_data_challenges_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.data_engineers_data_challenges_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <div className="w-16 h-[2px] mx-auto" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
           </div>
 
           {/* Unique bento-style layout: large left card + stacked right cards */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
-{loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks?.length && (<>
+{servicePage?.data_engineers_data_challenges_section?.blocks?.length && (<>
             {/* ── Card 1 – Large feature card (2/5 width) ── */}
             <div className={`lg:col-span-2 group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
               style={{ minHeight: "460px", transitionDelay: "0ms" }}>
               {/* Background image */}
-              <img src={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[0]?.image?.url} alt={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[0]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               {/* Dark gradient overlay */}
               <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(5,10,25,0.97) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.3) 100%)" }} />
               {/* Cyan accent line at top */}
@@ -575,10 +579,10 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-end p-7">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.25), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.35)", backdropFilter: "blur(8px)" }}>
-                  <DynamicIcon name={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[0]?.icon} className="w-6 h-6 text-accent" />
+                  <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.icon} className="w-6 h-6 text-accent" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300">{loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[0]?.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[0]?.description }} />
+                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300">{servicePage?.data_engineers_data_challenges_section?.blocks[0]?.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[0]?.description }} />
                 {/* Bottom accent */}
                 <div className="mt-5 w-10 h-[2px] group-hover:w-20 transition-all duration-500" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
               </div>
@@ -593,7 +597,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                 <div className="flex flex-col sm:flex-row h-full" style={{ minHeight: "218px" }}>
                   {/* Image panel */}
                   <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
-                    <img src={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.image?.url} alt={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
                     {/* Accent line – bottom on mobile, right on desktop */}
                     <div className="absolute bottom-0 sm:bottom-auto sm:top-0 sm:bottom-0 sm:right-0 sm:w-[1px] h-[1px] sm:h-auto left-0 right-0" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
@@ -602,10 +606,10 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                   <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
                     <div className="absolute inset-0 rounded-r-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 80% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                      <DynamicIcon name={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.icon} className="w-5 h-5 text-accent" />
+                      <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.icon} className="w-5 h-5 text-accent" />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.title }}></h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[1]?.description }} />
+                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[1]?.title }}></h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[1]?.description }} />
                   </div>
                 </div>
               </div>
@@ -618,14 +622,14 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
                   <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
                     <div className="absolute inset-0 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                      <DynamicIcon name={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.icon} className="w-5 h-5 text-accent" />
+                      <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.icon} className="w-5 h-5 text-accent" />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.title }}></h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.description }} />
+                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[2]?.title }}></h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[2]?.description }} />
                   </div>
                   {/* Image panel */}
                   <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
-                    <img src={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.image?.url} alt={loaderData?.data?.data?.data_engineers_data_challenges_section?.blocks[2]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
                     {/* Accent line – bottom on mobile, left on desktop */}
                     <div className="absolute bottom-0 sm:bottom-auto sm:top-0 sm:bottom-0 sm:left-0 sm:w-[1px] h-[1px] sm:h-auto left-0 right-0" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
@@ -641,10 +645,10 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
 
       {/* ====== CTA 1 ====== */}
       <InlineCTA
-        title={loaderData?.data?.data?.data_engineers_consultation_section?.heading}
-        subtitle={loaderData?.data?.data?.data_engineers_consultation_section?.content}
-        cta={loaderData?.data?.data?.data_engineers_consultation_section?.cta_text}
-        ctaLink={loaderData?.data?.data?.data_engineers_consultation_section?.cta_url} />
+        title={servicePage?.data_engineers_consultation_section?.heading}
+        subtitle={servicePage?.data_engineers_consultation_section?.content}
+        cta={servicePage?.data_engineers_consultation_section?.cta_text}
+        ctaLink={servicePage?.data_engineers_consultation_section?.cta_url} />
       
 
       {/* ====== SERVICES OFFERED ====== */}
@@ -654,14 +658,14 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Header */}
           <div className={`text-center mb-12 transition-all duration-700 ${visibleSections.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.data_engineers_service_we_offer_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.data_engineers_service_we_offer_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-              {loaderData?.data?.data?.data_engineers_service_we_offer_section?.paragraph}
+              {servicePage?.data_engineers_service_we_offer_section?.paragraph}
             </p>
           </div>
 
           {/* ── Interactive showcase: vertical tabs left + content right ── */}
-          <ServicesShowcase data={loaderData?.data?.data?.data_engineers_service_we_offer_section?.blocks} isVisible={visibleSections.services} />
+          <ServicesShowcase data={servicePage?.data_engineers_service_we_offer_section?.blocks} isVisible={visibleSections.services} />
         </div>
       </section>
 
@@ -671,9 +675,9 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
         <PulsingGlow className="bottom-0 right-0 w-[500px] h-[400px]" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.advanced ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-              {loaderData?.data?.data?.paragraph}
+              {servicePage?.paragraph}
             </p>
           </div>
 
@@ -764,10 +768,10 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
 
       {/* ====== CTA 2 ====== */}
       <InlineCTA
-        title={loaderData?.data?.data?.data_engineers_for_the_reliable_services_section?.heading}
-        subtitle={loaderData?.data?.data?.data_engineers_for_the_reliable_services_section?.content}
-        cta={loaderData?.data?.data?.data_engineers_for_the_reliable_services_section?.cta_text}
-        ctaLink={loaderData?.data?.data?.data_engineers_for_the_reliable_services_section?.cta_url} />
+        title={servicePage?.data_engineers_for_the_reliable_services_section?.heading}
+        subtitle={servicePage?.data_engineers_for_the_reliable_services_section?.content}
+        cta={servicePage?.data_engineers_for_the_reliable_services_section?.cta_text}
+        ctaLink={servicePage?.data_engineers_for_the_reliable_services_section?.cta_url} />
       
 
       {/* ====== ENGAGEMENT MODELS ====== */}
@@ -780,9 +784,9 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
           {/* Header */}
           <div className={`text-center mb-14 transition-all duration-700 ${visibleSections.engagement ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-[#38BDF8] mb-3 px-3 py-1 rounded-full" style={{ background: "rgba(56,189,248,0.1)", border: "1px solid rgba(56,189,248,0.2)" }}>
-              {loaderData?.data?.data?.data_engineers_engagement_models_section?.tag_heading}
+              {servicePage?.data_engineers_engagement_models_section?.tag_heading}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-2" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.data_engineers_engagement_models_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mt-2" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.data_engineers_engagement_models_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}>
             </h2>
           </div>
 
@@ -856,9 +860,9 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
 
           {/* Header */}
           <div className={`mb-8 transition-all duration-700 ${visibleSections.industries ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.industries_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} ></h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.industries_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} ></h2>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-lg">
-              {loaderData?.data?.data?.industries_paragraph}
+              {servicePage?.industries_paragraph}
             </p>
           </div>
 
@@ -983,8 +987,8 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
           {/* Header */}
           <div className={`mb-12 transition-all duration-700 ${visibleSections.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.our_engineering_process_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
-            <p className="text-muted-foreground text-sm mt-2 max-w-xl">{loaderData?.data?.data?.our_engineering_process_section?.paragraph}</p>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.our_engineering_process_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
+            <p className="text-muted-foreground text-sm mt-2 max-w-xl">{servicePage?.our_engineering_process_section?.paragraph}</p>
           </div>
 
           {/* Cards grid */}
@@ -1022,10 +1026,10 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
 
       {/* ====== CTA 3 ====== */}
       <InlineCTA
-        title={loaderData?.data?.data?.data_engineers_hire_experts_section?.heading}
-        subtitle={loaderData?.data?.data?.data_engineers_hire_experts_section?.content}
-        cta={loaderData?.data?.data?.data_engineers_hire_experts_section?.cta_text}
-        ctaLink={loaderData?.data?.data?.data_engineers_hire_experts_section?.cta_url} />
+        title={servicePage?.data_engineers_hire_experts_section?.heading}
+        subtitle={servicePage?.data_engineers_hire_experts_section?.content}
+        cta={servicePage?.data_engineers_hire_experts_section?.cta_text}
+        ctaLink={servicePage?.data_engineers_hire_experts_section?.cta_url} />
       
 
       {/* ====== TECH STACK ====== */}
@@ -1034,7 +1038,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
         <PulsingGlow className="top-20 left-0 w-[400px] h-[400px]" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.techstack ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.data_engineering_technology_stack_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.data_engineering_technology_stack_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {techStack.map((stack, index) =>
@@ -1068,13 +1072,13 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
           {/* Heading + sub-stats row */}
           <div className={`flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14 transition-all duration-700 ${visibleSections.whychoose ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} ></h2>
-              <p className="mt-3 text-sm lg:text-base max-w-xl" style={{ color: "rgba(180,210,240,0.60)" }}>{loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.paragraph}
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.data_engineers_benefits_of_choosing_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} ></h2>
+              <p className="mt-3 text-sm lg:text-base max-w-xl" style={{ color: "rgba(180,210,240,0.60)" }}>{servicePage?.data_engineers_benefits_of_choosing_section?.paragraph}
               </p>
             </div>
             {/* Inline KPIs */}
             <div className="flex gap-8 shrink-0">
-              {[{ val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_1, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_1 }, { val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_2, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_2 }, { val: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_number_3, lbl: loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.count_text_3 }].map((k, i) =>
+              {[{ val: servicePage?.data_engineers_benefits_of_choosing_section?.count_number_1, lbl: servicePage?.data_engineers_benefits_of_choosing_section?.count_text_1 }, { val: servicePage?.data_engineers_benefits_of_choosing_section?.count_number_2, lbl: servicePage?.data_engineers_benefits_of_choosing_section?.count_text_2 }, { val: servicePage?.data_engineers_benefits_of_choosing_section?.count_number_3, lbl: servicePage?.data_engineers_benefits_of_choosing_section?.count_text_3 }].map((k, i) =>
               <div key={i} className="text-center">
                   <div className="text-2xl lg:text-3xl font-black" style={{ background: "linear-gradient(135deg,#5FC2E3,#0077B6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{k.val}</div>
                   <div className="text-xs mt-1" style={{ color: "rgba(180,210,240,0.55)" }}>{k.lbl}</div>
@@ -1138,7 +1142,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
 
           {/* Bottom trust strip */}
           <div className={`mt-10 flex flex-wrap items-center justify-center gap-6 transition-all duration-700 delay-500 ${visibleSections.whychoose ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-            {loaderData?.data?.data?.data_engineers_benefits_of_choosing_section?.bottom_bullets?.map((item, index) => (
+            {servicePage?.data_engineers_benefits_of_choosing_section?.bottom_bullets?.map((item, index) => (
   <div
     key={index}
     className="flex items-center gap-2 text-sm font-medium"
@@ -1189,12 +1193,12 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
               <div>
                 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.digital_security_compliance_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
-                <p className="text-muted-foreground text-sm mt-2 max-w-xl">{loaderData?.data?.data?.digital_security_compliance_section?.paragraph}</p>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.digital_security_compliance_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
+                <p className="text-muted-foreground text-sm mt-2 max-w-xl">{servicePage?.digital_security_compliance_section?.paragraph}</p>
               </div>
               {/* Trust badges */}
               <div className="flex flex-wrap gap-2">
-                {loaderData?.data?.data?.digital_security_compliance_section?.tags?.map((badge, i) =>
+                {servicePage?.digital_security_compliance_section?.tags?.map((badge, i) =>
                 <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.2)", color: "#5FC2E3" }}>
                     <Shield className="w-3 h-3" />
                     {badge.label}
@@ -1237,21 +1241,21 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
       </section>
 
       {/* ====== CERTIFICATIONS ====== */}
-      <CertificationsSection certificationData={loaderData.data?.data?.certifications_section} sectionRef={certRef as any} isVisible={visibleSections.security || false} />
+      <CertificationsSection certificationData={servicePage?.certifications_section} sectionRef={certRef as any} isVisible={visibleSections.security || false} />
 
       {/* ====== CTA 4 ====== */}
       <InlineCTA
-        title={loaderData?.data?.data?.data_engineers_security_brief_cta_section?.heading}
-        subtitle={loaderData?.data?.data?.data_engineers_security_brief_cta_section?.content}
-        cta={loaderData?.data?.data?.data_engineers_security_brief_cta_section?.cta_text}
-        ctaLink={loaderData?.data?.data?.data_engineers_security_brief_cta_section?.cta_url} />
+        title={servicePage?.data_engineers_security_brief_cta_section?.heading}
+        subtitle={servicePage?.data_engineers_security_brief_cta_section?.content}
+        cta={servicePage?.data_engineers_security_brief_cta_section?.cta_text}
+        ctaLink={servicePage?.data_engineers_security_brief_cta_section?.cta_url} />
       
 
       {/* ====== TESTIMONIALS ====== */}
       <section id="testimonials" ref={setSectionRef("testimonials")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 6%) 100%)" }}>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.testimonials ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.voices_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.voices_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
             <div className="relative w-24 h-px mx-auto">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
             </div>
@@ -1287,7 +1291,7 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
       <section id="faqs" ref={setSectionRef("faqs")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 5%) 100%)" }}>
         <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-3xl">
           <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{__html: addClassToSpan(loaderData?.data?.data?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{__html: addClassToSpan(servicePage?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
           </div>
           <Accordion type="single" collapsible className={`space-y-3 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             {faqs.map((faq, index) =>
@@ -1339,13 +1343,13 @@ const faqs = loaderData?.data?.data?.frequently_asked_question?.map((item) => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className={`transition-all duration-700 ${visibleSections.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              <span className="inline-block text-xs font-semibold tracking-[0.25em] text-accent/70 mb-3 uppercase">{loaderData?.data?.data?.services_get_started_section_section?.small_heading}</span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.services_get_started_section_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <span className="inline-block text-xs font-semibold tracking-[0.25em] text-accent/70 mb-3 uppercase">{servicePage?.services_get_started_section_section?.small_heading}</span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.services_get_started_section_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-muted-foreground text-base mb-4 text-left">
-                {loaderData?.data?.data?.services_get_started_section_section?.paragraph}
+                {servicePage?.services_get_started_section_section?.paragraph}
               </p>
               <div className="space-y-2">
-                {loaderData?.data?.data?.services_get_started_section_section?.lists?.map((item, index) =>
+                {servicePage?.services_get_started_section_section?.lists?.map((item, index) =>
                 <div key={index} className={`flex items-center gap-3 transition-all duration-500 ${visibleSections.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
                 style={{ transitionDelay: `${200 + index * 100}ms` }}>
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />

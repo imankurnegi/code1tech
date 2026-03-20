@@ -1,11 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Link } from "lucide-react";
 import { useTypingAnimation } from "@/hooks/use-typing-animation";
 import HeroGlowBackground from "./HeroGlowBackground";
 import ClientsLogoSlider from "./ClientsLogoSlider";
 import { addClassToSpan } from "@/lib/utils";
-import { Link } from "react-router-dom";
 
 interface HeroSectionProps {
   dataBanner?: {
@@ -42,12 +41,6 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
     pauseDuration: 2000,
     onFirstComplete: () => setShowCTA(true)
   });
-
-  // Ensure consistent initial render
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const mainHeading = dataBanner?.banner_main_heading ?? "";
   const paragraph = dataBanner?.banner_paragraph ?? "";
@@ -100,9 +93,7 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
 
           {/* Typing headline */}
           <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent mb-6 sm:mb-8 min-h-[1.2em]">
-            <span className="font-sans text-5xl bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-              {isMounted ? displayText : (phrases[0] || '')}
-            </span>
+            <span className="font-sans text-5xl bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">{displayText}</span>
             <span className={`inline-block w-[2px] sm:w-[3px] h-[0.85em] bg-accent ml-1 align-middle transition-opacity duration-100 ${isComplete ? 'opacity-0' : 'animate-pulse'}`} />
           </div>
 
@@ -117,10 +108,10 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
           {/* CTA Button - appears after first typing completes */}
           <div className={`transition-all duration-700 ease-out px-4 sm:px-0 ${showCTA ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'}`}>
             <Button variant="hero" size="xl" className="group w-full sm:w-auto text-sm sm:text-base" asChild>
-              <Link to={buttonUrl}>
+              <a href={buttonUrl}>
                 {buttonText}
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-              </Link>
+              </a>
             </Button>
           </div>
 

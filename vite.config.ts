@@ -4,29 +4,19 @@ import path from "path";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
-  const basePath = env.VITE_BASE_PATH || "/";
+
+  const basePath = env.VITE_BASE_PATH;
 
   return {
-    base: basePath,
+    base: "/frontend/",
 
     server: {
       host: "::",
-      port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
-    },
-
-    build: {
-      target: "esnext",
-      ssr:true
-      // manualChunks wala block yahan se hata diya hai taaki error na aaye
+      port: 3000,
     },
 
     ssr: {
-      // SSR ke liye in libraries ka bundle hona zaroori hai
-      noExternal: [
-        "@tanstack/react-query", 
-        "react-router-dom", 
-        "react-helmet-async"
-      ],
+      noExternal: ["@tanstack/react-query", "react-router-dom"],
     },
 
     plugins: [react()],
@@ -35,7 +25,6 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-      extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
-    },
+    }
   };
 });

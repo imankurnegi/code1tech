@@ -1,96 +1,35 @@
-import App from "./App";
-import Layout, { loader as layoutLoader } from "./components/layout/Layout";
-import Index, { loader as indexLoader } from "./pages/Index";
+import Layout from "./components/layout/Layout"; 
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import ErrorPage from "./pages/ErrorPage";
-import Contact, { loader as contactLoader } from "./pages/Contact";
-import About, { loader as aboutLoader } from "./pages/About";
-import Team, { loader as teamLoader } from "./pages/Team";
-import EngineerAsAService, { loader as engServiceLoader } from "./pages/services/EngineerAsAService";
-import DataEngineering, { loader as dataEngineeringLoader } from "./pages/services/DataEngineering";
-import AIMLSolutions, { loader as AIMLSolutionsLoader } from "./pages/services/AIMLSolutions";
-import DataScience, { loader as dataScienceLoader } from "./pages/services/DataScience";
-import TermsConditions, { loader as dataTermsLoader } from "./pages/TermsConditions";
-import PrivacyPolicy, { loader as dataPrivacyLoader } from "./pages/PrivacyPolicy";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
+import Team from "./pages/Team";
+import EngineerAsAService from "./pages/services/EngineerAsAService";
+import DataEngineering from "./pages/services/DataEngineering";
+import AIMLSolutions from "./pages/services/AIMLSolutions";
+import DataScience from "./pages/services/DataScience";
+import TermsConditions from "./pages/TermsConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import { Route, Routes } from "react-router-dom";
 
-export const routes = [
-  {
-    path: "/",
-    Component: App,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "",
-        id: "layout",
-        Component: Layout,
-        loader: layoutLoader,
-        children: [
-          {
-            path: "",
-            id: "index",
-            Component: Index,
-            loader: indexLoader
-          },
-          {
-            path: "contactus",
-            id: "contact",
-            Component: Contact,
-            loader: contactLoader
-          },
-          {
-            path: "about",
-            id: "about",
-            Component: About,
-            loader: aboutLoader
-          },
-          {
-            path: "team",
-            id: "team",
-            Component: Team,
-            loader: teamLoader
-          },
-          {
-            path: "services/engineer-as-a-service",
-            id: "engineerasaservice",
-            Component: EngineerAsAService,
-            loader: engServiceLoader
-          },
-          {
-            path: "services/data-engineering",
-            id: "dataengineering",
-            Component: DataEngineering,
-            loader: dataEngineeringLoader
-          },
-          {
-            path: "services/ai-ml-solutions",
-            id: "aimlsolutions",
-            Component: AIMLSolutions,
-            loader: AIMLSolutionsLoader
-          },
-          {
-            path: "services/data-science",
-            id: "datascience",
-            Component: DataScience,
-            loader: dataScienceLoader
-          },
-          {
-            path: "terms-conditions",
-            id: "terms",
-            Component: TermsConditions,
-            loader: dataTermsLoader
-          },
-          {
-            path: "privacy-policy",
-            id: "privacy",
-            Component: PrivacyPolicy,
-            loader: dataPrivacyLoader
-          },
-        ],
-      },
-      {
-        path: "*",
-        Component: NotFound,
-      },
-    ],
-  },
-];
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/contactus" element={<Contact />} />
+        <Route path="/services/engineer-as-a-service" element={<EngineerAsAService />} />
+        <Route path="/services/data-science" element={<DataScience />} />
+        <Route path="/services/ai-ml-solutions" element={<AIMLSolutions />} />
+        <Route path="/services/data-engineering" element={<DataEngineering />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  )
+}
+
+export default AppRoutes;
