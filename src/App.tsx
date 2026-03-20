@@ -18,7 +18,7 @@ const App = () => {
         (e.ctrlKey && e.shiftKey && ["i", "j"].includes(e.key.toLowerCase())) ||
         (e.ctrlKey && e.key.toLowerCase() === "u")
       ) {
-        e.preventDefault();
+       // e.preventDefault();
       }
     };
 

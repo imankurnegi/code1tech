@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
-import { useLoaderData } from "react-router-dom";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 import { api } from "@/api";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import SeoTags from "@/components/SeoTags";
@@ -33,7 +33,7 @@ export async function loader() {
 
 const Contact = () => {
   
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
 
   const [isHeroVisible, setIsHeroVisible] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);

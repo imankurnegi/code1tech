@@ -35,19 +35,6 @@ export const api = {
   getPrivacyPolicyData: async () => privacyData,
   getTermsCondition: async () => termsData,
 
-  // Browser-only live fetch (optional)
-  fetchLive: {
-    getHomeData: async () => {
-      const res = await fetch(`${BASE_URL}/homepage`, { headers });
-      return res.ok ? res.json() : homepageData;
-    },
-    getLayoutData: async () => {
-      const res = await fetch(`${BASE_URL}/menus/topmenu`, { headers });
-      return res.ok ? res.json() : layoutData;
-    },
-    // Add other endpoints similarly if needed
-  },
-
   submitContactForm: async (formData: FormData) => {
     try {
       const res = await fetch(`${BASE_URL}/cf7/submit`, {

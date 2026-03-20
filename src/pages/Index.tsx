@@ -17,7 +17,7 @@ import ContactSection from "@/components/ContactSection";
 import { useQuery } from "@tanstack/react-query";
 import SeoTags from "@/components/SeoTags";
 import { api } from "@/api";
-import { useLoaderData } from "react-router-dom";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 
 export async function loader() {
   try {
@@ -37,7 +37,7 @@ export async function loader() {
 }
 
 const Index = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
 
   const homepageData = loaderData?.homeData;
   const clientLogosData = loaderData?.clientLogos?.data ?? [];

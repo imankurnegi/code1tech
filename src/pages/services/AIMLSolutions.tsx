@@ -44,6 +44,7 @@ const NetworkCanvas = () => {
     let animationId: number;
     const nodes: Array<{ x: number; y: number; vx: number; vy: number; size: number }> = [];
     const resize = () => {
+      if (typeof window === 'undefined') return;
       const dpr = window.devicePixelRatio || 1;
       canvas.width = canvas.offsetWidth * dpr;
       canvas.height = canvas.offsetHeight * dpr;
@@ -51,7 +52,7 @@ const NetworkCanvas = () => {
     };
     const initNodes = () => {
       nodes.length = 0;
-      const count = window.innerWidth < 768 ? 20 : 45;
+      const count = typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 45;
       for (let i = 0; i < count; i++) {
         nodes.push({ x: Math.random() * canvas.offsetWidth, y: Math.random() * canvas.offsetHeight, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, size: Math.random() * 2 + 0.5 });
       }
@@ -109,12 +110,12 @@ const InlineCTA = ({ title, subtitle, btnText, btnUrl }: { title: string; subtit
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{title}</h3>
           <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>
         </div>
-            <a href={`${import.meta.env.BASE_URL}${btnUrl?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+            <Link to={btnUrl} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
           <Button size="lg" className="group font-semibold w-full sm:w-auto px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {btnText} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -380,13 +381,13 @@ const CoreServicesSection = ({data}) => {
               </div>
               <div className="p-7 lg:p-8 flex flex-col flex-1 justify-between">
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6" dangerouslySetInnerHTML={{__html: current.body}}></p>
-            <a href={`${import.meta.env.BASE_URL}${current.cta_link?.replace(/^\/+/, "")}`} >
+            <Link to={current.cta_link}>
                   <Button size="sm" className="group font-semibold rounded-xl px-6 transition-all duration-300 hover:scale-105"
                     style={{ background: "linear-gradient(135deg, #0077B6, #005F8E)", color: "#fff", boxShadow: "0 4px 16px rgba(0,119,182,0.35)" }}>
                     {current.cta_text}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -420,13 +421,13 @@ const CoreServicesSection = ({data}) => {
                   <div className="px-4 pb-5">
                     <div className="h-px w-full mb-4" style={{ background: `linear-gradient(90deg, transparent, ${svc.color}, transparent)` }} />
                     <p className="text-muted-foreground text-sm leading-relaxed mb-4" dangerouslySetInnerHTML={{__html: svc.body}}></p>
-                    <a href={`${import.meta.env.BASE_URL}${svc.cta_link?.replace(/^\/+/, "")}`}>
+                    <Link to={svc.cta_link}>
                       <Button size="sm" className="group font-semibold rounded-xl px-5 w-full transition-all duration-300"
                         style={{ background: "linear-gradient(135deg, #0077B6, #005F8E)", color: "#fff" }}>
                         {svc.cta_text}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                       </Button>
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -607,12 +608,12 @@ const AIMLSolutions = () => {
               <p className="text-sm font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
                 {loaderData?.data?.data?.banner_section?.highlighted_text}
               </p>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.banner_section?.cta_url?.replace(/^\/+/, "")}`}>
+            <Link to={loaderData?.data?.data?.banner_section?.cta_url}>
                 <Button size="lg" className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                   {loaderData?.data?.data?.banner_section?.cta_text} 
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -1358,18 +1359,18 @@ const AIMLSolutions = () => {
               </p>
               {loaderData?.data?.data?.services_get_started_section?.buttons.length > 0 && (
               <div className="flex flex-col sm:flex-row gap-4">
-            <a href={`${import.meta.env.BASE_URL}${loaderData.data.data.services_get_started_section.buttons[0]?.cta_url?.replace(/^\/+/, "")}`}>
+            <Link to={loaderData.data.data.services_get_started_section.buttons[0]?.cta_url}>
                   <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:scale-105 transition-all duration-300 w-full sm:w-auto">
                     {loaderData.data.data.services_get_started_section.buttons[0]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </a>
-            <a href={`${import.meta.env.BASE_URL}${loaderData.data.data.services_get_started_section.buttons[1]?.cta_url?.replace(/^\/+/, "")}`}>
+                </Link>
+            <Link to={loaderData.data.data.services_get_started_section.buttons[1]?.cta_url}>
                   <Button size="lg" variant="outline" className="group font-medium px-8 py-6 rounded-lg hover:scale-105 transition-all duration-300 w-full sm:w-auto">
                     {loaderData.data.data.services_get_started_section.buttons[1]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </a>
+                </Link>
               </div>
                 )}
             </div>

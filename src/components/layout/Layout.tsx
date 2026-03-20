@@ -1,4 +1,5 @@
-import { Outlet, useLoaderData, useLocation, ScrollRestoration } from "react-router-dom";
+import { Outlet, useLocation, ScrollRestoration } from "react-router-dom";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 import { api } from "@/api";
@@ -14,7 +15,7 @@ export async function loader() {
 }
 
 const Layout = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   const location = useLocation(); // Current route track karne ke liye
 
   const headerData = {

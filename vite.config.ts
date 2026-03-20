@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
 
     build: {
       target: "esnext",
+      ssr:true
       // manualChunks wala block yahan se hata diya hai taaki error na aaye
     },
 

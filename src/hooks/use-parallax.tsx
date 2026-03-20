@@ -3,8 +3,10 @@ import { useEffect, useState, useRef, RefObject } from "react";
 // Simple scroll-based parallax
 export const useParallax = (speed: number = 0.5) => {
   const [offset, setOffset] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const handleScroll = () => {
       setOffset(window.scrollY);
     };
@@ -13,7 +15,8 @@ export const useParallax = (speed: number = 0.5) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return offset * speed;
+  // Return 0 during SSR to avoid hydration mismatches
+  return !isMounted ? 0 : offset * speed;
 };
 
 // Advanced element-relative parallax
@@ -23,8 +26,10 @@ export const useElementParallax = (
 ) => {
   const ref = useRef<HTMLElement>(null);
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1, opacity: 1 });
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const element = ref.current;
     if (!element) return;
 
@@ -71,15 +76,18 @@ export const useElementParallax = (
     };
   }, [speed, direction]);
 
-  return { ref, transform };
+  // Return neutral transform during SSR to avoid hydration mismatches
+  return { ref, transform: !isMounted ? { x: 0, y: 0, scale: 1, opacity: 1 } : transform };
 };
 
 // Multi-layer parallax for complex backgrounds
 export const useLayeredParallax = (layers: number = 3) => {
   const [offsets, setOffsets] = useState<number[]>(Array(layers).fill(0));
   const containerRef = useRef<HTMLElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     let rafId: number;
 
     const handleScroll = () => {
@@ -115,5 +123,6 @@ export const useLayeredParallax = (layers: number = 3) => {
     };
   }, [layers]);
 
-  return { containerRef, offsets };
+  // Return zero offsets during SSR to avoid hydration mismatches
+  return { containerRef, offsets: !isMounted ? Array(layers).fill(0) : offsets };
 };

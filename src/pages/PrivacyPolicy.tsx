@@ -1,7 +1,7 @@
 import { api } from "@/api";
 import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
-import { useLoaderData } from "react-router-dom";
+import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
 
 export async function loader() {
   try {
@@ -16,7 +16,7 @@ export async function loader() {
   }
   
   const PrivacyPolicy = () => {
-  const loaderData = useLoaderData() as any;
+  const loaderData = useSafeLoaderData();
   return (
       <main>
         <SeoTags
