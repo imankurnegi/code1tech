@@ -30,11 +30,7 @@ jobs:
       - name: Build SSR
         run: npm run build:ssr
 
-      # 4.1️⃣ List output (optional, debug)
-      - name: List build output
-        run: ls -R dist
-
-      # 5️⃣ Setup SSH key for VPS
+      # 5️⃣ Setup SSH
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -42,32 +38,46 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      # 6️⃣ Deploy built SSR files
-      - name: Deploy SSR files
+      # 6️⃣ Deploy files to VPS
+      - name: Deploy files
         run: |
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/frontend/dist/client /var/www/frontend/dist/server"
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/frontend"
 
-          rsync -avz --delete ./dist/client/ \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/client
+          # dist files
+          rsync -avz --delete ./dist/ \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist
 
-          rsync -avz --delete ./dist/server/ \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist/server
-
+          # server file
           rsync -avz server.js \
             ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server.js
 
-      # 7️⃣ Restart PM2 server in production mode
+          # package files (IMPORTANT)
+          rsync -avz package.json \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/package.json
+
+          rsync -avz package-lock.json \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/package-lock.json
+
+      # 7️⃣ Install dependencies on VPS
+      - name: Install dependencies on VPS
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
+            cd /var/www/frontend && \
+            npm ci --only=production \
+          "
+
+      # 8️⃣ Restart PM2
       - name: Restart PM2 server
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
             cd /var/www/frontend && \
             NODE_ENV=production pm2 describe react-ssr > /dev/null 2>&1 && \
             NODE_ENV=production pm2 restart react-ssr --update-env || \
-            NODE_ENV=production pm2 start server.js --name react-ssr --watch --update-env \
+            NODE_ENV=production pm2 start server.js --name react-ssr --update-env \
           "
 
-      # 8️⃣ Deployment Info
+      # 9️⃣ Done
       - name: Deployment Info
         run: |
-          echo "✅ SSR Deployment complete. Files uploaded to /var/www/frontend/"
-          echo "📄 PM2 process 'react-ssr' is running on VPS in production mode"
+          echo "✅ SSR Deployment complete"
+          echo "🚀 App running with PM2 (react-ssr)"
