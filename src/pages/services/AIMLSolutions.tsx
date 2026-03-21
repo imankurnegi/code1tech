@@ -86,7 +86,7 @@ const InlineCTA = ({ title, subtitle, btnText, btnUrl }: { title: string; subtit
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{title}</h3>
           <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>
         </div>
-        <Link to="/contact" className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+        <Link to={btnUrl} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
           <Button size="lg" className="group font-semibold w-full sm:w-auto px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {btnText} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />

@@ -406,7 +406,7 @@ const Team = () => {
             <p className="text-muted-foreground mb-6">
               {teamData?.join_us_section?.description}
             </p>
-            <Link to={`/${teamData?.join_us_section?.button_url}`} className="inline-flex items-center">
+            <Link to={teamData?.join_us_section?.button_url} className="inline-flex items-center">
               <Button variant="hero" size="lg" className="group">
                 {teamData?.join_us_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
