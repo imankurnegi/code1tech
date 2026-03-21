@@ -146,6 +146,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
                 }`} />
 
                 <div className="relative p-6">
+                  <div className="flex items-center gap-4 mb-3">
                   {/* Icon */}
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 ${
                     isHovered ? "bg-accent/20" : "bg-muted/50"
@@ -161,6 +162,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
                   }`}>
                     {industry.title}
                   </h3>
+                  </div>
 
                   {/* Description */}
                   <p className="text-muted-foreground text-sm leading-relaxed">
