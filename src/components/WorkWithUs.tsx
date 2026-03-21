@@ -92,7 +92,7 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
         )}
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 max-w-6xl mx-auto mb-10 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 max-w-6xl mx-auto mb-10 md:mb-16">
           {models.map((model, index) => {
           const isHovered = hoveredIndex === index;
           return <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)} className={`group relative rounded-2xl transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-2" : ""}`} style={{
