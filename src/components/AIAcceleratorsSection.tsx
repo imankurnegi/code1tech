@@ -193,7 +193,7 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
                   className="group w-full sm:w-auto text-sm sm:text-base"
                   onClick={() => {
                     if (dataAiAgent.section_cta_url) {
-                      window.location.href = `${import.meta.env.BASE_URL}${dataAiAgent.section_cta_url?.replace(/^\/+/, "")}`;
+                      window.location.href = dataAiAgent.section_cta_url;
                     }
                   }}
                 >

@@ -27,7 +27,7 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
   const [hoveredCard, setHoveredCard] = useState<'left' | 'right' | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const parallaxOffset = useParallax(0.08);
+  const parallaxOffset = 0; // useParallax(0.08) - Temporarily disabled
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {

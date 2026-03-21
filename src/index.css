@@ -108,7 +108,6 @@
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -252,26 +251,4 @@
   to { 
     transform: scale(1.05); 
   }
-}
-
-/* Custom scrollbar - all browsers including mobile */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: hsl(0 0% 100% / 0.4) transparent;
-}
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  -webkit-appearance: none;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: hsl(0 0% 100% / 0.08);
-  border-radius: 3px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: hsl(0 0% 100% / 0.4);
-  border-radius: 3px;
-  min-height: 30px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: hsl(0 0% 100% / 0.6);
 }

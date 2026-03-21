@@ -183,7 +183,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
               className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
               onClick={() => {
                 if (dataIndustries.help_cta_url) {
-                  window.location.href = `${import.meta.env.BASE_URL}${dataIndustries.help_cta_url?.replace(/^\/+/, "")}`
+                  window.location.href = dataIndustries.help_cta_url;
                 }
               }}
             >

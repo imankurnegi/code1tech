@@ -11,25 +11,11 @@ import { useEffect, useState, useRef } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { api } from "@/api";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
-import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
-import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
-
-export async function loader() {
-  try {
-    const data = await api.getDataScience();
-    const contactFormFields = await api.getContactFormFields();
-    return { data, contactFormFields };
-  } catch (error) {
-    console.error("Failed to load data science data", error);
-    return {
-      data: null,
-      contactFormFields: null,
-    };
-  }
-}
+import SeoTags from "@/components/SeoTags";
+import { useQuery } from "@tanstack/react-query";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -200,12 +186,12 @@ const InlineCTA = ({ text, buttonText, link = "/contact" }: { text: string; butt
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{text}</h3>
         </div>
         {/* Button */}
-            <a href={`${import.meta.env.BASE_URL}${link?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10">
+        <Link to={link} className="flex-shrink-0 relative z-10">
           <Button size="lg" className="group font-semibold px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {buttonText} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -564,12 +550,34 @@ const AnalyticsSolutionsSection = ({
 };
 
 const DataScience = () => {
-  const loaderData = useSafeLoaderData();
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(0);
-  const contactFormFields = loaderData?.contactFormFields ?? null;
 
-  const pageData = loaderData?.data?.data ?? null;
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+  
+ const { data, isLoading, error } = useQuery({
+    queryKey: ["dataSciencePage"],
+    queryFn: async () => {
+      const [serviceData, contactFormFields] = await Promise.all([
+        api.getDataScience(),
+        api.getContactFormFields(),
+      ]);
+
+      return {
+        serviceData,
+        contactFormFields,
+      };
+    },
+  });
+
+  if (isLoading) return null;
+  if (error) return null;
+
+  const pageData = data?.serviceData?.data ?? null;
+  const contactFormFields = data?.contactFormFields ?? null;
+
   const banner = pageData?.banner_section;
   const statsFields = pageData?.stats_section?.stats_fields ?? [];
   const industriesApi = pageData?.box_data ?? [];
@@ -588,11 +596,6 @@ const DataScience = () => {
   const testimonialsSectionHeading = pageData?.testimonial_section_heading;
   const faqSectionHeading = pageData?.faq_section_heading;
   const faqsApi = pageData?.frequently_asked_question ?? [];
-
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const handleFormSubmit = async (data: ContactFormData) => {
     const formData = new FormData();
@@ -780,9 +783,9 @@ const DataScience = () => {
   return (
     <>
         <SeoTags
-                    title={loaderData?.data?.data?.seo?.title}
-                    description={loaderData?.data?.data?.seo?.description}
-                    ogImage={loaderData?.data?.data?.seo?.og_image}
+                    title={pageData?.seo?.title}
+                    description={pageData?.seo?.description}
+                    ogImage={pageData?.seo?.og_image}
                   />
       {/* ===== 1. HERO / BANNER ===== */}
       <section
@@ -896,7 +899,7 @@ const DataScience = () => {
               <p className="text-sm font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
                 {banner?.highlighted_text}
               </p>
-            <a href={`${import.meta.env.BASE_URL}${banner?.cta_url?.replace(/^\/+/, "")}`}>
+              <Link to={banner?.cta_url || "#"}>
                 <Button
                   size="lg"
                   className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
@@ -904,7 +907,7 @@ const DataScience = () => {
                   {banner?.cta_text}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -1111,9 +1114,9 @@ const DataScience = () => {
                 {/* CTA link */}
                 {service.cta && (
                   <div>
-            <a href={`${import.meta.env.BASE_URL}${service.ctaUrl?.replace(/^\/+/, "")}`} className="inline-flex items-center gap-2 text-accent text-sm font-medium hover:gap-3 transition-all duration-300">
+                    <Link to={service.ctaUrl || "#"} className="inline-flex items-center gap-2 text-accent text-sm font-medium hover:gap-3 transition-all duration-300">
                       {service.cta} <ArrowRight className="w-4 h-4" />
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -1522,7 +1525,7 @@ const DataScience = () => {
                 ))}
               </div>
               <div className="flex flex-wrap gap-4">
-            <a href={`${import.meta.env.BASE_URL}${servicesGetStarted?.buttons[0]?.cta_url?.replace(/^\/+/, "")}`}>
+                <Link to={servicesGetStarted?.buttons[0]?.cta_url || "#"}>
                   <Button
                     size="lg"
                     className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
@@ -1530,8 +1533,8 @@ const DataScience = () => {
                     {servicesGetStarted?.buttons[0]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                   </Button>
-                </a>
-            <a href={`${import.meta.env.BASE_URL}${servicesGetStarted?.buttons[1]?.cta_url?.replace(/^\/+/, "")}`}>
+                </Link>
+                <Link to={servicesGetStarted?.buttons[1]?.cta_url || "#" }>
                   <Button
                     size="lg"
                     variant="outline"
@@ -1540,7 +1543,7 @@ const DataScience = () => {
                     {servicesGetStarted?.buttons[1]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                   </Button>
-                </a>
+                </Link>
               </div>
             </div>
 

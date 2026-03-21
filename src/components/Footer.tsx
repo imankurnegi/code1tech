@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, ChevronDown, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export interface FooterMenuItem {
   id: number | string;
@@ -152,10 +153,10 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <a
-                      href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
+                    <Link
+                      to={link.url}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                     dangerouslySetInnerHTML={{ __html: link.title}}></a>
+                     dangerouslySetInnerHTML={{ __html: link.title}}></Link>
                   </li>
                 ))}
               </ul>
@@ -170,11 +171,11 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
-                    <a
-                      href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`}
+                    <Link
+                      to={link.url}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
                     dangerouslySetInnerHTML={{ __html: link.title}}>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -372,8 +373,8 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <a href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
-                    </a>
+                    <Link to={link.url} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -402,8 +403,8 @@ const Footer = ({ data }: FooterProps) => {
               <ul className="space-y-3 pl-1">
                 {hireTalentLinks.map((link) => (
                   <li key={link.id}>
-                    <a href={`${import.meta.env.BASE_URL}${link?.url?.replace(/^\/+/, "")}`} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
-                    </a>
+                    <Link to={link.url} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -563,12 +564,12 @@ const Footer = ({ data }: FooterProps) => {
           {data?.legal_links?.privacy_policy && (
             <>
               <span className="hidden sm:block text-border">|</span>
-              <a
-                href={`${import.meta.env.BASE_URL}${data.legal_links.privacy_policy.replace(/^\/+/, "")}`}
+              <Link
+                to={data.legal_links.privacy_policy}
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 Privacy Policy
-              </a>
+              </Link>
             </>
           )}
         </div>

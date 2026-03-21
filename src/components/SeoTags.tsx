@@ -8,27 +8,46 @@ interface SEOProps {
   ogImage?: string;
 }
 
-const SeoTags = ({ title, description, canonical, ogType = "website", ogImage }: SEOProps) => {
+const SeoTags = ({
+  title,
+  description,
+  canonical,
+  ogType = "website",
+  ogImage,
+}: SEOProps) => {
   const siteTitle = "Code1 Tech Systems";
-  const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
+
+  // ✅ fallback handling
+  const finalTitle = title
+    ? `${title} | ${siteTitle}`
+    : siteTitle;
+
+  const finalDescription =
+    description || "Code1 Tech Systems provides scalable tech and AI solutions to grow your business.";
+
+  const finalOgImage =
+    ogImage || "";
 
   return (
     <Helmet>
-      <title>{fullTitle}</title>
-      {description && <meta name="description" content={description} />}
+      {/* ✅ always present */}
+      <title>{finalTitle}</title>
+      <meta name="description" content={finalDescription} />
+
+      {/* ✅ canonical */}
       {canonical && <link rel="canonical" href={canonical} />}
 
-      {/* Open Graph / Facebook */}
+      {/* ✅ Open Graph */}
       <meta property="og:type" content={ogType} />
-      <meta property="og:title" content={fullTitle} />
-      {description && <meta property="og:description" content={description} />}
-      {ogImage && <meta property="og:image" content={ogImage} />}
+      <meta property="og:title" content={finalTitle} />
+      <meta property="og:description" content={finalDescription} />
+      <meta property="og:image" content={finalOgImage} />
 
-      {/* Twitter */}
+      {/* ✅ Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      {description && <meta name="twitter:description" content={description} />}
-      {ogImage && <meta name="twitter:image" content={ogImage} />}
+      <meta name="twitter:title" content={finalTitle} />
+      <meta name="twitter:description" content={finalDescription} />
+      <meta name="twitter:image" content={finalOgImage} />
     </Helmet>
   );
 };

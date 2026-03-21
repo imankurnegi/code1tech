@@ -3,7 +3,7 @@ name: Deploy React SSR to VPS
 on:
   push:
     branches:
-      - staging
+      - main      # <-- ab main branch ke liye
   workflow_dispatch:
 
 jobs:
@@ -41,28 +41,28 @@ jobs:
       # 6️⃣ Deploy files
       - name: Deploy files to VPS
         run: |
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/frontend"
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/production"
 
           # dist
           rsync -avz --delete ./dist/ \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/dist
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/dist
 
           # server
           rsync -avz server.js \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/server.js
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/server.js
 
           # package files (IMPORTANT)
           rsync -avz package.json \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/package.json
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/package.json
 
           rsync -avz package-lock.json \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/frontend/package-lock.json
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/package-lock.json
 
       # 7️⃣ Install dependencies on VPS (FIXED 🔥)
       - name: Install dependencies on VPS
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
-            cd /var/www/frontend && \
+            cd /var/www/production && \
             npm ci --omit=dev --legacy-peer-deps \
           "
 
@@ -70,7 +70,7 @@ jobs:
       - name: Restart PM2 server
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
-            cd /var/www/frontend && \
+            cd /var/www/production && \
             NODE_ENV=production pm2 describe react-ssr > /dev/null 2>&1 && \
             NODE_ENV=production pm2 restart react-ssr --update-env || \
             NODE_ENV=production pm2 start server.js --name react-ssr --update-env \

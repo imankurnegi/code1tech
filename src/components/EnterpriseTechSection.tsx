@@ -83,14 +83,6 @@ const FloatingParticles = () => {
 
 // Video thumbnails data
 const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
-  const [activeThumb, setActiveThumb] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const thumbnailRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const parallaxOffset = useParallax(0.1);
-
   // Build video list from API with safe fallbacks for SSG/SSR
   const videoFullData = dataTrusted?.left_video_section
     ? Object.values(dataTrusted.left_video_section).map((video, index) => ({
@@ -106,6 +98,14 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
   if (!dataTrusted || videoData.length === 0) {
     return null;
   }
+
+  const [activeThumb, setActiveThumb] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const thumbnailRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const parallaxOffset = useParallax(0.1);
 
   // Handle thumbnail hover play/pause
   const handleThumbnailHover = (index: number) => {
@@ -312,7 +312,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
               <Button size="lg" className="relative group w-full sm:w-auto rounded-full px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{
               background: "linear-gradient(135deg, hsl(205 100% 35%), hsl(194 68% 55%))",
               boxShadow: "0 4px 25px hsla(205, 100%, 35%, 0.35)"
-            }} onClick={() => window.location.href = `${import.meta.env.BASE_URL}${dataTrusted?.cta_url?.replace(/^\/+/, "")}`}>
+            }} onClick={() => window.location.href = dataTrusted?.cta_url}>
                 {/* Hover glow effect */}
                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
                 boxShadow: "0 0 35px hsla(194, 68%, 55%, 0.45), 0 0 70px hsla(194, 68%, 55%, 0.25)"

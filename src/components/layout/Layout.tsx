@@ -1,53 +1,43 @@
-import { Outlet, useLoaderData, useLocation, ScrollRestoration } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 
-export async function loader() {
-  try {
-    const data = await api.getLayoutData();
-    return data;
-  } catch (error) {
-    console.error("Failed to load layout data for SSG", error);
-    return { data: null };
-  }
-}
-
 const Layout = () => {
-  const loaderData = useLoaderData() as any;
-  const location = useLocation(); // Current route track karne ke liye
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["layout"],
+        queryFn: api.getLayoutData,
+    });
 
-  const headerData = {
-    logo: loaderData?.data?.full,
-    alt: loaderData?.data?.alt,
-    primary_menu: loaderData?.data?.primary_menu,
-    secondary_menu: loaderData?.data?.secondary_menu
-  }
+    if (isLoading) return null;
+    if (error) return null;
 
-  const footerData = {
-    footer_logo: loaderData?.data?.footer_logo,
-    footer_menus: loaderData?.data?.footer_menus,
-    copyright_text: loaderData?.data?.copyright_text,
-    contact: loaderData?.data?.contact,
-    social_links: loaderData?.data?.social_links,
-    legal_links: loaderData?.data?.legal_links,
-    footer_text: loaderData?.data?.footer_text
-  }
+    const headerData = {
+        logo: data?.data?.full,
+        alt: data?.data?.alt,
+        primary_menu: data?.data?.primary_menu,
+        secondary_menu: data?.data?.secondary_menu
+    }
+    const footerData = {
+        footer_logo: data?.data?.footer_logo,
+        footer_menus: data?.data?.footer_menus,
+        copyright_text: data?.data?.copyright_text,
+        contact: data?.data?.contact,
+        social_links: data?.data?.social_links,
+        legal_links: data?.data?.legal_links,
+        footer_text: data?.data?.footer_text
+    }
 
-  return (
-    /* key={location.pathname} add karne se Back button press karne par 
-       React ko pata chalta hai ki use child components re-sync karne hain */
-    <div key={location.pathname} className="min-h-screen bg-background">
-      {/* Har page change par scroll top par laane ke liye */}
-      <ScrollRestoration />
-      
-      <Navbar data={headerData} />
-      <main>
-        <Outlet />
-      </main>
-      <Footer data={footerData} />
-    </div>
-  );
-};
+    return (
+        <>
+            <Navbar data={headerData} />
+            <main>
+                <Outlet />
+            </main>
+            <Footer data={footerData} />
+        </>
 
+    );
+}
 export default Layout;

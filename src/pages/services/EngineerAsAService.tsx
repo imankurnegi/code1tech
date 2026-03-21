@@ -11,20 +11,7 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
-
-export async function loader() {
-  try {
-    const data = await api.getEngineerAsAService();
-    const contactFormFields = await api.getContactFormFields();
-    return { data, contactFormFields };
-  } catch (error) {
-    console.error("Failed to load engineer as a service data", error);
-    return {
-      data: null,
-      contactFormFields: null,
-    };
-  }
-}
+import { useQuery } from "@tanstack/react-query";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -164,13 +151,26 @@ const PulsingGlow = ({ className, color = "rgba(95, 194, 227, 0.08)" }: { classN
 );
 
 const EngineerAsAService = () => {
-  const loaderData = useLoaderData() as any;
   const [isVisible, setIsVisible] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
   const [activePricing, setActivePricing] = useState(0);
   const [activeService, setActiveService] = useState(0);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const contactFormFields = loaderData?.contactFormFields ?? null;
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["engineerServicePage"],
+    queryFn: async () => {
+      const [serviceData, contactFormFields] = await Promise.all([
+        api.getEngineerAsAService(),
+        api.getContactFormFields(),
+      ]);
+
+      return {
+        serviceData,
+        contactFormFields,
+      };
+    },
+  });
 
   const handleFormSubmit = async (data: ContactFormData) => {
       const formData = new FormData();
@@ -211,7 +211,13 @@ const EngineerAsAService = () => {
     sectionRefs.current[id] = el;
   };
 
-  const pillars = loaderData?.data?.data?.engineer_as_a_service_page_section?.box_fields?.map((item) => {
+  if (isLoading) return null;
+  if (error) return null;
+
+  const serviceData = data?.serviceData?.data;
+  const contactFormFields = data?.contactFormFields ?? null;
+  
+  const pillars = serviceData?.engineer_as_a_service_page_section?.box_fields?.map((item) => {
     return {
       icon: item.box_icon,
       title: item.box_heading,
@@ -222,7 +228,7 @@ const EngineerAsAService = () => {
     }
   }) || [];
 
-  const eaasServices = loaderData?.data?.data?.eng_services_data?.map((service) => {
+  const eaasServices = serviceData?.eng_services_data?.map((service) => {
     return {
       icon: service.sdb.engineer_service_post_fields.service_box_icon,
       title: service.post_title,
@@ -233,7 +239,7 @@ const EngineerAsAService = () => {
     }
   }) || [];
 
-  const processSteps = loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_work_box?.map((item, index) => {
+  const processSteps = serviceData?.engineer_as_a_service_page_section?.how_we_work_box?.map((item, index) => {
     return {
       icon: item.box_icon, 
       title: item.box_heading, 
@@ -241,7 +247,7 @@ const EngineerAsAService = () => {
     }
   }) || [];
 
-  const advantages = loaderData?.data?.data?.engineer_as_a_service_page_section?.advanced_solutions_box?.map((item) => {
+  const advantages = serviceData?.engineer_as_a_service_page_section?.advanced_solutions_box?.map((item) => {
     return {
       icon: item.box_icon,
       title: item.box_heading,
@@ -249,7 +255,7 @@ const EngineerAsAService = () => {
     }
   }) || [];
 
-  const pricingModels = loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_engagement_section?.map((item) => {
+  const pricingModels = serviceData?.engineer_as_a_service_page_section?.pricing_engagement_section?.map((item) => {
     return {
       icon: item.icon,
       title: item.heading,
@@ -257,7 +263,7 @@ const EngineerAsAService = () => {
     }
   }) || [];
 
-  const securityItems = loaderData?.data?.data?.engineer_as_a_service_page_section?.security_section_box?.map((item) => {
+  const securityItems = serviceData?.engineer_as_a_service_page_section?.security_section_box?.map((item) => {
     return {
       icon: item.box_icon,
       title: item.box_title,
@@ -312,9 +318,9 @@ const EngineerAsAService = () => {
   return (
     <>
     <SeoTags
-        title={loaderData?.data?.data?.seo?.title}
-        description={loaderData?.data?.data?.seo?.description}
-        ogImage={loaderData?.data?.data?.seo?.og_image}
+        title={serviceData?.seo?.title}
+        description={serviceData?.seo?.description}
+        ogImage={serviceData?.seo?.og_image}
       />
       {/* ====== HERO SECTION ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{
@@ -339,8 +345,8 @@ const EngineerAsAService = () => {
                   boxShadow: "0 25px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(95, 194, 227, 0.1)"
                 }}>
                   <img 
-                    src={loaderData?.data?.data?.banner_section?.banner_image?.url} 
-                    alt={loaderData?.data?.data?.banner_section?.banner_image?.alt} 
+                    src={serviceData?.banner_section?.banner_image?.url} 
+                    alt={serviceData?.banner_section?.banner_image?.alt} 
                     className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105"
                     style={{ filter: "brightness(0.9) contrast(1.05)" }}
                     loading="eager"
@@ -362,8 +368,8 @@ const EngineerAsAService = () => {
                   transitionDelay: "600ms",
                   animation: "float 6s ease-in-out infinite"
                 }}>
-                  <div className="text-2xl font-bold text-accent font-mono">{loaderData?.data?.data?.banner_section?.floating_badge_fields[1]?.badge_heading}</div>
-                  <div className="text-xs text-muted-foreground">{loaderData?.data?.data?.banner_section?.floating_badge_fields[1]?.badge_text}</div>
+                  <div className="text-2xl font-bold text-accent font-mono">{serviceData?.banner_section?.floating_badge_fields[1]?.badge_heading}</div>
+                  <div className="text-xs text-muted-foreground">{serviceData?.banner_section?.floating_badge_fields[1]?.badge_text}</div>
                 </div>
 
                 <div className={`absolute -left-4 bottom-1/4 p-4 rounded-xl backdrop-blur-xl transition-all duration-1000 hidden sm:block ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{
@@ -374,30 +380,31 @@ const EngineerAsAService = () => {
                   animation: "float 5s ease-in-out infinite",
                   animationDelay: "2s"
                 }}>
-                  <div className="text-2xl font-bold text-accent font-mono">{loaderData?.data?.data?.banner_section?.floating_badge_fields[0]?.badge_heading}</div>
-                  <div className="text-xs text-muted-foreground">{loaderData?.data?.data?.banner_section?.floating_badge_fields[0]?.badge_text}</div>
+                  <div className="text-2xl font-bold text-accent font-mono">{serviceData?.banner_section?.floating_badge_fields[0]?.badge_heading}</div>
+                  <div className="text-xs text-muted-foreground">{serviceData?.banner_section?.floating_badge_fields[0]?.badge_text}</div>
                 </div>
               </div>
             </div>
 
             {/* Right Side - Content */}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-lg text-left">
-                {loaderData?.data?.data?.banner_section?.banner_description}
+                {serviceData?.banner_section?.banner_description}
               </p>
               <p className="text-base font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
-                {loaderData?.data?.data?.banner_section?.highlighted_text}
+                {serviceData?.banner_section?.highlighted_text}
               </p>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.banner_section?.cta_url?.replace(/^\/+/, "")}`}>
+              
+              <Link to={serviceData?.banner_section?.cta_url}>
               <Button 
                 size="lg"
                 className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
               >
-                  {loaderData?.data?.data?.banner_section?.cta_text}
+                  {serviceData?.banner_section?.cta_text}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
               </Button>
-             </a>
+             </Link>
                </div>
           </div>
 
@@ -411,10 +418,10 @@ const EngineerAsAService = () => {
               animation: isVisible ? "statsBarShimmer 6s ease-in-out infinite" : "none"
             }}
           >
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[0]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[0]?.stats_title} delay={1100} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[1]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[1]?.stats_title} delay={1250} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[2]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[2]?.stats_title} delay={1400} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[3]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[3]?.stats_title} delay={1550} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[0]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[0]?.stats_title} delay={1100} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[1]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[1]?.stats_title} delay={1250} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[2]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[2]?.stats_title} delay={1400} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[3]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[3]?.stats_title} delay={1550} />
           </div>
         </div>
 
@@ -489,10 +496,10 @@ const EngineerAsAService = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           {/* Section Header */}
           <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${visibleSections.pillars ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-5 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.engineer_as_a_service_page_section?.perfect_match_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-5 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.engineer_as_a_service_page_section?.perfect_match_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <div className="w-16 h-[2px] mx-auto mb-5" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
             <p className="text-muted-foreground text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-              {loaderData?.data?.data?.engineer_as_a_service_page_section?.perfect_match_description}
+              {serviceData?.engineer_as_a_service_page_section?.perfect_match_description}
             </p>
           </div>
 
@@ -643,7 +650,7 @@ const EngineerAsAService = () => {
         <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 max-w-[1200px]">
           {/* Section Header */}
           <div className={`text-center mb-7 lg:mb-9 transition-all duration-700 ${visibleSections.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-2xl sm:text-[28px] lg:text-[32px] font-bold text-foreground mb-3 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.service_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-2xl sm:text-[28px] lg:text-[32px] font-bold text-foreground mb-3 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.service_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <div className="w-16 h-[2px] mx-auto" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
           </div>
 
@@ -703,9 +710,10 @@ const EngineerAsAService = () => {
                           </span>
                         ))}
                       </div>
-            <a href={`${import.meta.env.BASE_URL}${service.link?.replace(/^\/+/, "")}`} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
+
+                      <Link to={service.link} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
                         <ArrowRight className="w-4 h-4" />
-                      </a>
+                      </Link>
                     </div>
 
                     {/* Image region — visible on all breakpoints */}
@@ -751,15 +759,15 @@ const EngineerAsAService = () => {
                 <div className="absolute" style={{ bottom: "-70%", right: "22%", width: "380px", height: "260px", background: "transparent", border: "1.5px solid rgba(56,189,248,0.15)", borderRadius: "50%", transform: "rotate(15deg)" }} />
               </div>
               <div className="flex-1 relative z-10">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{loaderData?.data?.data?.engineer_service_bottom_highlighted_text}</h3>
-                <p className="text-muted-foreground text-sm mt-1">{loaderData?.data?.data?.engineer_service_bottom_text}</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{serviceData?.engineer_service_bottom_highlighted_text}</h3>
+                <p className="text-muted-foreground text-sm mt-1">{serviceData?.engineer_service_bottom_text}</p>
               </div>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_service_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+              <Link to={serviceData?.engineer_service_cta_url} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
                 <Button size="lg" className="group font-semibold w-full sm:w-auto px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
                   style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
-                  {loaderData?.data?.data?.engineer_service_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  {serviceData?.engineer_service_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -783,7 +791,7 @@ const EngineerAsAService = () => {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${visibleSections.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_work_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.engineer_as_a_service_page_section?.how_we_work_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
@@ -838,15 +846,15 @@ const EngineerAsAService = () => {
                 <div className="absolute" style={{ bottom: "-70%", right: "22%", width: "380px", height: "260px", background: "transparent", border: "1.5px solid rgba(56,189,248,0.15)", borderRadius: "50%", transform: "rotate(15deg)" }} />
               </div>
               <div className="flex-1 relative z-10">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_bottom_highlighted_text}</h3>
-                <p className="text-muted-foreground text-sm mt-1">{loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_bottom_text}</p>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{serviceData?.engineer_as_a_service_page_section?.how_we_bottom_highlighted_text}</h3>
+                <p className="text-muted-foreground text-sm mt-1">{serviceData?.engineer_as_a_service_page_section?.how_we_bottom_text}</p>
               </div>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+              <Link to={serviceData?.engineer_as_a_service_page_section?.how_we_cta_url} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
                 <Button size="lg" className="group font-semibold w-full sm:w-auto px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
                   style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
-                  {loaderData?.data?.data?.engineer_as_a_service_page_section?.how_we_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  {serviceData?.engineer_as_a_service_page_section?.how_we_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -908,7 +916,7 @@ const EngineerAsAService = () => {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${visibleSections.advantages ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.engineer_as_a_service_page_section?.advanced_solutions_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.engineer_as_a_service_page_section?.advanced_solutions_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
@@ -1021,9 +1029,9 @@ const EngineerAsAService = () => {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${visibleSections.pricing ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.engineer_as_a_service_page_section?.pricing_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-              {loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_section_description}
+              {serviceData?.engineer_as_a_service_page_section?.pricing_section_description}
             </p>
           </div>
 
@@ -1155,19 +1163,19 @@ const EngineerAsAService = () => {
 
             <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 px-8 py-7">
               <div className="text-center sm:text-left">
-                <p className="text-lg sm:text-xl font-bold text-foreground mb-1">{loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_high_text}</p>
-                <p className="text-sm text-muted-foreground">{loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_bottom_text}</p>
+                <p className="text-lg sm:text-xl font-bold text-foreground mb-1">{serviceData?.engineer_as_a_service_page_section?.pricing_high_text}</p>
+                <p className="text-sm text-muted-foreground">{serviceData?.engineer_as_a_service_page_section?.pricing_bottom_text}</p>
               </div>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0">
+              <Link to={serviceData?.engineer_as_a_service_page_section?.pricing_cta_url} className="flex-shrink-0">
                 <Button
                   size="lg"
                   className="group w-full sm:w-auto font-semibold px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.5)]"
                   style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.35)" }}
                 >
-                  {loaderData?.data?.data?.engineer_as_a_service_page_section?.pricing_cta_text}
+                  {serviceData?.engineer_as_a_service_page_section?.pricing_cta_text}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -1191,9 +1199,9 @@ const EngineerAsAService = () => {
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className={`text-center mb-8 lg:mb-10 transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.engineer_as_a_service_page_section?.security_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.engineer_as_a_service_page_section?.security_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-              {loaderData?.data?.data?.engineer_as_a_service_page_section?.security_section_description}
+              {serviceData?.engineer_as_a_service_page_section?.security_section_description}
             </p>
           </div>
 
@@ -1232,7 +1240,7 @@ const EngineerAsAService = () => {
             }}
           >
             <p className="text-foreground leading-relaxed max-w-4xl mx-auto text-sm lg:text-base">
-              {loaderData?.data?.data?.engineer_as_a_service_page_section?.security_bottom_info}
+              {serviceData?.engineer_as_a_service_page_section?.security_bottom_info}
             </p>
           </div>
         </div>
@@ -1256,15 +1264,15 @@ const EngineerAsAService = () => {
               <div className="absolute" style={{ bottom: "-70%", right: "22%", width: "380px", height: "260px", background: "transparent", border: "1.5px solid rgba(56,189,248,0.15)", borderRadius: "50%", transform: "rotate(15deg)" }} />
             </div>
             <div className="flex-1 relative z-10">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{loaderData?.data?.data?.engineer_as_a_service_page_section?.security_highlighted_text}</h3>
-              <p className="text-muted-foreground text-sm mt-1">{loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_bottom_text}</p>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground leading-snug">{serviceData?.engineer_as_a_service_page_section?.security_highlighted_text}</h3>
+              <p className="text-muted-foreground text-sm mt-1">{serviceData?.engineer_as_a_service_page_section?.security_cta_bottom_text}</p>
             </div>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_url?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+            <Link to={serviceData?.engineer_as_a_service_page_section?.security_cta_url} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
               <Button size="lg" className="group font-semibold w-full sm:w-auto px-6 sm:px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
                 style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
-                {loaderData?.data?.data?.engineer_as_a_service_page_section?.security_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                {serviceData?.engineer_as_a_service_page_section?.security_cta_text} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -1283,14 +1291,14 @@ const EngineerAsAService = () => {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className={`transition-all duration-700 ${visibleSections.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <span className="inline-block text-xs font-semibold tracking-[0.25em] text-accent/70 mb-3 uppercase">
-                {loaderData?.data?.data?.services_get_started_section?.small_heading}
+                {serviceData?.services_get_started_section?.small_heading}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.services_get_started_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.services_get_started_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-muted-foreground text-base mb-4 text-left">
-                {loaderData?.data?.data?.services_get_started_section?.paragraph}
+                {serviceData?.services_get_started_section?.paragraph}
               </p>
               <div className="space-y-2">
-                {loaderData?.data?.data?.services_get_started_section?.lists?.map((item: any, index: number) => (
+                {serviceData?.services_get_started_section?.lists?.map((item: any, index: number) => (
                   <div key={index} className={`flex items-center gap-3 transition-all duration-500 ${visibleSections.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
                     style={{ transitionDelay: `${200 + index * 100}ms` }}
                   >

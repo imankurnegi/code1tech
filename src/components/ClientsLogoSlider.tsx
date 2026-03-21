@@ -11,7 +11,7 @@ interface dataClientLogoProps {
 
 const LogoTrack = memo(({clients} : {clients: ClientLogo[]}) => (
   <div className="flex items-center shrink-0 gap-5 md:gap-8 lg:gap-10 px-3 md:px-4 lg:px-5">
-    {clients.map((client, index) => (
+    {clients.length && clients.map((client, index) => (
       <div 
         key={index} 
         className="flex-shrink-0 h-24 md:h-28 lg:h-32 flex items-center justify-center"
@@ -76,8 +76,8 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
           }} />
 
           <div className="flex items-center w-max animate-marquee">
-            <LogoTrack clients={dataClientLogo} />
-            <LogoTrack clients={dataClientLogo} />
+            <LogoTrack clients={dataClientLogo || []} />
+            <LogoTrack clients={dataClientLogo || []} />
           </div>
         </div>
       </div>

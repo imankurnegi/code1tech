@@ -1,37 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  CheckCircle,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  Quote,
-  Star,
-} from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp, ChevronRight } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Link, useLoaderData } from "react-router-dom";
 import { api } from "@/api";
-import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
-import SeoTags from "@/components/SeoTags";
+import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
-import { useSafeLoaderData } from "@/hooks/useSafeLoaderData";
-
-export async function loader() {
-  try {
-    const data = await api.getAIMLData();
-    const contactFormFields = await api.getContactFormFields();
-    return { data, contactFormFields };
-  } catch (error) {
-    console.error("Failed to load AI/ML solutions data", error);
-    return {
-      data: null,
-      contactFormFields: null,
-    };
-  }
-}
+import SeoTags from "@/components/SeoTags";
+import { useQuery } from "@tanstack/react-query";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -109,12 +86,12 @@ const InlineCTA = ({ title, subtitle, btnText, btnUrl }: { title: string; subtit
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{title}</h3>
           <p className="text-muted-foreground text-sm mt-1">{subtitle}</p>
         </div>
-            <a href={`${import.meta.env.BASE_URL}${btnUrl?.replace(/^\/+/, "")}`} className="flex-shrink-0 relative z-10 w-full sm:w-auto">
+        <Link to="/contact" className="flex-shrink-0 relative z-10 w-full sm:w-auto">
           <Button size="lg" className="group font-semibold w-full sm:w-auto px-8 rounded-xl transition-all duration-300 hover:scale-105 hover:brightness-110"
             style={{ background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)", color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.4)" }}>
             {btnText} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -380,13 +357,13 @@ const CoreServicesSection = ({data}) => {
               </div>
               <div className="p-7 lg:p-8 flex flex-col flex-1 justify-between">
                 <p className="text-muted-foreground text-sm leading-relaxed mb-6" dangerouslySetInnerHTML={{__html: current.body}}></p>
-            <a href={`${import.meta.env.BASE_URL}${current.cta_link?.replace(/^\/+/, "")}`} >
+                <Link to={current.cta_link}>
                   <Button size="sm" className="group font-semibold rounded-xl px-6 transition-all duration-300 hover:scale-105"
                     style={{ background: "linear-gradient(135deg, #0077B6, #005F8E)", color: "#fff", boxShadow: "0 4px 16px rgba(0,119,182,0.35)" }}>
                     {current.cta_text}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -420,13 +397,13 @@ const CoreServicesSection = ({data}) => {
                   <div className="px-4 pb-5">
                     <div className="h-px w-full mb-4" style={{ background: `linear-gradient(90deg, transparent, ${svc.color}, transparent)` }} />
                     <p className="text-muted-foreground text-sm leading-relaxed mb-4" dangerouslySetInnerHTML={{__html: svc.body}}></p>
-                    <a href={`${import.meta.env.BASE_URL}${svc.cta_link?.replace(/^\/+/, "")}`}>
+                    <Link to={svc.cta_link}>
                       <Button size="sm" className="group font-semibold rounded-xl px-5 w-full transition-all duration-300"
                         style={{ background: "linear-gradient(135deg, #0077B6, #005F8E)", color: "#fff" }}>
                         {svc.cta_text}
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                       </Button>
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -499,10 +476,8 @@ const RevealGrid = ({ children, className = "", staggerMs = 100 }: { children: R
 
 
 const AIMLSolutions = () => {
-  const loaderData = useSafeLoaderData();
   const [isVisible, setIsVisible] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const contactFormFields = loaderData?.contactFormFields ?? null;
 
   const handleFormSubmit = async (data: ContactFormData) => {
           const formData = new FormData();
@@ -546,20 +521,41 @@ const AIMLSolutions = () => {
     );
   };
 
-  const engagementModels = loaderData?.data?.data?.engagement_models_section?.right_side_box?.map((model: any) => ({
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["aiMlPage"],
+    queryFn: async () => {
+      const [serviceData, contactFormFields] = await Promise.all([
+        api.getAIMLData(),
+        api.getContactFormFields(),
+      ]);
+
+      return {
+        serviceData,
+        contactFormFields,
+      };
+    },
+  });
+
+  if (isLoading) return null;
+  if (error) return null;
+
+  const serviceData = data?.serviceData?.data;
+  const contactFormFields = data?.contactFormFields ?? null;
+
+  const engagementModels = serviceData?.engagement_models_section?.right_side_box?.map((model: any) => ({
     icon: model.icon,
     title: model.title,
     desc: model.description
   })) || [];
 
-  const process = loaderData?.data?.data?.how_our_engineers_work_section?.box_fields?.map((step: any) => ({
+  const process = serviceData?.how_our_engineers_work_section?.box_fields?.map((step: any) => ({
     icon: step.icon,
     title: step.title,
     desc: step.description,
     bottomTxt: step.bottom_text
   })) || [];
 
-  const faqs = loaderData?.data?.data?.frequently_asked_question?.map((faq: any) => ({
+  const faqs = serviceData?.frequently_asked_question?.map((faq: any) => ({
     q: faq.post_title,
     a: faq.post_content
   })) || [];
@@ -567,9 +563,9 @@ const AIMLSolutions = () => {
   return (
     <>
     <SeoTags
-                title={loaderData?.data?.data?.seo?.title}
-                description={loaderData?.data?.data?.seo?.description}
-                ogImage={loaderData?.data?.data?.seo?.og_image}
+                title={serviceData?.seo?.title}
+                description={serviceData?.seo?.description}
+                ogImage={serviceData?.seo?.og_image}
               />
       {/* ── HERO ── */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)" }}>
@@ -582,47 +578,47 @@ const AIMLSolutions = () => {
             {/* Left – Image */}
             <div className={`relative transition-all duration-500 ease-out ${isVisible ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-12 scale-95"}`}>
               <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: "0 25px 80px rgba(0,0,0,0.6), 0 0 60px rgba(95,194,227,0.1)" }}>
-                <img src={loaderData?.data?.data?.banner_section?.banner_image?.url} alt={loaderData?.data?.data?.banner_section?.banner_image?.alt} className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
+                <img src={serviceData?.banner_section?.banner_image?.url} alt={serviceData?.banner_section?.banner_image?.alt} className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-70" />
                 <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
               </div>
               <div className="absolute -top-3 -left-3 w-20 h-20 border-t-2 border-l-2 border-accent/40 rounded-tl-3xl" style={{ animation: "pulse 3s ease-in-out infinite" }} />
               <div className="absolute -bottom-3 -right-3 w-20 h-20 border-b-2 border-r-2 border-accent/40 rounded-br-3xl" style={{ animation: "pulse 3s ease-in-out infinite", animationDelay: "1.5s" }} />
               <div className={`absolute -right-4 top-1/4 p-4 rounded-xl backdrop-blur-xl hidden sm:block ${isVisible ? "opacity-100" : "opacity-0"}`} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(95,194,227,0.2)", boxShadow: "0 10px 40px rgba(0,0,0,0.4)", animation: "float 6s ease-in-out infinite" }}>
-                <div className="text-2xl font-bold text-accent font-mono">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[1]?.badge_heading}</div>
-                <div className="text-xs text-muted-foreground">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[1]?.badge_text}</div>
+                <div className="text-2xl font-bold text-accent font-mono">{serviceData?.banner_section?.floating_badge_fields && serviceData.banner_section.floating_badge_fields[1]?.badge_heading}</div>
+                <div className="text-xs text-muted-foreground">{serviceData?.banner_section?.floating_badge_fields && serviceData.banner_section.floating_badge_fields[1]?.badge_text}</div>
               </div>
               <div className={`absolute -left-4 bottom-1/4 p-4 rounded-xl backdrop-blur-xl hidden sm:block ${isVisible ? "opacity-100" : "opacity-0"}`} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(95,194,227,0.2)", boxShadow: "0 10px 40px rgba(0,0,0,0.4)", animation: "float 5s ease-in-out infinite", animationDelay: "2s" }}>
-                <div className="text-2xl font-bold text-accent font-mono">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[0]?.badge_heading}</div>
-                <div className="text-xs text-muted-foreground">{loaderData?.data?.data?.banner_section?.floating_badge_fields && loaderData.data.data.banner_section.floating_badge_fields[0]?.badge_text}</div>
+                <div className="text-2xl font-bold text-accent font-mono">{serviceData?.banner_section?.floating_badge_fields && serviceData.banner_section.floating_badge_fields[0]?.badge_heading}</div>
+                <div className="text-xs text-muted-foreground">{serviceData?.banner_section?.floating_badge_fields && serviceData.banner_section.floating_badge_fields[0]?.badge_text}</div>
               </div>
             </div>
 
             {/* Right – Content */}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-snug mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-snug mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-               {loaderData?.data?.data?.banner_section?.banner_description}
+               {serviceData?.banner_section?.banner_description}
               </p>
               <p className="text-sm font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
-                {loaderData?.data?.data?.banner_section?.highlighted_text}
+                {serviceData?.banner_section?.highlighted_text}
               </p>
-            <a href={`${import.meta.env.BASE_URL}${loaderData?.data?.data?.banner_section?.cta_url?.replace(/^\/+/, "")}`}>
+              <Link to={serviceData?.banner_section?.cta_url}>
                 <Button size="lg" className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
-                  {loaderData?.data?.data?.banner_section?.cta_text} 
+                  {serviceData?.banner_section?.cta_text} 
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
 
           {/* Stats Bar */}
           <div className={`mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 p-4 sm:p-6 rounded-2xl backdrop-blur-2xl transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
             style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(95,194,227,0.04) 50%, rgba(255,255,255,0.03) 100%)", border: "1px solid rgba(95,194,227,0.15)", boxShadow: "0 10px 40px rgba(0,0,0,0.35)", transitionDelay: "1000ms" }}>
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[0]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[0]?.stats_title} delay={1100} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[1]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[1]?.stats_title} delay={1250} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[2]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[2]?.stats_title} delay={1400} />
-            <AnimatedStat value={loaderData?.data?.data?.stats_section?.stats_fields[3]?.stats_numbers} label={loaderData?.data?.data?.stats_section?.stats_fields[3]?.stats_title} delay={1550} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[0]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[0]?.stats_title} delay={1100} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[1]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[1]?.stats_title} delay={1250} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[2]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[2]?.stats_title} delay={1400} />
+            <AnimatedStat value={serviceData?.stats_section?.stats_fields[3]?.stats_numbers} label={serviceData?.stats_section?.stats_fields[3]?.stats_title} delay={1550} />
           </div>
         </div>
 
@@ -637,7 +633,7 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <RevealOnScroll>
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.ai_ml_challenges_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.ai_ml_challenges_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <div className="w-16 h-[2px] mx-auto" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
             </div>
           </RevealOnScroll>
@@ -645,18 +641,18 @@ const AIMLSolutions = () => {
           {/* Bento layout */}
           <RevealOnScroll delay={200}>
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
-{loaderData?.data?.data?.ai_ml_challenges_section?.box_fields?.length && (<>
+{serviceData?.ai_ml_challenges_section?.box_fields?.length && (<>
             {/* Card 1 */}
             <div className="lg:col-span-2 group relative rounded-2xl overflow-hidden" style={{ minHeight: "460px" }}>
-              <img src={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[0]?.image?.url} alt={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[0]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={serviceData?.ai_ml_challenges_section?.box_fields[0]?.image?.url} alt={serviceData?.ai_ml_challenges_section?.box_fields[0]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(5,10,25,0.97) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.3) 100%)" }} />
               <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
               <div className="absolute inset-0 flex flex-col justify-end p-7">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.25), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.35)", backdropFilter: "blur(8px)" }}>
-                  <DynamicIcon name={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[0]?.icon}className="w-6 h-6 text-accent" />
+                  <DynamicIcon name={serviceData?.ai_ml_challenges_section?.box_fields[0]?.icon}className="w-6 h-6 text-accent" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[0]?.title }} />
-                <p className="text-muted-foreground text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[0]?.description }} />
+                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: serviceData?.ai_ml_challenges_section?.box_fields[0]?.title }} />
+                <p className="text-muted-foreground text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: serviceData?.ai_ml_challenges_section?.box_fields[0]?.description }} />
                 <div className="mt-5 w-10 h-[2px] group-hover:w-20 transition-all duration-500" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
               </div>
             </div>
@@ -668,17 +664,17 @@ const AIMLSolutions = () => {
               <div className="group relative rounded-2xl overflow-hidden" style={{ minHeight: "218px" }}>
                 <div className="flex flex-col sm:flex-row h-full">
                   <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
-                    <img src={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[1]?.image?.url} alt={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[1]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={serviceData?.ai_ml_challenges_section?.box_fields[1]?.image?.url} alt={serviceData?.ai_ml_challenges_section?.box_fields[1]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
                     <div className="absolute bottom-0 sm:bottom-auto sm:top-0 left-0 right-0 sm:right-auto sm:top-0 sm:bottom-0 sm:right-0 sm:w-[1px] h-[1px] sm:h-auto" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
                   </div>
                   <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
                     <div className="absolute inset-0 rounded-r-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 80% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                      <DynamicIcon name={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[1]?.icon} className="w-5 h-5 text-accent" />
+                      <DynamicIcon name={serviceData?.ai_ml_challenges_section?.box_fields[1]?.icon} className="w-5 h-5 text-accent" />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[1]?.title }} />
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[1]?.description }} />
+                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: serviceData?.ai_ml_challenges_section?.box_fields[1]?.title }} />
+                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: serviceData?.ai_ml_challenges_section?.box_fields[1]?.description }} />
                   </div>
                 </div>
               </div>
@@ -689,13 +685,13 @@ const AIMLSolutions = () => {
                   <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
                     <div className="absolute inset-0 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                      <DynamicIcon name={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[2]?.icon}  className="w-5 h-5 text-accent" />
+                      <DynamicIcon name={serviceData?.ai_ml_challenges_section?.box_fields[2]?.icon}  className="w-5 h-5 text-accent" />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[2]?.title }} />
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[2]?.description }} />
+                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: serviceData?.ai_ml_challenges_section?.box_fields[2]?.title }} />
+                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: serviceData?.ai_ml_challenges_section?.box_fields[2]?.description }} />
                   </div>
                   <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
-                    <img src={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[2]?.image?.url} alt={loaderData?.data?.data?.ai_ml_challenges_section?.box_fields[2]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <img src={serviceData?.ai_ml_challenges_section?.box_fields[2]?.image?.url} alt={serviceData?.ai_ml_challenges_section?.box_fields[2]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
                     <div className="absolute bottom-0 sm:bottom-auto sm:top-0 left-0 right-0 sm:left-0 sm:right-auto sm:w-[1px] h-[1px] sm:h-auto" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
                   </div>
@@ -710,20 +706,20 @@ const AIMLSolutions = () => {
       </section>
 
       {/* ── CORE SERVICES ── */}
-      <CoreServicesSection data={loaderData?.data?.data?.core_services_section} />
+      <CoreServicesSection data={serviceData?.core_services_section} />
 
       {/* ── INLINE CTA 2 ── */}
       <InlineCTA
-        title={loaderData?.data?.data?.core_services_section?.cta_bottom_text}
-        subtitle={loaderData?.data?.data?.core_services_section?.cta_main_text}
-        btnText={loaderData?.data?.data?.core_services_section?.cta_text}
-        btnUrl={loaderData?.data?.data?.core_services_section?.cta_url}
+        title={serviceData?.core_services_section?.cta_bottom_text}
+        subtitle={serviceData?.core_services_section?.cta_main_text}
+        btnText={serviceData?.core_services_section?.cta_text}
+        btnUrl={serviceData?.core_services_section?.cta_url}
       />
 
       {/* ── ADVANCED CAPABILITIES ── */}
       <section className="relative py-16 lg:py-24 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={loaderData?.data?.data?.advanced_capabilities_section?.background_image?.url} alt={loaderData?.data?.data?.advanced_capabilities_section?.background_image?.alt} className="w-full h-full object-cover" style={{ filter: "brightness(0.25) saturate(0.7)" }} />
+          <img src={serviceData?.advanced_capabilities_section?.background_image?.url} alt={serviceData?.advanced_capabilities_section?.background_image?.alt} className="w-full h-full object-cover" style={{ filter: "brightness(0.25) saturate(0.7)" }} />
           <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(8,14,28,0.95) 0%, rgba(8,14,28,0.80) 50%, rgba(8,14,28,0.95) 100%)" }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(95,194,227,0.07) 0%, transparent 70%)" }} />
         </div>
@@ -731,14 +727,14 @@ const AIMLSolutions = () => {
           <RevealOnScroll>
             <div className="text-center mb-12">
               
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.advanced_capabilities_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.advanced_capabilities_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             </div>
           </RevealOnScroll>
 
           <RevealOnScroll delay={150}>
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Card 1 – Real-Time Streaming */}
-            {loaderData?.data?.data?.advanced_capabilities_section?.box_fields?.length && loaderData?.data?.data?.advanced_capabilities_section?.box_fields.map((box,i) => (
+            {serviceData?.advanced_capabilities_section?.box_fields?.length && serviceData?.advanced_capabilities_section?.box_fields.map((box,i) => (
               <div key={i} className="group relative rounded-2xl p-7 transition-all duration-500 hover:-translate-y-1 flex flex-col gap-4" style={{ background: "rgba(10,18,35,0.75)", border: "1px solid rgba(95,194,227,0.15)", backdropFilter: "blur(14px)", boxShadow: "0 8px 32px rgba(0,0,0,0.45)" }}>
               <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-accent/25 rounded-tr-lg" />
               <div className="flex items-center gap-3">
@@ -761,10 +757,10 @@ const AIMLSolutions = () => {
 
       {/* ── INLINE CTA ADVANCED ── */}
       <InlineCTA
-        title={loaderData?.data?.data?.advanced_capabilities_section?.cta_main_text}
-        subtitle={loaderData?.data?.data?.advanced_capabilities_section?.cta_bottom_text}
-        btnText={loaderData?.data?.data?.advanced_capabilities_section?.cta_text}
-        btnUrl={loaderData?.data?.data?.advanced_capabilities_section?.cta_url}
+        title={serviceData?.advanced_capabilities_section?.cta_main_text}
+        subtitle={serviceData?.advanced_capabilities_section?.cta_bottom_text}
+        btnText={serviceData?.advanced_capabilities_section?.cta_text}
+        btnUrl={serviceData?.advanced_capabilities_section?.cta_url}
       />
 
       {/* ── INDUSTRIES WE SERVE ── */}
@@ -773,12 +769,12 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <RevealOnScroll>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.industries_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.industries_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             </div>
           </RevealOnScroll>
           <RevealOnScroll delay={150}>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {loaderData?.data?.data?.box_data.map((sector, i) => (
+            {serviceData?.box_data.map((sector, i) => (
               <div key={i} className="group relative rounded-2xl p-5 flex flex-col items-start gap-3 transition-all duration-400 hover:-translate-y-1 hover:border-accent/40" style={{ background: "rgba(10,18,35,0.6)", border: "1px solid rgba(95,194,227,0.12)", backdropFilter: "blur(10px)" }}>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.1))", border: "1px solid rgba(95,194,227,0.22)" }}>
                   <DynamicIcon name={sector.acf.ai_icon} className="w-5 h-5 text-accent" />
@@ -808,15 +804,15 @@ const AIMLSolutions = () => {
             {/* ── LEFT: title + showcase image ── */}
             <div className="lg:col-span-2 flex flex-col gap-6">
               <div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.engagement_models_section?.main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.engagement_models_section?.main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               </div>
 
               {/* Showcase image card */}
               <div className="relative rounded-2xl overflow-hidden flex-1 min-h-[220px]"
                 style={{ border: "1px solid rgba(95,194,227,0.15)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
                 <img
-                  src={loaderData?.data?.data?.engagement_models_section?.left_side_image?.url}
-                  alt={loaderData?.data?.data?.engagement_models_section?.left_side_image?.alt}
+                  src={serviceData?.engagement_models_section?.left_side_image?.url}
+                  alt={serviceData?.engagement_models_section?.left_side_image?.alt}
                   className="w-full h-full object-cover"
                   style={{ filter: "brightness(0.7) saturate(1.1)" }}
                 />
@@ -840,7 +836,7 @@ const AIMLSolutions = () => {
                       </span>
                     ))}
                   </div> */}
-                  <div dangerouslySetInnerHTML={{ __html: he.decode(loaderData?.data?.data?.engagement_models_section?.left_image_data) }} />
+                  <div dangerouslySetInnerHTML={{ __html: he.decode(serviceData?.engagement_models_section?.left_image_data) }} />
                 </div>
               </div>
             </div>
@@ -906,10 +902,10 @@ const AIMLSolutions = () => {
 
       {/* ── INLINE CTA 3 ── */}
       <InlineCTA
-        title={loaderData?.data?.data?.engagement_models_section?.cta_highlighted_text}
-        subtitle={loaderData?.data?.data?.engagement_models_section?.cta_bottom_text}
-        btnUrl={loaderData?.data?.data?.engagement_models_section?.cta_url}
-        btnText={loaderData?.data?.data?.engagement_models_section?.cta_text}
+        title={serviceData?.engagement_models_section?.cta_highlighted_text}
+        subtitle={serviceData?.engagement_models_section?.cta_bottom_text}
+        btnUrl={serviceData?.engagement_models_section?.cta_url}
+        btnText={serviceData?.engagement_models_section?.cta_text}
       />
 
 
@@ -921,7 +917,7 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <RevealOnScroll>
             <div className="text-center mb-14">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.how_our_engineers_work_section?.main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.how_our_engineers_work_section?.main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             </div>
           </RevealOnScroll>
 
@@ -1036,7 +1032,7 @@ const AIMLSolutions = () => {
       </section>
 
       {/* ── TECH STACK ── */}
-      <TechStackSection data={loaderData?.data?.data?.stacks_fields} sectionTitle={loaderData?.data?.data?.ai_stack_section_heading} />
+      <TechStackSection data={serviceData?.stacks_fields} sectionTitle={serviceData?.ai_stack_section_heading} />
 
       {/* ── WHY CHOOSE US ── */}
       <section className="relative py-14 lg:py-20 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}>
@@ -1051,13 +1047,13 @@ const AIMLSolutions = () => {
           {/* ── Section header ── */}
           <RevealOnScroll>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.why_choose_ai_ml_section?.main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.why_choose_ai_ml_section?.main_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             </div>
           </RevealOnScroll>
 
           {/* ── KPI stats strip ── */}
           <div className="grid grid-cols-3 gap-4 mb-12 max-w-2xl mx-auto">
-            {loaderData?.data?.data?.why_choose_ai_ml_section?.small_box?.length > 0 && loaderData.data.data.why_choose_ai_ml_section.small_box.map((s, i) => (
+            {serviceData?.why_choose_ai_ml_section?.small_box?.length > 0 && serviceData.why_choose_ai_ml_section.small_box.map((s, i) => (
               <div key={i} className="relative rounded-2xl p-5 text-center overflow-hidden"
                 style={{ background: "rgba(10,18,35,0.9)", border: "1px solid rgba(95,194,227,0.15)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)" }}>
                 <div className="absolute top-0 left-0 right-0 h-[2px]"
@@ -1070,7 +1066,7 @@ const AIMLSolutions = () => {
 
           {/* ── Benefit cards 2×2 ── */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
-            {loaderData?.data?.data?.why_choose_ai_ml_section?.big_box?.length > 0 && loaderData.data.data.why_choose_ai_ml_section.big_box.map((item, i) => {
+            {serviceData?.why_choose_ai_ml_section?.big_box?.length > 0 && serviceData.why_choose_ai_ml_section.big_box.map((item, i) => {
               const cardColors = ["#5FC2E3", "#4EAAFF", "#38BDF8", "#0EA5E9"];
               const color = cardColors[i];
               return (
@@ -1122,10 +1118,10 @@ const AIMLSolutions = () => {
 
       {/* ── INLINE CTA ── */}
       <InlineCTA
-        title={loaderData?.data?.data?.why_choose_ai_ml_section?.cta_highlighted_text}
-        subtitle={loaderData?.data?.data?.why_choose_ai_ml_section?.cta_bottom_text}
-        btnText={loaderData?.data?.data?.why_choose_ai_ml_section?.cta_text}
-        btnUrl={loaderData?.data?.data?.why_choose_ai_ml_section?.cta_url}
+        title={serviceData?.why_choose_ai_ml_section?.cta_highlighted_text}
+        subtitle={serviceData?.why_choose_ai_ml_section?.cta_bottom_text}
+        btnText={serviceData?.why_choose_ai_ml_section?.cta_text}
+        btnUrl={serviceData?.why_choose_ai_ml_section?.cta_url}
       />
 
       {/* ── CASE STUDIES ── */}
@@ -1207,11 +1203,11 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <RevealOnScroll>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.security_and_compliance_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.security_and_compliance_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             </div>
           </RevealOnScroll>
           <div className="grid md:grid-cols-3 gap-6">
-            { loaderData?.data?.data?.security_and_compliance_section?.box_fields?.length && loaderData.data.data.security_and_compliance_section.box_fields.map((item, i) => (
+            { serviceData?.security_and_compliance_section?.box_fields?.length && serviceData.security_and_compliance_section.box_fields.map((item, i) => (
               <div key={i} className="p-6 rounded-2xl" style={cardStyle}>
                 <div className="p-3 rounded-xl bg-accent/10 text-accent w-fit mb-4">
                   <DynamicIcon name={item.icon} className="w-6 h-6" />
@@ -1228,11 +1224,11 @@ const AIMLSolutions = () => {
       <section className="py-14 lg:py-20" style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}>
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.key_benefits_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.key_benefits_section?.section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
           </div>
 
           {(() => {
-            const benefits = loaderData?.data?.data?.key_benefits_section?.key_box_fields?.map((t: any) => ({
+            const benefits = serviceData?.key_benefits_section?.key_box_fields?.map((t: any) => ({
               icon: t.icon,
               title: t.title,
               desc: t.description,
@@ -1291,11 +1287,11 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <RevealOnScroll>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(loaderData?.data?.data?.testimonial_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.testimonial_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
             </div>
           </RevealOnScroll>
           <div className="grid md:grid-cols-3 gap-6">
-            {loaderData?.data?.data?.testimonials?.length && loaderData.data.data.testimonials.map((t, i) => (
+            {serviceData?.testimonials?.length && serviceData.testimonials.map((t, i) => (
               <div key={i} className="group relative p-7 rounded-2xl flex flex-col transition-all duration-500 hover:-translate-y-1 overflow-hidden" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.12)" }}>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" style={{ background: "radial-gradient(ellipse at 20% 20%, rgba(95,194,227,0.07) 0%, transparent 65%)" }} />
                 <div className="absolute top-0 left-6 right-6 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(95,194,227,0.35), transparent)" }} />
@@ -1324,7 +1320,7 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
           <RevealOnScroll>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(loaderData?.data?.data?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(serviceData?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
             </div>
           </RevealOnScroll>
           <div className="space-y-3">
@@ -1352,24 +1348,24 @@ const AIMLSolutions = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(loaderData?.data?.data?.services_get_started_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(serviceData?.services_get_started_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
               <p className="text-muted-foreground text-lg mb-8">
-                {loaderData?.data?.data?.services_get_started_section?.paragraph}
+                {serviceData?.services_get_started_section?.paragraph}
               </p>
-              {loaderData?.data?.data?.services_get_started_section?.buttons.length > 0 && (
+              {serviceData?.services_get_started_section?.buttons.length > 0 && (
               <div className="flex flex-col sm:flex-row gap-4">
-            <a href={`${import.meta.env.BASE_URL}${loaderData.data.data.services_get_started_section.buttons[0]?.cta_url?.replace(/^\/+/, "")}`}>
+                <Link to={serviceData.services_get_started_section.buttons[0]?.cta_url}>
                   <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:scale-105 transition-all duration-300 w-full sm:w-auto">
-                    {loaderData.data.data.services_get_started_section.buttons[0]?.cta_text}
+                    {serviceData.services_get_started_section.buttons[0]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </a>
-            <a href={`${import.meta.env.BASE_URL}${loaderData.data.data.services_get_started_section.buttons[1]?.cta_url?.replace(/^\/+/, "")}`}>
+                </Link>
+                <Link to={serviceData.services_get_started_section.buttons[1]?.cta_url}>
                   <Button size="lg" variant="outline" className="group font-medium px-8 py-6 rounded-lg hover:scale-105 transition-all duration-300 w-full sm:w-auto">
-                    {loaderData.data.data.services_get_started_section.buttons[1]?.cta_text}
+                    {serviceData.services_get_started_section.buttons[1]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </a>
+                </Link>
               </div>
                 )}
             </div>
@@ -1380,10 +1376,10 @@ const AIMLSolutions = () => {
 
       {/* ── FINAL CTA ── */}
       <InlineCTA
-        title={loaderData?.data?.data?.advanced_capabilities_section?.cta_main_text}
-        subtitle={loaderData?.data?.data?.advanced_capabilities_section?.cta_bottom_text}
-        btnText={loaderData?.data?.data?.advanced_capabilities_section?.cta_text}
-        btnUrl={loaderData?.data?.data?.advanced_capabilities_section?.cta_url}
+        title={serviceData?.advanced_capabilities_section?.cta_main_text}
+        subtitle={serviceData?.advanced_capabilities_section?.cta_bottom_text}
+        btnText={serviceData?.advanced_capabilities_section?.cta_text}
+        btnUrl={serviceData?.advanced_capabilities_section?.cta_url}
       />
     </>
   );

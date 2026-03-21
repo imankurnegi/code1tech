@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface CaseStudy {
   ID: number;
@@ -172,8 +173,8 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
                   </div>
                   
                   {/* CTA */}
-                  <a 
-                    href={`${study.post_name}`}
+                  <Link 
+                    to={study.post_name}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${
@@ -184,7 +185,7 @@ const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudies
                     <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${
                       isHovered ? "translate-x-1" : ""
                     }`} />
-                  </a>
+                  </Link>
                 </div>
                 
                 {/* Hover glow effect */}
