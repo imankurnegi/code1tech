@@ -66,7 +66,7 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
   return (
     <section
       ref={sectionRef}
-      className="pb-16 md:pb-24 lg:pb-28 relative overflow-hidden"
+      className="pb-16 md:pb-4 lg:pb-28 relative overflow-hidden"
       style={{
         background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(213 50% 7%) 50%, hsl(222 47% 5%) 100%)"
       }}
@@ -119,7 +119,7 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
-          <div className="max-w-xl">
+          <div className="w-full lg:max-w-xl">
             {/* Heading */}
             {dataAiAgent?.section_heading && (
                <h2 

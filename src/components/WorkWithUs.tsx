@@ -106,12 +106,14 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
 
                 <div className="relative p-4 sm:p-6 md:p-7 flex flex-col h-full">
                   {/* Icon */}
+                  <div className="flex items-center gap-4 mb-3 sm:mb-4">
                   <div className={`w-10 sm:w-12 h-10 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-5 transition-all duration-300 ${isHovered ? "bg-accent/20 scale-105" : "bg-muted/50"}`}>
                     <DynamicIcon name={model.icon} className={`w-5 sm:w-6 h-5 sm:h-6 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
                   </div>
 
                   {/* Title */}
                   <h3 className={`text-sm sm:text-lg font-bold mb-2 sm:mb-3 transition-colors duration-300 ${isHovered ? "text-foreground" : "text-foreground/90"}`} dangerouslySetInnerHTML={{ __html: model.title}} />
+                  </div>
 
                   {/* Description */}
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed flex-grow">
