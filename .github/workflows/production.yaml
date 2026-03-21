@@ -1,0 +1,83 @@
+name: Deploy React SSR to VPS
+
+on:
+  push:
+    branches:
+      - main      # <-- ab main branch ke liye
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3️⃣ Install dependencies (BUILD)
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      # 4️⃣ Build SSR
+      - name: Build SSR
+        run: npm run build:ssr
+
+      # 5️⃣ Setup SSH
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      # 6️⃣ Deploy files
+      - name: Deploy files to VPS
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/production"
+
+          # dist
+          rsync -avz --delete ./dist/ \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/dist
+
+          # server
+          rsync -avz server.js \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/server.js
+
+          # package files (IMPORTANT)
+          rsync -avz package.json \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/package.json
+
+          rsync -avz package-lock.json \
+            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/production/package-lock.json
+
+      # 7️⃣ Install dependencies on VPS (FIXED 🔥)
+      - name: Install dependencies on VPS
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
+            cd /var/www/production && \
+            npm ci --omit=dev --legacy-peer-deps \
+          "
+
+      # 8️⃣ Restart PM2
+      - name: Restart PM2 server
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
+            cd /var/www/production && \
+            NODE_ENV=production pm2 describe react-ssr > /dev/null 2>&1 && \
+            NODE_ENV=production pm2 restart react-ssr --update-env || \
+            NODE_ENV=production pm2 start server.js --name react-ssr --update-env \
+          "
+
+      # 9️⃣ Done
+      - name: Deployment Info
+        run: |
+          echo "✅ SSR Deployment complete"
+          echo "🚀 App running with PM2 (react-ssr)"
