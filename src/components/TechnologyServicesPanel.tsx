@@ -4,6 +4,7 @@ import { useParallax } from "@/hooks/use-parallax";
 import { ArrowRight, Link } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface Outcome {
   icon: string;
