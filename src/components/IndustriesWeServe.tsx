@@ -180,29 +180,9 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
             }`}
           >
             <Link to={dataIndustries.help_cta_url}>
-              <Button
-                variant="ghost"
-                className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
-              >
-                <span className="relative">
-                  {dataIndustries.help_cta_text}
-                  <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
-                </span>
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-};
-
-export default IndustriesWeServe;
-
-                  window.location.href = dataIndustries.help_cta_url;
-                }
-              }}
+            <Button
+              variant="ghost"
+              className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
             >
               <span className="relative">
                 {dataIndustries.help_cta_text}
@@ -210,6 +190,7 @@ export default IndustriesWeServe;
               </span>
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
+            </Link>
           </div>
         )}
       </div>
