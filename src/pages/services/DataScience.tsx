@@ -1524,7 +1524,7 @@ const DataScience = () => {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 ">
                 <Link to={servicesGetStarted?.buttons[0]?.cta_url || "#"}>
                   <Button
                     size="lg"
@@ -1532,7 +1532,7 @@ const DataScience = () => {
                   >
                     {servicesGetStarted?.buttons[0]?.cta_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
-                  </Button>
+                  </Button> 
                 </Link>
                 <Link to={servicesGetStarted?.buttons[1]?.cta_url || "#" }>
                   <Button

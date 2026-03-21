@@ -523,7 +523,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
               </div>
             </div>
 
-            {/* Right – Content */}
+            {/* Right – Content*/}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-snug mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">

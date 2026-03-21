@@ -1353,7 +1353,7 @@ const AIMLSolutions = () => {
                 {serviceData?.services_get_started_section?.paragraph}
               </p>
               {serviceData?.services_get_started_section?.buttons.length > 0 && (
-              <div className="flex flex-col sm:flex-row gap-4">
+               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to={serviceData.services_get_started_section.buttons[0]?.cta_url}>
                   <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:scale-105 transition-all duration-300 w-full sm:w-auto">
                     {serviceData.services_get_started_section.buttons[0]?.cta_text}

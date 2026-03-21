@@ -572,7 +572,7 @@ const About = () => {
       </div>
     </section>
 
-    {/* Certifications Section */}
+    {/* Certifications Section*/}
     <CertificationsSection certificationData={about?.certifications_section} sectionRef={teamRef} isVisible={teamVisible} />
   </>;
 };

@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
 
   return (
     <main>
-      {/* ✅ SEO tags */}
+      {/* ✅ SEO tags  */}
       <SeoTags
         title={privacyData?.seo?.title}
         description={privacyData?.seo?.description}

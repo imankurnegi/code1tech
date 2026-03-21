@@ -205,7 +205,7 @@ const Team = () => {
                 background: "linear-gradient(135deg, hsl(222 50% 7%) 0%, hsl(215 55% 10%) 100%)"
               }}
             >
-              {/* Animated scanning line */}
+              {/* Animated  scanning line */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent animate-[scan_4s_ease-in-out_infinite]" />
               </div>
