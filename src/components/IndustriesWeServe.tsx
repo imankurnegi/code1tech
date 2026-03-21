@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface IndustryCard {
   ID: number;
@@ -178,11 +179,27 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <Button
-              variant="ghost"
-              className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
-              onClick={() => {
-                if (dataIndustries.help_cta_url) {
+            <Link to={dataIndustries.help_cta_url}>
+              <Button
+                variant="ghost"
+                className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
+              >
+                <span className="relative">
+                  {dataIndustries.help_cta_text}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
+                </span>
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default IndustriesWeServe;
+
                   window.location.href = dataIndustries.help_cta_url;
                 }
               }}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface ProcessIcon {
   id: number;
@@ -435,19 +436,16 @@ const HiringProcess = ({ dataHiring }: HiringProcessProps) => {
               showCTA ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
+            <Link to={dataHiring.section_cta_url}>
             <button 
               className={`group inline-flex items-center gap-2 bg-accent/10 hover:bg-accent/15 border border-accent/30 hover:border-accent/40 text-accent px-6 py-3 rounded-full text-base font-medium transition-all duration-500 hover:shadow-[0_0_30px_8px_hsl(var(--accent)/0.1)] ${
                 ctaPulse ? 'animate-cta-pulse' : ''
               }`}
-              onClick={() => {
-                if (dataHiring.section_cta_url) {
-                  window.location.href = dataHiring.section_cta_url;
-                }
-              }}
             >
               <span>{dataHiring.section_cta_text}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-500" />
             </button>
+            </Link>
           </div>
         )}
       </div>

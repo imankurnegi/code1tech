@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface WorkCard {
   card_icon: string;
@@ -124,18 +125,15 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
         {/* CTA */}
         {dataWorkWithUs?.section_cta_text && (
           <div className={`text-center px-4 sm:px-0 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <Link to={dataWorkWithUs.section_cta_url}>
             <Button 
               size="lg" 
               className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
-              onClick={() => {
-                if (dataWorkWithUs.section_cta_url) {
-                  window.location.href = dataWorkWithUs.section_cta_url;
-                }
-              }}
             >
               {dataWorkWithUs.section_cta_text}
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Button>
+            </Link>
           </div>
         )}
       </div>

@@ -3,6 +3,7 @@ import { Calendar, Zap, Bot, TrendingUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AIOrbitVisual from "./AIOrbitVisual";
 import { addClassToSpan } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface TagImage {
   ID?: number;
@@ -187,19 +188,16 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               >
+                <Link to={dataAiAgent.section_cta_url}>
                 <Button 
                   variant="hero" 
                   size="lg" 
                   className="group w-full sm:w-auto text-sm sm:text-base"
-                  onClick={() => {
-                    if (dataAiAgent.section_cta_url) {
-                      window.location.href = dataAiAgent.section_cta_url;
-                    }
-                  }}
                 >
                   <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   {dataAiAgent.section_cta_text}
                 </Button>
+                </Link>
               </div>
             )}
           </div>
