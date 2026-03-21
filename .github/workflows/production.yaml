@@ -1,4 +1,4 @@
-name: Deploy React SSR to VPS
+name: Deploy React Production SSR to VPS
 
 on:
   push:
@@ -71,13 +71,13 @@ jobs:
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
             cd /var/www/production && \
-            NODE_ENV=production pm2 describe react-ssr > /dev/null 2>&1 && \
-            NODE_ENV=production pm2 restart react-ssr --update-env || \
-            NODE_ENV=production pm2 start server.js --name react-ssr --update-env \
+            NODE_ENV=production pm2 describe react-ssr-production > /dev/null 2>&1 && \
+            NODE_ENV=production pm2 restart react-ssr-production --update-env || \
+            NODE_ENV=production pm2 start server.js --name react-ssr-production --update-env \
           "
 
       # 9️⃣ Done
       - name: Deployment Info
         run: |
           echo "✅ SSR Deployment complete"
-          echo "🚀 App running with PM2 (react-ssr)"
+          echo "🚀 App running with PM2 (react-ssr-production)"
