@@ -39,12 +39,10 @@ const Index = () => {
 
   if (isLoading) return null;
   if (error) return null;
-  if (!data) return null;
 
   const homepageData = data?.homeData;
-  const clientLogosData = data?.clientLogos;
+  const clientLogosData = data?.clientLogos?.data ?? [];
   const contactFormFields = data?.contactFormFields;
-
   return (
     <>
       <SeoTags

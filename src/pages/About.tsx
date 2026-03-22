@@ -65,7 +65,6 @@ const About = () => {
 
   if (isLoading) return null;
   if (error) return null;
-  if(!data) return null;
 
   const about = data?.aboutData?.data;
   const clientLogosData = data?.clientLogos?.data ?? [];

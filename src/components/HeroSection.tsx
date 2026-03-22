@@ -118,7 +118,7 @@ const HeroSection = ({ dataBanner, dataClientLogo }: HeroSectionProps & {dataCli
 
           {/* Client Logo Slider */}
           <div className="mt-12 w-full max-w-4xl mx-auto">
-            <ClientsLogoSlider dataClientLogo ={dataClientLogo} />
+            <ClientsLogoSlider dataClientLogo={dataClientLogo} />
           </div>
         </div>
       </div>

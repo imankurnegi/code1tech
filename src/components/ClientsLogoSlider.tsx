@@ -76,8 +76,8 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
           }} />
 
           <div className="flex items-center w-max animate-marquee">
-            <LogoTrack clients={dataClientLogo || []} />
-            <LogoTrack clients={dataClientLogo || []} />
+            <LogoTrack clients={dataClientLogo} />
+            <LogoTrack clients={dataClientLogo} />
           </div>
         </div>
       </div>
