@@ -239,7 +239,7 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
                   {/* Client info */}
                   <div className="flex items-center gap-3">
                     {/* Avatar placeholder */}
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center flex-shrink-0">
                       <span className="text-foreground font-semibold text-xs">
                         {testimonial.name.split(" ").map(n => n[0]).join("")}
                       </span>

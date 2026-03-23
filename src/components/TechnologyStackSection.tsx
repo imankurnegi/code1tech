@@ -241,7 +241,7 @@ const MobileTabBar = ({
           >
             <DynamicIcon name={cap.iconClass} className="w-4 h-4" />
             <span className="text-xs font-medium whitespace-nowrap">
-              {cap.title.split(' ').slice(0, 2).join(' ')}
+              {cap.title}
             </span>
           </button>
         );

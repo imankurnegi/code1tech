@@ -116,7 +116,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                   </div>
                   <span 
                     className={`text-xs font-medium text-center leading-tight ${isActive ? "text-foreground" : "text-muted-foreground"}`}
-                    dangerouslySetInnerHTML={{ __html: service.title.split(" ").slice(0, 2).join(" ") }}
+                    dangerouslySetInnerHTML={{ __html: service.title}}
                   />
                 </button>;
           })}
