@@ -21,7 +21,7 @@ const TermsConditions = () => {
         description={termsData?.seo?.description}
         ogImage={termsData?.seo?.og_image}
       />
-      {/* Hero */}
+      {/* Hero  */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">

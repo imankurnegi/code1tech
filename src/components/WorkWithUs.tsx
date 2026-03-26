@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface WorkCard {
   card_icon: string;
@@ -91,7 +92,7 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
         )}
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 max-w-6xl mx-auto mb-10 md:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 md:gap-6 max-w-6xl mx-auto mb-10 md:mb-16">
           {models.map((model, index) => {
           const isHovered = hoveredIndex === index;
           return <div key={index} onMouseEnter={() => setHoveredIndex(index)} onMouseLeave={() => setHoveredIndex(null)} className={`group relative rounded-2xl transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"} ${isHovered ? "-translate-y-2" : ""}`} style={{
@@ -105,12 +106,14 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
 
                 <div className="relative p-4 sm:p-6 md:p-7 flex flex-col h-full">
                   {/* Icon */}
+                  <div className="flex items-center gap-4 mb-3 sm:mb-4">
                   <div className={`w-10 sm:w-12 h-10 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-5 transition-all duration-300 ${isHovered ? "bg-accent/20 scale-105" : "bg-muted/50"}`}>
                     <DynamicIcon name={model.icon} className={`w-5 sm:w-6 h-5 sm:h-6 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`} />
                   </div>
 
                   {/* Title */}
                   <h3 className={`text-sm sm:text-lg font-bold mb-2 sm:mb-3 transition-colors duration-300 ${isHovered ? "text-foreground" : "text-foreground/90"}`} dangerouslySetInnerHTML={{ __html: model.title}} />
+                  </div>
 
                   {/* Description */}
                   <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed flex-grow">
@@ -124,18 +127,15 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
         {/* CTA */}
         {dataWorkWithUs?.section_cta_text && (
           <div className={`text-center px-4 sm:px-0 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <Link to={dataWorkWithUs.section_cta_url}>
             <Button 
               size="lg" 
               className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
-              onClick={() => {
-                if (dataWorkWithUs.section_cta_url) {
-                  window.location.href = dataWorkWithUs.section_cta_url;
-                }
-              }}
             >
               {dataWorkWithUs.section_cta_text}
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Button>
+            </Link>
           </div>
         )}
       </div>

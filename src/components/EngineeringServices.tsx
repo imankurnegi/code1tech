@@ -209,7 +209,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
         </div>
 
         {/* 3-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
             <div
               key={index}
@@ -275,7 +275,7 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
                   <h3 className="text-xl md:text-2xl font-bold mb-4 leading-tight text-primary-foreground" dangerouslySetInnerHTML={{ __html: service.title }} />
 
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6 max-w-xs text-left">
+                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed mb-6 max-w-full text-left">
                     {service.description}
                   </p>
 

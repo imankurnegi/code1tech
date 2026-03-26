@@ -65,7 +65,6 @@ const About = () => {
 
   if (isLoading) return null;
   if (error) return null;
-  if(!data) return null;
 
   const about = data?.aboutData?.data;
   const clientLogosData = data?.clientLogos?.data ?? [];
@@ -212,7 +211,7 @@ const About = () => {
               </p> */}
             </div>
 
-            <Link to={`/${about?.what_can_we_do_section?.button_url}`}>
+            <Link to={about?.what_can_we_do_section?.button_url}>
               <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
                 {about?.what_can_we_do_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -397,7 +396,7 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-12 transition-all duration-700 delay-300 ${visionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to={`/${about?.our_vision_section?.bottom_button_url}`}>
+          <Link to={about?.our_vision_section?.bottom_button_url}>
             <Button variant="hero" size="lg" className="group">
               {about?.our_vision_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -562,7 +561,7 @@ const About = () => {
 
         {/* CTA */}
         <div className={`text-center mt-8 transition-all duration-700 delay-400 ${approachVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <Link to={`/${about?.our_work_approach_section?.bottom_button_url}`}>
+          <Link to={about?.our_work_approach_section?.bottom_button_url}>
             <Button variant="hero" size="lg" className="group shadow-lg shadow-primary/20">
               {about?.our_work_approach_section?.bottom_button_label}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -572,7 +571,7 @@ const About = () => {
       </div>
     </section>
 
-    {/* Certifications Section */}
+    {/* Certifications Section*/}
     <CertificationsSection certificationData={about?.certifications_section} sectionRef={teamRef} isVisible={teamVisible} />
   </>;
 };

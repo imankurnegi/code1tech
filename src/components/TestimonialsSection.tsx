@@ -172,8 +172,9 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
                 {/* Glassmorphism card */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-muted/40 to-muted/15 backdrop-blur-md border border-border/20 transition-all duration-300 group-hover:border-accent/30 group-hover:shadow-lg group-hover:shadow-accent/10" />
                 
-                <div className="relative p-7">
-                  {/* Quote icon */}
+                <div className="relative p-7 h-full flex flex-col justify-between">
+                  <div>
+                    {/* Quote icon */}
                   <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-5">
                     <Quote className="w-5 h-5 text-accent" />
                   </div>
@@ -182,11 +183,12 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
                   <p className="text-foreground/90 text-base leading-relaxed mb-6 min-h-[100px]">
                     {testimonial.quote}
                   </p>
+                  </div>
 
                   {/* Client info */}
                   <div className="flex items-center gap-4">
                     {/* Avatar placeholder */}
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center flex-shrink-0">
                       <span className="text-foreground font-semibold text-sm">
                         {testimonial.name.split(" ").map(n => n[0]).join("")}
                       </span>
@@ -225,8 +227,9 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
                 {/* Glassmorphism card */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-muted/40 to-muted/15 backdrop-blur-md border border-border/20" />
                 
-                <div className="relative p-6">
-                  {/* Quote icon */}
+                <div className="relative p-6 h-full flex flex-col justify-between">
+                  <div>
+                    {/* Quote icon */}
                   <div className="w-9 h-9 rounded-lg bg-accent/15 flex items-center justify-center mb-4">
                     <Quote className="w-4 h-4 text-accent" />
                   </div>
@@ -235,11 +238,12 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
                   <p className="text-foreground/90 text-sm leading-relaxed mb-5">
                     {testimonial.quote}
                   </p>
+                  </div>
 
                   {/* Client info */}
                   <div className="flex items-center gap-3">
                     {/* Avatar placeholder */}
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center flex-shrink-0">
                       <span className="text-foreground font-semibold text-xs">
                         {testimonial.name.split(" ").map(n => n[0]).join("")}
                       </span>

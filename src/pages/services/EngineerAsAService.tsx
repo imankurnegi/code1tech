@@ -389,7 +389,7 @@ const EngineerAsAService = () => {
             {/* Right Side - Content */}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-              <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-lg text-left">
+              <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-full text-left">
                 {serviceData?.banner_section?.banner_description}
               </p>
               <p className="text-base font-semibold text-accent mb-6" style={{ animation: "pulse 3s ease-in-out infinite" }}>
@@ -711,9 +711,9 @@ const EngineerAsAService = () => {
                         ))}
                       </div>
 
-                      <Link to={service.link} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
+                      {/* <Link to={service.link} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
                         <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      </Link> */}
                     </div>
 
                     {/* Image region — visible on all breakpoints */}
@@ -1246,7 +1246,7 @@ const EngineerAsAService = () => {
         </div>
       </section>
 
-      {/* ====== PRE-CONTACT CTA BANNER ====== */}
+      {/* ===== PRE-CONTACT CTA BANNER ====== */}
       <section className="relative py-6 overflow-hidden" style={{ background: "hsl(222 47% 5%)" }}>
         <div className="container mx-auto px-4 lg:px-8">
           <div className="relative rounded-2xl overflow-hidden flex flex-col sm:flex-row items-center gap-4 sm:gap-6 px-4 sm:px-8 py-6 sm:py-7 text-center sm:text-left"

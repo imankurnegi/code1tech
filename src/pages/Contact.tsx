@@ -68,7 +68,7 @@ const Contact = () => {
     country: "USA"
   }];
 
-  // Intersection observers for animations
+  //Intersection observers for animations
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     const createObserver = (ref: React.RefObject<Element>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {

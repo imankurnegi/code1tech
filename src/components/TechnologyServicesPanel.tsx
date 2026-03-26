@@ -4,6 +4,7 @@ import { useParallax } from "@/hooks/use-parallax";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface Outcome {
   icon: string;
@@ -24,8 +25,8 @@ interface ServiceCard {
 
 interface SmartTechnologyData {
   smart_technology_cards: ServiceCard[];
-  cta_text: string;
-  cta_url: string;
+  smart_technology_cta_text: string;
+  smart_technology_cta_url: string;
   heading: string;
   sub_heading: string;
 }
@@ -115,7 +116,7 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
                   </div>
                   <span 
                     className={`text-xs font-medium text-center leading-tight ${isActive ? "text-foreground" : "text-muted-foreground"}`}
-                    dangerouslySetInnerHTML={{ __html: service.title.split(" ").slice(0, 2).join(" ") }}
+                    dangerouslySetInnerHTML={{ __html: service.title}}
                   />
                 </button>;
           })}
@@ -185,22 +186,20 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
         </div>
 
         {/* CTA Button */}
-        {dataSmartTechnology?.cta_text && (
+        {dataSmartTechnology?.smart_technology_cta_url && (
           <div className={`text-center px-4 sm:px-0 mt-12 md:mt-16 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <Link to={dataSmartTechnology.smart_technology_cta_url}>
             <Button 
               size="lg" 
-              className="group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
-              onClick={() => {
-                if (dataSmartTechnology.cta_url) {
-                  window.location.href = dataSmartTechnology.cta_url;
-                }
-              }}
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-12 group w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:from-accent/90 hover:to-primary/90 text-primary-foreground px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold rounded-full shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-300"
             >
-              {dataSmartTechnology.cta_text}
+              {dataSmartTechnology.smart_technology_cta_text}
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </Button>
+            </Link>
           </div>
         )}
+        
       </div>
 
       {/* Hide scrollbar utility */}

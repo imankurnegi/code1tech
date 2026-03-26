@@ -205,7 +205,7 @@ const Team = () => {
                 background: "linear-gradient(135deg, hsl(222 50% 7%) 0%, hsl(215 55% 10%) 100%)"
               }}
             >
-              {/* Animated scanning line */}
+              {/* Animated  scanning line */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent animate-[scan_4s_ease-in-out_infinite]" />
               </div>
@@ -220,7 +220,7 @@ const Team = () => {
               {/* Radial glow on hover */}
               <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-accent/0 group-hover:bg-accent/5 blur-3xl transition-all duration-1000 pointer-events-none" />
 
-              <div className="flex flex-col lg:flex-row items-center relative z-10">
+              <div className="flex flex-col sm:flex-row items-center relative z-10">
                 {/* Left - Text Content */}
                 <div className="flex-1 px-6 sm:px-8 lg:px-10 py-6 sm:py-8 lg:py-10 relative z-10">
                   {/* Animated corner brackets */}
@@ -239,7 +239,7 @@ const Team = () => {
                 </div>
 
                 {/* Right - Image with geometric accent (hidden on mobile, shown sm+) */}
-                <div className="hidden sm:flex relative w-full lg:w-[28%] h-[170px] lg:h-[210px] flex-shrink-0 items-center justify-center">
+                <div className="hidden sm:flex relative w-[28%] flex-shrink-0 h-[170px] lg:h-[210px] items-center justify-center">
                   {/* Orbiting dot */}
                   <div className="hidden lg:block absolute -right-10 top-1/2 -translate-y-1/2 w-[250px] h-[250px] pointer-events-none animate-[spin_12s_linear_infinite]">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/40" />
@@ -334,9 +334,9 @@ const Team = () => {
               {/* Radial glow on hover */}
               <div className="absolute top-1/2 right-1/3 translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-accent/0 group-hover:bg-accent/5 blur-3xl transition-all duration-1000 pointer-events-none" />
 
-              <div className="flex flex-row lg:flex-row items-center relative z-10">
+              <div className="flex flex-row items-center relative z-10">
                 {/* Left - Image with geometric accent (hidden on mobile, shown sm+) */}
-                <div className="hidden sm:flex relative w-full lg:w-[28%] h-[170px] lg:h-[210px] flex-shrink-0 items-center justify-center">
+                <div className="hidden sm:flex relative w-[28%] flex-shrink-0 h-[170px] lg:h-[210px] items-center justify-center">
                   {/* Orbiting dot */}
                   <div className="hidden lg:block absolute -left-10 top-1/2 -translate-y-1/2 w-[250px] h-[250px] pointer-events-none animate-[spin_12s_linear_infinite_reverse]">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/40" />
@@ -406,7 +406,7 @@ const Team = () => {
             <p className="text-muted-foreground mb-6">
               {teamData?.join_us_section?.description}
             </p>
-            <Link to={`/${teamData?.join_us_section?.button_url}`} className="inline-flex items-center">
+            <Link to={teamData?.join_us_section?.button_url} className="inline-flex items-center">
               <Button variant="hero" size="lg" className="group">
                 {teamData?.join_us_section?.button_label}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

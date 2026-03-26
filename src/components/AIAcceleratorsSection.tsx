@@ -3,6 +3,7 @@ import { Calendar, Zap, Bot, TrendingUp } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AIOrbitVisual from "./AIOrbitVisual";
 import { addClassToSpan } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface TagImage {
   ID?: number;
@@ -65,7 +66,7 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
   return (
     <section
       ref={sectionRef}
-      className="pb-16 md:pb-24 lg:pb-28 relative overflow-hidden"
+      className="pb-16 md:pb-4 lg:pb-28 relative overflow-hidden"
       style={{
         background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(213 50% 7%) 50%, hsl(222 47% 5%) 100%)"
       }}
@@ -118,7 +119,7 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
-          <div className="max-w-xl">
+          <div className="w-full lg:max-w-xl">
             {/* Heading */}
             {dataAiAgent?.section_heading && (
                <h2 
@@ -187,19 +188,16 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
               >
+                <Link to={dataAiAgent.section_cta_url}>
                 <Button 
                   variant="hero" 
                   size="lg" 
                   className="group w-full sm:w-auto text-sm sm:text-base"
-                  onClick={() => {
-                    if (dataAiAgent.section_cta_url) {
-                      window.location.href = dataAiAgent.section_cta_url;
-                    }
-                  }}
                 >
                   <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                   {dataAiAgent.section_cta_text}
                 </Button>
+                </Link>
               </div>
             )}
           </div>

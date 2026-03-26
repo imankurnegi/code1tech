@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
+import { Link } from "react-router-dom";
 
 interface IndustryCard {
   ID: number;
@@ -145,6 +146,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
                 }`} />
 
                 <div className="relative p-6">
+                  <div className="flex items-center gap-4 mb-3">
                   {/* Icon */}
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 ${
                     isHovered ? "bg-accent/20" : "bg-muted/50"
@@ -160,6 +162,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
                   }`}>
                     {industry.title}
                   </h3>
+                  </div>
 
                   {/* Description */}
                   <p className="text-muted-foreground text-sm leading-relaxed">
@@ -178,14 +181,10 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
+            <Link to={dataIndustries.help_cta_url}>
             <Button
               variant="ghost"
               className="group text-accent hover:text-foreground hover:bg-accent/10 text-base font-medium px-6 py-3 h-auto"
-              onClick={() => {
-                if (dataIndustries.help_cta_url) {
-                  window.location.href = dataIndustries.help_cta_url;
-                }
-              }}
             >
               <span className="relative">
                 {dataIndustries.help_cta_text}
@@ -193,6 +192,7 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
               </span>
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
+            </Link>
           </div>
         )}
       </div>

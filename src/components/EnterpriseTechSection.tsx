@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useParallax } from "@/hooks/use-parallax";
 import { addClassToSpan } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface VideoDetails {
   video_text?: string;
@@ -309,10 +310,11 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
 
             {/* CTA Button */}
             <div className="pt-2 md:pt-4">
+            <Link to={dataTrusted?.cta_url}>
               <Button size="lg" className="relative group w-full sm:w-auto rounded-full px-6 sm:px-8 py-6 text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{
               background: "linear-gradient(135deg, hsl(205 100% 35%), hsl(194 68% 55%))",
               boxShadow: "0 4px 25px hsla(205, 100%, 35%, 0.35)"
-            }} onClick={() => window.location.href = dataTrusted?.cta_url}>
+            }}>
                 {/* Hover glow effect */}
                 <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{
                 boxShadow: "0 0 35px hsla(194, 68%, 55%, 0.45), 0 0 70px hsla(194, 68%, 55%, 0.25)"
@@ -321,6 +323,7 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
                   {dataTrusted?.cta_text}
                 </span>
               </Button>
+              </Link>
             </div>
           </div>
         </div>

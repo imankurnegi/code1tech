@@ -10,6 +10,7 @@ export interface MenuItem {
   subtitle?: string;
   class?: string;
   children?: MenuItem[];
+  onClick?: () => void;
 }
 
 export interface HeaderData {
@@ -226,6 +227,7 @@ const Navbar = ({ data }: HeaderProps) => {
                     key={link.title}
                     to={link.url}
                     className={`relative py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 flex items-center justify-between text-foreground/70 hover:text-foreground hover:bg-foreground/5 ${link.class === "disabled" ? "pointer-events-none" : ""}`}
+                    onClick={() => setIsOpen(false)}
                   >
                     {link.title}
                   </Link>

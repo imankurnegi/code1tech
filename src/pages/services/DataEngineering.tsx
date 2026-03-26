@@ -4,15 +4,16 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger } from
-"@/components/ui/accordion";
+  AccordionTrigger
+} from
+  "@/components/ui/accordion";
 import {
   ArrowRight,
   Shield,
   CheckCircle,
   Quote
 } from
-"lucide-react";
+  "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { api } from "@/api";
@@ -22,6 +23,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 // ── Animated Network Canvas ──
 const NetworkCanvas = () => {
@@ -32,7 +34,7 @@ const NetworkCanvas = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     let animationId: number;
-    const nodes: Array<{x: number;y: number;vx: number;vy: number;size: number;}> = [];
+    const nodes: Array<{ x: number; y: number; vx: number; vy: number; size: number; }> = [];
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = canvas.offsetWidth * dpr;
@@ -51,52 +53,52 @@ const NetworkCanvas = () => {
       ctx.strokeStyle = "rgba(95, 194, 227, 0.025)";
       ctx.lineWidth = 0.5;
       const gridSize = 80;
-      for (let x = 0; x < canvas.offsetWidth; x += gridSize) {ctx.beginPath();ctx.moveTo(x, 0);ctx.lineTo(x, canvas.offsetHeight);ctx.stroke();}
-      for (let y = 0; y < canvas.offsetHeight; y += gridSize) {ctx.beginPath();ctx.moveTo(0, y);ctx.lineTo(canvas.offsetWidth, y);ctx.stroke();}
+      for (let x = 0; x < canvas.offsetWidth; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.offsetHeight); ctx.stroke(); }
+      for (let y = 0; y < canvas.offsetHeight; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.offsetWidth, y); ctx.stroke(); }
       nodes.forEach((node, i) => {
-        node.x += node.vx;node.y += node.vy;
+        node.x += node.vx; node.y += node.vy;
         if (node.x < 0 || node.x > canvas.offsetWidth) node.vx *= -1;
         if (node.y < 0 || node.y > canvas.offsetHeight) node.vy *= -1;
-        ctx.beginPath();ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(95, 194, 227, 0.5)";ctx.fill();
-        ctx.beginPath();ctx.arc(node.x, node.y, node.size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(95, 194, 227, 0.05)";ctx.fill();
+        ctx.beginPath(); ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(95, 194, 227, 0.5)"; ctx.fill();
+        ctx.beginPath(); ctx.arc(node.x, node.y, node.size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(95, 194, 227, 0.05)"; ctx.fill();
         nodes.slice(i + 1).forEach((node2) => {
-          const dx = node.x - node2.x;const dy = node.y - node2.y;
+          const dx = node.x - node2.x; const dy = node.y - node2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 180) {ctx.beginPath();ctx.moveTo(node.x, node.y);ctx.lineTo(node2.x, node2.y);ctx.strokeStyle = `rgba(95, 194, 227, ${0.12 * (1 - dist / 180)})`;ctx.lineWidth = 0.6;ctx.stroke();}
+          if (dist < 180) { ctx.beginPath(); ctx.moveTo(node.x, node.y); ctx.lineTo(node2.x, node2.y); ctx.strokeStyle = `rgba(95, 194, 227, ${0.12 * (1 - dist / 180)})`; ctx.lineWidth = 0.6; ctx.stroke(); }
         });
       });
       animationId = requestAnimationFrame(animate);
     };
-    resize();initNodes();animate();
-    const handleResize = () => {resize();initNodes();};
+    resize(); initNodes(); animate();
+    const handleResize = () => { resize(); initNodes(); };
     window.addEventListener("resize", handleResize);
-    return () => {cancelAnimationFrame(animationId);window.removeEventListener("resize", handleResize);};
+    return () => { cancelAnimationFrame(animationId); window.removeEventListener("resize", handleResize); };
   }, []);
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.6 }} />;
 };
 
-const FloatingParticles = ({ count = 15 }: {count?: number;}) =>
-<>
+const FloatingParticles = ({ count = 15 }: { count?: number; }) =>
+  <>
     {[...Array(count)].map((_, i) =>
-  <div key={`fp-${i}`} className="absolute rounded-full bg-accent/20 hidden md:block" style={{
-    width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`,
-    left: `${5 + Math.random() * 90}%`, top: `${5 + Math.random() * 90}%`,
-    animation: `float ${5 + Math.random() * 6}s ease-in-out infinite`,
-    animationDelay: `${Math.random() * 4}s`, boxShadow: "0 0 6px rgba(95, 194, 227, 0.4)"
-  }} />
-  )}
+      <div key={`fp-${i}`} className="absolute rounded-full bg-accent/20 hidden md:block" style={{
+        width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`,
+        left: `${5 + Math.random() * 90}%`, top: `${5 + Math.random() * 90}%`,
+        animation: `float ${5 + Math.random() * 6}s ease-in-out infinite`,
+        animationDelay: `${Math.random() * 4}s`, boxShadow: "0 0 6px rgba(95, 194, 227, 0.4)"
+      }} />
+    )}
   </>;
 
 
-const PulsingGlow = ({ className, color = "rgba(95, 194, 227, 0.08)" }: {className: string;color?: string;}) =>
-<div className={`absolute pointer-events-none hidden md:block ${className}`}>
+const PulsingGlow = ({ className, color = "rgba(95, 194, 227, 0.08)" }: { className: string; color?: string; }) =>
+  <div className={`absolute pointer-events-none hidden md:block ${className}`}>
     <div className="w-full h-full rounded-full" style={{ background: `radial-gradient(circle, ${color} 0%, transparent 70%)`, animation: "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
   </div>;
 
 
-const AnimatedStat = ({ value, label, delay = 0, isVisible }: {value: string;label: string;delay?: number;isVisible: boolean;}) => {
+const AnimatedStat = ({ value, label, delay = 0, isVisible }: { value: string; label: string; delay?: number; isVisible: boolean; }) => {
   const [displayNum, setDisplayNum] = useState(0);
   const numericPart = parseInt(value.replace(/[^0-9]/g, ""), 10);
   const suffix = value.replace(/[0-9]/g, "");
@@ -111,7 +113,7 @@ const AnimatedStat = ({ value, label, delay = 0, isVisible }: {value: string;lab
         step++;
         const eased = 1 - Math.pow(1 - step / steps, 3);
         setDisplayNum(Math.min(Math.round(eased * numericPart), numericPart));
-        if (step >= steps) {setDisplayNum(numericPart);clearInterval(interval);}
+        if (step >= steps) { setDisplayNum(numericPart); clearInterval(interval); }
       }, 1600 / steps);
     }, delay);
     return () => clearTimeout(timeout);
@@ -125,15 +127,15 @@ const AnimatedStat = ({ value, label, delay = 0, isVisible }: {value: string;lab
 };
 
 // ── Inline CTA Banner ──
-const InlineCTA = ({ title, subtitle, cta, ctaLink }: {title: string;subtitle: string;cta: string;ctaLink: string;image?: string;}) =>
-<div style={{ background: "#070B12" }} className="py-6">
+const InlineCTA = ({ title, subtitle, cta, ctaLink }: { title: string; subtitle: string; cta: string; ctaLink: string; image?: string; }) =>
+  <div style={{ background: "#070B12" }} className="py-6">
     <div className="container mx-auto px-4 lg:px-8">
       <div className="relative rounded-2xl overflow-hidden flex flex-col sm:flex-row items-center gap-6 px-4 sm:px-8 py-7"
-    style={{
-      background: "linear-gradient(110deg, #0E1525 0%, #0B1220 40%, #12102A 70%, #0E1525 100%)",
-      border: "1px solid rgba(148,163,184,0.15)",
-      boxShadow: "0 4px 32px rgba(0,0,0,0.6)"
-    }}>
+        style={{
+          background: "linear-gradient(110deg, #0E1525 0%, #0B1220 40%, #12102A 70%, #0E1525 100%)",
+          border: "1px solid rgba(148,163,184,0.15)",
+          boxShadow: "0 4px 32px rgba(0,0,0,0.6)"
+        }}>
         {/* Decorative swoosh / glow blobs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Large violet ellipse */}
@@ -189,18 +191,18 @@ const InlineCTA = ({ title, subtitle, cta, ctaLink }: {title: string;subtitle: s
 // DATA
 // ══════════════════════════════════════════════════════════════
 
-const ServicesShowcase = ({ data, isVisible }: { data:any, isVisible: boolean }) => {
+const ServicesShowcase = ({ data, isVisible }: { data: any, isVisible: boolean }) => {
   const [active, setActive] = useState(0);
   const [fading, setFading] = useState(false);
 
   const servicesOffered = data?.map((block: any) => ({
-  icon: block.icon,
-  title: block.title,
-  description: block.description
-})) || [];
+    icon: block.icon,
+    title: block.title,
+    description: block.description
+  })) || [];
 
-// ── Services Showcase images ──
-const serviceImages = data?.map((b: any) => b.image?.url) || [];
+  // ── Services Showcase images ──
+  const serviceImages = data?.map((b: any) => b.image?.url) || [];
 
   const switchTab = (i: number) => {
     if (i === active) return;
@@ -239,7 +241,7 @@ const serviceImages = data?.map((b: any) => b.image?.url) || [];
             }}>
               <DynamicIcon name={s.icon} className="w-4 h-4" />
             </div>
-            <span className="leading-tight hidden sm:block line-clamp-1" dangerouslySetInnerHTML={{ __html: s.title}}></span>
+            <span className="leading-tight hidden sm:block line-clamp-1" dangerouslySetInnerHTML={{ __html: s.title }}></span>
             <span className="leading-tight sm:hidden">{s.title.split(" ").slice(0, 3).join(" ")}…</span>
           </button>
         ))}
@@ -327,9 +329,9 @@ const serviceImages = data?.map((b: any) => b.image?.url) || [];
 };
 
 const caseStudies = [
-{ title: "Real-Time Analytics Pipeline for Healthcare", description: "Built a streaming data pipeline processing 10M+ events/day, reducing reporting latency from hours to seconds for a leading healthcare provider.", impact: "10x faster insights" },
-{ title: "Cloud Migration for Fortune 500 Retailer", description: "Migrated 50TB+ legacy data warehouse to Snowflake with zero downtime, achieving 40% cost reduction and significant performance improvements.", impact: "40% cost savings" },
-{ title: "Data Governance Framework for Fintech", description: "Implemented enterprise-wide data quality & governance framework ensuring regulatory compliance across 15+ data sources.", impact: "99.9% data accuracy" }];
+  { title: "Real-Time Analytics Pipeline for Healthcare", description: "Built a streaming data pipeline processing 10M+ events/day, reducing reporting latency from hours to seconds for a leading healthcare provider.", impact: "10x faster insights" },
+  { title: "Cloud Migration for Fortune 500 Retailer", description: "Migrated 50TB+ legacy data warehouse to Snowflake with zero downtime, achieving 40% cost reduction and significant performance improvements.", impact: "40% cost savings" },
+  { title: "Data Governance Framework for Fintech", description: "Implemented enterprise-wide data quality & governance framework ensuring regulatory compliance across 15+ data sources.", impact: "99.9% data accuracy" }];
 
 
 // ══════════════════════════════════════════════════════════════
@@ -341,17 +343,17 @@ const DataEngineering = () => {
   const [capTabFading, setCapTabFading] = useState(false);
   const [indTab, setIndTab] = useState(0);
   const [indFading, setIndFading] = useState(false);
-  
+
   const handleIndTabChange = (i: number) => {
     if (i === indTab) return;
     setIndFading(true);
     setIndTab(i); // update immediately so image starts loading
-    setTimeout(() => {setIndFading(false);}, 220);
+    setTimeout(() => { setIndFading(false); }, 220);
   };
   const handleCapTabChange = (i: number) => {
     if (i === activeCapTab) return;
     setCapTabFading(true);
-    setTimeout(() => {setActiveCapTab(i);setCapTabFading(false);}, 220);
+    setTimeout(() => { setActiveCapTab(i); setCapTabFading(false); }, 220);
   };
   const [isVisible, setIsVisible] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
@@ -368,26 +370,26 @@ const DataEngineering = () => {
       },
       { threshold: 0.1 }
     );
-    Object.values(sectionRefs.current).forEach((ref) => {if (ref) observer.observe(ref);});
+    Object.values(sectionRefs.current).forEach((ref) => { if (ref) observer.observe(ref); });
     if (certRef.current) observer.observe(certRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const setSectionRef = (id: string) => (el: HTMLElement | null) => {sectionRefs.current[id] = el;};
+  const setSectionRef = (id: string) => (el: HTMLElement | null) => { sectionRefs.current[id] = el; };
 
   const handleFormSubmit = async (data: ContactFormData) => {
-        const formData = new FormData();
-        formData.append("your-name", data.firstName);
-        formData.append("last-name", data.lastName);
-        formData.append("email", data.email);
-        formData.append("phone", data.phone);
-        formData.append("subject", data.subject ?? "");
-        formData.append("message", data.message);
-        await api.submitContactForm(formData);
-      };
+    const formData = new FormData();
+    formData.append("your-name", data.firstName);
+    formData.append("last-name", data.lastName);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("subject", data.subject ?? "");
+    formData.append("message", data.message);
+    await api.submitContactForm(formData);
+  };
 
-      
-      const { data, isLoading, error } = useQuery({
+
+  const { data, isLoading, error } = useQuery({
     queryKey: ["dataEngineeringPage"],
     queryFn: async () => {
       const [serviceData, contactFormFields] = await Promise.all([
@@ -408,90 +410,88 @@ const DataEngineering = () => {
   const servicePage = data?.serviceData?.data;
   const contactFormFields = data?.contactFormFields ?? null;
 
-const engagementModels = servicePage?.data_engineers_engagement_models_section?.cards?.map((item) => {
-  return {
-    icon: item.icon,
-    title: item.title,
-    description: item.paragraph,
-    image: item.image?.url || '',
-    accentColor: item.accent_color || "#38BDF8",
-    badge: item.tag,
-    bullets: item.lists || []
+  const engagementModels = servicePage?.data_engineers_engagement_models_section?.cards?.map((item) => {
+    return {
+      icon: item.icon,
+      title: item.title,
+      description: item.paragraph,
+      image: item.image?.url || '',
+      accentColor: item.accent_color || "#38BDF8",
+      badge: item.tag,
+      bullets: item.lists || []
+    }
+  }) || [];
+
+  const advancedCapabilities = servicePage?.industries?.map((industry: any) => ({
+    icon: industry.sdb.data_engineers_capabilities.icon,
+    title: industry.post_title,
+    contentTitle: industry.sdb.data_engineers_capabilities.content_heading,
+    subtitle: industry.sdb.data_engineers_capabilities.content,
+    liveText: industry.sdb.data_engineers_capabilities.live_text,
+    items: industry.sdb.data_engineers_capabilities.right_blocks.map((block: any) => ({ label: block.heading, details: block.content }))
+  })) || [];
+
+  const industriesData = servicePage.industries_industries?.map((industry: any) => ({
+    icon: industry.sdb.data_engineers_industries.icon,
+    title: industry.post_title,
+    image: industry.sdb.data_engineers_industries.image?.url || '',
+    bullets: industry.sdb.data_engineers_industries.lists.map((block: any) => ({ label: block.list })),
+    subHeading: industry.sdb.data_engineers_industries.sub_heading,
+    activeText: industry.sdb.data_engineers_industries.active_text
+  })) || [];
+
+  const engineeringProcess = servicePage?.our_engineering_process_section?.cards?.map((card: any) => ({
+    step: card.step,
+    icon: card.icon,
+    title: card.title,
+    description: card.content,
+    tag: card.tag
+  })) || [];
+
+  const techStack = servicePage?.data_engineering_technology_stack_section?.stack_lists?.map((list: any) => ({
+    category: list.title,
+    items: list.content
+  })) || [
+      // { category: "Cloud Platforms", items: ["AWS (S3, Glue, Redshift, EMR)", "Google Cloud (BigQuery, Dataflow)", "Azure (ADF, Synapse, ADLS)"] },
+    ];
+
+  const whyChooseItems = servicePage?.data_engineers_benefits_of_choosing_section?.cards?.map((card: any) => ({
+    icon: card.icon,
+    title: card.title,
+    description: card.content,
+    tag: card.tag
+  })) || [];
+
+
+  const securityItems = servicePage?.digital_security_compliance_section?.content_blocks?.map((item) => {
+    return {
+      icon: item.icon,
+      title: item.title,
+      description: item.content,
+      label: item.label
+    }
+  }) || [];
+
+  const dataTestimonials = {
+    testimonial_heading: servicePage?.voices_heading,
+    testimonials: servicePage?.voices_testimonials
   }
-}) || [];
-
-const advancedCapabilities = servicePage?.industries?.map((industry: any) => ({
-  icon: industry.sdb.data_engineers_capabilities.icon,
-  title: industry.post_title,
-  contentTitle: industry.sdb.data_engineers_capabilities.content_heading,
-  subtitle: industry.sdb.data_engineers_capabilities.content,
-  liveText: industry.sdb.data_engineers_capabilities.live_text,
-  items: industry.sdb.data_engineers_capabilities.right_blocks.map((block: any) => ({ label: block.heading, details: block.content }))
-})) || [];
-
-const industriesData = servicePage.industries_industries?.map((industry: any) => ({
-  icon: industry.sdb.data_engineers_industries.icon,
-  title: industry.post_title,
-  image: industry.sdb.data_engineers_industries.image?.url || '',
-  bullets: industry.sdb.data_engineers_industries.lists.map((block: any) => ({ label: block.list })),
-  subHeading: industry.sdb.data_engineers_industries.sub_heading,
-  activeText: industry.sdb.data_engineers_industries.active_text
-})) || [];
-
-const engineeringProcess = servicePage?.our_engineering_process_section?.cards?.map((card: any) => ({
-  step: card.step,
-  icon: card.icon,
-  title: card.title,
-  description: card.content,
-  tag: card.tag
-})) || [];
-
-const techStack = servicePage?.data_engineering_technology_stack_section?.stack_lists?.map((list: any) => ({
-  category: list.title,
-  items: list.content
-})) || [
-// { category: "Cloud Platforms", items: ["AWS (S3, Glue, Redshift, EMR)", "Google Cloud (BigQuery, Dataflow)", "Azure (ADF, Synapse, ADLS)"] },
-];
-
-const whyChooseItems = servicePage?.data_engineers_benefits_of_choosing_section?.cards?.map((card: any) => ({
-  icon: card.icon,
-  title: card.title,
-  description: card.content,
-  tag: card.tag
-})) || [];
 
 
-const securityItems = servicePage?.digital_security_compliance_section?.content_blocks?.map((item) =>{
-  return { 
-    icon: item.icon, 
-    title: item.title, 
-    description: item.content,
-  label: item.label
-}
-}) || [];
-
-const testimonials = servicePage?.voices_testimonials?.map((item: any) => ({
-  quote: item.post_content,
-  name: item.post_title,
-  role: item.acf.designation,
-  company: item.acf.company
-})) || [];
-
-
-const faqs = servicePage?.frequently_asked_question?.map((item) => {
-  return {
-    q: item.post_title,
-    a: item.post_content
-  }
-}) || [];
+  const faqs = servicePage?.frequently_asked_question?.map((item) => {
+    return {
+      q: item.post_title,
+      a: item.post_content
+    }
+  }) || [];
 
   return (
     <>
-    <SeoTags
-            title={servicePage?.seo?.title}
-            description={servicePage?.seo?.description}
-            ogImage={servicePage?.seo?.og_image}
-          />
+      <SeoTags
+        title={servicePage?.seo?.title}
+        description={servicePage?.seo?.description}
+        ogImage={servicePage?.seo?.og_image}
+      />
       {/* ====== HERO ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)" }}>
         <NetworkCanvas />
@@ -505,8 +505,8 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
             <div className={`relative transition-all duration-500 ease-out ${isVisible ? "opacity-100 translate-x-0 scale-100" : "opacity-0 -translate-x-12 scale-95"}`}>
               <div className="relative">
                 <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: "0 25px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(95, 194, 227, 0.1)" }}>
-                  <img src={servicePage?.banner_section?.banner_image?.url} 
-                    alt={servicePage?.banner_section?.banner_image?.alt}  className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
+                  <img src={servicePage?.banner_section?.banner_image?.url}
+                    alt={servicePage?.banner_section?.banner_image?.alt} className="w-full h-[350px] lg:h-[420px] object-cover transition-transform duration-[2s] hover:scale-105" style={{ filter: "brightness(0.9) contrast(1.05)" }} loading="eager" />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-70" />
                   <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-transparent" />
                 </div>
@@ -523,7 +523,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
               </div>
             </div>
 
-            {/* Right – Content */}
+            {/* Right – Content*/}
             <div className={`transition-all duration-1000 ease-out delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}>
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-snug mb-5" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.banner_section?.banner_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
@@ -542,7 +542,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
 
           {/* Stats Bar */}
           <div className={`mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 p-4 sm:p-6 rounded-2xl backdrop-blur-2xl transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-          style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(95,194,227,0.04) 50%, rgba(255,255,255,0.03) 100%)", border: "1px solid rgba(95, 194, 227, 0.15)", boxShadow: "0 10px 40px rgba(0, 0, 0, 0.35)", transitionDelay: "1000ms" }}>
+            style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(95,194,227,0.04) 50%, rgba(255,255,255,0.03) 100%)", border: "1px solid rgba(95, 194, 227, 0.15)", boxShadow: "0 10px 40px rgba(0, 0, 0, 0.35)", transitionDelay: "1000ms" }}>
             <AnimatedStat value={servicePage?.stats_section?.stats_fields[0]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[0]?.stats_title} delay={1100} isVisible={isVisible} />
             <AnimatedStat value={servicePage?.stats_section?.stats_fields[1]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[1]?.stats_title} delay={1250} isVisible={isVisible} />
             <AnimatedStat value={servicePage?.stats_section?.stats_fields[2]?.stats_numbers} label={servicePage?.stats_section?.stats_fields[2]?.stats_title} delay={1400} isVisible={isVisible} />
@@ -566,79 +566,79 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
 
           {/* Unique bento-style layout: large left card + stacked right cards */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 items-stretch">
-{servicePage?.data_engineers_data_challenges_section?.blocks?.length && (<>
-            {/* ── Card 1 – Large feature card (2/5 width) ── */}
-            <div className={`lg:col-span-2 group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-              style={{ minHeight: "460px", transitionDelay: "0ms" }}>
-              {/* Background image */}
-              <img src={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              {/* Dark gradient overlay */}
-              <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(5,10,25,0.97) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.3) 100%)" }} />
-              {/* Cyan accent line at top */}
-              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-7">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.25), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.35)", backdropFilter: "blur(8px)" }}>
-                  <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.icon} className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300">{servicePage?.data_engineers_data_challenges_section?.blocks[0]?.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[0]?.description }} />
-                {/* Bottom accent */}
-                <div className="mt-5 w-10 h-[2px] group-hover:w-20 transition-all duration-500" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
-              </div>
-            </div>
-
-            {/* ── Right column: 2 stacked cards (3/5 width) ── */}
-            <div className="lg:col-span-3 grid grid-rows-2 gap-5">
-
-              {/* ── Card 2 – Horizontal split: image left + text right ── */}
-              <div className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-                style={{ transitionDelay: "150ms" }}>
-                <div className="flex flex-col sm:flex-row h-full" style={{ minHeight: "218px" }}>
-                  {/* Image panel */}
-                  <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
-                    <img src={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
-                    {/* Accent line – bottom on mobile, right on desktop */}
-                    <div className="absolute bottom-0 sm:bottom-auto sm:top-0 sm:bottom-0 sm:right-0 sm:w-[1px] h-[1px] sm:h-auto left-0 right-0" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
+            {servicePage?.data_engineers_data_challenges_section?.blocks?.length && (<>
+              {/* ── Card 1 – Large feature card (2/5 width) ── */}
+              <div className={`lg:col-span-2 group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                style={{ minHeight: "460px", transitionDelay: "0ms" }}>
+                {/* Background image */}
+                <img src={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                {/* Dark gradient overlay */}
+                <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(5,10,25,0.97) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.3) 100%)" }} />
+                {/* Cyan accent line at top */}
+                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-7">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.25), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.35)", backdropFilter: "blur(8px)" }}>
+                    <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[0]?.icon} className="w-6 h-6 text-accent" />
                   </div>
-                  {/* Text panel */}
-                  <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
-                    <div className="absolute inset-0 rounded-r-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 80% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                      <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.icon} className="w-5 h-5 text-accent" />
+                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors duration-300">{servicePage?.data_engineers_data_challenges_section?.blocks[0]?.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[0]?.description }} />
+                  {/* Bottom accent */}
+                  <div className="mt-5 w-10 h-[2px] group-hover:w-20 transition-all duration-500" style={{ background: "linear-gradient(90deg, #5FC2E3, #0077B6)" }} />
+                </div>
+              </div>
+
+              {/* ── Right column: 2 stacked cards (3/5 width) ── */}
+              <div className="lg:col-span-3 grid grid-rows-2 gap-5">
+
+                {/* ── Card 2 – Horizontal split: image left + text right ── */}
+                <div className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                  style={{ transitionDelay: "150ms" }}>
+                  <div className="flex flex-col sm:flex-row h-full" style={{ minHeight: "218px" }}>
+                    {/* Image panel */}
+                    <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
+                      <img src={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
+                      {/* Accent line – bottom on mobile, right on desktop */}
+                      <div className="absolute bottom-0 sm:bottom-auto sm:top-0 sm:bottom-0 sm:right-0 sm:w-[1px] h-[1px] sm:h-auto left-0 right-0" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[1]?.title }}></h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[1]?.description }} />
-                  </div>
-                </div>
-              </div>
-
-              {/* ── Card 3 – Horizontal split: text left + image right ── */}
-              <div className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-                style={{ transitionDelay: "300ms" }}>
-                <div className="flex flex-col-reverse sm:flex-row h-full" style={{ minHeight: "218px" }}>
-                  {/* Text panel */}
-                  <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
-                    <div className="absolute inset-0 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                      <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.icon} className="w-5 h-5 text-accent" />
+                    {/* Text panel */}
+                    <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
+                      <div className="absolute inset-0 rounded-r-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 80% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
+                        <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[1]?.icon} className="w-5 h-5 text-accent" />
+                      </div>
+                      <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[1]?.title }}></h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[1]?.description }} />
                     </div>
-                    <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[2]?.title }}></h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[2]?.description }} />
                   </div>
-                  {/* Image panel */}
-                  <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
-                    <img src={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
-                    {/* Accent line – bottom on mobile, left on desktop */}
-                    <div className="absolute bottom-0 sm:bottom-auto sm:top-0 sm:bottom-0 sm:left-0 sm:w-[1px] h-[1px] sm:h-auto left-0 right-0" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
+                </div>
+
+                {/* ── Card 3 – Horizontal split: text left + image right ── */}
+                <div className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.challenges ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                  style={{ transitionDelay: "300ms" }}>
+                  <div className="flex flex-col-reverse sm:flex-row h-full" style={{ minHeight: "218px" }}>
+                    {/* Text panel */}
+                    <div className="flex-1 flex flex-col justify-center p-5 sm:p-6 lg:p-7 relative" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.1)" }}>
+                      <div className="absolute inset-0 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(ellipse at 20% 50%, rgba(95,194,227,0.06) 0%, transparent 70%)" }} />
+                      <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 flex-shrink-0 relative z-10" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.12))", border: "1px solid rgba(95,194,227,0.25)" }}>
+                        <DynamicIcon name={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.icon} className="w-5 h-5 text-accent" />
+                      </div>
+                      <h3 className="text-base lg:text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors duration-300 relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[2]?.title }}></h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed relative z-10" dangerouslySetInnerHTML={{ __html: servicePage?.data_engineers_data_challenges_section?.blocks[2]?.description }} />
+                    </div>
+                    {/* Image panel */}
+                    <div className="relative sm:w-2/5 flex-shrink-0 overflow-hidden h-40 sm:h-auto">
+                      <img src={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.image?.url} alt={servicePage?.data_engineers_data_challenges_section?.blocks[2]?.image?.alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(5,10,25,0) 60%, rgba(8,14,30,0.95) 100%)" }} />
+                      {/* Accent line – bottom on mobile, left on desktop */}
+                      <div className="absolute bottom-0 sm:bottom-auto sm:top-0 sm:bottom-0 sm:left-0 sm:w-[1px] h-[1px] sm:h-auto left-0 right-0" style={{ background: "linear-gradient(90deg, transparent, #5FC2E3, transparent)" }} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </>
-              )}
+            )}
           </div>
         </div>
       </section>
@@ -649,7 +649,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
         subtitle={servicePage?.data_engineers_consultation_section?.content}
         cta={servicePage?.data_engineers_consultation_section?.cta_text}
         ctaLink={servicePage?.data_engineers_consultation_section?.cta_url} />
-      
+
 
       {/* ====== SERVICES OFFERED ====== */}
       <section id="services" ref={setSectionRef("services")} className="relative py-14 lg:py-20 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 4.5%) 100%)" }}>
@@ -686,15 +686,15 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
             {/* Top tab bar */}
             <div className="flex flex-wrap gap-2 mb-5 p-1 rounded-xl" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(95,194,227,0.1)" }}>
               {advancedCapabilities.map((c, i) =>
-              <button
-                key={i}
-                onClick={() => handleCapTabChange(i)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex-1 min-w-fit justify-center ${activeCapTab === i ? "text-foreground" : "text-muted-foreground hover:text-foreground/80"}`}
-                style={activeCapTab === i ? {
-                  background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.12))",
-                  border: "1px solid rgba(95,194,227,0.35)",
-                  boxShadow: "0 0 16px rgba(95,194,227,0.12)"
-                } : { border: "1px solid transparent" }}>
+                <button
+                  key={i}
+                  onClick={() => handleCapTabChange(i)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex-1 min-w-fit justify-center ${activeCapTab === i ? "text-foreground" : "text-muted-foreground hover:text-foreground/80"}`}
+                  style={activeCapTab === i ? {
+                    background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.12))",
+                    border: "1px solid rgba(95,194,227,0.35)",
+                    boxShadow: "0 0 16px rgba(95,194,227,0.12)"
+                  } : { border: "1px solid transparent" }}>
                   <DynamicIcon name={c.icon} className="w-4 h-4 flex-shrink-0" />
                   <span className="hidden sm:inline whitespace-nowrap">{c.title.split("&")[0].trim()}</span>
                 </button>
@@ -705,61 +705,61 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
             <div
               className="transition-all duration-220"
               style={{ opacity: capTabFading ? 0 : 1, transform: capTabFading ? "translateY(6px)" : "translateY(0)", transition: "opacity 220ms ease, transform 220ms ease" }}>
-              
-            <div className="relative rounded-xl overflow-hidden" style={{
+
+              <div className="relative rounded-xl overflow-hidden" style={{
                 background: "linear-gradient(135deg, hsl(222 47% 6.5%), hsl(210 60% 8%))",
                 border: "1px solid rgba(95,194,227,0.2)",
                 boxShadow: "0 8px 40px rgba(95,194,227,0.07), 0 4px 24px rgba(0,0,0,0.4)"
               }}>
-              <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-accent/30" />
-              <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-accent/30" />
-              <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-accent/30" />
-              <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-accent/30" />
-              <div className="flex flex-col lg:flex-row">
-                {/* Left: header panel */}
-                <div className="lg:w-64 flex-shrink-0 p-6 lg:p-7 flex flex-col justify-between"
-                  style={{ borderRight: "1px solid rgba(95,194,227,0.1)", background: "linear-gradient(180deg, rgba(95,194,227,0.06) 0%, transparent 100%)" }}>
-                  <div>
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center text-accent mb-4"
-                      style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.3)" }}>
-                      {(() => {const Icon = advancedCapabilities[activeCapTab].icon;return <DynamicIcon name={Icon} className="w-5 h-5" />;})()}
-                    </div>
-                    <h3 className="text-base font-bold text-foreground mb-2 leading-snug" dangerouslySetInnerHTML={{ __html: advancedCapabilities[activeCapTab].contentTitle}}></h3>
-                    <div className="w-8 h-[2px] mb-3" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
-                    <p className="text-sm text-muted-foreground leading-relaxed">{advancedCapabilities[activeCapTab].subtitle}</p>
-                  </div>
-                  <div className="mt-5 flex items-center gap-2 text-accent text-xs font-semibold tracking-wider uppercase">
-                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse flex-shrink-0" />
-                    {advancedCapabilities[activeCapTab].liveText}
-                  </div>
-                </div>
-                {/* Right: items grid */}
-                <div className="flex-1 p-6 lg:p-7 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {advancedCapabilities[activeCapTab].items.map((item, i) =>
-                    <div key={i} className="flex flex-col gap-1.5 p-3.5 rounded-lg transition-colors duration-200 hover:bg-white/[0.03]"
-                    style={{ border: "1px solid rgba(148,163,184,0.08)" }}>
-                      <div className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#5FC2E3" }} />
-                        <span className="text-sm font-bold text-foreground/90" dangerouslySetInnerHTML={{ __html: item.label}}></span>
+                <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-accent/30" />
+                <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-accent/30" />
+                <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-accent/30" />
+                <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-accent/30" />
+                <div className="flex flex-col lg:flex-row">
+                  {/* Left: header panel */}
+                  <div className="lg:w-64 flex-shrink-0 p-6 lg:p-7 flex flex-col justify-between"
+                    style={{ borderRight: "1px solid rgba(95,194,227,0.1)", background: "linear-gradient(180deg, rgba(95,194,227,0.06) 0%, transparent 100%)" }}>
+                    <div>
+                      <div className="w-11 h-11 rounded-xl flex items-center justify-center text-accent mb-4"
+                        style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.2), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.3)" }}>
+                        {(() => { const Icon = advancedCapabilities[activeCapTab].icon; return <DynamicIcon name={Icon} className="w-5 h-5" />; })()}
                       </div>
-                      <p className="text-[13px] text-muted-foreground leading-relaxed pl-3.5" dangerouslySetInnerHTML={{ __html: item.details}}></p>
+                      <h3 className="text-base font-bold text-foreground mb-2 leading-snug" dangerouslySetInnerHTML={{ __html: advancedCapabilities[activeCapTab].contentTitle }}></h3>
+                      <div className="w-8 h-[2px] mb-3" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
+                      <p className="text-sm text-muted-foreground leading-relaxed">{advancedCapabilities[activeCapTab].subtitle}</p>
                     </div>
+                    <div className="mt-5 flex items-center gap-2 text-accent text-xs font-semibold tracking-wider uppercase">
+                      <span className="w-2 h-2 rounded-full bg-accent animate-pulse flex-shrink-0" />
+                      {advancedCapabilities[activeCapTab].liveText}
+                    </div>
+                  </div>
+                  {/* Right: items grid */}
+                  <div className="flex-1 p-6 lg:p-7 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {advancedCapabilities[activeCapTab].items.map((item, i) =>
+                      <div key={i} className="flex flex-col gap-1.5 p-3.5 rounded-lg transition-colors duration-200 hover:bg-white/[0.03]"
+                        style={{ border: "1px solid rgba(148,163,184,0.08)" }}>
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#5FC2E3" }} />
+                          <span className="text-sm font-bold text-foreground/90" dangerouslySetInnerHTML={{ __html: item.label }}></span>
+                        </div>
+                        <p className="text-[13px] text-muted-foreground leading-relaxed pl-3.5" dangerouslySetInnerHTML={{ __html: item.details }}></p>
+                      </div>
                     )}
+                  </div>
                 </div>
               </div>
-            </div>
             </div>{/* end fade wrapper */}
 
             {/* Tab progress dots */}
             <div className="flex justify-center gap-2 mt-4">
               {advancedCapabilities.map((_, i) =>
-              <button key={i} onClick={() => handleCapTabChange(i)}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: activeCapTab === i ? "24px" : "6px",
-                height: "6px",
-                background: activeCapTab === i ? "#5FC2E3" : "rgba(95,194,227,0.25)"
-              }} />
+                <button key={i} onClick={() => handleCapTabChange(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: activeCapTab === i ? "24px" : "6px",
+                    height: "6px",
+                    background: activeCapTab === i ? "#5FC2E3" : "rgba(95,194,227,0.25)"
+                  }} />
               )}
             </div>
           </div>
@@ -772,7 +772,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
         subtitle={servicePage?.data_engineers_for_the_reliable_services_section?.content}
         cta={servicePage?.data_engineers_for_the_reliable_services_section?.cta_text}
         ctaLink={servicePage?.data_engineers_for_the_reliable_services_section?.cta_url} />
-      
+
 
       {/* ====== ENGAGEMENT MODELS ====== */}
       {/* ====== ENGAGEMENT MODELS ====== */}
@@ -830,7 +830,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                   {/* Accent line */}
                   <div className="w-8 h-0.5 mb-4 rounded-full" style={{ background: `linear-gradient(90deg, ${model.accentColor}, transparent)` }} />
                   <h3 className="text-lg font-bold text-foreground mb-3 leading-tight">{model.title}</h3>
-                  <p className="text-sm leading-relaxed mb-5 text-left" style={{ color: "#A7B0C0" }} dangerouslySetInnerHTML={{__html:model.description}}></p>
+                  <p className="text-sm leading-relaxed mb-5 text-left" style={{ color: "#A7B0C0" }} dangerouslySetInnerHTML={{ __html: model.description }}></p>
 
                   {/* Bullet highlights */}
                   {/* <div className="mt-auto grid grid-cols-2 gap-2">
@@ -841,7 +841,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                       </div>
                     ))}
                   </div> */}
-                  <div className="mt-auto grid grid-cols-2 gap-2" dangerouslySetInnerHTML={{__html: he.decode(model.bullets)}}>
+                  <div className="mt-auto grid grid-cols-2 gap-2" dangerouslySetInnerHTML={{ __html: he.decode(model.bullets) }}>
                   </div>
                 </div>
 
@@ -884,9 +884,9 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                       background: "rgba(255,255,255,0.03)",
                       border: "1px solid rgba(255,255,255,0.06)"
                     }}>
-                    
+
                     <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isActive ? "text-accent" : "text-muted-foreground"}`}
-                    style={{ background: isActive ? "rgba(95,194,227,0.15)" : "rgba(255,255,255,0.05)" }}>
+                      style={{ background: isActive ? "rgba(95,194,227,0.15)" : "rgba(255,255,255,0.05)" }}>
                       <DynamicIcon name={ind.icon} className="w-3.5 h-3.5" />
                     </div>
                     <span className="text-xs">{ind.title}</span>
@@ -909,7 +909,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                 {/* Preload all industry images for instant switching */}
                 <div className="hidden">
                   {industriesData.map((ind, i) =>
-                  <img key={i} src={ind.image} alt="" loading="eager" />
+                    <img key={i} src={ind.image} alt="" loading="eager" />
                   )}
                 </div>
 
@@ -917,18 +917,18 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                 <div
                   className="relative w-full overflow-hidden"
                   style={{ height: "160px", opacity: indFading ? 0 : 1, transition: "opacity 220ms ease" }}>
-                  
+
                   <img
                     src={industriesData[indTab].image}
                     alt={industriesData[indTab].title}
                     className="w-full h-full object-cover object-center transition-all duration-500" />
-                  
+
                   <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(7,11,18,0.2) 0%, rgba(7,11,18,0.75) 100%)" }} />
                   {/* Overlay label */}
                   <div className="absolute bottom-4 left-6 z-10 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center text-accent flex-shrink-0"
-                    style={{ background: "rgba(10,20,40,0.85)", border: "1px solid rgba(95,194,227,0.3)", backdropFilter: "blur(8px)" }}>
-                      {(() => {const Icon = industriesData[indTab].icon;return <DynamicIcon name={Icon} className="w-5 h-5" />;})()}
+                      style={{ background: "rgba(10,20,40,0.85)", border: "1px solid rgba(95,194,227,0.3)", backdropFilter: "blur(8px)" }}>
+                      {(() => { const Icon = industriesData[indTab].icon; return <DynamicIcon name={Icon} className="w-5 h-5" />; })()}
                     </div>
                     <div>
                       <p className="text-foreground font-bold text-base leading-tight">{industriesData[indTab].title}</p>
@@ -947,12 +947,12 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                     background: "linear-gradient(135deg, hsl(222 47% 6.5%), hsl(210 60% 8%))",
                     opacity: indFading ? 0 : 1, transform: indFading ? "translateY(6px)" : "translateY(0)", transition: "opacity 220ms ease, transform 220ms ease"
                   }}>
-                  
+
                   <p className="text-xs text-accent/60 font-semibold tracking-widest uppercase mb-4">{industriesData[indTab].subHeading}</p>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {industriesData[indTab].bullets.map((b, i) =>
-                    <div key={i} className="flex items-start gap-2.5 p-3.5 rounded-xl"
-                    style={{ background: "rgba(95,194,227,0.04)", border: "1px solid rgba(95,194,227,0.08)" }}>
+                      <div key={i} className="flex items-start gap-2.5 p-3.5 rounded-xl"
+                        style={{ background: "rgba(95,194,227,0.04)", border: "1px solid rgba(95,194,227,0.08)" }}>
                         <CheckCircle className="w-4 h-4 text-accent/70 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-muted-foreground leading-snug">{b.label}</span>
                       </div>
@@ -966,13 +966,13 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
           {/* Progress dots */}
           <div className="flex justify-center gap-2 mt-5">
             {industriesData.map((_, i) =>
-            <button key={i} onClick={() => handleIndTabChange(i)}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: indTab === i ? "24px" : "6px",
-              height: "6px",
-              background: indTab === i ? "linear-gradient(90deg, #5FC2E3, #0077B6)" : "rgba(95,194,227,0.25)"
-            }} />
+              <button key={i} onClick={() => handleIndTabChange(i)}
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: indTab === i ? "24px" : "6px",
+                  height: "6px",
+                  background: indTab === i ? "linear-gradient(90deg, #5FC2E3, #0077B6)" : "rgba(95,194,227,0.25)"
+                }} />
             )}
           </div>
         </div>
@@ -986,7 +986,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
 
           {/* Header */}
           <div className={`mb-12 transition-all duration-700 ${visibleSections.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            
+
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.our_engineering_process_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
             <p className="text-muted-foreground text-sm mt-2 max-w-xl">{servicePage?.our_engineering_process_section?.paragraph}</p>
           </div>
@@ -994,14 +994,14 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
           {/* Cards grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
             {engineeringProcess.map((item, index) =>
-            <div key={index} className={`group relative transition-all duration-700 hover:-translate-y-1 ${visibleSections.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-            style={{ transitionDelay: `${index * 120}ms` }}>
+              <div key={index} className={`group relative transition-all duration-700 hover:-translate-y-1 ${visibleSections.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                style={{ transitionDelay: `${index * 120}ms` }}>
                 {index < engineeringProcess.length - 1 &&
-              <div className="hidden lg:flex absolute top-1/2 -right-4 -translate-y-1/2 w-8 z-20 items-center justify-center">
+                  <div className="hidden lg:flex absolute top-1/2 -right-4 -translate-y-1/2 w-8 z-20 items-center justify-center">
                     <div className="w-full h-px" style={{ background: "linear-gradient(90deg, rgba(56,189,248,0.5), rgba(56,189,248,0.1))" }} />
                     <div className="absolute right-0 w-0 h-0" style={{ borderTop: "3px solid transparent", borderBottom: "3px solid transparent", borderLeft: "5px solid rgba(56,189,248,0.4)" }} />
                   </div>
-              }
+                }
                 <div className="h-full rounded-2xl p-6 flex flex-col relative overflow-hidden" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", backdropFilter: "blur(20px)" }}>
                   {/* Top accent line */}
                   <div className="absolute top-0 left-0 right-0 h-px rounded-t-2xl" style={{ background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.4), transparent)" }} />
@@ -1012,11 +1012,11 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                   {/* Phase label */}
                   <span className="text-xs font-semibold tracking-widest text-accent/50 uppercase mb-1">{item.tag}</span>
                   {/* Title */}
-                  <h3 className="text-foreground font-bold text-base mb-3 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
+                  <h3 className="text-foreground font-bold text-base mb-3 group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title }}></h3>
                   {/* Divider */}
                   <div className="w-8 h-px mb-4" style={{ background: "rgba(56,189,248,0.3)" }} />
                   {/* Description */}
-                  <p className="text-muted-foreground text-sm leading-[1.75] text-left flex-1"  dangerouslySetInnerHTML={{ __html: item.description}}></p>
+                  <p className="text-muted-foreground text-sm leading-[1.75] text-left flex-1" dangerouslySetInnerHTML={{ __html: item.description }}></p>
                 </div>
               </div>
             )}
@@ -1030,7 +1030,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
         subtitle={servicePage?.data_engineers_hire_experts_section?.content}
         cta={servicePage?.data_engineers_hire_experts_section?.cta_text}
         ctaLink={servicePage?.data_engineers_hire_experts_section?.cta_url} />
-      
+
 
       {/* ====== TECH STACK ====== */}
       <section id="techstack" ref={setSectionRef("techstack")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 6%) 100%)" }}>
@@ -1042,9 +1042,9 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {techStack.map((stack, index) =>
-            <div key={index} className={`group p-5 rounded-xl transition-all duration-500 hover:-translate-y-1 ${visibleSections.techstack ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(20px)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)", transitionDelay: `${index * 100}ms` }}>
-                <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-3" dangerouslySetInnerHTML={{__html: he.decode(stack.category)}}></h3>
+              <div key={index} className={`group p-5 rounded-xl transition-all duration-500 hover:-translate-y-1 ${visibleSections.techstack ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(20px)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)", transitionDelay: `${index * 100}ms` }}>
+                <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-3" dangerouslySetInnerHTML={{ __html: he.decode(stack.category) }}></h3>
                 <div className="w-8 h-[1px] mb-3 opacity-40" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
                 {/* <ul className="space-y-2">
                   {stack.items.map((item, i) =>
@@ -1053,7 +1053,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                     </li>
                 )}
                 </ul> */}
-                <div dangerouslySetInnerHTML={{__html: he.decode(stack.items)}}></div>
+                <div dangerouslySetInnerHTML={{ __html: he.decode(stack.items) }}></div>
               </div>
             )}
           </div>
@@ -1079,7 +1079,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
             {/* Inline KPIs */}
             <div className="flex gap-8 shrink-0">
               {[{ val: servicePage?.data_engineers_benefits_of_choosing_section?.count_number_1, lbl: servicePage?.data_engineers_benefits_of_choosing_section?.count_text_1 }, { val: servicePage?.data_engineers_benefits_of_choosing_section?.count_number_2, lbl: servicePage?.data_engineers_benefits_of_choosing_section?.count_text_2 }, { val: servicePage?.data_engineers_benefits_of_choosing_section?.count_number_3, lbl: servicePage?.data_engineers_benefits_of_choosing_section?.count_text_3 }].map((k, i) =>
-              <div key={i} className="text-center">
+                <div key={i} className="text-center">
                   <div className="text-2xl lg:text-3xl font-black" style={{ background: "linear-gradient(135deg,#5FC2E3,#0077B6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{k.val}</div>
                   <div className="text-xs mt-1" style={{ color: "rgba(180,210,240,0.55)" }}>{k.lbl}</div>
                 </div>
@@ -1102,7 +1102,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                     boxShadow: "0 8px 40px rgba(0,0,0,0.40), inset 0 1px 0 rgba(95,194,227,0.07)",
                     transitionDelay: `${index * 100}ms`
                   }}>
-                  
+
                   {/* Hover radial glow */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: "radial-gradient(ellipse at 30% 20%, rgba(95,194,227,0.12) 0%, transparent 60%)" }} />
                   {/* Top edge glow */}
@@ -1113,11 +1113,11 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                   <div className="relative z-10 p-7 flex flex-col gap-5 h-full">
                     {/* Icon badge */}
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
-                    style={{ background: "linear-gradient(135deg, rgba(0,119,182,0.35), rgba(95,194,227,0.15))", border: "1px solid rgba(95,194,227,0.22)" }}>
+                      style={{ background: "linear-gradient(135deg, rgba(0,119,182,0.35), rgba(95,194,227,0.15))", border: "1px solid rgba(95,194,227,0.22)" }}>
                       <DynamicIcon name={item.icon} />
                     </div>
                     {/* Title */}
-                    <h3 className="text-base lg:text-lg font-bold text-foreground leading-snug group-hover:text-[#5FC2E3] transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
+                    <h3 className="text-base lg:text-lg font-bold text-foreground leading-snug group-hover:text-[#5FC2E3] transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title }}></h3>
                     {/* Divider */}
                     <div className="w-10 h-px" style={{ background: "linear-gradient(90deg, #5FC2E3, transparent)" }} />
                     {/* Description */}
@@ -1125,7 +1125,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                     {/* Footer tag */}
                     <div className="mt-auto pt-4 border-t" style={{ borderColor: "rgba(95,194,227,0.08)" }}>
                       <span className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
-                      style={{ background: "rgba(95,194,227,0.07)", border: "1px solid rgba(95,194,227,0.14)", color: "#5FC2E3" }}>
+                        style={{ background: "rgba(95,194,227,0.07)", border: "1px solid rgba(95,194,227,0.14)", color: "#5FC2E3" }}>
                         <CheckCircle size={11} />
                         {item.tag}
                       </span>
@@ -1143,15 +1143,15 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
           {/* Bottom trust strip */}
           <div className={`mt-10 flex flex-wrap items-center justify-center gap-6 transition-all duration-700 delay-500 ${visibleSections.whychoose ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
             {servicePage?.data_engineers_benefits_of_choosing_section?.bottom_bullets?.map((item, index) => (
-  <div
-    key={index}
-    className="flex items-center gap-2 text-sm font-medium"
-    style={{ color: "rgba(180,210,240,0.55)" }}
-  >
-    <div className="w-1 h-1 rounded-full" style={{ background: "#5FC2E3" }} />
-    {item.label}
-  </div>
-))}
+              <div
+                key={index}
+                className="flex items-center gap-2 text-sm font-medium"
+                style={{ color: "rgba(180,210,240,0.55)" }}
+              >
+                <div className="w-1 h-1 rounded-full" style={{ background: "#5FC2E3" }} />
+                {item.label}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1192,14 +1192,14 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
           <div className={`mb-12 transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
               <div>
-                
+
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.digital_security_compliance_section?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
                 <p className="text-muted-foreground text-sm mt-2 max-w-xl">{servicePage?.digital_security_compliance_section?.paragraph}</p>
               </div>
               {/* Trust badges */}
               <div className="flex flex-wrap gap-2">
                 {servicePage?.digital_security_compliance_section?.tags?.map((badge, i) =>
-                <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.2)", color: "#5FC2E3" }}>
+                  <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.2)", color: "#5FC2E3" }}>
                     <Shield className="w-3 h-3" />
                     {badge.label}
                   </span>
@@ -1211,8 +1211,8 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
           {/* Cards */}
           <div className="flex flex-col gap-4">
             {securityItems.map((item, index) =>
-            <div key={index} className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-            style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", transitionDelay: `${index * 120}ms` }}>
+              <div key={index} className={`group relative rounded-2xl overflow-hidden transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", backdropFilter: "blur(20px)", transitionDelay: `${index * 120}ms` }}>
                 {/* Hover glow line */}
                 <div className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.5), transparent)" }} />
                 <div className="flex flex-col lg:flex-row gap-0">
@@ -1222,7 +1222,7 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
                       <DynamicIcon name={item.icon} className="w-5 h-5 text-accent" />
                     </div>
                     <div>
-                      <h3 className="text-foreground font-semibold text-sm lg:text-base leading-snug group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title}}></h3>
+                      <h3 className="text-foreground font-semibold text-sm lg:text-base leading-snug group-hover:text-accent transition-colors duration-300" dangerouslySetInnerHTML={{ __html: item.title }}></h3>
                       <div className="mt-2 flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                         <span className="text-accent/60 text-xs font-medium">{item.label}</span>
@@ -1240,62 +1240,26 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
         </div>
       </section>
 
-      {/* ====== CERTIFICATIONS ====== */}
-      <CertificationsSection certificationData={servicePage?.certifications_section} sectionRef={certRef as any} isVisible={visibleSections.security || false} />
-
       {/* ====== CTA 4 ====== */}
       <InlineCTA
         title={servicePage?.data_engineers_security_brief_cta_section?.heading}
         subtitle={servicePage?.data_engineers_security_brief_cta_section?.content}
         cta={servicePage?.data_engineers_security_brief_cta_section?.cta_text}
         ctaLink={servicePage?.data_engineers_security_brief_cta_section?.cta_url} />
-      
+
 
       {/* ====== TESTIMONIALS ====== */}
-      <section id="testimonials" ref={setSectionRef("testimonials")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 6%) 100%)" }}>
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.testimonials ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.voices_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
-            <div className="relative w-24 h-px mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent to-transparent" />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
-            {testimonials.map((t, index) =>
-            <div key={index} className={`group relative rounded-2xl transition-all duration-500 hover:-translate-y-1 ${visibleSections.testimonials ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-            style={{ transitionDelay: `${index * 150}ms` }}>
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-muted/40 to-muted/15 backdrop-blur-md border border-border/20 transition-all duration-300 group-hover:border-accent/30 group-hover:shadow-lg group-hover:shadow-accent/10" />
-                <div className="relative p-6">
-                  <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center mb-4">
-                    <Quote className="w-5 h-5 text-accent" />
-                  </div>
-                  <p className="text-foreground/90 text-sm leading-relaxed mb-5" dangerouslySetInnerHTML={{ __html: t.quote }}></p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent/30 to-primary/30 flex items-center justify-center">
-                      <span className="text-foreground font-semibold text-xs">{t.name.split(" ").map((n) => n[0]).join("")}</span>
-                    </div>
-                    <div>
-                      <h4 className="text-foreground font-semibold text-sm">{t.name}</h4>
-                      <p className="text-muted-foreground text-xs">{t.role}</p>
-                      <p className="text-accent/80 text-xs">{t.company}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ====== FAQs ====== */}
       <section id="faqs" ref={setSectionRef("faqs")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 5%) 100%)" }}>
         <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-3xl">
           <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{__html: addClassToSpan(servicePage?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
           </div>
           <Accordion type="single" collapsible className={`space-y-3 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             {faqs.map((faq, index) =>
-            <AccordionItem key={index} value={`faq-${index}`} className="border-none rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <AccordionItem key={index} value={`faq-${index}`} className="border-none rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <AccordionTrigger className="px-5 py-4 text-foreground hover:text-accent hover:no-underline text-left text-sm font-semibold">{faq.q}</AccordionTrigger>
                 <AccordionContent className="px-5 pb-4 text-muted-foreground text-sm leading-[1.7]">{faq.a}</AccordionContent>
               </AccordionItem>
@@ -1350,10 +1314,10 @@ const faqs = servicePage?.frequently_asked_question?.map((item) => {
               </p>
               <div className="space-y-2">
                 {servicePage?.services_get_started_section_section?.lists?.map((item, index) =>
-                <div key={index} className={`flex items-center gap-3 transition-all duration-500 ${visibleSections.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
-                style={{ transitionDelay: `${200 + index * 100}ms` }}>
+                  <div key={index} className={`flex items-center gap-3 transition-all duration-500 ${visibleSections.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
+                    style={{ transitionDelay: `${200 + index * 100}ms` }}>
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
-                    <span className="text-foreground/80" dangerouslySetInnerHTML={{ __html: item.list}}></span>
+                    <span className="text-foreground/80" dangerouslySetInnerHTML={{ __html: item.list }}></span>
                   </div>
                 )}
               </div>
