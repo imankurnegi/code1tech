@@ -33,19 +33,32 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+ useEffect(() => {
+  if (typeof window === 'undefined') return;
+
+  const el = sectionRef.current
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
-        setIsVisible(true);
+        setIsVisible(true)
+        observer.unobserve(el) // optional
       }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+    },
+    { threshold: 0.1 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
   return <section ref={sectionRef} className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(222,47%,5%)] via-[hsl(222,45%,6%)] to-[hsl(222,47%,5%)]" />

@@ -184,28 +184,34 @@ const EngineerAsAService = () => {
     };
 
   useEffect(() => {
-    setIsVisible(true);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleSections((prev) => ({
-              ...prev,
-              [entry.target.id]: true
-            }));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+  const initialVisible = {}
 
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+  Object.keys(sectionRefs.current).forEach((key) => {
+    initialVisible[key] = true
+  })
 
-    return () => observer.disconnect();
-  }, []);
+  setVisibleSections(initialVisible)
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections((prev) => ({
+            ...prev,
+            [entry.target.id]: true
+          }))
+        }
+      })
+    },
+    { threshold: 0.1 }
+  )
+
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref) observer.observe(ref)
+  })
+
+  return () => observer.disconnect()
+}, [])
 
   const setSectionRef = (id: string) => (el: HTMLElement | null) => {
     sectionRefs.current[id] = el;

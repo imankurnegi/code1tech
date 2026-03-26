@@ -41,22 +41,30 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
+  if (typeof window === 'undefined') return;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+  const el = sectionRef.current
+  if (!el) return
 
-    return () => observer.disconnect();
-  }, []);
+  if (el.getBoundingClientRect().top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        observer.disconnect()
+      }
+    },
+    { threshold: 0.2 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   return (
     <div 

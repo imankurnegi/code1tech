@@ -361,19 +361,42 @@ const DataEngineering = () => {
   const certRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    setIsVisible(true);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setVisibleSections((prev) => ({ ...prev, [entry.target.id]: true }));
-        });
-      },
-      { threshold: 0.1 }
-    );
-    Object.values(sectionRefs.current).forEach((ref) => { if (ref) observer.observe(ref); });
-    if (certRef.current) observer.observe(certRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const initial = {}
+
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref?.id) {
+      initial[ref.id] = true
+    }
+  })
+
+  if (certRef.current?.id) {
+    initial[certRef.current.id] = true
+  }
+
+  setVisibleSections(initial)
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections((prev) => ({
+            ...prev,
+            [entry.target.id]: true
+          }))
+        }
+      })
+    },
+    { threshold: 0.1 }
+  )
+
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref) observer.observe(ref)
+  })
+
+  if (certRef.current) observer.observe(certRef.current)
+
+  return () => observer.disconnect()
+}, [])
 
   const setSectionRef = (id: string) => (el: HTMLElement | null) => { sectionRefs.current[id] = el; };
 

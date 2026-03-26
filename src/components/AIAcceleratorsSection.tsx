@@ -40,21 +40,30 @@ const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+  if (typeof window === 'undefined') return;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+  const el = sectionRef.current;
+  if (!el) return;
 
-    return () => observer.disconnect();
-  }, []);
+  if (el.getBoundingClientRect().top < window.innerHeight) {
+    setIsVisible(true);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(el);
+      }
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe(el);
+
+  return () => observer.disconnect();
+}, []);
 
   // Map API tags to value points with default icons
   const valuePoints = dataAiAgent?.section_tags ? [

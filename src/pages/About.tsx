@@ -44,24 +44,41 @@ const About = () => {
   });
 
   useEffect(() => {
-    setHeroVisible(true);
-    const observers: IntersectionObserver[] = [];
-    const createObserver = (ref: React.RefObject<HTMLElement>, setter: (v: boolean) => void) => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) setter(true);
-      }, {
-        threshold: 0.1
-      });
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    };
-    createObserver(introRef, setIntroVisible);
-    createObserver(visionRef, setVisionVisible);
-    createObserver(valuesRef, setValuesVisible);
-    createObserver(approachRef, setApproachVisible);
-    createObserver(teamRef, setTeamVisible);
-    return () => observers.forEach(o => o.disconnect());
-  }, []);
+  setHeroVisible(true)
+
+  const observers = []
+
+  const createObserver = (ref, setter) => {
+    const el = ref.current
+    if (!el) return
+
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight) {
+      setter(true)
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setter(true)
+          observer.unobserve(el) // optional (animation once)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(el)
+    observers.push(observer)
+  }
+
+  createObserver(introRef, setIntroVisible)
+  createObserver(visionRef, setVisionVisible)
+  createObserver(valuesRef, setValuesVisible)
+  createObserver(approachRef, setApproachVisible)
+  createObserver(teamRef, setTeamVisible)
+
+  return () => observers.forEach((o) => o.disconnect())
+}, [])
 
   if (isLoading) return null;
   if (error) return null;

@@ -422,15 +422,29 @@ const RevealOnScroll = ({ children, className = "", delay = 0, direction = "up" 
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(el); } },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const el = ref.current
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight - 40) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        observer.unobserve(el)
+      }
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   const baseStyles = "transition-all duration-700 ease-out";
   const transforms: Record<string, string> = {
@@ -452,16 +466,31 @@ const RevealGrid = ({ children, className = "", staggerMs = 100 }: { children: R
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(el); } },
-      { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+ useEffect(() => {
+  const el = ref.current
+  if (!el) return
+
+  // 👇 INITIAL VISIBILITY CHECK (MOST IMPORTANT)
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        observer.unobserve(el)
+      }
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   return (
     <div ref={ref} className={className}>

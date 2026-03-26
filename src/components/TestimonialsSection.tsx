@@ -48,21 +48,31 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+  if (typeof window === 'undefined') return;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+  const el = sectionRef.current
+  if (!el) return
 
-    return () => observer.disconnect();
-  }, []);
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        observer.unobserve(el) // optional
+      }
+    },
+    { threshold: 0.1 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   // Auto-scroll effect
   useEffect(() => {

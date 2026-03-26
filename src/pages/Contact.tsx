@@ -19,6 +19,41 @@ const Contact = () => {
   const locationsRef = useRef<HTMLElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
 
+  
+  //Intersection observers for animations
+  useEffect(() => {
+  const observers = []
+
+  const createObserver = (ref, setter) => {
+    const el = ref.current
+    if (!el) return
+
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight) {
+      setter(true)
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setter(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(el)
+    observers.push(observer)
+  }
+
+  createObserver(heroRef, setIsHeroVisible)
+  createObserver(formRef, setIsFormVisible)
+  createObserver(locationsRef, setIsLocationsVisible)
+  createObserver(brandsRef, setIsBrandsVisible)
+
+  return () => observers.forEach((obs) => obs.disconnect())
+}, [])
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],
     queryFn: async () => {
@@ -67,27 +102,6 @@ const Contact = () => {
     address: contact?.locations_group?.address_2,
     country: "USA"
   }];
-
-  //Intersection observers for animations
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const createObserver = (ref: React.RefObject<Element>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          setter(true);
-        }
-      }, {
-        threshold: 0.1
-      });
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    };
-    createObserver(heroRef, setIsHeroVisible);
-    createObserver(formRef, setIsFormVisible);
-    createObserver(locationsRef, setIsLocationsVisible);
-    createObserver(brandsRef, setIsBrandsVisible);
-    return () => observers.forEach(obs => obs.disconnect());
-  }, []);
   
   return <>
     <SeoTags

@@ -29,20 +29,36 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const parallaxOffset = 0; // useParallax(0.08) - Temporarily disabled
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+  if (typeof window === 'undefined') return;
+
+  const el = sectionRef.current
+  if (!el) return
+
+  const triggerAnimation = () => {
+    setIsVisible(true)
+    setTimeout(() => setLineVisible(true), 800)
+  }
+
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    triggerAnimation()
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
-        setIsVisible(true);
-        // Delay line animation until cards appear
-        setTimeout(() => setLineVisible(true), 800);
+        triggerAnimation()
+        observer.unobserve(el)
       }
-    }, {
-      threshold: 0.15
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+    },
+    { threshold: 0.15 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   // Animated mesh/particle network background
   useEffect(() => {

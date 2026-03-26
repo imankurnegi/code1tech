@@ -128,18 +128,31 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
 
   // Intersection Observer for fade-in animation
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+  if (typeof window === 'undefined') return;
+
+  const el = sectionRef.current
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
-        setIsVisible(true);
+        setIsVisible(true)
+        observer.unobserve(el)
       }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+    },
+    { threshold: 0.1 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   // Reset video when switching
   useEffect(() => {

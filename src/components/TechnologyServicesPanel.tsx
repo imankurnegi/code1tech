@@ -51,18 +51,31 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxOffset = useParallax(0.08);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+  if (typeof window === 'undefined') return;
+
+  const el = sectionRef.current
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
-        setIsVisible(true);
+        setIsVisible(true)
+        observer.unobserve(el)
       }
-    }, {
-      threshold: 0.2
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+    },
+    { threshold: 0.2 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
   const handleServiceChange = (index: number) => {
     if (index === activeIndex) return;
     setIsTransitioning(true);

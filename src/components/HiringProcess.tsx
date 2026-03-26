@@ -49,22 +49,33 @@ const HiringProcess = ({ dataHiring }: HiringProcessProps) => {
 
   // Intersection observer for initial visibility
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          setShowCTA(true);
-        }
-      },
-      { threshold: 0.15 }
-    );
+  if (typeof window === 'undefined') return;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+  const el = sectionRef.current
+  if (!el) return
 
-    return () => observer.disconnect();
-  }, []);
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    setShowCTA(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true)
+        setShowCTA(true)
+        observer.unobserve(el)
+      }
+    },
+    { threshold: 0.15 }
+  )
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   // Looping animation - cycles through steps every 11 seconds (2.75s per step)
   useEffect(() => {

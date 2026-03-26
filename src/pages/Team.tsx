@@ -52,32 +52,49 @@ const Team = () => {
   const engBannerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+  window.scrollTo(0, 0)
 
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
-    };
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target === heroRef.current) setHeroVisible(true);
-          if (entry.target === leadershipRef.current) setLeadershipVisible(true);
-          if (entry.target === architectsRef.current) setArchitectsVisible(true);
-          if (entry.target === bannerRef.current) setBannerVisible(true);
-          if (entry.target === engineersRef.current) setEngineersVisible(true);
-          if (entry.target === engBannerRef.current) setEngBannerVisible(true);
-        }
-      });
-    }, observerOptions);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (entry.target === heroRef.current) setHeroVisible(true)
+        if (entry.target === leadershipRef.current) setLeadershipVisible(true)
+        if (entry.target === architectsRef.current) setArchitectsVisible(true)
+        if (entry.target === bannerRef.current) setBannerVisible(true)
+        if (entry.target === engineersRef.current) setEngineersVisible(true)
+        if (entry.target === engBannerRef.current) setEngBannerVisible(true)
+      }
+    })
+  }, observerOptions)
 
-    [heroRef, leadershipRef, architectsRef, bannerRef, engineersRef, engBannerRef].forEach(ref => {
-      if (ref.current) observer.observe(ref.current);
-    });
+  const refs = [
+    { ref: heroRef, setter: setHeroVisible },
+    { ref: leadershipRef, setter: setLeadershipVisible },
+    { ref: architectsRef, setter: setArchitectsVisible },
+    { ref: bannerRef, setter: setBannerVisible },
+    { ref: engineersRef, setter: setEngineersVisible },
+    { ref: engBannerRef, setter: setEngBannerVisible }
+  ]
 
-    return () => observer.disconnect();
-  }, []);
+  refs.forEach(({ ref, setter }) => {
+    const el = ref.current
+    if (!el) return
+
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight - 50) {
+      setter(true)
+    }
+
+    observer.observe(el)
+  })
+
+  return () => observer.disconnect()
+}, [])
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["team"],

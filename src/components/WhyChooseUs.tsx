@@ -33,18 +33,30 @@ const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-      }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+  if (typeof window === 'undefined') return;
+
+  const el = sectionRef.current
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  if (rect.top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      setIsVisible(true)
+      observer.unobserve(el) // optional (animation once)
     }
-    return () => observer.disconnect();
-  }, []);
+  }, {
+    threshold: 0.1
+  })
+
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
   const leftPillars = pillars.slice(0, 3);
   const rightPillars = pillars.slice(3, 5);
   const renderPillar = (pillar: typeof pillars[0], index: number, globalIndex: number) => {

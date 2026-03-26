@@ -257,21 +257,26 @@ const TechnologyStackSection = ({ dataCapabilities }: { dataCapabilities: any })
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    if (typeof window === 'undefined') return;
+  const el = sectionRef.current
+  if (!el) return
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+  if (el.getBoundingClientRect().top < window.innerHeight) {
+    setIsVisible(true)
+    return
+  }
+
+  const observer = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      setIsVisible(true)
+      observer.unobserve(el)
     }
+  }, { threshold: 0.1 })
 
-    return () => observer.disconnect();
-  }, []);
+  observer.observe(el)
+
+  return () => observer.disconnect()
+}, [])
 
   // Map API data into internal capabilities structure (left nav + right panel)
   const dynamicCapabilities: Capability[] | null = useMemo(() => {

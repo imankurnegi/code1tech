@@ -132,21 +132,30 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useNetworkAnimation(canvasRef);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: 0.1,
-      },
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+  if (typeof window === 'undefined') return;
+
+  const el = sectionRef.current;
+  if (!el) return;
+
+  if (el.getBoundingClientRect().top < window.innerHeight) {
+    setIsVisible(true);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(el); // optional
+      }
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe(el);
+
+  return () => observer.disconnect();
+}, []);
 
   
 
