@@ -6,8 +6,12 @@ export default defineConfig(({ mode }) => {
   return {
     base: "/",
     server: {
-      host: "::",
+      host: true,
       port: 3000,
+      allowedHosts: [
+        "code1.dev",
+        "staging.code1.dev"
+      ],
     },
     ssr: {
       noExternal: ["@tanstack/react-query", "react-router-dom"],
