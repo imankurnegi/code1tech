@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "build:ssr": "vite build --outDir dist/client && vite build --ssr src/entry-server.tsx --outDir dist/server",
-    "ssr": "cross-env NODE_ENV=production node server.js"
+    "ssr": "cross-env NODE_ENV=production node server.js",
+    "ssr:dev": "cross-env NODE_ENV=development node server.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -16,6 +16,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -592,10 +593,13 @@ const DataScience = () => {
   const securityComplianceSection = pageData?.security_and_compliance_section;
   const caseStudiesApi = pageData?.case_studies ?? [];
   const caseStudiesSectionHeading = pageData?.case_study_section_heading;
-  const testimonialsApi = pageData?.testimonials ?? [];
-  const testimonialsSectionHeading = pageData?.testimonial_section_heading;
   const faqSectionHeading = pageData?.faq_section_heading;
   const faqsApi = pageData?.frequently_asked_question ?? [];
+
+  const dataTestimonials = {
+    testimonial_heading: pageData?.testimonial_section_heading,
+    testimonials: pageData?.testimonials ?? []
+  }
 
   const handleFormSubmit = async (data: ContactFormData) => {
     const formData = new FormData();
@@ -714,13 +718,6 @@ const DataScience = () => {
       industry: ["Finance & Banking", "Healthcare", "Retail & eCommerce"][index] || "",
       result: stripTags(cs.post_content || ""),
       icon: cs?.acf?.hover_icon,
-    })) || [];
-
-  const testimonials =
-    testimonialsApi.map((t: any) => ({
-      quote: stripTags(t.post_content || ""),
-      author: t.acf?.designation || t.post_title,
-      company: t.acf?.company || "",
     })) || [];
 
   const faqs =
@@ -1419,42 +1416,7 @@ const DataScience = () => {
       </section> */}
 
       {/* ===== 12. TESTIMONIALS ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg2}>
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
-              dangerouslySetInnerHTML={{
-                __html: addClassToSpan(
-                  testimonialsSectionHeading ?? "",
-                  "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent"
-                )
-              }}
-            />
-
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {testimonials.map((t, index) => (
-              <div
-                key={index}
-                className={`p-6 rounded-2xl transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ ...cardStyle, transitionDelay: `${300 + index * 100}ms` }}
-              >
-                <Quote className="w-8 h-8 text-accent/30 mb-4" />
-                <p className="text-foreground/90 text-sm leading-relaxed mb-4 italic text-left">"{t.quote}"</p>
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-accent text-accent" />)}
-                  </div>
-                </div>
-                <p className="text-accent text-sm font-medium mt-2">{t.author}</p>
-                <p className="text-muted-foreground text-xs">{t.company}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+       <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ===== 13. FAQs ===== */}
       <section className="py-8 lg:py-12" style={sectionBg3}>

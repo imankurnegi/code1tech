@@ -2,10 +2,13 @@ import fs from 'node:fs/promises'
 import express from 'express'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const port = process.env.PORT || 3000
+const port = process.env.PORT || (isProduction ? 3000 : 3500)
 const base = process.env.BASE || '/'
 
 const app = express()
+
+// 👇 Vite instance (dev ke liye)
+let vite
 
 // Production: serve built client files
 if (isProduction) {
@@ -17,16 +20,19 @@ if (isProduction) {
 } else {
   // Development: use Vite dev server
   const { createServer } = await import('vite')
-  const vite = await createServer({
+
+  vite = await createServer({
     server: { middlewareMode: true },
     appType: 'custom',
     base,
   })
+
   app.use(vite.middlewares)
 }
 
 // SSR handler
 app.use('*', async (req, res, next) => {
+  // Static assets skip
   if (/\.(js|css|map|png|jpg|jpeg|svg|webp|ico|json)$/i.test(req.originalUrl)) {
     return next()
   }
@@ -36,19 +42,20 @@ app.use('*', async (req, res, next) => {
     let template, render
 
     if (isProduction) {
-      // Production: import built SSR entry-server.js
+      // Production
       template = await fs.readFile('./dist/client/index.html', 'utf-8')
       render = (await import('./dist/server/entry-server.js')).render
     } else {
-      // Dev: load Vite modules
-      const fsDefault = fs
-      template = await fsDefault.readFile('./index.html', 'utf-8')
-      const vite = globalThis.viteDevServer || await import('vite')
+      // Development
+      template = await fs.readFile('./index.html', 'utf-8')
+
+      // 👇 correct usage (no import('vite') here)
       template = await vite.transformIndexHtml(url, template)
       render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
     }
 
     const rendered = await render(url)
+
     const html = template
       .replace('<!--app-head-->', rendered.head ?? '')
       .replace('<!--app-html-->', rendered.html ?? '')
@@ -64,6 +71,8 @@ app.use('*', async (req, res, next) => {
   }
 })
 
+// Start server
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
+  console.log(`Mode: ${isProduction ? 'Production' : 'Development'}`)
 })

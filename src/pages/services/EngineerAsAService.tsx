@@ -711,9 +711,9 @@ const EngineerAsAService = () => {
                         ))}
                       </div>
 
-                      <Link to={service.link} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
+                      {/* <Link to={service.link} className="inline-flex items-center mt-3 text-accent hover:text-accent/80 transition-colors">
                         <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      </Link> */}
                     </div>
 
                     {/* Image region — visible on all breakpoints */}

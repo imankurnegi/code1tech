@@ -9,6 +9,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -559,6 +560,11 @@ const AIMLSolutions = () => {
     q: faq.post_title,
     a: faq.post_content
   })) || [];
+
+  const dataTestimonials = {
+    testimonial_heading: serviceData?.testimonial_section_heading,
+    testimonials: serviceData?.testimonials ?? []
+  }
 
   return (
     <>
@@ -1283,37 +1289,7 @@ const AIMLSolutions = () => {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="py-14 lg:py-20" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 100%)" }}>
-        <div className="container mx-auto px-4 lg:px-8">
-          <RevealOnScroll>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(serviceData?.testimonial_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-            </div>
-          </RevealOnScroll>
-          <div className="grid md:grid-cols-3 gap-6">
-            {serviceData?.testimonials?.length && serviceData.testimonials.map((t, i) => (
-              <div key={i} className="group relative p-7 rounded-2xl flex flex-col transition-all duration-500 hover:-translate-y-1 overflow-hidden" style={{ background: "rgba(8,14,30,0.95)", border: "1px solid rgba(95,194,227,0.12)" }}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl" style={{ background: "radial-gradient(ellipse at 20% 20%, rgba(95,194,227,0.07) 0%, transparent 65%)" }} />
-                <div className="absolute top-0 left-6 right-6 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(95,194,227,0.35), transparent)" }} />
-                <div className="relative z-10 flex flex-col h-full">
-                  {/* Quote mark */}
-                  <div className="text-5xl font-serif leading-none mb-4 bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent select-none">"</div>
-                  <p className="text-muted-foreground text-sm leading-relaxed flex-1 mb-6" dangerouslySetInnerHTML={{__html: t.post_content}}></p>
-                  <div className="flex items-center gap-3 pt-4 border-t border-border/20">
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.25), rgba(0,119,182,0.15))", border: "1px solid rgba(95,194,227,0.3)" }}>
-                      {t.post_title.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="text-foreground text-sm font-semibold">{t.post_title}</div>
-                      <div className="text-muted-foreground text-xs">{t?.acf?.designation}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+       <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ── FAQs ── */}
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}>
