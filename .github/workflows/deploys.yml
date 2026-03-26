@@ -71,9 +71,9 @@ jobs:
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "\
             cd /var/www/frontend && \
-            NODE_ENV=production pm2 describe react-ssr > /dev/null 2>&1 && \
-            NODE_ENV=production pm2 restart react-ssr --update-env || \
-            NODE_ENV=production pm2 start server.js --name react-ssr --update-env \
+            NODE_ENV=staging pm2 describe react-ssr > /dev/null 2>&1 && \
+            NODE_ENV=staging pm2 restart react-ssr --update-env || \
+            NODE_ENV=staging pm2 start server.js --name react-ssr --update-env \
           "
 
       # 9️⃣ Done
