@@ -20,6 +20,7 @@ const TermsConditions = () => {
         title={termsData?.seo?.title}
         description={termsData?.seo?.description}
         ogImage={termsData?.seo?.og_image}
+        schema={termsData?.schema}
       />
       {/* Hero  */}
       <section className="relative pt-32 pb-16 overflow-hidden">

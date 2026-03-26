@@ -783,6 +783,7 @@ const DataScience = () => {
                     title={pageData?.seo?.title}
                     description={pageData?.seo?.description}
                     ogImage={pageData?.seo?.og_image}
+                    schema={pageData?.schema}
                   />
       {/* ===== 1. HERO / BANNER ===== */}
       <section

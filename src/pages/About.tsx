@@ -74,6 +74,7 @@ const About = () => {
       title={about?.seo?.title}
       description={about?.seo?.description}
       ogImage={about?.seo?.og_image}
+      schema={about?.schema}
     />
     {/* Hero Section - Matching Home page style */}
     <section ref={heroRef} className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-24 lg:pt-28" style={{

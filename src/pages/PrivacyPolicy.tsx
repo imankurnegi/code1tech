@@ -22,6 +22,7 @@ const PrivacyPolicy = () => {
         title={privacyData?.seo?.title}
         description={privacyData?.seo?.description}
         ogImage={privacyData?.seo?.og_image}
+        schema={privacyData?.schema}
       />
 
       {/* Hero Section */}

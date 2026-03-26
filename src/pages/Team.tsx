@@ -95,6 +95,7 @@ const Team = () => {
         title={teamData?.seo?.title}
         description={teamData?.seo?.description}
         ogImage={teamData?.seo?.og_image}
+        schema={teamData?.schema}
       />
       {/* Hero Section */}
       <section
