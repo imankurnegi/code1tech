@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 
 interface VideoDetails {
   video_text?: string;
-  video_image?: boolean | string;
+  video_image?: {
+    url:string,
+    alt:string
+  };
   video_url?: string;
 }
 interface trustedSectionProps {
@@ -90,12 +93,11 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
         id: index + 1,
         label: video.video_text,
         video: video.video_url,
-        // image: video.video_image, // optional
+        image: video.video_image, // optional
       }))
     : [];
 
   const videoData = videoFullData;
-
   if (!dataTrusted || videoData.length === 0) {
     return null;
   }
@@ -105,25 +107,15 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
   const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const thumbnailRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const thumbnailRefs = useRef<(HTMLImageElement | null)[]>([]);
   const parallaxOffset = useParallax(0.1);
 
   // Handle thumbnail hover play/pause
   const handleThumbnailHover = (index: number) => {
     setHoveredThumb(index);
-    const video = thumbnailRefs.current[index];
-    if (video) {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    }
   };
   const handleThumbnailLeave = (index: number) => {
     setHoveredThumb(null);
-    const video = thumbnailRefs.current[index];
-    if (video) {
-      video.pause();
-      video.currentTime = 0;
-    }
   };
 
   // Intersection Observer for fade-in animation
@@ -255,16 +247,28 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
                         
                         {/* Thumbnail Preview */}
                         <div className="aspect-video relative overflow-hidden">
-                          <video ref={el => {
-                        thumbnailRefs.current[index] = el;
-                      }} muted loop playsInline className={`
-                              w-full h-full object-cover 
-                              transition-transform duration-500 ease-out
-                              ${video.id === 3 ? "scale-[1.35]" : ""} ${video.id === 4 ? "scale-[1.45]" : ""}
-                              ${activeThumb !== index && hoveredThumb === index ? (video.id === 3 ? "scale-[1.45]" : video.id === 4 ? "scale-[1.55]" : "scale-110") : ""}
-                            `}>
-                            <source src={video.video} type="video/mp4" />
-                          </video>
+                          <img
+  ref={el => {
+    thumbnailRefs.current[index] = el;
+  }}
+  src={video.image.url}
+  alt={video.image.alt}
+  className={`
+    w-full h-full object-cover
+    transition-transform duration-500 ease-out
+    ${video.id === 3 ? "scale-[1.35]" : ""}
+    ${video.id === 4 ? "scale-[1.45]" : ""}
+    ${
+      activeThumb !== index && hoveredThumb === index
+        ? video.id === 3
+          ? "scale-[1.45]"
+          : video.id === 4
+          ? "scale-[1.55]"
+          : "scale-110"
+        : ""
+    }
+  `}
+/>
                           
                           {/* Label Overlay with hover effect */}
                           <div className={`
