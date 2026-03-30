@@ -145,7 +145,7 @@ const PulsingGlow = ({ className, color = "rgba(95, 194, 227, 0.08)" }: { classN
 );
 
 // Banner-style CTA component
-const InlineCTA = ({ text, buttonText, link = "/contact" }: { text: string; buttonText: string; link?: string; image?: string }) => (
+const InlineCTA = ({ text, buttonText, link = "/contactus" }: { text: string; buttonText: string; link?: string; image?: string }) => (
   <div className="py-6" style={{ background: "#070B12" }}>
     <div className="container mx-auto px-4 lg:px-8">
       <div className="relative rounded-2xl overflow-hidden flex flex-col sm:flex-row items-center gap-6 px-4 sm:px-8 py-7"
@@ -783,6 +783,7 @@ const DataScience = () => {
                     title={pageData?.seo?.title}
                     description={pageData?.seo?.description}
                     ogImage={pageData?.seo?.og_image}
+                    schema={pageData?.schema}
                   />
       {/* ===== 1. HERO / BANNER ===== */}
       <section
@@ -1002,8 +1003,8 @@ const DataScience = () => {
                         <ArrowRight className="w-5 h-5 text-accent -rotate-45" />
                       </div>
                     </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-md" dangerouslySetInnerHTML={{__html: offering.description}}></p>
-                    <div className="relative rounded-xl overflow-hidden aspect-[4/3] max-w-md" style={{
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6" dangerouslySetInnerHTML={{__html: offering.description}}></p>
+                    <div className="relative rounded-xl overflow-hidden aspect-[4/2]" style={{
                       border: "1px solid rgba(148, 163, 184, 0.15)",
                     }}>
                       <img
@@ -1044,7 +1045,7 @@ const DataScience = () => {
       </section>
 
       {/* Inline CTA 1 */}
-      <InlineCTA text={pageData?.cta_section_heading} buttonText={pageData?.cta_text} />
+      <InlineCTA text={pageData?.cta_section_heading} buttonText={pageData?.cta_text} link={howWeWorkSection?.cta_url} />
 
       {/* ===== 4. ADVANCED DATA SCIENCE SERVICES ===== */}
       <section className="py-8 lg:py-12" style={sectionBg2}>

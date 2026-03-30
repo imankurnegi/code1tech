@@ -19,6 +19,28 @@ const Contact = () => {
   const locationsRef = useRef<HTMLElement>(null);
   const brandsRef = useRef<HTMLDivElement>(null);
 
+  
+  //Intersection observers for animations
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const createObserver = (ref: React.RefObject<Element>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setter(true);
+        }
+      }, {
+        threshold: 0.1
+      });
+      if (ref.current) observer.observe(ref.current);
+      observers.push(observer);
+    };
+    createObserver(heroRef, setIsHeroVisible);
+    createObserver(formRef, setIsFormVisible);
+    createObserver(locationsRef, setIsLocationsVisible);
+    createObserver(brandsRef, setIsBrandsVisible);
+    return () => observers.forEach(obs => obs.disconnect());
+  }, []);
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],
     queryFn: async () => {
@@ -68,32 +90,13 @@ const Contact = () => {
     country: "USA"
   }];
 
-  //Intersection observers for animations
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const createObserver = (ref: React.RefObject<Element>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          setter(true);
-        }
-      }, {
-        threshold: 0.1
-      });
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    };
-    createObserver(heroRef, setIsHeroVisible);
-    createObserver(formRef, setIsFormVisible);
-    createObserver(locationsRef, setIsLocationsVisible);
-    createObserver(brandsRef, setIsBrandsVisible);
-    return () => observers.forEach(obs => obs.disconnect());
-  }, []);
   
   return <>
     <SeoTags
         title={contact?.seo?.title}
         description={contact?.seo?.description}
         ogImage={contact?.seo?.og_image}
+        schema={contact?.schema}
       />
     {/* ========== HERO SECTION ========== */}
     <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 lg:pt-24" style={{

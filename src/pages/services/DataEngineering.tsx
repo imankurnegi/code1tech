@@ -491,6 +491,7 @@ const DataEngineering = () => {
         title={servicePage?.seo?.title}
         description={servicePage?.seo?.description}
         ogImage={servicePage?.seo?.og_image}
+        schema={servicePage?.schema}
       />
       {/* ====== HERO ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(220 50% 6%) 50%, hsl(222 47% 4%) 100%)" }}>

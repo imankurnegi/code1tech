@@ -49,6 +49,7 @@ const Index = () => {
         title={homepageData?.data?.seo?.title}
         description={homepageData?.data?.seo?.description}
         ogImage={homepageData?.data?.seo?.og_image}
+        schema={homepageData?.data?.schema}
       />
       {/* {isLoading ? (
           <div className="flex justify-center items-center h-screen">

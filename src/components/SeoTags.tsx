@@ -6,6 +6,7 @@ interface SEOProps {
   canonical?: string;
   ogType?: string;
   ogImage?: string;
+  schema?: object | string;
 }
 
 const SeoTags = ({
@@ -14,6 +15,7 @@ const SeoTags = ({
   canonical,
   ogType = "website",
   ogImage,
+  schema
 }: SEOProps) => {
   const siteTitle = "Code1 Tech Systems";
 
@@ -29,6 +31,7 @@ const SeoTags = ({
     ogImage || "";
 
   return (
+     <>
     <Helmet>
       {/* ✅ always present */}
       <title>{finalTitle}</title>
@@ -48,7 +51,19 @@ const SeoTags = ({
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDescription} />
       <meta name="twitter:image" content={finalOgImage} />
+   
+   {/* ✅ JSON-LD */}
+      {schema && (
+        <script type="application/ld+json">
+    {typeof schema === "string"
+      ? schema
+      : JSON.stringify(schema).replace(/</g, "\\u003c")}
+  </script>
+      )}
+
     </Helmet>
+     
+     </>
   );
 };
 

@@ -169,6 +169,7 @@ export async function render(url: string) {
     helmet?.title?.toString() || "",
     helmet?.meta?.toString() || "",
     helmet?.link?.toString() || "",
+    helmet?.script?.toString() || "",
   ].join("\n");
 
   const state = JSON.stringify(dehydrate(queryClient));

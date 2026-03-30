@@ -321,6 +321,7 @@ const EngineerAsAService = () => {
         title={serviceData?.seo?.title}
         description={serviceData?.seo?.description}
         ogImage={serviceData?.seo?.og_image}
+        schema={serviceData?.schema}
       />
       {/* ====== HERO SECTION ====== */}
       <section className="relative py-8 lg:py-12 overflow-hidden" style={{
