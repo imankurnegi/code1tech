@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, memo } from "react";
+import { useLocation } from "react-router-dom";
 
 type ClientLogo = {
   title?: string;
@@ -40,23 +41,35 @@ const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
+const location = useLocation();
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+useEffect(() => {
+  // Reset visibility on route change
+  setIsVisible(false);
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect(); // stop observing once triggered
+      }
+    },
+    { threshold: 0.2 }
+  );
+
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+
+    // Fallback if already visible in viewport
+    const rect = sectionRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setIsVisible(true);
+      observer.disconnect();
     }
+  }
 
-    return () => observer.disconnect();
-  }, []);
+  return () => observer.disconnect();
+}, [location.pathname]); // re-run on route change
 
   return (
     <div 

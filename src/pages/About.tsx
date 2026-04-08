@@ -11,6 +11,7 @@ import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 const About = () => {
   const [heroVisible, setHeroVisible] = useState(false);
@@ -43,25 +44,55 @@ const About = () => {
     },
   });
 
-  useEffect(() => {
-    setHeroVisible(true);
-    const observers: IntersectionObserver[] = [];
-    const createObserver = (ref: React.RefObject<HTMLElement>, setter: (v: boolean) => void) => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) setter(true);
-      }, {
-        threshold: 0.1
+const location = useLocation();
+
+useEffect(() => {
+  setHeroVisible(true);
+
+  const sections = [
+    { ref: introRef, setter: setIntroVisible },
+    { ref: visionRef, setter: setVisionVisible },
+    { ref: valuesRef, setter: setValuesVisible },
+    { ref: approachRef, setter: setApproachVisible },
+    { ref: teamRef, setter: setTeamVisible },
+  ];
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const match = sections.find(
+            (sec) => sec.ref.current === entry.target
+          );
+
+          if (match) {
+            match.setter(true);
+            observer.unobserve(entry.target); // run once
+          }
+        }
       });
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    };
-    createObserver(introRef, setIntroVisible);
-    createObserver(visionRef, setVisionVisible);
-    createObserver(valuesRef, setValuesVisible);
-    createObserver(approachRef, setApproachVisible);
-    createObserver(teamRef, setTeamVisible);
-    return () => observers.forEach(o => o.disconnect());
-  }, []);
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -80px 0px",
+    }
+  );
+
+  sections.forEach(({ ref, setter }) => {
+    if (ref.current) {
+      setter(false); // 👈 reset on route change
+      observer.observe(ref.current);
+
+      // 👇 fallback (already visible)
+      const rect = ref.current.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        setter(true);
+      }
+    }
+  });
+
+  return () => observer.disconnect();
+}, [location.pathname]);
 
   if (isLoading) return null;
   if (error) return null;

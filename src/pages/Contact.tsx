@@ -8,6 +8,7 @@ import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 const Contact = () => {
   const [isHeroVisible, setIsHeroVisible] = useState(false);
@@ -21,25 +22,53 @@ const Contact = () => {
 
   
   //Intersection observers for animations
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const createObserver = (ref: React.RefObject<Element>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
-      const observer = new IntersectionObserver(([entry]) => {
+const location = useLocation();
+
+useEffect(() => {
+  const observers: IntersectionObserver[] = [];
+
+  const createObserver = (
+    ref: React.RefObject<Element>,
+    setter: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    const el = ref.current;
+    if (!el) return;
+
+    setter(false); // 👈 reset on route change
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
         if (entry.isIntersecting) {
           setter(true);
+          observer.unobserve(entry.target); // 👈 trigger once
         }
-      }, {
-        threshold: 0.1
-      });
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    };
-    createObserver(heroRef, setIsHeroVisible);
-    createObserver(formRef, setIsFormVisible);
-    createObserver(locationsRef, setIsLocationsVisible);
-    createObserver(brandsRef, setIsBrandsVisible);
-    return () => observers.forEach(obs => obs.disconnect());
-  }, []);
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -80px 0px", // 👈 smoother trigger
+      }
+    );
+
+    observer.observe(el);
+
+    // 👇 fallback (already visible case)
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setter(true);
+    }
+
+    observers.push(observer);
+  };
+
+  createObserver(heroRef, setIsHeroVisible);
+  createObserver(formRef, setIsFormVisible);
+  createObserver(locationsRef, setIsLocationsVisible);
+  createObserver(brandsRef, setIsBrandsVisible);
+
+  return () => {
+    observers.forEach((obs) => obs.disconnect());
+  };
+}, [location.pathname]); // 
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],

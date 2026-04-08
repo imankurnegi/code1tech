@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useParallax } from "@/hooks/use-parallax";
 import { addClassToSpan } from "@/lib/utils";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface VideoDetails {
   video_text?: string;
@@ -118,20 +118,37 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
     setHoveredThumb(null);
   };
 
-  // Intersection Observer for fade-in animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+
+
+const location = useLocation();
+
+useEffect(() => {
+  // Reset visibility on route change
+  setIsVisible(false);
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true);
+        observer.unobserve(entry.target); // trigger once
       }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    },
+    { threshold: 0.1 }
+  );
+
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+
+    // Fallback: mark as visible if already in viewport
+    const rect = sectionRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setIsVisible(true);
+      observer.unobserve(sectionRef.current);
     }
-    return () => observer.disconnect();
-  }, []);
+  }
+
+  return () => observer.disconnect();
+}, [location.pathname]); // re-run on route change
 
   // Reset video when switching
   useEffect(() => {

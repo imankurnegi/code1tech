@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Users, Cpu, Network, Cog } from "lucide-react";
 import { useParallax } from "@/hooks/use-parallax";
 import { addClassToSpan } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 interface GrowthStrategyData {
   strategy_1_icon: boolean | string;
@@ -28,21 +29,43 @@ const GrowthStrategies = ({ dataGrowth }: GrowthStrategiesProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const parallaxOffset = 0; // useParallax(0.08) - Temporarily disabled
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+
+
+const location = useLocation();
+
+useEffect(() => {
+  // Reset visibility states on route change
+  setIsVisible(false);
+  setLineVisible(false);
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true);
+
         // Delay line animation until cards appear
         setTimeout(() => setLineVisible(true), 800);
+
+        observer.unobserve(entry.target); // trigger once
       }
-    }, {
-      threshold: 0.15
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    },
+    { threshold: 0.15 }
+  );
+
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+
+    // Fallback: already visible in viewport
+    const rect = sectionRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setIsVisible(true);
+      setTimeout(() => setLineVisible(true), 800);
+      observer.unobserve(sectionRef.current);
     }
-    return () => observer.disconnect();
-  }, []);
+  }
+
+  return () => observer.disconnect();
+}, [location.pathname]); // re-run on route change
 
   // Animated mesh/particle network background
   useEffect(() => {

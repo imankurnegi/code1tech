@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { 
   ArrowRight, 
   CheckCircle
@@ -183,29 +183,49 @@ const EngineerAsAService = () => {
       await api.submitContactForm(formData);
     };
 
-  useEffect(() => {
-    setIsVisible(true);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleSections((prev) => ({
-              ...prev,
-              [entry.target.id]: true
-            }));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+const location = useLocation();
 
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+useEffect(() => {
+  // Reset visibility on route change
+  setIsVisible(true);
+  setVisibleSections({}); // reset all section visibility
 
-    return () => observer.disconnect();
-  }, []);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections((prev) => ({
+            ...prev,
+            [entry.target.id]: true,
+          }));
+          observer.unobserve(entry.target); // trigger once per section
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  // Observe all section refs
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref) observer.observe(ref);
+  });
+
+  // Fallback: mark sections already visible in viewport
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref) {
+      const rect = ref.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        setVisibleSections((prev) => ({
+          ...prev,
+          [ref.id]: true,
+        }));
+        observer.unobserve(ref);
+      }
+    }
+  });
+
+  return () => observer.disconnect();
+}, [location.pathname]); 
 
   const setSectionRef = (id: string) => (el: HTMLElement | null) => {
     sectionRefs.current[id] = el;

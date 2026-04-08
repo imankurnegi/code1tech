@@ -24,6 +24,7 @@ import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import { useLocation } from "react-router-dom";
 
 // ── Animated Network Canvas ──
 const NetworkCanvas = () => {
@@ -360,20 +361,57 @@ const DataEngineering = () => {
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const certRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    setIsVisible(true);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setVisibleSections((prev) => ({ ...prev, [entry.target.id]: true }));
-        });
-      },
-      { threshold: 0.1 }
-    );
-    Object.values(sectionRefs.current).forEach((ref) => { if (ref) observer.observe(ref); });
-    if (certRef.current) observer.observe(certRef.current);
-    return () => observer.disconnect();
-  }, []);
+const location = useLocation();
+
+useEffect(() => {
+  // Reset all visibility states on route change
+  setIsVisible(true);
+  setVisibleSections({}); // 👈 reset all sections visibility
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections((prev) => ({
+            ...prev,
+            [entry.target.id]: true,
+          }));
+          observer.unobserve(entry.target); // trigger once per section
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  // Observe all section refs
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref) observer.observe(ref);
+  });
+
+  // Observe certRef if it exists
+  if (certRef.current) observer.observe(certRef.current);
+
+  // Fallback: mark sections already visible in viewport
+  Object.values(sectionRefs.current).forEach((ref) => {
+    if (ref) {
+      const rect = ref.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        setVisibleSections((prev) => ({ ...prev, [ref.id]: true }));
+        observer.unobserve(ref);
+      }
+    }
+  });
+
+  if (certRef.current) {
+    const rect = certRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setVisibleSections((prev) => ({ ...prev, [certRef.current!.id]: true }));
+      observer.unobserve(certRef.current);
+    }
+  }
+
+  return () => observer.disconnect();
+}, [location.pathname]);
 
   const setSectionRef = (id: string) => (el: HTMLElement | null) => { sectionRefs.current[id] = el; };
 
