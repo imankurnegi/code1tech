@@ -7,6 +7,7 @@ import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 const getInitials = (name: string) => {
   return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
@@ -51,33 +52,63 @@ const Team = () => {
   const engineersRef = useRef<HTMLElement>(null);
   const engBannerRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
+const location = useLocation();
 
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
-    };
+useEffect(() => {
+  // Scroll to top on route change
+  window.scrollTo(0, 0);
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+  // List of refs and their state setters
+  const elements: {
+    ref: React.RefObject<Element>;
+    setter: React.Dispatch<React.SetStateAction<boolean>>;
+  }[] = [
+    { ref: heroRef, setter: setHeroVisible },
+    { ref: leadershipRef, setter: setLeadershipVisible },
+    { ref: architectsRef, setter: setArchitectsVisible },
+    { ref: bannerRef, setter: setBannerVisible },
+    { ref: engineersRef, setter: setEngineersVisible },
+    { ref: engBannerRef, setter: setEngBannerVisible },
+  ];
+
+  const observers: IntersectionObserver[] = [];
+
+  elements.forEach(({ ref, setter }) => {
+    const el = ref.current;
+    if (!el) return;
+
+    // Reset visibility on route change
+    setter(false);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
         if (entry.isIntersecting) {
-          if (entry.target === heroRef.current) setHeroVisible(true);
-          if (entry.target === leadershipRef.current) setLeadershipVisible(true);
-          if (entry.target === architectsRef.current) setArchitectsVisible(true);
-          if (entry.target === bannerRef.current) setBannerVisible(true);
-          if (entry.target === engineersRef.current) setEngineersVisible(true);
-          if (entry.target === engBannerRef.current) setEngBannerVisible(true);
+          setter(true);
+          observer.unobserve(entry.target); // trigger once
         }
-      });
-    }, observerOptions);
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
 
-    [heroRef, leadershipRef, architectsRef, bannerRef, engineersRef, engBannerRef].forEach(ref => {
-      if (ref.current) observer.observe(ref.current);
-    });
+    observer.observe(el);
 
-    return () => observer.disconnect();
-  }, []);
+    // Fallback if element is already visible in viewport
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setter(true);
+      observer.unobserve(el);
+    }
+
+    observers.push(observer);
+  });
+
+  return () => {
+    observers.forEach((obs) => obs.disconnect());
+  };
+}, [location.pathname]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["team"],

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface WorkCard {
   card_icon: string;
@@ -33,19 +33,37 @@ const WorkWithUs = ({ dataWorkWithUs }: WorkWithUsProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+
+const location = useLocation();
+
+useEffect(() => {
+  // Reset visibility on route change
+  setIsVisible(false);
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true);
+        observer.unobserve(entry.target); // trigger once
       }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    },
+    { threshold: 0.1 }
+  );
+
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+
+    // Fallback: mark visible if already in viewport
+    const rect = sectionRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setIsVisible(true);
+      observer.unobserve(sectionRef.current);
     }
-    return () => observer.disconnect();
-  }, []);
+  }
+
+  return () => observer.disconnect();
+}, [location.pathname]); // re-run on route change
+
   return <section ref={sectionRef} className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(222,47%,5%)] via-[hsl(222,45%,6%)] to-[hsl(222,47%,5%)]" />

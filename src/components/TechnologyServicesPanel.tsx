@@ -4,7 +4,7 @@ import { useParallax } from "@/hooks/use-parallax";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface Outcome {
   icon: string;
@@ -50,19 +50,38 @@ const TechnologyServicesPanel = ({ dataSmartTechnology }: TechnologyServicesPane
   const [isTransitioning, setIsTransitioning] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxOffset = useParallax(0.08);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
+
+
+const location = useLocation();
+
+useEffect(() => {
+  // Reset visibility on route change
+  setIsVisible(false);
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
       if (entry.isIntersecting) {
         setIsVisible(true);
+        observer.unobserve(entry.target); // trigger once
       }
-    }, {
-      threshold: 0.2
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    },
+    { threshold: 0.2 }
+  );
+
+  if (sectionRef.current) {
+    observer.observe(sectionRef.current);
+
+    // Fallback: mark visible if already in viewport
+    const rect = sectionRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setIsVisible(true);
+      observer.unobserve(sectionRef.current);
     }
-    return () => observer.disconnect();
-  }, []);
+  }
+
+  return () => observer.disconnect();
+}, [location.pathname]); // re-run on route change
+
   const handleServiceChange = (index: number) => {
     if (index === activeIndex) return;
     setIsTransitioning(true);
