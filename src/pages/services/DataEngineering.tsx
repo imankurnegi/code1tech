@@ -15,7 +15,7 @@ import {
 } from
   "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { api } from "@/api";
 import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
@@ -24,6 +24,7 @@ import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import { useInView, useInViewMap } from "@/hooks/useInView";
 
 // ── Animated Network Canvas ──
 const NetworkCanvas = () => {
@@ -355,27 +356,8 @@ const DataEngineering = () => {
     setCapTabFading(true);
     setTimeout(() => { setActiveCapTab(i); setCapTabFading(false); }, 220);
   };
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const certRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    setIsVisible(true);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setVisibleSections((prev) => ({ ...prev, [entry.target.id]: true }));
-        });
-      },
-      { threshold: 0.1 }
-    );
-    Object.values(sectionRefs.current).forEach((ref) => { if (ref) observer.observe(ref); });
-    if (certRef.current) observer.observe(certRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  const setSectionRef = (id: string) => (el: HTMLElement | null) => { sectionRefs.current[id] = el; };
+  const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>();
+  const { setRef: setSectionRef, inViewMap: visibleSections } = useInViewMap();
 
   const handleFormSubmit = async (data: ContactFormData) => {
     const formData = new FormData();
@@ -486,7 +468,7 @@ const DataEngineering = () => {
   }) || [];
 
   return (
-    <>
+    <div ref={pageRef}>
       <SeoTags
         title={servicePage?.seo?.title}
         description={servicePage?.seo?.description}
@@ -1331,7 +1313,7 @@ const DataEngineering = () => {
           </div>
         </div>
       </section>
-    </>);
+    </div>);
 
 };
 

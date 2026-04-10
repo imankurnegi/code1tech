@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useParallax } from "@/hooks/use-parallax";
 import { addClassToSpan } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface VideoDetails {
   video_text?: string;
@@ -103,9 +104,8 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
   }
 
   const [activeThumb, setActiveThumb] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredThumb, setHoveredThumb] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
   const videoRef = useRef<HTMLVideoElement>(null);
   const thumbnailRefs = useRef<(HTMLImageElement | null)[]>([]);
   const parallaxOffset = useParallax(0.1);
@@ -117,21 +117,6 @@ const EnterpriseTechSection = ({dataTrusted}: trustedSectionProps) => {
   const handleThumbnailLeave = (index: number) => {
     setHoveredThumb(null);
   };
-
-  // Intersection Observer for fade-in animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-      }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
 
   // Reset video when switching
   useEffect(() => {

@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 import { api } from "@/api";
+import { useInView } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
@@ -37,46 +38,15 @@ const TeamMemberCard = ({ member, index, isVisible }: { member: { name: string; 
 );
 
 const Team = () => {
-  const [heroVisible, setHeroVisible] = useState(false);
-  const [leadershipVisible, setLeadershipVisible] = useState(false);
-  const [architectsVisible, setArchitectsVisible] = useState(false);
-  const [bannerVisible, setBannerVisible] = useState(false);
-  const [engineersVisible, setEngineersVisible] = useState(false);
-  const [engBannerVisible, setEngBannerVisible] = useState(false);
-
-  const heroRef = useRef<HTMLElement>(null);
-  const leadershipRef = useRef<HTMLElement>(null);
-  const architectsRef = useRef<HTMLElement>(null);
-  const bannerRef = useRef<HTMLElement>(null);
-  const engineersRef = useRef<HTMLElement>(null);
-  const engBannerRef = useRef<HTMLElement>(null);
+  const { ref: heroRef, inView: heroVisible } = useInView<HTMLElement>();
+  const { ref: leadershipRef, inView: leadershipVisible } = useInView<HTMLElement>();
+  const { ref: architectsRef, inView: architectsVisible } = useInView<HTMLElement>();
+  const { ref: bannerRef, inView: bannerVisible } = useInView<HTMLElement>();
+  const { ref: engineersRef, inView: engineersVisible } = useInView<HTMLElement>();
+  const { ref: engBannerRef, inView: engBannerVisible } = useInView<HTMLElement>();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target === heroRef.current) setHeroVisible(true);
-          if (entry.target === leadershipRef.current) setLeadershipVisible(true);
-          if (entry.target === architectsRef.current) setArchitectsVisible(true);
-          if (entry.target === bannerRef.current) setBannerVisible(true);
-          if (entry.target === engineersRef.current) setEngineersVisible(true);
-          if (entry.target === engBannerRef.current) setEngBannerVisible(true);
-        }
-      });
-    }, observerOptions);
-
-    [heroRef, leadershipRef, architectsRef, bannerRef, engineersRef, engBannerRef].forEach(ref => {
-      if (ref.current) observer.observe(ref.current);
-    });
-
-    return () => observer.disconnect();
   }, []);
 
   const { data, isLoading, error } = useQuery({

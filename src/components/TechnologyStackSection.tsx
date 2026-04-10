@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
+import { useInView } from "@/hooks/useInView";
 
 interface TechGroup {
   label: string;
@@ -251,27 +252,9 @@ const MobileTabBar = ({
 };
 
 const TechnologyStackSection = ({ dataCapabilities }: { dataCapabilities: any }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   // Map API data into internal capabilities structure (left nav + right panel)
   const dynamicCapabilities: Capability[] | null = useMemo(() => {

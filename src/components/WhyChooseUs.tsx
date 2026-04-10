@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
 import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface BusinessCard {
   card_icon: string;
@@ -29,22 +30,8 @@ const WhyChooseUs = ({ dataWhyBusinesses }: WhyChooseUsProps) => {
     title: card.card_heading,
     description: card.card_description,
   })) || [];
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-      }
-    }, {
-      threshold: 0.1
-    });
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
   const leftPillars = pillars.slice(0, 3);
   const rightPillars = pillars.slice(3, 5);
   const renderPillar = (pillar: typeof pillars[0], index: number, globalIndex: number) => {

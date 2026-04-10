@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface CaseStudy {
   ID: number;
@@ -26,26 +27,8 @@ interface CaseStudiesData {
 }
 
 const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudiesData }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   if (!dataCaseStudies || !dataCaseStudies.case_studies || dataCaseStudies.case_studies.length === 0) {
     return null;

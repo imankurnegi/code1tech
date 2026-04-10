@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, Zap, Bot, TrendingUp } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import AIOrbitVisual from "./AIOrbitVisual";
 import { addClassToSpan } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface TagImage {
   ID?: number;
@@ -36,25 +37,7 @@ interface AIAcceleratorsSectionProps {
 }
 
 const AIAcceleratorsSection = ({ dataAiAgent }: AIAcceleratorsSectionProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>({ threshold: 0.01, rootMargin: "0px 0px -10% 0px" });
 
   // Map API tags to value points with default icons
   const valuePoints = dataAiAgent?.section_tags ? [

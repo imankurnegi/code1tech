@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
@@ -8,38 +8,13 @@ import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
+import { useInView } from "@/hooks/useInView";
 
 const Contact = () => {
-  const [isHeroVisible, setIsHeroVisible] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [isLocationsVisible, setIsLocationsVisible] = useState(false);
-  const [isBrandsVisible, setIsBrandsVisible] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLElement>(null);
-  const locationsRef = useRef<HTMLElement>(null);
-  const brandsRef = useRef<HTMLDivElement>(null);
-
-  
-  //Intersection observers for animations
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const createObserver = (ref: React.RefObject<Element>, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          setter(true);
-        }
-      }, {
-        threshold: 0.1
-      });
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    };
-    createObserver(heroRef, setIsHeroVisible);
-    createObserver(formRef, setIsFormVisible);
-    createObserver(locationsRef, setIsLocationsVisible);
-    createObserver(brandsRef, setIsBrandsVisible);
-    return () => observers.forEach(obs => obs.disconnect());
-  }, []);
+  const { ref: heroRef, inView: isHeroVisible } = useInView<HTMLElement>();
+  const { ref: formRef, inView: isFormVisible } = useInView<HTMLElement>();
+  const { ref: locationsRef, inView: isLocationsVisible } = useInView<HTMLElement>();
+  const { ref: brandsRef, inView: isBrandsVisible } = useInView<HTMLDivElement>();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],

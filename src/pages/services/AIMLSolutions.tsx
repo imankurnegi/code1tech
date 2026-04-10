@@ -3,6 +3,7 @@ import { ArrowRight, ChevronDown, ChevronUp, ChevronRight } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { api } from "@/api";
+import { useInView } from "@/hooks/useInView";
 import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
@@ -418,19 +419,7 @@ const CoreServicesSection = ({data}) => {
 
 // ── Scroll Reveal Component ──
 const RevealOnScroll = ({ children, className = "", delay = 0, direction = "up" }: { children: React.ReactNode; className?: string; delay?: number; direction?: "up" | "left" | "right" | "scale" }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(el); } },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, inView: isVisible } = useInView<HTMLDivElement>();
 
   const baseStyles = "transition-all duration-700 ease-out";
   const transforms: Record<string, string> = {
@@ -449,20 +438,7 @@ const RevealOnScroll = ({ children, className = "", delay = 0, direction = "up" 
 
 // ── Staggered Grid Items ──
 const RevealGrid = ({ children, className = "", staggerMs = 100 }: { children: React.ReactNode; className?: string; staggerMs?: number }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(el); } },
-      { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
+  const { ref, inView: isVisible } = useInView<HTMLDivElement>({ threshold: 0.01, rootMargin: "0px 0px -20px 0px" });
   return (
     <div ref={ref} className={className}>
       {Array.isArray(children) ? children.map((child, i) => (
@@ -477,7 +453,7 @@ const RevealGrid = ({ children, className = "", staggerMs = 100 }: { children: R
 
 
 const AIMLSolutions = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>({ threshold: 0.01, rootMargin: "0px 0px -50px 0px" });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const handleFormSubmit = async (data: ContactFormData) => {
@@ -490,9 +466,6 @@ const AIMLSolutions = () => {
           formData.append("message", data.message);
           await api.submitContactForm(formData);
         };
-  
-
-  useEffect(() => { setIsVisible(true); }, []);
 
   const AnimatedStat = ({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) => {
     const [displayNum, setDisplayNum] = useState(0);
@@ -567,8 +540,8 @@ const AIMLSolutions = () => {
   }
 
   return (
-    <>
-    <SeoTags
+    <div ref={pageRef}>
+      <SeoTags
                 title={serviceData?.seo?.title}
                 description={serviceData?.seo?.description}
                 ogImage={serviceData?.seo?.og_image}
@@ -1358,7 +1331,7 @@ const AIMLSolutions = () => {
         btnText={serviceData?.advanced_capabilities_section?.cta_text}
         btnUrl={serviceData?.advanced_capabilities_section?.cta_url}
       />
-    </>
+    </div>
   );
 };
 

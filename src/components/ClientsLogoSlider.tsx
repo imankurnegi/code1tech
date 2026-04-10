@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, memo } from "react";
+import { memo } from "react";
+import { useInView } from "@/hooks/useInView";
 
 type ClientLogo = {
   title?: string;
@@ -37,26 +38,7 @@ const LogoTrack = memo(({clients} : {clients: ClientLogo[]}) => (
 LogoTrack.displayName = "LogoTrack";
 
 const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLDivElement>();
 
   return (
     <div 

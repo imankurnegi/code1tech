@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
 import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface IndustryCard {
   ID: number;
@@ -33,26 +34,8 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
     title: card.post_title,
     description: card.post_excerpt,
   })) || [];
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   return (
     <section

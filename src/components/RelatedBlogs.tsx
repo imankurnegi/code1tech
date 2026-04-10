@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { ArrowRight, Clock } from "lucide-react";
 import blogAi from "@/assets/blog-ai.jpg";
+import { useInView } from "@/hooks/useInView";
 import blogData from "@/assets/blog-data.jpg";
 import blogCloud from "@/assets/blog-cloud.jpg";
 import { addClassToSpan } from "@/lib/utils";
@@ -43,26 +44,8 @@ const categoryColors: Record<string, string> = {
 };
 
 const RelatedBlogs = ({ dataRelatedBlogs }: { dataRelatedBlogs?: RelatedBlogsData }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   return (
     <section
