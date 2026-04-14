@@ -5,6 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import blogData from "@/assets/blog-data.jpg";
 import blogCloud from "@/assets/blog-cloud.jpg";
 import { addClassToSpan } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 interface RelatedBlogsData {
   heading?: string;

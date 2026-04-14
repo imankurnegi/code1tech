@@ -8,6 +8,7 @@ import { useInView } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 const getInitials = (name: string) => {
   return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);

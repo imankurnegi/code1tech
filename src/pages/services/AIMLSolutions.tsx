@@ -11,6 +11,7 @@ import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import { useLocation } from "react-router-dom";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
