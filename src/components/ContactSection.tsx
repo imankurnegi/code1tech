@@ -1,10 +1,9 @@
-import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import ContactUsForm, { type ContactFormFieldsData, type ContactFormData } from "@/components/ContactUsForm";
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface ContactData {
   section_heading: string;
@@ -41,39 +40,7 @@ const ContactSection = ({ dataContact, contactFormFields = null }: ContactSectio
     { icon: dataContact.item_2_icon, text: dataContact.item_2_text },
     { icon: dataContact.item_3_icon, text: dataContact.item_3_text },
   ] : [];
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   return <section ref={sectionRef} id="contact" className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden">
       {/* Background gradient */}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
@@ -8,67 +8,13 @@ import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 const Contact = () => {
-  const [isHeroVisible, setIsHeroVisible] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [isLocationsVisible, setIsLocationsVisible] = useState(false);
-  const [isBrandsVisible, setIsBrandsVisible] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLElement>(null);
-  const locationsRef = useRef<HTMLElement>(null);
-  const brandsRef = useRef<HTMLDivElement>(null);
-
-  
-  //Intersection observers for animations
-const location = useLocation();
-
-useEffect(() => {
-  const observers: IntersectionObserver[] = [];
-
-  const createObserver = (
-    ref: React.RefObject<Element>,
-    setter: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    const el = ref.current;
-    if (!el) return;
-
-    setter(false); // 👈 reset on route change
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setter(true);
-          observer.unobserve(entry.target); // 👈 trigger once
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -80px 0px", // 👈 smoother trigger
-      }
-    );
-
-    observer.observe(el);
-
-    // 👇 fallback (already visible case)
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setter(true);
-    }
-
-    observers.push(observer);
-  };
-
-  createObserver(heroRef, setIsHeroVisible);
-  createObserver(formRef, setIsFormVisible);
-  createObserver(locationsRef, setIsLocationsVisible);
-  createObserver(brandsRef, setIsBrandsVisible);
-
-  return () => {
-    observers.forEach((obs) => obs.disconnect());
-  };
-}, [location.pathname]); // 
+  const { ref: heroRef, inView: isHeroVisible } = useInView<HTMLElement>();
+  const { ref: formRef, inView: isFormVisible } = useInView<HTMLElement>();
+  const { ref: locationsRef, inView: isLocationsVisible } = useInView<HTMLElement>();
+  const { ref: brandsRef, inView: isBrandsVisible } = useInView<HTMLDivElement>();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],

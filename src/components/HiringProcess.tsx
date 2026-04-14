@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface ProcessIcon {
   id: number;
@@ -39,49 +40,17 @@ const HiringProcess = ({ dataHiring }: HiringProcessProps) => {
     title: process.process_heading,
     description: process.process_description,
   })) || [];
-  const [isVisible, setIsVisible] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [showCTA, setShowCTA] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [ctaPulse, setCtaPulse] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
-  // Intersection observer for initial visibility
-
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-  setShowCTA(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        setShowCTA(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.15 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      setShowCTA(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  useEffect(() => {
+    if (!isVisible) return;
+    setShowCTA(true);
+  }, [isVisible]);
 
   // Looping animation - cycles through steps every 11 seconds (2.75s per step)
   useEffect(() => {

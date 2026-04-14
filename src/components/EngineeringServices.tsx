@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useInView } from "@/hooks/useInView";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -127,40 +128,9 @@ const EngineeringServices = ({ dataEngineering }: EngineeringServicesProps) => {
     image: category.acf.card_image,
     ctaLink: category.acf.card_learn_more,
   })) || [];
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useNetworkAnimation(canvasRef);
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback if element is already visible
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
 
   
 

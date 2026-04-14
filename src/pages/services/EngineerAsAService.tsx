@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { 
   ArrowRight, 
   CheckCircle
@@ -12,6 +12,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import { useInView, useInViewMap } from "@/hooks/useInView";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -151,11 +152,10 @@ const PulsingGlow = ({ className, color = "rgba(95, 194, 227, 0.08)" }: { classN
 );
 
 const EngineerAsAService = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
+  const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>();
+  const { setRef: setSectionRef, inViewMap: visibleSections } = useInViewMap();
   const [activePricing, setActivePricing] = useState(0);
   const [activeService, setActiveService] = useState(0);
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["engineerServicePage"],
@@ -182,54 +182,6 @@ const EngineerAsAService = () => {
       formData.append("message", data.message);
       await api.submitContactForm(formData);
     };
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(true);
-  setVisibleSections({}); // reset all section visibility
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setVisibleSections((prev) => ({
-            ...prev,
-            [entry.target.id]: true,
-          }));
-          observer.unobserve(entry.target); // trigger once per section
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  // Observe all section refs
-  Object.values(sectionRefs.current).forEach((ref) => {
-    if (ref) observer.observe(ref);
-  });
-
-  // Fallback: mark sections already visible in viewport
-  Object.values(sectionRefs.current).forEach((ref) => {
-    if (ref) {
-      const rect = ref.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        setVisibleSections((prev) => ({
-          ...prev,
-          [ref.id]: true,
-        }));
-        observer.unobserve(ref);
-      }
-    }
-  });
-
-  return () => observer.disconnect();
-}, [location.pathname]); 
-
-  const setSectionRef = (id: string) => (el: HTMLElement | null) => {
-    sectionRefs.current[id] = el;
-  };
 
   if (isLoading) return null;
   if (error) return null;
@@ -336,8 +288,8 @@ useEffect(() => {
     );
   };
   return (
-    <>
-    <SeoTags
+    <div ref={pageRef}>
+      <SeoTags
         title={serviceData?.seo?.title}
         description={serviceData?.seo?.description}
         ogImage={serviceData?.seo?.og_image}
@@ -1344,7 +1296,7 @@ useEffect(() => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

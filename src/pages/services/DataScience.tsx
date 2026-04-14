@@ -8,6 +8,7 @@ import {
   Star,
 } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { useInView } from "@/hooks/useInView";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { api } from "@/api";
 import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
@@ -551,13 +552,17 @@ const AnalyticsSolutionsSection = ({
 };
 
 const DataScience = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>();
   const [activeService, setActiveService] = useState(0);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
   
+  // Individual section visibility hooks
+  const { ref: servicesRef, inView: servicesVisible } = useInView<HTMLDivElement>();
+  const { ref: advancedRef, inView: advancedVisible } = useInView<HTMLDivElement>();
+  const { ref: processRef, inView: processVisible } = useInView<HTMLDivElement>();
+  const { ref: techStackRef, inView: techStackVisible } = useInView<HTMLDivElement>();
+  const { ref: securityRef, inView: securityVisible } = useInView<HTMLDivElement>();
+  const { ref: faqRef, inView: faqVisible } = useInView<HTMLDivElement>();
+
  const { data, isLoading, error } = useQuery({
     queryKey: ["dataSciencePage"],
     queryFn: async () => {
@@ -778,13 +783,13 @@ const DataScience = () => {
   };
   
   return (
-    <>
-        <SeoTags
-                    title={pageData?.seo?.title}
-                    description={pageData?.seo?.description}
-                    ogImage={pageData?.seo?.og_image}
-                    schema={pageData?.schema}
-                  />
+    <div ref={pageRef}>
+      <SeoTags
+        title={pageData?.seo?.title}
+        description={pageData?.seo?.description}
+        ogImage={pageData?.seo?.og_image}
+        schema={pageData?.schema}
+      />
       {/* ===== 1. HERO / BANNER ===== */}
       <section
         className="relative py-8 lg:py-12 overflow-hidden"
@@ -958,9 +963,9 @@ const DataScience = () => {
       />
 
       {/* ===== 3. DATA SCIENCE SERVICES WE OFFER ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg3}>
+      <section ref={servicesRef} className="py-8 lg:py-12" style={sectionBg3}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 delay-200 ${servicesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2
               className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
               dangerouslySetInnerHTML={{
@@ -1048,9 +1053,9 @@ const DataScience = () => {
       <InlineCTA text={pageData?.cta_section_heading} buttonText={pageData?.cta_text} link={howWeWorkSection?.cta_url} />
 
       {/* ===== 4. ADVANCED DATA SCIENCE SERVICES ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg2}>
+      <section ref={advancedRef} className="py-8 lg:py-12" style={sectionBg2}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 delay-300 ${advancedVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
               dangerouslySetInnerHTML={{
                 __html: addClassToSpan(
@@ -1069,7 +1074,7 @@ const DataScience = () => {
             {advancedServices.map((service, index) => (
               <div
                 key={index}
-                className={`group rounded-2xl p-6 lg:p-8 transition-all duration-500 hover:border-accent/20 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                className={`group rounded-2xl p-6 lg:p-8 transition-all duration-500 hover:border-accent/20 ${advancedVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{
                   background: "rgba(255, 255, 255, 0.02)",
                   border: "1px solid rgba(148, 163, 184, 0.12)",
@@ -1124,9 +1129,9 @@ const DataScience = () => {
       </section>
 
       {/* ===== 5. OUR PROCESS ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg3}>
+      <section ref={processRef} className="py-8 lg:py-12" style={sectionBg3}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 ${processVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(ourProcessSectionHeading ?? "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
 
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
@@ -1138,7 +1143,7 @@ const DataScience = () => {
             {processSteps.map((step, index) => (
               <div
                 key={index}
-                className={`group p-6 rounded-2xl text-center transition-all duration-500 hover:-translate-y-2 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                className={`group p-6 rounded-2xl text-center transition-all duration-500 hover:-translate-y-2 ${processVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{ ...cardStyle, transitionDelay: `${300 + index * 100}ms` }}
               >
                 <div className="mb-4">
@@ -1314,9 +1319,9 @@ const DataScience = () => {
       </section>
 
       {/* ===== 9. TECHNOLOGY STACK ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg3}>
+      <section ref={techStackRef} className="py-8 lg:py-12" style={sectionBg3}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-8 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-8 transition-all duration-700 ${techStackVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2
               className="text-2xl sm:text-3xl font-bold text-foreground mb-3"
               dangerouslySetInnerHTML={{
@@ -1343,9 +1348,9 @@ const DataScience = () => {
       </section>
 
       {/* ===== 10. SECURITY & COMPLIANCE ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg2}>
+      <section ref={securityRef} className="py-8 lg:py-12" style={sectionBg2}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 ${securityVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2
               className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
               dangerouslySetInnerHTML={{
@@ -1382,7 +1387,7 @@ const DataScience = () => {
       {/* ===== 11. CASE STUDIES ===== */}
       {/* <section className="py-8 lg:py-12" style={sectionBg3}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 ${securityVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2
               className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
               dangerouslySetInnerHTML={{
@@ -1420,9 +1425,9 @@ const DataScience = () => {
        <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ===== 13. FAQs ===== */}
-      <section className="py-8 lg:py-12" style={sectionBg3}>
+      <section ref={faqRef} className="py-8 lg:py-12" style={sectionBg3}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`text-center mb-12 transition-all duration-700 ${faqVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2
               className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
               dangerouslySetInnerHTML={{
@@ -1516,7 +1521,7 @@ const DataScience = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
