@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, memo } from "react";
-import { useLocation } from "react-router-dom";
+import { memo } from "react";
+import { useInView } from "@/hooks/useInView";
 
 type ClientLogo = {
   title?: string;
@@ -38,38 +38,7 @@ const LogoTrack = memo(({clients} : {clients: ClientLogo[]}) => (
 LogoTrack.displayName = "LogoTrack";
 
 const ClientsLogoSlider = ({ dataClientLogo }: dataClientLogoProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.disconnect(); // stop observing once triggered
-      }
-    },
-    { threshold: 0.2 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback if already visible in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.disconnect();
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLDivElement>();
 
   return (
     <div 

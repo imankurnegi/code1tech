@@ -15,16 +15,16 @@ import {
 } from
   "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { api } from "@/api";
-import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import { useLocation } from "react-router-dom";
+import { useInView, useInViewMap } from "@/hooks/useInView";
 
 // ── Animated Network Canvas ──
 const NetworkCanvas = () => {
@@ -356,88 +356,16 @@ const DataEngineering = () => {
     setCapTabFading(true);
     setTimeout(() => { setActiveCapTab(i); setCapTabFading(false); }, 220);
   };
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const certRef = useRef<HTMLElement>(null);
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset all visibility states on route change
-  setIsVisible(true);
-  setVisibleSections({}); // 👈 reset all sections visibility
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setVisibleSections((prev) => ({
-            ...prev,
-            [entry.target.id]: true,
-          }));
-          observer.unobserve(entry.target); // trigger once per section
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  // Observe all section refs
-  Object.values(sectionRefs.current).forEach((ref) => {
-    if (ref) observer.observe(ref);
-  });
-
-  // Observe certRef if it exists
-  if (certRef.current) observer.observe(certRef.current);
-
-  // Fallback: mark sections already visible in viewport
-  Object.values(sectionRefs.current).forEach((ref) => {
-    if (ref) {
-      const rect = ref.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        setVisibleSections((prev) => ({ ...prev, [ref.id]: true }));
-        observer.unobserve(ref);
-      }
-    }
-  });
-
-  if (certRef.current) {
-    const rect = certRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setVisibleSections((prev) => ({ ...prev, [certRef.current!.id]: true }));
-      observer.unobserve(certRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]);
-
-  const setSectionRef = (id: string) => (el: HTMLElement | null) => { sectionRefs.current[id] = el; };
-
-  const handleFormSubmit = async (data: ContactFormData) => {
-    const formData = new FormData();
-    formData.append("your-name", data.firstName);
-    formData.append("last-name", data.lastName);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("subject", data.subject ?? "");
-    formData.append("message", data.message);
-    await api.submitContactForm(formData);
-  };
-
+  const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>();
+  const { setRef: setSectionRef, inViewMap: visibleSections } = useInViewMap();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["dataEngineeringPage"],
     queryFn: async () => {
-      const [serviceData, contactFormFields] = await Promise.all([
-        api.getDataEngineering(),
-        api.getContactFormFields(),
-      ]);
+      const serviceData = await api.getDataEngineering();
 
       return {
         serviceData,
-        contactFormFields,
       };
     },
   });
@@ -446,7 +374,6 @@ useEffect(() => {
   if (error) return null;
 
   const servicePage = data?.serviceData?.data;
-  const contactFormFields = data?.contactFormFields ?? null;
 
   const engagementModels = servicePage?.data_engineers_engagement_models_section?.cards?.map((item) => {
     return {
@@ -524,7 +451,7 @@ useEffect(() => {
   }) || [];
 
   return (
-    <>
+    <div ref={pageRef}>
       <SeoTags
         title={servicePage?.seo?.title}
         description={servicePage?.seo?.description}
@@ -1363,13 +1290,13 @@ useEffect(() => {
             </div>
             <div className={`transition-all duration-700 delay-200 ${visibleSections.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <div className="p-6 lg:p-8 rounded-2xl" style={{ background: "rgba(255,255,255,0.02)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.06)", boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(95,194,227,0.05)" }}>
-                <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+                <ContactUsForm />
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>);
+    </div>);
 
 };
 

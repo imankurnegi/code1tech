@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link, useLoaderData, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { 
   ArrowRight, 
   CheckCircle
@@ -9,9 +9,10 @@ import { useEffect, useState, useRef } from "react";
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
-import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
+import { useInView, useInViewMap } from "@/hooks/useInView";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -151,91 +152,26 @@ const PulsingGlow = ({ className, color = "rgba(95, 194, 227, 0.08)" }: { classN
 );
 
 const EngineerAsAService = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
+  const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>();
+  const { setRef: setSectionRef, inViewMap: visibleSections } = useInViewMap();
   const [activePricing, setActivePricing] = useState(0);
   const [activeService, setActiveService] = useState(0);
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["engineerServicePage"],
     queryFn: async () => {
-      const [serviceData, contactFormFields] = await Promise.all([
-        api.getEngineerAsAService(),
-        api.getContactFormFields(),
-      ]);
+      const serviceData = await api.getEngineerAsAService();
 
       return {
         serviceData,
-        contactFormFields,
       };
     },
   });
-
-  const handleFormSubmit = async (data: ContactFormData) => {
-      const formData = new FormData();
-      formData.append("your-name", data.firstName);
-      formData.append("last-name", data.lastName);
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
-      formData.append("subject", data.subject ?? "");
-      formData.append("message", data.message);
-      await api.submitContactForm(formData);
-    };
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(true);
-  setVisibleSections({}); // reset all section visibility
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setVisibleSections((prev) => ({
-            ...prev,
-            [entry.target.id]: true,
-          }));
-          observer.unobserve(entry.target); // trigger once per section
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  // Observe all section refs
-  Object.values(sectionRefs.current).forEach((ref) => {
-    if (ref) observer.observe(ref);
-  });
-
-  // Fallback: mark sections already visible in viewport
-  Object.values(sectionRefs.current).forEach((ref) => {
-    if (ref) {
-      const rect = ref.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        setVisibleSections((prev) => ({
-          ...prev,
-          [ref.id]: true,
-        }));
-        observer.unobserve(ref);
-      }
-    }
-  });
-
-  return () => observer.disconnect();
-}, [location.pathname]); 
-
-  const setSectionRef = (id: string) => (el: HTMLElement | null) => {
-    sectionRefs.current[id] = el;
-  };
 
   if (isLoading) return null;
   if (error) return null;
 
   const serviceData = data?.serviceData?.data;
-  const contactFormFields = data?.contactFormFields ?? null;
   
   const pillars = serviceData?.engineer_as_a_service_page_section?.box_fields?.map((item) => {
     return {
@@ -336,8 +272,8 @@ useEffect(() => {
     );
   };
   return (
-    <>
-    <SeoTags
+    <div ref={pageRef}>
+      <SeoTags
         title={serviceData?.seo?.title}
         description={serviceData?.seo?.description}
         ogImage={serviceData?.seo?.og_image}
@@ -1338,13 +1274,13 @@ useEffect(() => {
                 boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(95, 194, 227, 0.05)",
                 animation: visibleSections.contact ? "borderGlow 4s ease-in-out infinite" : "none"
               }}>
-                <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+                <ContactUsForm />
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "./DynamicIcon";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface IndustryCard {
   ID: number;
@@ -33,39 +34,8 @@ const IndustriesWeServe = ({ dataIndustries }: IndustriesWeServeProps) => {
     title: card.post_title,
     description: card.post_excerpt,
   })) || [];
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark as visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   return (
     <section

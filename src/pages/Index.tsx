@@ -22,17 +22,15 @@ const Index = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["homepage"],
     queryFn: async () => {
-      const [homeData, clientLogos, contactFormFields] =
+      const [homeData, clientLogos] =
         await Promise.all([
           api.getHomeData(),
           api.getClientLogos(),
-          api.getContactFormFields(),
         ]);
 
       return {
         homeData,
         clientLogos,
-        contactFormFields,
       };
     },
   });
@@ -42,7 +40,6 @@ const Index = () => {
 
   const homepageData = data?.homeData;
   const clientLogosData = data?.clientLogos?.data ?? [];
-  const contactFormFields = data?.contactFormFields;
   return (
     <>
       <SeoTags
@@ -76,7 +73,7 @@ const Index = () => {
       <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
       <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
       {/* <RelatedBlogs dataRelatedBlogs={homepageData?.data?.blog_section}/> */}
-      <ContactSection dataContact={homepageData?.data?.contact_form_fields} contactFormFields={contactFormFields} />
+      <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
 
     </>
   )

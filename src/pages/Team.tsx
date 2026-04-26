@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 import { api } from "@/api";
+import { useInView } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
@@ -38,77 +39,16 @@ const TeamMemberCard = ({ member, index, isVisible }: { member: { name: string; 
 );
 
 const Team = () => {
-  const [heroVisible, setHeroVisible] = useState(false);
-  const [leadershipVisible, setLeadershipVisible] = useState(false);
-  const [architectsVisible, setArchitectsVisible] = useState(false);
-  const [bannerVisible, setBannerVisible] = useState(false);
-  const [engineersVisible, setEngineersVisible] = useState(false);
-  const [engBannerVisible, setEngBannerVisible] = useState(false);
+  const { ref: heroRef, inView: heroVisible } = useInView<HTMLElement>();
+  const { ref: leadershipRef, inView: leadershipVisible } = useInView<HTMLElement>();
+  const { ref: architectsRef, inView: architectsVisible } = useInView<HTMLElement>();
+  const { ref: bannerRef, inView: bannerVisible } = useInView<HTMLElement>();
+  const { ref: engineersRef, inView: engineersVisible } = useInView<HTMLElement>();
+  const { ref: engBannerRef, inView: engBannerVisible } = useInView<HTMLElement>();
 
-  const heroRef = useRef<HTMLElement>(null);
-  const leadershipRef = useRef<HTMLElement>(null);
-  const architectsRef = useRef<HTMLElement>(null);
-  const bannerRef = useRef<HTMLElement>(null);
-  const engineersRef = useRef<HTMLElement>(null);
-  const engBannerRef = useRef<HTMLElement>(null);
-
-const location = useLocation();
-
-useEffect(() => {
-  // Scroll to top on route change
-  window.scrollTo(0, 0);
-
-  // List of refs and their state setters
-  const elements: {
-    ref: React.RefObject<Element>;
-    setter: React.Dispatch<React.SetStateAction<boolean>>;
-  }[] = [
-    { ref: heroRef, setter: setHeroVisible },
-    { ref: leadershipRef, setter: setLeadershipVisible },
-    { ref: architectsRef, setter: setArchitectsVisible },
-    { ref: bannerRef, setter: setBannerVisible },
-    { ref: engineersRef, setter: setEngineersVisible },
-    { ref: engBannerRef, setter: setEngBannerVisible },
-  ];
-
-  const observers: IntersectionObserver[] = [];
-
-  elements.forEach(({ ref, setter }) => {
-    const el = ref.current;
-    if (!el) return;
-
-    // Reset visibility on route change
-    setter(false);
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setter(true);
-          observer.unobserve(entry.target); // trigger once
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      }
-    );
-
-    observer.observe(el);
-
-    // Fallback if element is already visible in viewport
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setter(true);
-      observer.unobserve(el);
-    }
-
-    observers.push(observer);
-  });
-
-  return () => {
-    observers.forEach((obs) => obs.disconnect());
-  };
-}, [location.pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["team"],

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
@@ -6,105 +6,37 @@ import { api } from "@/api";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
-import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 const Contact = () => {
-  const [isHeroVisible, setIsHeroVisible] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [isLocationsVisible, setIsLocationsVisible] = useState(false);
-  const [isBrandsVisible, setIsBrandsVisible] = useState(false);
-  const heroRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLElement>(null);
-  const locationsRef = useRef<HTMLElement>(null);
-  const brandsRef = useRef<HTMLDivElement>(null);
-
-  
-  //Intersection observers for animations
-const location = useLocation();
-
-useEffect(() => {
-  const observers: IntersectionObserver[] = [];
-
-  const createObserver = (
-    ref: React.RefObject<Element>,
-    setter: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    const el = ref.current;
-    if (!el) return;
-
-    setter(false); // 👈 reset on route change
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setter(true);
-          observer.unobserve(entry.target); // 👈 trigger once
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -80px 0px", // 👈 smoother trigger
-      }
-    );
-
-    observer.observe(el);
-
-    // 👇 fallback (already visible case)
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setter(true);
-    }
-
-    observers.push(observer);
-  };
-
-  createObserver(heroRef, setIsHeroVisible);
-  createObserver(formRef, setIsFormVisible);
-  createObserver(locationsRef, setIsLocationsVisible);
-  createObserver(brandsRef, setIsBrandsVisible);
-
-  return () => {
-    observers.forEach((obs) => obs.disconnect());
-  };
-}, [location.pathname]); // 
+  const { ref: heroRef, inView: isHeroVisible } = useInView<HTMLElement>();
+  const { ref: formRef, inView: isFormVisible } = useInView<HTMLElement>();
+  const { ref: locationsRef, inView: isLocationsVisible } = useInView<HTMLElement>();
+  const { ref: brandsRef, inView: isBrandsVisible } = useInView<HTMLDivElement>();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],
     queryFn: async () => {
-      const [contactData, clientLogos, contactFormFields] =
+      const [contactData, clientLogos] =
         await Promise.all([
           api.getContactData(),
           api.getClientLogos(),
-          api.getContactFormFields(),
         ]);
 
       return {
         contactData,
         clientLogos,
-        contactFormFields,
       };
     },
   });
-
-  const handleFormSubmit = async (data: ContactFormData) => {
-    const formData = new FormData();
-    formData.append("your-name", data.firstName);
-    formData.append("last-name", data.lastName);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("subject", data.subject ?? "");
-    formData.append("message", data.message);
-    await api.submitContactForm(formData);
-  };
 
   if (isLoading) return null;
   if (error) return null;
 
   const contact = data?.contactData?.data;
   const clientLogosData = data?.clientLogos?.data ?? [];
-  const contactFormFields = data?.contactFormFields ?? null;
 
   const salesNumbers = [contact?.sales_group?.phone_1, contact?.sales_group?.phone_2, contact?.sales_group?.phone_3].filter((n): n is string => !!n);
   const hrNumbers = [contact?.career_group?.phone_1, contact?.career_group?.phone_2].filter((n): n is string => !!n);
@@ -203,7 +135,7 @@ useEffect(() => {
               <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20 blur-sm pointer-events-none" />
 
               {/* Glassmorphism card */}
-              <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+              <ContactUsForm />
             </div>
           </div>
 

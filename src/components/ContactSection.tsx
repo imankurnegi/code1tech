@@ -1,10 +1,8 @@
-import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import ContactUsForm, { type ContactFormFieldsData, type ContactFormData } from "@/components/ContactUsForm";
-import { api } from "@/api";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface ContactData {
   section_heading: string;
@@ -21,59 +19,15 @@ interface ContactData {
 
 interface ContactSectionProps {
   dataContact?: ContactData;
-  contactFormFields?: ContactFormFieldsData | null;
 }
 
-const ContactSection = ({ dataContact, contactFormFields = null }: ContactSectionProps) => {
-  const handleFormSubmit = async (data: ContactFormData) => {
-    const formData = new FormData();
-    formData.append("your-name", data.firstName);
-    formData.append("last-name", data.lastName);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("subject", data.subject ?? "");
-    formData.append("message", data.message);
-    await api.submitContactForm(formData);
-  };
-
+const ContactSection = ({ dataContact }: ContactSectionProps) => {
   const trustBullets = dataContact ? [
     { icon: dataContact.item_1_icon, text: dataContact.item_1_text },
     { icon: dataContact.item_2_icon, text: dataContact.item_2_text },
     { icon: dataContact.item_3_icon, text: dataContact.item_3_text },
   ] : [];
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   return <section ref={sectionRef} id="contact" className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden">
       {/* Background gradient */}
@@ -144,7 +98,7 @@ useEffect(() => {
           <div className="relative group">
             {/* Glass panel background */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-muted/40 to-muted/15 backdrop-blur-md border border-border/30" />
-            <ContactUsForm contactFormFields={contactFormFields ?? null} onSubmit={handleFormSubmit} />
+            <ContactUsForm />
           </div>
         </div>
       </div>

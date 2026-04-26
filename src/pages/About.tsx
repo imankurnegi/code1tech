@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -11,23 +11,17 @@ import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 const About = () => {
-  const [heroVisible, setHeroVisible] = useState(false);
-  const [introVisible, setIntroVisible] = useState(false);
-  const [visionVisible, setVisionVisible] = useState(false);
-  const [valuesVisible, setValuesVisible] = useState(false);
-  const [approachVisible, setApproachVisible] = useState(false);
-  const [teamVisible, setTeamVisible] = useState(false);
   const [activeTab, setActiveTab] = useState("vision");
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
-  const heroRef = useRef<HTMLElement>(null);
-  const introRef = useRef<HTMLElement>(null);
-  const visionRef = useRef<HTMLElement>(null);
-  const valuesRef = useRef<HTMLElement>(null);
-  const approachRef = useRef<HTMLElement>(null);
-  const teamRef = useRef<HTMLElement>(null);
+  const { ref: heroRef, inView: heroVisible } = useInView<HTMLElement>();
+  const { ref: introRef, inView: introVisible } = useInView<HTMLElement>();
+  const { ref: visionRef, inView: visionVisible } = useInView<HTMLElement>();
+  const { ref: valuesRef, inView: valuesVisible } = useInView<HTMLElement>();
+  const { ref: approachRef, inView: approachVisible } = useInView<HTMLElement>();
+  const { ref: teamRef, inView: teamVisible } = useInView<HTMLElement>();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["aboutPageData"],
@@ -44,55 +38,6 @@ const About = () => {
     },
   });
 
-const location = useLocation();
-
-useEffect(() => {
-  setHeroVisible(true);
-
-  const sections = [
-    { ref: introRef, setter: setIntroVisible },
-    { ref: visionRef, setter: setVisionVisible },
-    { ref: valuesRef, setter: setValuesVisible },
-    { ref: approachRef, setter: setApproachVisible },
-    { ref: teamRef, setter: setTeamVisible },
-  ];
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const match = sections.find(
-            (sec) => sec.ref.current === entry.target
-          );
-
-          if (match) {
-            match.setter(true);
-            observer.unobserve(entry.target); // run once
-          }
-        }
-      });
-    },
-    {
-      threshold: 0.1,
-      rootMargin: "0px 0px -80px 0px",
-    }
-  );
-
-  sections.forEach(({ ref, setter }) => {
-    if (ref.current) {
-      setter(false); // 👈 reset on route change
-      observer.observe(ref.current);
-
-      // 👇 fallback (already visible)
-      const rect = ref.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight) {
-        setter(true);
-      }
-    }
-  });
-
-  return () => observer.disconnect();
-}, [location.pathname]);
 
   if (isLoading) return null;
   if (error) return null;

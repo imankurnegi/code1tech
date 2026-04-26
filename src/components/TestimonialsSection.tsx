@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Quote } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface TestimonialItem {
   ID: number;
@@ -43,42 +43,9 @@ const TestimonialsSection = ({ dataTestimonials }: TestimonialsSectionProps) => 
     role: item.acf?.designation,
     company: item.acf?.company
   })) || [];
-  const [isVisible, setIsVisible] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
   const scrollRef = useRef<HTMLDivElement>(null);
-
-
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
 
   // Auto-scroll effect
   useEffect(() => {

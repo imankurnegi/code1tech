@@ -8,6 +8,8 @@ import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import ClientCaptcha from 'react-client-captcha'
+import { api } from "@/api";
+import { useQuery } from "@tanstack/react-query";
 
 
 const contactSchema = z.object({
@@ -63,11 +65,10 @@ const countryCodes = [
 ];
 
 type ContactUsFormProps = {
-  contactFormFields: ContactFormFieldsData | null;
-  onSubmit?: (data: ContactFormData) => Promise<void> | void;
+  contactFormFields?: ContactFormFieldsData | null;
 };
 
-const ContactUsForm = ({ contactFormFields, onSubmit: onSubmitProp }: ContactUsFormProps) => {
+const ContactUsForm = ({ contactFormFields: contactFormFieldsProp = null }: ContactUsFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState("+91");
@@ -87,7 +88,15 @@ const [captchaError, setCaptchaError] = useState("");
     resolver: zodResolver(contactSchema)
   });
 
-  if (!contactFormFields) {
+  const { data: fetchedContactFormFields, isLoading: isContactFieldsLoading } = useQuery({
+    queryKey: ["contact-form-fields"],
+    queryFn: api.getContactFormFields,
+    enabled: !contactFormFieldsProp,
+  });
+
+  const contactFormFields = contactFormFieldsProp ?? fetchedContactFormFields ?? null;
+
+  if (isContactFieldsLoading || !contactFormFields) {
     return null;
   }
 
@@ -102,11 +111,14 @@ const [captchaError, setCaptchaError] = useState("");
     setIsSubmitting(true);
 
     try {
-      if (onSubmitProp) {
-        await onSubmitProp(data);
-      } else {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      }
+      const formData = new FormData();
+      formData.append("your-name", data.firstName);
+      formData.append("last-name", data.lastName);
+      formData.append("email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("subject", data.subject ?? "");
+      formData.append("message", data.message);
+      await api.submitContactForm(formData);
       setIsSubmitted(true);
       reset();
       toast({

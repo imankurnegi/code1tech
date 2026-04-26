@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { addClassToSpan } from "@/lib/utils";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface CaseStudy {
   ID: number;
@@ -26,39 +27,8 @@ interface CaseStudiesData {
 }
 
 const CaseStudiesSection = ({ dataCaseStudies }: { dataCaseStudies?: CaseStudiesData }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark as visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   if (!dataCaseStudies || !dataCaseStudies.case_studies || dataCaseStudies.case_studies.length === 0) {
     return null;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
-import { useLocation } from "react-router-dom";
+import { useInView } from "@/hooks/useInView";
 
 interface TechGroup {
   label: string;
@@ -252,41 +252,9 @@ const MobileTabBar = ({
 };
 
 const TechnologyStackSection = ({ dataCapabilities }: { dataCapabilities: any }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-
-const location = useLocation();
-
-useEffect(() => {
-  // Reset visibility on route change
-  setIsVisible(false);
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        observer.unobserve(entry.target); // trigger once
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  if (sectionRef.current) {
-    observer.observe(sectionRef.current);
-
-    // Fallback: mark visible if already in viewport
-    const rect = sectionRef.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setIsVisible(true);
-      observer.unobserve(sectionRef.current);
-    }
-  }
-
-  return () => observer.disconnect();
-}, [location.pathname]); // re-run on route change
+  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
 
   // Map API data into internal capabilities structure (left nav + right panel)
   const dynamicCapabilities: Capability[] | null = useMemo(() => {

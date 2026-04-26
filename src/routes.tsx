@@ -11,6 +11,8 @@ import DataScience from "./pages/services/DataScience";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { Route, Routes } from "react-router-dom";
+import JobDetail from "./pages/JobDetail";
+import Careers from "./pages/Careers";
 
 const AppRoutes = () => {
   return (
@@ -26,6 +28,8 @@ const AppRoutes = () => {
         <Route path="/services/data-engineering" element={<DataEngineering />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/careers/:id" element={<JobDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
