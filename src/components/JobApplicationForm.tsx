@@ -157,7 +157,7 @@ const JobApplicationForm = ({ preselectedPosition, positions, trigger }: JobAppl
 
     try {
       const submission = new FormData();
-      submission.append("id", "1000");
+      submission.append("form_id", "1000");
       submission.append("full_name", parsed.data.full_name);
       submission.append("email", parsed.data.email);
       submission.append("phone", parsed.data.phone);
