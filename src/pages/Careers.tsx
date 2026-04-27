@@ -40,7 +40,7 @@ const Careers = () => {
 
   const jobListings = jobsRaw.map((job: any) => ({
     id: job.id,
-    slug: job?.job_career_department?.[0]?.slug || job?.job_categories?.[0]?.slug || "",
+    slug: job?.slug || "",
     title: he.decode(job.title || ""),
     category: he.decode(job?.job_categories?.[0]?.name || ""),
     location: `${he.decode(job?.job_career_city?.[0]?.name || "")}, ${he.decode(job?.job_career_country?.[0]?.name || "")}`.replace(/,\s*$/, ""),

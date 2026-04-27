@@ -21,8 +21,8 @@ const applicationSchema = z.object({
   email: z.string().trim().email("Invalid email address").max(255),
   phone: z.string().trim().min(1, "Phone number is required").max(20),
   position: z.string().min(1, "Position is required"),
-  experience_years: z.string().min(1, "Experience is required"),
-  current_company: z.string().trim().max(100).optional().or(z.literal("")),
+  experience: z.string().min(1, "Experience is required"),
+  company: z.string().trim().max(100).optional().or(z.literal("")),
   linkedin_url: z.string().trim().url("Invalid URL").optional().or(z.literal("")),
   portfolio_url: z.string().trim().url("Invalid URL").optional().or(z.literal("")),
   cover_letter: z.string().trim().max(2000).optional().or(z.literal("")),
@@ -83,8 +83,8 @@ const JobApplicationForm = ({ preselectedPosition, positions, trigger }: JobAppl
     email: "",
     phone: "",
     position: preselectedPosition || "",
-    experience_years: "",
-    current_company: "",
+    experience: "",
+    company: "",
     linkedin_url: "",
     portfolio_url: "",
     cover_letter: "",
@@ -119,7 +119,7 @@ const JobApplicationForm = ({ preselectedPosition, positions, trigger }: JobAppl
   const resetForm = () => {
     setFormData({
       full_name: "", email: "", phone: "", position: preselectedPosition || "",
-      experience_years: "", current_company: "", linkedin_url: "",
+      experience: "", company: "", linkedin_url: "",
       portfolio_url: "", cover_letter: "",
     });
     setResumeFile(null);
@@ -162,8 +162,8 @@ const JobApplicationForm = ({ preselectedPosition, positions, trigger }: JobAppl
       submission.append("email", parsed.data.email);
       submission.append("phone", parsed.data.phone);
       submission.append("position", parsed.data.position);
-      submission.append("experience_years", parsed.data.experience_years);
-      submission.append("current_company", parsed.data.current_company || "");
+      submission.append("experience", parsed.data.experience);
+      submission.append("company", parsed.data.company || "");
       submission.append("linkedin_url", parsed.data.linkedin_url || "");
       submission.append("portfolio_url", parsed.data.portfolio_url || "");
       submission.append("cover_letter", parsed.data.cover_letter || "");
@@ -272,7 +272,7 @@ const JobApplicationForm = ({ preselectedPosition, positions, trigger }: JobAppl
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="experience" className="text-foreground">{experienceField?.label}</Label>
-                  <Select value={formData.experience_years} onValueChange={(v) => handleChange("experience_years", v)}>
+                  <Select value={formData.experience} onValueChange={(v) => handleChange("experience", v)}>
                     <SelectTrigger className="mt-1 bg-muted/50 border-border">
                       <SelectValue placeholder={experienceField?.options?.[0]} />
                     </SelectTrigger>
@@ -282,14 +282,14 @@ const JobApplicationForm = ({ preselectedPosition, positions, trigger }: JobAppl
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.experience_years && <p className="text-xs text-destructive mt-1">{errors.experience_years}</p>}
+                  {errors.experience && <p className="text-xs text-destructive mt-1">{errors.experience}</p>}
                 </div>
                 <div>
-                  <Label htmlFor="current_company" className="text-foreground">{companyField?.label}</Label>
+                  <Label htmlFor="company" className="text-foreground">{companyField?.label}</Label>
                   <Input
-                    id="current_company"
-                    value={formData.current_company}
-                    onChange={(e) => handleChange("current_company", e.target.value)}
+                    id="company"
+                    value={formData.company}
+                    onChange={(e) => handleChange("company", e.target.value)}
                     placeholder={companyField?.placeholder}
                     className="mt-1 bg-muted/50 border-border"
                   />
