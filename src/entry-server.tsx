@@ -18,6 +18,8 @@ export async function render(url: string) {
   });
 
   const baseUrl = import.meta.env.VITE_API_URL || '';
+  const jobSlugMatch = url.match(/^\/jobs\/([^/?]+)/);
+  const jobSlug = jobSlugMatch ? jobSlugMatch[1] : null;
 
   if (baseUrl) {
     try {
@@ -135,6 +137,16 @@ export async function render(url: string) {
           queryFn: api.getTermsCondition,
         }),
 
+        queryClient.prefetchQuery({
+          queryKey: ["careers-page"],
+          queryFn: api.getCareersData,
+        }),
+
+        queryClient.prefetchQuery({
+          queryKey: ["job-listings"],
+          queryFn: api.getAllJobs,
+        }),
+
         // Contact data (if needed separately)
         queryClient.prefetchQuery({
           queryKey: ["contactPageData"],
@@ -149,6 +161,12 @@ export async function render(url: string) {
           },
         })
       ]);
+      if (jobSlug) {
+        queryClient.prefetchQuery({
+          queryKey: ["job-detail", jobSlug],
+          queryFn: () => api.getJobsBySlug(jobSlug),
+        })
+      }
     } catch (e) {
       console.error("SSR Prefetch Error:", e);
     }

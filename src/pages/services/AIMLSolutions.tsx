@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { api } from "@/api";
 import { useInView } from "@/hooks/useInView";
-import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
@@ -457,17 +457,6 @@ const AIMLSolutions = () => {
   const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>({ threshold: 0.01, rootMargin: "0px 0px -50px 0px" });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const handleFormSubmit = async (data: ContactFormData) => {
-          const formData = new FormData();
-          formData.append("your-name", data.firstName);
-          formData.append("last-name", data.lastName);
-          formData.append("email", data.email);
-          formData.append("phone", data.phone);
-          formData.append("subject", data.subject ?? "");
-          formData.append("message", data.message);
-          await api.submitContactForm(formData);
-        };
-
   const AnimatedStat = ({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) => {
     const [displayNum, setDisplayNum] = useState(0);
     const numericPart = parseInt(value.replace(/[^0-9]/g, ""), 10);
@@ -499,14 +488,10 @@ const AIMLSolutions = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["aiMlPage"],
     queryFn: async () => {
-      const [serviceData, contactFormFields] = await Promise.all([
-        api.getAIMLData(),
-        api.getContactFormFields(),
-      ]);
+      const serviceData = await api.getAIMLData();
 
       return {
         serviceData,
-        contactFormFields,
       };
     },
   });
@@ -515,7 +500,6 @@ const AIMLSolutions = () => {
   if (error) return null;
 
   const serviceData = data?.serviceData?.data;
-  const contactFormFields = data?.contactFormFields ?? null;
 
   const engagementModels = serviceData?.engagement_models_section?.right_side_box?.map((model: any) => ({
     icon: model.icon,
@@ -1320,7 +1304,7 @@ const AIMLSolutions = () => {
               </div>
                 )}
             </div>
-            <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+            <ContactUsForm />
           </div>
         </div>
       </section>

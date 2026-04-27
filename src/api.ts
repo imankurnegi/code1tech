@@ -135,4 +135,37 @@ export const api = {
     }
     return json;
   },
+
+  getCareersData: async () => {
+    const response = await fetch(`${BASE_URL}/careers`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch careers page data");
+    }
+    return response.json();
+  },
+
+  getAllJobs: async () => {
+    const response = await fetch(`${BASE_URL}/alljobs`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch jobs data");
+    }
+    return response.json();
+  },
+
+  getJobsBySlug: async (slug: string) => {
+    const response = await fetch(`${BASE_URL}/alljobs/?slug=${encodeURIComponent(slug)}`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch jobs by slug");
+    }
+    return response.json();
+  },
+
+  getJobApplicationFormFields: async () => {
+    const response = await fetch(`${BASE_URL}/cf7/form-fields/1000`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch job application form fields");
+    }
+    return await response.json();
+  },
+  
 };

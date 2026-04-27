@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import { api } from "@/api";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
-import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import { useInView, useInViewMap } from "@/hooks/useInView";
@@ -160,34 +160,18 @@ const EngineerAsAService = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["engineerServicePage"],
     queryFn: async () => {
-      const [serviceData, contactFormFields] = await Promise.all([
-        api.getEngineerAsAService(),
-        api.getContactFormFields(),
-      ]);
+      const serviceData = await api.getEngineerAsAService();
 
       return {
         serviceData,
-        contactFormFields,
       };
     },
   });
-
-  const handleFormSubmit = async (data: ContactFormData) => {
-      const formData = new FormData();
-      formData.append("your-name", data.firstName);
-      formData.append("last-name", data.lastName);
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
-      formData.append("subject", data.subject ?? "");
-      formData.append("message", data.message);
-      await api.submitContactForm(formData);
-    };
 
   if (isLoading) return null;
   if (error) return null;
 
   const serviceData = data?.serviceData?.data;
-  const contactFormFields = data?.contactFormFields ?? null;
   
   const pillars = serviceData?.engineer_as_a_service_page_section?.box_fields?.map((item) => {
     return {
@@ -1290,7 +1274,7 @@ const EngineerAsAService = () => {
                 boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(95, 194, 227, 0.05)",
                 animation: visibleSections.contact ? "borderGlow 4s ease-in-out infinite" : "none"
               }}>
-                <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+                <ContactUsForm />
               </div>
             </div>
           </div>

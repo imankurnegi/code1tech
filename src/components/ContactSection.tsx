@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import ContactUsForm, { type ContactFormFieldsData, type ContactFormData } from "@/components/ContactUsForm";
-import { api } from "@/api";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { useInView } from "@/hooks/useInView";
 
@@ -20,21 +19,9 @@ interface ContactData {
 
 interface ContactSectionProps {
   dataContact?: ContactData;
-  contactFormFields?: ContactFormFieldsData | null;
 }
 
-const ContactSection = ({ dataContact, contactFormFields = null }: ContactSectionProps) => {
-  const handleFormSubmit = async (data: ContactFormData) => {
-    const formData = new FormData();
-    formData.append("your-name", data.firstName);
-    formData.append("last-name", data.lastName);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("subject", data.subject ?? "");
-    formData.append("message", data.message);
-    await api.submitContactForm(formData);
-  };
-
+const ContactSection = ({ dataContact }: ContactSectionProps) => {
   const trustBullets = dataContact ? [
     { icon: dataContact.item_1_icon, text: dataContact.item_1_text },
     { icon: dataContact.item_2_icon, text: dataContact.item_2_text },
@@ -111,7 +98,7 @@ const ContactSection = ({ dataContact, contactFormFields = null }: ContactSectio
           <div className="relative group">
             {/* Glass panel background */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-muted/40 to-muted/15 backdrop-blur-md border border-border/30" />
-            <ContactUsForm contactFormFields={contactFormFields ?? null} onSubmit={handleFormSubmit} />
+            <ContactUsForm />
           </div>
         </div>
       </div>

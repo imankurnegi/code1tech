@@ -17,7 +17,7 @@ import {
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { api } from "@/api";
-import ContactUsForm, { ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
@@ -359,29 +359,13 @@ const DataEngineering = () => {
   const { ref: pageRef, inView: isVisible } = useInView<HTMLDivElement>();
   const { setRef: setSectionRef, inViewMap: visibleSections } = useInViewMap();
 
-  const handleFormSubmit = async (data: ContactFormData) => {
-    const formData = new FormData();
-    formData.append("your-name", data.firstName);
-    formData.append("last-name", data.lastName);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("subject", data.subject ?? "");
-    formData.append("message", data.message);
-    await api.submitContactForm(formData);
-  };
-
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["dataEngineeringPage"],
     queryFn: async () => {
-      const [serviceData, contactFormFields] = await Promise.all([
-        api.getDataEngineering(),
-        api.getContactFormFields(),
-      ]);
+      const serviceData = await api.getDataEngineering();
 
       return {
         serviceData,
-        contactFormFields,
       };
     },
   });
@@ -390,7 +374,6 @@ const DataEngineering = () => {
   if (error) return null;
 
   const servicePage = data?.serviceData?.data;
-  const contactFormFields = data?.contactFormFields ?? null;
 
   const engagementModels = servicePage?.data_engineers_engagement_models_section?.cards?.map((item) => {
     return {
@@ -1307,7 +1290,7 @@ const DataEngineering = () => {
             </div>
             <div className={`transition-all duration-700 delay-200 ${visibleSections.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
               <div className="p-6 lg:p-8 rounded-2xl" style={{ background: "rgba(255,255,255,0.02)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.06)", boxShadow: "0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(95,194,227,0.05)" }}>
-                <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+                <ContactUsForm />
               </div>
             </div>
           </div>

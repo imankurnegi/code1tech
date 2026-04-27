@@ -11,7 +11,7 @@ import { useEffect, useState, useRef } from "react";
 import { useInView } from "@/hooks/useInView";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { api } from "@/api";
-import ContactUsForm, { type ContactFormData } from "@/components/ContactUsForm";
+import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import he from "he";
@@ -566,14 +566,10 @@ const DataScience = () => {
  const { data, isLoading, error } = useQuery({
     queryKey: ["dataSciencePage"],
     queryFn: async () => {
-      const [serviceData, contactFormFields] = await Promise.all([
-        api.getDataScience(),
-        api.getContactFormFields(),
-      ]);
+      const serviceData = await api.getDataScience();
 
       return {
         serviceData,
-        contactFormFields,
       };
     },
   });
@@ -582,7 +578,6 @@ const DataScience = () => {
   if (error) return null;
 
   const pageData = data?.serviceData?.data ?? null;
-  const contactFormFields = data?.contactFormFields ?? null;
 
   const banner = pageData?.banner_section;
   const statsFields = pageData?.stats_section?.stats_fields ?? [];
@@ -606,16 +601,6 @@ const DataScience = () => {
     testimonials: pageData?.testimonials ?? []
   }
 
-  const handleFormSubmit = async (data: ContactFormData) => {
-    const formData = new FormData();
-    formData.append("your-name", data.firstName);
-    formData.append("last-name", data.lastName);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("subject", data.subject ?? "");
-    formData.append("message", data.message);
-    await api.submitContactForm(formData);
-  };
   // --- DATA MAPPED FROM API ---
 
   const analyticsSolutions: AnalyticsSolution[] =
@@ -1516,7 +1501,7 @@ const DataScience = () => {
             </div>
 
             <div className={`relative transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-              <ContactUsForm contactFormFields={contactFormFields} onSubmit={handleFormSubmit} />
+              <ContactUsForm />
             </div>
           </div>
         </div>
