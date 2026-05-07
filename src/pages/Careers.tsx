@@ -135,7 +135,7 @@ const Careers = () => {
               />
             </h1>
             <p className="text-sm sm:text-base 2xl:text-lg max-w-3xl mx-auto text-muted-foreground leading-relaxed mb-6 sm:mb-8 px-2 sm:px-0">
-              {careersData?.paragraph}
+              {careersData?.main_paragraph}
             </p>
             <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-4 max-w-sm sm:max-w-none mx-auto">
               {bannerTags.map((stat: any, i: number) => (
