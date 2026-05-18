@@ -119,6 +119,15 @@ export const api = {
     return response.json();
   },
 
+  getOnDemandEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/on-demand-engineers`, { headers });
+    if (!response.ok) {
+      throw new Error("Failed to fetch on demand engineers data");
+    }
+
+    return response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",
