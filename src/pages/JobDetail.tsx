@@ -296,6 +296,7 @@ const JobDetail = () => {
               )}
 
               {/* Benefits */}
+              {job.content?.rewards_benefits && job.content?.rewards_benefits_heading && (
               <div>
                 <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
                   <span className="w-1 h-6 bg-accent rounded-full" />
@@ -303,6 +304,7 @@ const JobDetail = () => {
                 </h3>
                 <div className="text-muted-foreground leading-relaxed [&_p]:mb-4 [&_em]:text-sm [&_em]:italic" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.rewards_benefits || "") }} />
               </div>
+              )}
 
               {/* Apply CTA */}
               <Card className="bg-accent/5 border-accent/20">
