@@ -445,6 +445,7 @@ const OnDemandEngineers = () => {
     icon: item.icon,
     title: item.title ?? "",
     description: item.paragraph ?? "",
+    status: item.status ?? "",
   }));
 
   const faqs = (pageData.frequently_asked_question ?? []).map((item) => ({
@@ -883,60 +884,114 @@ const OnDemandEngineers = () => {
       </section>
 
       {/* ====== SECURITY & COMPLIANCE ====== */}
-      <section id="security" ref={setSectionRef("security")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 50%, hsl(222 47% 5%) 100%)" }}>
+      <section id="security" ref={setSectionRef("security")} className="relative py-12 lg:py-20 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 50%, hsl(222 47% 5%) 100%)" }}>
         {/* Background decorations */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-px" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(56,189,248,0.15) 50%, transparent 100%)" }} />
-          <div className="absolute bottom-0 left-0 w-full h-px" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(56,189,248,0.1) 50%, transparent 100%)" }} />
+          <div className="absolute top-0 left-0 w-full h-px" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(56,189,248,0.18) 50%, transparent 100%)" }} />
+          <div className="absolute bottom-0 left-0 w-full h-px" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(56,189,248,0.12) 50%, transparent 100%)" }} />
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(56,189,248,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.5) 1px, transparent 1px)", backgroundSize: "56px 56px" }} />
+          {/* Ambient glows */}
+          <div className="absolute top-1/4 -left-32 w-[420px] h-[420px] rounded-full" style={{ background: "radial-gradient(circle, rgba(56,189,248,0.10) 0%, transparent 70%)", filter: "blur(40px)" }} />
+          <div className="absolute bottom-0 -right-32 w-[420px] h-[420px] rounded-full" style={{ background: "radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 70%)", filter: "blur(40px)" }} />
         </div>
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className={`flex flex-col lg:flex-row lg:items-start lg:gap-16 transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            {/* Left column: heading + shield visual */}
-            <div className="lg:w-[380px] flex-shrink-0 mb-8 lg:mb-0 lg:sticky lg:top-24">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(pageData?.security_compliance_on_demand_engineers?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-8">
-                {pageData?.security_compliance_on_demand_engineers?.paragraph}
-              </p>
-              {/* Shield visual */}
-              <div className="hidden lg:flex items-center justify-center">
-                <div className="relative w-40 h-44">
-                  <div className="absolute inset-0 rounded-[40%_40%_50%_50%] border-2 border-accent/20" style={{ background: "linear-gradient(180deg, rgba(56,189,248,0.08) 0%, rgba(37,99,235,0.04) 100%)" }} />
-                  <div className="absolute inset-3 rounded-[38%_38%_48%_48%] border border-accent/10" style={{ background: "linear-gradient(180deg, rgba(56,189,248,0.05) 0%, transparent 100%)" }} />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Shield className="w-14 h-14 text-accent/50" />
+          {/* Section header — centered */}
+          <div className={`max-w-3xl mx-auto text-center mb-12 transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 mb-5 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm">
+              <DynamicIcon name={pageData?.security_compliance_on_demand_engineers?.left_section_icon} className="w-3.5 h-3.5 text-accent" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-accent/90">{pageData?.security_compliance_on_demand_engineers?.top_label}</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(pageData?.security_compliance_on_demand_engineers?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              {pageData?.security_compliance_on_demand_engineers?.paragraph}
+            </p>
+          </div>
+
+          {/* Bento grid — featured glass shield card + 4 protocol cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+            {/* Left Feature Card: Four-Layer Defense */}
+            <div
+              className={`lg:col-span-5 relative group transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            >
+              {/* Outer gradient glow */}
+              <div className="absolute -inset-px rounded-3xl blur-[2px] transition-all duration-500 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(95,194,227,0.20) 0%, transparent 100%)" }} />
+              <div
+                className="relative h-full rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 flex flex-col items-center text-center overflow-hidden backdrop-blur-xl"
+                style={{
+                  background: "rgba(8,14,30,0.80)",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                }}
+              >
+                {/* Scanning visual background */}
+                <div className="absolute inset-0 opacity-10 motion-reduce:opacity-[0.04] pointer-events-none">
+                  <div className="absolute inset-0 motion-reduce:hidden" style={{ background: "radial-gradient(circle at 50% 50%, #004E9E 0%, transparent 70%)" }} />
+                  <div className="w-full h-full" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+                </div>
+
+                {/* Shield Graphic */}
+                <div className="relative mb-6 sm:mb-10 mt-2 sm:mt-4">
+                  <div className="absolute -inset-8 rounded-full animate-pulse motion-reduce:hidden" style={{ background: "rgba(95,194,227,0.10)", filter: "blur(40px)" }} />
+                  <div className="relative flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40">
+                    <div className="absolute inset-0 rounded-full border-2 border-dashed motion-reduce:hidden" style={{ borderColor: "rgba(95,194,227,0.20)", animation: "spin 20s linear infinite" }} />
+                    <div className="absolute inset-2 rounded-full" style={{ border: "1px solid rgba(95,194,227,0.40)" }} />
+                    <div className="p-[1px] rounded-2xl rotate-45" style={{ background: "linear-gradient(135deg, #004E9E 0%, #5FC2E3 100%)" }}>
+                      <div className="p-4 sm:p-6 rounded-[15px] -rotate-45" style={{ background: "#080E1E" }}>
+                        <DynamicIcon name={pageData?.security_compliance_on_demand_engineers?.left_section_icon} className="w-9 h-9 sm:w-12 sm:h-12 text-accent" />
+                      </div>
+                    </div>
                   </div>
-                  {/* Glow */}
-                  <div className="absolute -inset-8 rounded-full opacity-30" style={{ background: "radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%)" }} />
+                </div>
+
+                <span className="text-accent text-[10px] font-bold tracking-[0.3em] uppercase mb-3 sm:mb-4 font-mono">{pageData?.security_compliance_on_demand_engineers?.left_section_label}</span>
+                <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6">{pageData?.security_compliance_on_demand_engineers?.left_section_title}</h3>
+                <p className="text-muted-foreground text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-10 max-w-sm text-center">
+                  {pageData?.security_compliance_on_demand_engineers?.left_section_paragraph}
+                </p>
+
+                {/* Badges */}
+                <div className="mt-auto flex flex-wrap justify-center gap-2 sm:gap-3 relative z-10">
+                  {pageData?.security_compliance_on_demand_engineers?.left_side_tags?.map((badge) => (
+                    <span key={badge} className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest" style={{ border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.05)", color: "rgb(203,213,225)" }}>
+                      {badge.text}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Right column: stacked cards */}
-            <div className="flex-1 space-y-4">
+            {/* Right Side Protocol Grid */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {securityItems.map((item, i) => {
                 return (
                   <div
                     key={item.title}
-                    className={`group relative flex items-start gap-5 p-5 rounded-xl transition-all duration-500 hover:scale-[1.01] ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-                    style={{
-                      transitionDelay: `${i * 120}ms`,
-                      background: "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
-                      border: "1px solid rgba(148,163,184,0.1)",
-                    }}
+                    className={`group relative transition-all duration-700 ${visibleSections.security ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    style={{ transitionDelay: `${(i + 1) * 100}ms` }}
                   >
-                    {/* Numbered index */}
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-mono text-sm font-bold text-accent/60 border border-accent/15 bg-accent/5 group-hover:bg-accent/10 group-hover:text-accent transition-all">
-                      {String(i + 1).padStart(2, '0')}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <DynamicIcon className="w-4 h-4 text-accent/70" name={item.icon} />
-                        <h3 className="text-base font-bold text-foreground">{item.title}</h3>
+                    {/* Hover gradient border halo */}
+                    <div className="absolute -inset-px rounded-2xl transition-all duration-500 pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, transparent 100%)" }} />
+                    <div
+                      className="relative h-full rounded-2xl p-5 sm:p-6 flex flex-col backdrop-blur-sm transition-all duration-500 group-hover:border-accent/30"
+                      style={{
+                        background: "rgba(15,23,42,0.50)",
+                        border: "1px solid rgba(255,255,255,0.05)",
+                      }}
+                    >
+                      <div className="flex justify-between items-start gap-3 mb-4 sm:mb-6">
+                        <div className="p-2 sm:p-2.5 rounded-lg text-accent transition-colors group-hover:bg-accent/10 flex-shrink-0" style={{ background: "rgba(95,194,227,0.05)", border: "1px solid rgba(95,194,227,0.20)" }}>
+                          <DynamicIcon name={item.icon} className="w-4 h-4 sm:w-5 sm:h-5" />
+                        </div>
+                        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                          <span className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-tighter">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                          <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter">{item.status}</span>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                      <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2 sm:mb-3 group-hover:text-accent transition-colors">{item.title}</h3>
+                      <p className="text-[13px] sm:text-sm text-muted-foreground leading-relaxed text-left">{item.description}</p>
                     </div>
-                    {/* Hover accent */}
-                    <div className="absolute inset-y-0 left-0 w-[2px] rounded-full bg-gradient-to-b from-[#38BDF8] to-[#2563EB] opacity-0 group-hover:opacity-80 transition-opacity" />
                   </div>
                 );
               })}
