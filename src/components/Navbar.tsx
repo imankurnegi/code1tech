@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
 import { Link, useLocation } from "react-router-dom";
+import EyeFollowButton from "./EyeFollowButton";
 
 export interface MenuItem {
   title: string;
@@ -160,7 +161,7 @@ const Navbar = ({ data }: HeaderProps) => {
                 if (menu.class === "btn") {
                   return (
                     <Link to={menu.url} key={index}>
-                      <Button
+                      {/* <Button
                         size="sm"
                         className="group relative bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-5 py-2 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.15)] hover:shadow-[0_0_25px_rgba(0,194,255,0.3)] transition-all duration-300 overflow-hidden"
                       >
@@ -169,7 +170,8 @@ const Navbar = ({ data }: HeaderProps) => {
                           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                         </span>
                         <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      </Button>
+                      </Button> */}
+                      <EyeFollowButton text={menu.title} href={menu.url} eyeSize={22} pupilSize={8} />
                     </Link>
                   );
                 }
