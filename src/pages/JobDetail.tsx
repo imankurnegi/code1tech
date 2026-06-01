@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   MapPin, Briefcase, Calendar, Building2, ArrowLeft, ArrowRight,
-  Clock, Share2, CheckCircle2
+  Clock, Share2
 } from "lucide-react";
 import careersHero from "@/assets/careers-hero.jpg";
 import SeoTags from "@/components/SeoTags";
@@ -260,38 +260,30 @@ const JobDetail = () => {
               )}
 
               {/* What You'll Do */}
-              {job.content?.what_you_do?.length > 0 && (
+              {job.content?.what_you_do && (
                 <div>
                   <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
                     <span className="w-1 h-6 bg-accent rounded-full" />
                     {he.decode(job.content?.what_you_do_heading || "")}
                   </h3>
-                  <ul className="space-y-3">
-                    {job.content.what_you_do.map((resp: any, i: number) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">{he.decode(resp.list)}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div
+                    className="text-muted-foreground leading-relaxed [&_ul]:space-y-3 [&_ul]:list-disc [&_ul]:pl-5"
+                    dangerouslySetInnerHTML={{ __html: he.decode(job.content.what_you_do || "") }}
+                  />
                 </div>
               )}
 
               {/* Requirements */}
-              {job.content?.what_you_bring?.length > 0 && (
+              {job.content?.what_you_bring && (
                 <div>
                   <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
                     <span className="w-1 h-6 bg-accent rounded-full" />
                     {he.decode(job.content?.what_you_bring_heading || "")}
                   </h3>
-                  <ul className="space-y-3">
-                    {job.content.what_you_bring.map((req: any, i: number) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                        <span className="text-muted-foreground">{he.decode(req.list)}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div
+                    className="text-muted-foreground leading-relaxed [&_ul]:space-y-3 [&_ul]:list-disc [&_ul]:pl-5"
+                    dangerouslySetInnerHTML={{ __html: he.decode(job.content.what_you_bring || "") }}
+                  />
                 </div>
               )}
 
