@@ -496,7 +496,7 @@ const Blogs = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
 
                   {/* Hero card */}
-                  <Link to={`/blogs/${filteredPosts[0].slug}`} className="lg:col-span-7 group block relative">
+                  <Link to={`/blog/${filteredPosts[0].slug}`} className="lg:col-span-7 group block relative">
                     <div className="absolute -inset-0.5 bg-gradient-to-br from-accent/40 via-primary/30 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-500" />
                     <div className="relative h-full rounded-3xl overflow-hidden border border-border/40 group-hover:border-accent/50 transition-all duration-500 bg-[rgba(255,255,255,0.02)]">
                       <div className="relative aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[520px] overflow-hidden">
@@ -583,7 +583,7 @@ const Blogs = () => {
                       {filteredPosts.slice(1, 5).map((post, idx) => (
                         <Link
                           key={post.id}
-                          to={`/blogs/${post.slug}`}
+                          to={`/blog/${post.slug}`}
                           className="group relative flex gap-4 p-3 sm:p-4 rounded-xl border border-border/30 bg-[rgba(255,255,255,0.015)] hover:bg-[rgba(255,255,255,0.04)] hover:border-accent/40 hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
                         >
                           <span className="absolute left-0 top-4 bottom-4 w-0.5 bg-accent rounded-r scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
@@ -674,7 +674,7 @@ const Blogs = () => {
                   {visiblePosts.map((post, index) => (
                     <Link
                       key={post.id}
-                      to={`/blogs/${post.slug}`}
+                      to={`/blog/${post.slug}`}
                       className={`group block transition-all duration-500 relative ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                       style={{ transitionDelay: `${(index % ARTICLES_PER_PAGE) * 60}ms` }}
                     >
