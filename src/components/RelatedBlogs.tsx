@@ -1,21 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, Clock } from "lucide-react";
 import blogAi from "@/assets/blog-ai.jpg";
-import { useInView } from "@/hooks/useInView";
 import blogData from "@/assets/blog-data.jpg";
 import blogCloud from "@/assets/blog-cloud.jpg";
-import { addClassToSpan } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
-
-interface RelatedBlogsData {
-  heading?: string;
-  sub_heading?: string;
-  section_cta_text?: string;
-  section_cta_url?: string;
-}
 
 const blogs = [
   {
+    id: "ai-agents-enterprise",
     category: "AI",
     title: "How AI Agents Are Reshaping Enterprise Operations in 2024",
     preview: "Discover why forward-thinking companies are deploying autonomous AI agents to handle complex workflows.",
@@ -23,6 +15,7 @@ const blogs = [
     image: blogAi
   },
   {
+    id: "modern-data-stack",
     category: "Data",
     title: "The Modern Data Stack: From Chaos to Clarity",
     preview: "Building a unified data architecture that scales with your business growth and analytical ambitions.",
@@ -30,6 +23,7 @@ const blogs = [
     image: blogData
   },
   {
+    id: "cloud-migration-lessons",
     category: "Cloud",
     title: "Cloud Migration Done Right: Lessons from Fortune 500 Transformations",
     preview: "Key strategies that separate successful cloud migrations from costly failures.",
@@ -44,13 +38,32 @@ const categoryColors: Record<string, string> = {
   Cloud: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
 };
 
-const RelatedBlogs = ({ dataRelatedBlogs }: { dataRelatedBlogs?: RelatedBlogsData }) => {
+const RelatedBlogs = () => {
+  const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const { ref: sectionRef, inView: isVisible } = useInView<HTMLElement>();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       ref={sectionRef}
+      id="blogs"
       className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden"
     >
       {/* Background gradient */}
@@ -87,31 +100,25 @@ const RelatedBlogs = ({ dataRelatedBlogs }: { dataRelatedBlogs?: RelatedBlogsDat
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {dataRelatedBlogs?.heading &&(
-            <h2 
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4"
-              dangerouslySetInnerHTML={{ __html: addClassToSpan(dataRelatedBlogs?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
-            />
-          )}
-          
-          {dataRelatedBlogs?.sub_heading && (
-            <p
-              className="text-muted-foreground text-base sm:text-lg lg:text-xl"
-              dangerouslySetInnerHTML={{ __html: dataRelatedBlogs?.sub_heading ?? "" }}
-            />
-          )}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            Related <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Blogs</span>
+          </h2>
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+            Thought leadership, not content marketing.
+          </p>
         </div>
 
         {/* Blog Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-12">
           {blogs.map((blog, index) => {
             const isHovered = hoveredIndex === index;
             return (
-              <article
+              <Link
+                to={`/blogs/${blog.id}`}
                 key={index}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className={`group relative cursor-pointer transition-all duration-500 ${
+                className={`group relative block transition-all duration-500 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
                 } ${isHovered ? "-translate-y-2" : ""}`}
                 style={{ transitionDelay: `${150 + index * 100}ms` }}
@@ -153,7 +160,7 @@ const RelatedBlogs = ({ dataRelatedBlogs }: { dataRelatedBlogs?: RelatedBlogsDat
                     </h3>
 
                     {/* Preview */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-5 text-justify">
+                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-5 text-left">
                       {blog.preview}
                     </p>
 
@@ -182,35 +189,25 @@ const RelatedBlogs = ({ dataRelatedBlogs }: { dataRelatedBlogs?: RelatedBlogsDat
                 <div className={`absolute inset-0 rounded-2xl bg-accent/5 pointer-events-none transition-opacity duration-300 ${
                   isHovered ? "opacity-100" : "opacity-0"
                 }`} />
-              </article>
+              </Link>
             );
           })}
         </div>
 
         {/* CTA */}
-        {(dataRelatedBlogs?.section_cta_text || dataRelatedBlogs?.section_cta_url) && (
-          <div
-            className={`text-center transition-all duration-700 delay-400 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <button
-              type="button"
-              className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors"
-              onClick={() => {
-                if (dataRelatedBlogs?.section_cta_url) {
-                  window.location.href = dataRelatedBlogs.section_cta_url;
-                }
-              }}
-            >
-              <span className="relative">
-                {dataRelatedBlogs?.section_cta_text}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
-              </span>
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        )}
+        <div
+          className={`text-center transition-all duration-700 delay-400 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <Link to="/blogs" className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors">
+            <span className="relative">
+              Explore All Insights
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
+            </span>
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </div>
     </section>
   );
