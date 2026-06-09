@@ -1,7 +1,6 @@
 import { useState, useEffect, FormEvent } from "react";
 import { toast } from "sonner";
 import { Link, useSearchParams } from "react-router-dom";
-import ServicePageLayout from "@/components/ServicePageLayout";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Search, Zap, FileText, Mail, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { useElementParallax } from "@/hooks/use-parallax";
@@ -268,7 +267,6 @@ const Blogs = () => {
         ogImage={pageMeta?.seo?.og_image || pageMeta?.blog_page_banner?.banner_background_image || blogHero}
       />
 
-      <ServicePageLayout>
         {/* Grid texture */}
         <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0" style={{
           backgroundImage: 'linear-gradient(rgba(95,194,227,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(95,194,227,0.3) 1px, transparent 1px)',
@@ -838,7 +836,6 @@ const Blogs = () => {
             </div>
           </div>
         </section>
-      </ServicePageLayout>
     </>
   );
 };

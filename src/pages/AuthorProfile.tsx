@@ -1,6 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
-import ServicePageLayout from "@/components/ServicePageLayout";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight, ArrowLeft, Clock, Calendar,
@@ -104,21 +103,21 @@ const AuthorProfile = () => {
   // ── Loading ────────────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <ServicePageLayout>
+
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center space-y-4">
             <div className="w-12 h-12 rounded-full border-2 border-accent/30 border-t-accent animate-spin mx-auto" />
             <p className="text-muted-foreground text-sm">Loading author profile…</p>
           </div>
         </div>
-      </ServicePageLayout>
+
     );
   }
 
   // ── Error ──────────────────────────────────────────────────────────────────
   if (error || !author) {
     return (
-      <ServicePageLayout>
+
         <div className="min-h-screen flex items-center justify-center px-4">
           <div className="text-center space-y-4">
             <p className="text-rose-400">{error ?? "Author not found."}</p>
@@ -127,7 +126,7 @@ const AuthorProfile = () => {
             </Link>
           </div>
         </div>
-      </ServicePageLayout>
+
     );
   }
 
@@ -145,7 +144,7 @@ const AuthorProfile = () => {
         description={seoDesc}
         ogImage={seoImage}
       />
-      <ServicePageLayout>
+
 
       {/* Back link */}
       <section className="pt-8 pb-2">
@@ -356,8 +355,6 @@ const AuthorProfile = () => {
           </div>
         </div>
       </section>
-
-    </ServicePageLayout>
     </>
   );
 };
