@@ -128,7 +128,7 @@ const primaryCategorySlug = (post: ApiPost) => post.categories?.[0]?.slug ?? "";
 const ARTICLES_PER_PAGE = 6;
 
 // ── Component ─────────────────────────────────────────────────────────────────
-const Blogs = () => {
+const Blog = () => {
   const [heroVisible,     setHeroVisible]    = useState(false);
   const [searchParams,    setSearchParams]   = useSearchParams();
   const [activeCategory,  setActiveCategoryState] = useState(searchParams.get("category") || "all");
