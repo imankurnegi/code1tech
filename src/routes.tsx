@@ -35,8 +35,8 @@ const AppRoutes = () => {
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/careers/:id" element={<JobDetail />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/:id" element={<BlogDetail />} />
+        <Route path="/blog" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/author/:slug" element={<AuthorProfile />} />
         <Route path="*" element={<NotFound />} />
       </Route>
