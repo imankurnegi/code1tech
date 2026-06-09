@@ -14,7 +14,7 @@ import { Route, Routes } from "react-router-dom";
 import JobDetail from "./pages/JobDetail";
 import Careers from "./pages/Careers";
 import OnDemandEngineers from "./pages/services/eaas/OnDemandEngineers";
-import Blog from "./pages/Blog";
+import Blogs from "./pages/Blogs";
 import BlogDetail from "./pages/BlogDetail";
 import AuthorProfile from "./pages/AuthorProfile";
 
@@ -35,8 +35,8 @@ const AppRoutes = () => {
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/careers/:id" element={<JobDetail />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:id" element={<BlogDetail />} />
         <Route path="/author/:slug" element={<AuthorProfile />} />
         <Route path="*" element={<NotFound />} />
       </Route>

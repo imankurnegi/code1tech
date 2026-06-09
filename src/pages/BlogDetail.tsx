@@ -171,7 +171,7 @@ const BlogDetail = () => {
 
   // ── Fetch post by slug ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!slug) { navigate("/blog", { replace: true }); return; }
+    if (!slug) { navigate("/blogs", { replace: true }); return; }
     setLoading(true);
     setError(null);
     setIsVisible(false);
@@ -186,7 +186,7 @@ const BlogDetail = () => {
           : (data ?? null);
 
         if (!found) {
-          navigate("/blog", { replace: true });
+          navigate("/blogs", { replace: true });
           return;
         }
         setPost(found);
@@ -267,7 +267,7 @@ const BlogDetail = () => {
   const handleSidebarSearch = (e: FormEvent) => {
     e.preventDefault();
     const q = sidebarSearch.trim().slice(0, 100);
-    navigate(q ? `/blog?search=${encodeURIComponent(q)}` : "/blog");
+    navigate(q ? `/blogs?search=${encodeURIComponent(q)}` : "/blogs");
   };
 
   // ── Inline CTA ──────────────────────────────────────────────────────────────
@@ -318,7 +318,7 @@ const BlogDetail = () => {
         <div className="min-h-screen flex items-center justify-center px-4">
           <div className="text-center space-y-4 max-w-md">
             <p className="text-rose-400">{error ?? "Article not found."}</p>
-            <Link to="/blog">
+            <Link to="/blogs">
               <Button variant="outline" className="mt-2">← Back to Blog</Button>
             </Link>
           </div>
@@ -365,7 +365,7 @@ const BlogDetail = () => {
 
           <div className="container max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
             <Link
-              to="/blog"
+              to="/blogs"
               className={`inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-5 ${isVisible ? "opacity-100" : "opacity-0"}`}
             >
               <ArrowLeft className="w-4 h-4" /> Back to Blog
@@ -512,7 +512,7 @@ const BlogDetail = () => {
                   <nav aria-label="Article navigation" className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
                     {prevPost ? (
                       <Link
-                        to={`/blog/${prevPost.slug}`}
+                        to={`/blogs/${prevPost.slug}`}
                         className="group p-5 rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm hover:border-accent/50 hover:bg-card/50 transition-all"
                       >
                         <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground mb-2 group-hover:text-accent transition-colors">
@@ -527,7 +527,7 @@ const BlogDetail = () => {
 
                     {nextPost ? (
                       <Link
-                        to={`/blog/${nextPost.slug}`}
+                        to={`/blogs/${nextPost.slug}`}
                         className="group p-5 rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm hover:border-accent/50 hover:bg-card/50 transition-all md:text-right"
                       >
                         <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted-foreground mb-2 group-hover:text-accent transition-colors md:justify-end">
@@ -648,7 +648,7 @@ const BlogDetail = () => {
                           return (
                             <Link
                               key={cat.id}
-                              to={`/blog?category=${encodeURIComponent(cat.slug)}`}
+                              to={`/blogs?category=${encodeURIComponent(cat.slug)}`}
                               className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all hover:scale-[1.03] ${
                                 isActive
                                   ? getCategoryColor(cat.name)
@@ -673,7 +673,7 @@ const BlogDetail = () => {
                       <ul className="space-y-4">
                         {latestPosts.map(lp => (
                           <li key={lp.id}>
-                            <Link to={`/blog/${lp.slug}`} className="group flex gap-3 items-start">
+                            <Link to={`/blogs/${lp.slug}`} className="group flex gap-3 items-start">
                               <img
                                 src={resolveImage(lp.image, primaryCategorySlug(lp))}
                                 alt={lp.title}
@@ -696,7 +696,7 @@ const BlogDetail = () => {
                         ))}
                       </ul>
                       <Link
-                        to="/blog"
+                        to="/blogs"
                         className="mt-4 pt-3 border-t border-border/30 flex items-center justify-between text-xs font-medium text-accent hover:text-foreground transition-colors group"
                       >
                         <span>View all articles</span>
@@ -757,7 +757,7 @@ const BlogDetail = () => {
                       <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Articles</span>
                     </h2>
                   </div>
-                  <Link to="/blog" className="group inline-flex items-center text-accent text-sm font-medium hover:text-foreground transition-colors">
+                  <Link to="/blogs" className="group inline-flex items-center text-accent text-sm font-medium hover:text-foreground transition-colors">
                     View All Articles
                     <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform" />
                   </Link>
@@ -767,7 +767,7 @@ const BlogDetail = () => {
                   {relatedPosts.map(related => (
                     <Link
                       key={related.id}
-                      to={`/blog/${related.slug}`}
+                      to={`/blogs/${related.slug}`}
                       className="group relative block rounded-2xl overflow-hidden bg-gradient-to-br from-muted/50 to-muted/20 border border-border/30 hover:border-accent/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/10 transition-all duration-500"
                     >
                       <div className="relative aspect-video overflow-hidden">
@@ -856,7 +856,7 @@ const BlogDetail = () => {
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
-                <Link to="/blog">
+                <Link to="/blogs">
                   <Button variant="outline" size="lg" className="w-full sm:w-auto">
                     Read More Articles
                   </Button>
