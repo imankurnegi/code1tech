@@ -2,7 +2,8 @@ import { useState, useEffect, FormEvent } from "react";
 import { toast } from "sonner";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Search, Zap, FileText, Mail, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Clock, BookOpen, TrendingUp, Zap, FileText, Mail, ShieldCheck, CheckCircle2 } from "lucide-react";
+import AdvancedBlogSearch from "@/components/AdvancedBlogSearch";
 import { useElementParallax } from "@/hooks/use-parallax";
 import { useTypingAnimation } from "@/hooks/use-typing-animation";
 import SeoTags from "@/components/SeoTags";
@@ -308,28 +309,33 @@ const Blogs = () => {
           <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-[1]" style={{ background: 'linear-gradient(to top, hsl(222 47% 5%), transparent)' }} />
         </section>
 
-        {/* ── Search ───────────────────────────────────────────────────────── */}
-        <section className="py-4 lg:py-6" style={{ background: "hsl(222 47% 5%)" }}>
+        {/* ── Search — advanced with live suggestions, recent searches, trending ── */}
+        <section className="relative z-40 py-4 lg:py-6" style={{ background: "hsl(222 47% 5%)" }}>
           <div className="container mx-auto px-4 sm:px-6">
-            <div className="max-w-4xl mx-auto backdrop-blur-xl bg-[hsl(222_47%_8%/0.9)] border border-[rgba(148,163,184,0.2)] rounded-2xl p-4 sm:p-7 shadow-[0_12px_50px_-12px_rgba(0,0,0,0.6)]">
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-end">
-                <div className="flex-1 w-full">
-                  <label className="text-[11px] font-semibold text-accent tracking-widest uppercase mb-2 block">Search Articles</label>
-                  <div className="relative group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-accent transition-colors" />
-                    <input
-                      type="text"
-                      placeholder="Search by title or topic..."
-                      value={searchQuery}
-                      onChange={e => setSearchQuery(e.target.value)}
-                      className="w-full pl-11 pr-4 h-11 sm:h-12 bg-[rgba(255,255,255,0.04)] border border-[rgba(148,163,184,0.18)] rounded-xl text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-accent/50 focus:bg-[rgba(255,255,255,0.06)] transition-all"
-                    />
-                  </div>
+            <div className="max-w-4xl 2xl:max-w-5xl mx-auto backdrop-blur-xl bg-[hsl(222_47%_8%/0.9)] border border-[rgba(148,163,184,0.2)] rounded-2xl p-4 sm:p-5 md:p-7 shadow-[0_12px_50px_-12px_rgba(0,0,0,0.6)]">
+              <AdvancedBlogSearch
+                posts={posts}
+                value={searchQuery}
+                onChange={setSearchQuery}
+                getCategoryColor={getCategoryColor}
+                onCategorySelect={(c) => setActiveCategory(c)}
+              />
+              {(searchQuery || activeCategory !== "all") && (
+                <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                  <span>
+                    <span className="text-accent font-semibold">{filteredPosts.length}</span> article{filteredPosts.length === 1 ? "" : "s"}
+                    {searchQuery && <> matching "<span className="text-foreground">{searchQuery}</span>"</>}
+                    {activeCategory !== "all" && <> in <span className="text-foreground">{categories.find(c => c.slug === activeCategory)?.name ?? activeCategory}</span></>}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => { setSearchQuery(""); setActiveCategory("all"); }}
+                    className="text-accent hover:underline font-semibold"
+                  >
+                    Reset
+                  </button>
                 </div>
-                <Button variant="hero" size="lg" className="w-full sm:w-auto h-11 sm:h-12 px-6 sm:px-8 rounded-xl text-sm font-semibold">
-                  <Search className="w-4 h-4 mr-2" /> Search
-                </Button>
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -388,11 +394,7 @@ const Blogs = () => {
                   <div className="hidden md:block h-px flex-1 max-w-[280px] bg-gradient-to-r from-accent/40 to-transparent" />
                 </div>
 
-                <div className={`grid gap-3 sm:gap-4 ${
-                  categories.length <= 4
-                    ? "grid-cols-2 sm:grid-cols-4"
-                    : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7"
-                }`}>
+                <div className={`grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7`}>
                   {categories.slice(0, 7).map(cat => (
                     <button
                       key={cat.slug}
@@ -511,10 +513,17 @@ const Blogs = () => {
                         {/* Top badges */}
                         <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between gap-2">
                           <div className="flex items-center gap-2 flex-wrap">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-accent text-background shadow-lg shadow-accent/30">
+                              <Zap className="w-3 h-3" /> Featured
+                            </span>
                             <span className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold border backdrop-blur-md ${getCategoryColor(primaryCategory(filteredPosts[0]))}`}>
                               {primaryCategory(filteredPosts[0])}
                             </span>
                           </div>
+                          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-foreground/90 bg-background/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-border/40">
+                            <Clock className="w-3 h-3" />
+                            {formatDate(filteredPosts[0].date)}
+                          </span>
                         </div>
 
                         {/* Bottom overlay (desktop) */}
@@ -657,7 +666,7 @@ const Blogs = () => {
                         <p className="text-[11px] font-bold text-accent tracking-[0.25em] uppercase">More Stories</p>
                       </div>
                       <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-[1.05] tracking-tight">
-                        All{" "}
+                        {activeCategory === "all" ? "All" : (categories.find(c => c.slug === activeCategory)?.name ?? activeCategory)}{" "}
                         <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent italic">articles</span>
                         <span className="text-accent">.</span>
                       </h2>
