@@ -341,7 +341,7 @@ const Blogs = () => {
         </section>
 
         {/* ── Category pill filters ─────────────────────────────────────────── */}
-        <section className="py-4" style={{ background: "hsl(222 47% 5%)" }}>
+        {/* <section className="py-4" style={{ background: "hsl(222 47% 5%)" }}>
           <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-6xl mx-auto flex items-center gap-2 flex-wrap">
               <button
@@ -375,7 +375,7 @@ const Blogs = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* ── Top Categories mosaic ─────────────────────────────────────────── */}
         {!catsLoading && categories.length > 0 && (
