@@ -164,7 +164,7 @@ const CardDeckSpread = ({ cards, isVisible }: { cards: Array<{ icon: string; tit
   return (
     <div className="flex flex-wrap justify-center gap-6">
       {cards.map((card, i) => (
-        <div key={card.title} className="group relative rounded-2xl overflow-hidden transition-all duration-700 hover:-translate-y-2" style={{ opacity: entered ? 1 : 0, transform: entered ? "translateY(0) scale(1)" : `translateY(${40 + i * 8}px) scale(0.92)`, transitionDelay: `${i * 100}ms`, minHeight: 320 }}>
+        <div key={card.title} className="group relative rounded-2xl overflow-hidden transition-all duration-700 hover:-translate-y-2 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]" style={{ opacity: entered ? 1 : 0, transform: entered ? "translateY(0) scale(1)" : `translateY(${40 + i * 8}px) scale(0.92)`, transitionDelay: `${i * 100}ms`, minHeight: 320 }}>
           <img src={card.image} alt={card.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="eager" decoding="async" width={512} height={768} />
           <div className="absolute inset-0 transition-opacity duration-500" style={{ background: "linear-gradient(180deg, rgba(10,15,30,0.7) 0%, rgba(10,15,30,0.85) 50%, rgba(10,15,30,0.95) 100%)" }} />
           <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ border: "1px solid rgba(95,194,227,0.35)" }} />
