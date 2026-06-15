@@ -91,6 +91,24 @@ export const api = {
     return response.json();
   },
 
+  getOffshoreEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/offshore-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch offshore data");
+    return response.json();
+  },
+
+  getTechTeamEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/tech-team-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch tech team engineers data");
+    return response.json();
+  },
+
+  getManagedServices: async () => {
+    const response = await fetch(`${BASE_URL}/managed-services-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch managed services engineers data");
+    return response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",
