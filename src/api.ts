@@ -109,6 +109,12 @@ export const api = {
     return response.json();
   },
 
+  getDataIngestion: async () => {
+    const response = await fetch(`${BASE_URL}/data-ingestion-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch data ingestion engineers data");
+    return response.json();
+  },
+
   submitContactForm: async (formData: FormData) => {
     const res = await fetch(`${BASE_URL}/cf7/submit`, {
       method: "POST",
