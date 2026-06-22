@@ -83,6 +83,12 @@ export async function render(url: string) {
           },
         }),
 
+        // Data Warehousing page
+        queryClient.prefetchQuery({
+          queryKey: ["data-warehousing"],
+          queryFn: api.getDataWarehousing,
+        }),
+
         // Engineer as a Service page
         queryClient.prefetchQuery({
           queryKey: ["engineerServicePage"],

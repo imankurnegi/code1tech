@@ -21,6 +21,7 @@ import Blogs from "./pages/Blogs";
 import BlogDetail from "./pages/BlogDetail";
 import AuthorProfile from "./pages/AuthorProfile";
 import DataIngestion from "./pages/services/data-engineering/DataIngestion";
+import DataWarehousing from "./pages/services/data-engineering/DataWarehousing";
 
 const AppRoutes = () => {
   return (
@@ -39,6 +40,7 @@ const AppRoutes = () => {
         <Route path="/services/eaas/tech-team-building" element={<TechTeamBuilding />} />
         <Route path="/services/eaas/managed-services" element={<ManagedServices />} />
         <Route path="/services/data-engineering/data-ingestion" element={<DataIngestion />} />
+        <Route path="/services/data-engineering/data-warehousing" element={<DataWarehousing />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />

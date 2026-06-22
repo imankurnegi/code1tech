@@ -190,4 +190,10 @@ export const api = {
     if (!response.ok) throw new Error("Failed to fetch categories");
     return response.json();
   },
+
+  getDataWarehousing: async () => {
+    const response = await fetch(`${BASE_URL}/data-warehouse-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch data warehousing data");
+    return response.json();
+  }
 };
