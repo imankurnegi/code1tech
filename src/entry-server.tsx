@@ -88,6 +88,10 @@ export async function render(url: string) {
           queryKey: ["data-warehousing"],
           queryFn: api.getDataWarehousing,
         }),
+        queryClient.prefetchQuery({
+          queryKey: ["data-advanced-engineers"],
+          queryFn: api.getDataAdvancedEngineers,
+        }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
@@ -174,7 +178,7 @@ export async function render(url: string) {
         })
       ]);
       if (jobSlug) {
-      await queryClient.prefetchQuery({
+        await queryClient.prefetchQuery({
           queryKey: ["job-detail", jobSlug],
           queryFn: () => api.getJobsBySlug(jobSlug),
         })

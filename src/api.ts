@@ -195,5 +195,11 @@ export const api = {
     const response = await fetch(`${BASE_URL}/data-warehouse-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch data warehousing data");
     return response.json();
+  },
+
+  getDataAdvancedEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/data-advanced-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch data advanced engineers data");
+    return response.json();
   }
 };
