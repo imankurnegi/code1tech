@@ -92,6 +92,10 @@ export async function render(url: string) {
           queryKey: ["data-advanced-engineers"],
           queryFn: api.getDataAdvancedEngineers,
         }),
+        queryClient.prefetchQuery({
+          queryKey: ["dataQualityEngineers"],
+          queryFn: api.getDataQualityEngineers,
+        }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

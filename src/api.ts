@@ -201,5 +201,11 @@ export const api = {
     const response = await fetch(`${BASE_URL}/data-advanced-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch data advanced engineers data");
     return response.json();
+  },
+
+  getDataQualityEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/data-quality-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch data quality engineers data");
+    return response.json();
   }
 };

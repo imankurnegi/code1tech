@@ -23,6 +23,7 @@ import AuthorProfile from "./pages/AuthorProfile";
 import DataIngestion from "./pages/services/data-engineering/DataIngestion";
 import DataWarehousing from "./pages/services/data-engineering/DataWarehousing";
 import DataModelling from "./pages/services/data-engineering/DataModelling";
+import DataQualityGovernance from "./pages/services/data-engineering/DataQualityGovernance";
 
 const AppRoutes = () => {
   return (
@@ -43,6 +44,7 @@ const AppRoutes = () => {
         <Route path="/services/data-engineering/data-ingestion" element={<DataIngestion />} />
         <Route path="/services/data-engineering/data-warehousing" element={<DataWarehousing />} />
         <Route path="/services/data-engineering/data-modelling" element={<DataModelling />} />
+        <Route path="/services/data-engineering/data-quality-governance" element={<DataQualityGovernance />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
