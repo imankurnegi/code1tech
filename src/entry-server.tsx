@@ -100,6 +100,10 @@ export async function render(url: string) {
           queryKey: ["data-ops-engineers"],
           queryFn: api.getDataOpsEngineers,
         }),
+        queryClient.prefetchQuery({
+          queryKey: ["cloudDataMigrationPageData"],
+          queryFn: api.getDataCloudEngineers,
+        }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

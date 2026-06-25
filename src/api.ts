@@ -213,5 +213,11 @@ export const api = {
     const response = await fetch(`${BASE_URL}/data-dataops-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch data ops engineers data");
     return response.json();
+  },
+
+  getDataCloudEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/data-cloud-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch data cloud engineers data");
+    return response.json();
   }
 };
