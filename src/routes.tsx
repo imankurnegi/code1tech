@@ -26,6 +26,7 @@ import DataModelling from "./pages/services/data-engineering/DataModelling";
 import DataQualityGovernance from "./pages/services/data-engineering/DataQualityGovernance";
 import DataOpsPipelineAutomation from "./pages/services/data-engineering/DataOpsPipelineAutomation";
 import CloudDataMigration from "./pages/services/data-engineering/CloudDataMigration";
+import BusinessIntelligence from "./pages/services/data-science/BusinessIntelligence";
 
 const AppRoutes = () => {
   return (
@@ -49,6 +50,7 @@ const AppRoutes = () => {
         <Route path="/services/data-engineering/data-quality-governance" element={<DataQualityGovernance />} />
         <Route path="/services/data-engineering/dataops-pipeline-automation" element={<DataOpsPipelineAutomation />} />
         <Route path="/services/data-engineering/cloud-data-migration" element={<CloudDataMigration />} />
+        <Route path="/services/data-science/business-intelligence" element={<BusinessIntelligence />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
