@@ -245,7 +245,7 @@ const JobDetail = () => {
                   <span className="w-1 h-6 bg-accent rounded-full" />
                   {he.decode(job.content?.who_we_are_heading || "")}
                 </h3>
-                <div className="text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.who_we_are || "") }} />
+                <div className="text-muted-foreground leading-relaxed [&_ul]:space-y-3 [&_ul]:list-disc [&_ul]:pl-5" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.who_we_are || "") }} />
               </div>
 
               {/* About the Role */}
@@ -255,7 +255,7 @@ const JobDetail = () => {
                     <span className="w-1 h-6 bg-accent rounded-full" />
                     {he.decode(job.content?.about_the_role_heading || "")}
                   </h3>
-                  <div className="text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.about_the_role || "") }} />
+                  <div className="text-muted-foreground leading-relaxed [&_ul]:space-y-3 [&_ul]:list-disc [&_ul]:pl-5" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.about_the_role || "") }} />
                 </div>
               )}
 
@@ -294,7 +294,7 @@ const JobDetail = () => {
                   <span className="w-1 h-6 bg-accent rounded-full" />
                   {he.decode(job.content?.rewards_benefits_heading || "")}
                 </h3>
-                <div className="text-muted-foreground leading-relaxed [&_p]:mb-4 [&_em]:text-sm [&_em]:italic" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.rewards_benefits || "") }} />
+                <div className="text-muted-foreground leading-relaxed [&_ul]:space-y-3 [&_ul]:list-disc [&_ul]:pl-5" dangerouslySetInnerHTML={{ __html: he.decode(job.content?.rewards_benefits || "") }} />
               </div>
               )}
 
