@@ -108,6 +108,7 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -168,6 +169,23 @@
   /* Hide AI/complex elements on mobile for performance */
   .hide-mobile-ai {
     @apply md:block hidden;
+  }
+
+  /* Below-fold sections: defer rendering until near viewport */
+  .below-fold-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
+  }
+
+  /* GPU-accelerate animated elements */
+  .animate-float,
+  .animate-pulse-slow,
+  .animate-slide-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  .logo-scroll {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 }
 
@@ -251,4 +269,67 @@
   to { 
     transform: scale(1.05); 
   }
+}
+
+/* Data flow animations for GrowthStrategies */
+@keyframes dataFlowUp {
+  0% { top: 100%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 0%; opacity: 0; }
+}
+@keyframes dataFlowDown {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.data-flow-up {
+  animation: dataFlowUp 4s linear infinite;
+  top: 100%;
+}
+.data-flow-down {
+  animation: dataFlowDown 4s linear infinite;
+  top: 0%;
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide native scrollbar for horizontal scroll containers */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar - all browsers including mobile */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(0 0% 100% / 0.4) transparent;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  -webkit-appearance: none;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: hsl(0 0% 100% / 0.08);
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(0 0% 100% / 0.4);
+  border-radius: 3px;
+  min-height: 30px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(0 0% 100% / 0.6);
 }
