@@ -91,6 +91,13 @@ export const useInViewMap = <T extends Element = HTMLElement>({
       if (node) {
         elementsRef.current.set(id, node);
         idMap.current.set(node, id);
+        // Initialize key with true to avoid first paint flicker
+        setInViewMap((prev) => {
+          if (prev[id] === undefined) {
+            return { ...prev, [id]: true };
+          }
+          return prev;
+        });
       } else {
         const prev = elementsRef.current.get(id);
         if (prev) idMap.current.delete(prev);
