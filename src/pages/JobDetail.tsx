@@ -52,54 +52,70 @@ const JobDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="pt-24 pb-20">
-          <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
-            <div className="animate-pulse space-y-6">
-              <div className="h-8 bg-muted rounded w-1/3" />
-              <div className="h-6 bg-muted rounded w-1/4" />
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-                <div className="lg:col-span-1 space-y-4">
-                  <div className="h-48 bg-muted rounded-2xl" />
-                </div>
-                <div className="lg:col-span-2 space-y-4">
-                  <div className="h-6 bg-muted rounded w-full" />
-                  <div className="h-6 bg-muted rounded w-5/6" />
-                  <div className="h-6 bg-muted rounded w-4/6" />
+      <>
+        <SeoTags
+          title={(jobsResponse as any)?.data?.seo?.title}
+          description={(jobsResponse as any)?.data?.seo?.description}
+          ogImage={(jobsResponse as any)?.data?.seo?.og_image}
+          schema={(jobsResponse as any)?.data?.schema}
+        />
+        <div className="min-h-screen bg-background">
+          <div className="pt-24 pb-20">
+            <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+              <div className="animate-pulse space-y-6">
+                <div className="h-8 bg-muted rounded w-1/3" />
+                <div className="h-6 bg-muted rounded w-1/4" />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+                  <div className="lg:col-span-1 space-y-4">
+                    <div className="h-48 bg-muted rounded-2xl" />
+                  </div>
+                  <div className="lg:col-span-2 space-y-4">
+                    <div className="h-6 bg-muted rounded w-full" />
+                    <div className="h-6 bg-muted rounded w-5/6" />
+                    <div className="h-6 bg-muted rounded w-4/6" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (error || !job) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="pt-24 pb-20 text-center">
-          <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold text-foreground mb-4">Job Not Found</h1>
-            <p className="text-muted-foreground mb-8">This position may no longer be available.</p>
-            <Link to="/careers">
-              <Button variant="outline" className="gap-2">
-                <ArrowLeft className="w-4 h-4" /> Back to Careers
-              </Button>
-            </Link>
+      <>
+        <SeoTags
+          title={(jobsResponse as any)?.data?.seo?.title}
+          description={(jobsResponse as any)?.data?.seo?.description}
+          ogImage={(jobsResponse as any)?.data?.seo?.og_image}
+          schema={(jobsResponse as any)?.data?.schema}
+        />
+        <div className="min-h-screen bg-background">
+          <div className="pt-24 pb-20 text-center">
+            <div className="container mx-auto px-4">
+              <h1 className="text-3xl font-bold text-foreground mb-4">Job Not Found</h1>
+              <p className="text-muted-foreground mb-8">This position may no longer be available.</p>
+              <Link to="/careers">
+                <Button variant="outline" className="gap-2">
+                  <ArrowLeft className="w-4 h-4" /> Back to Careers
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
     <>
     <SeoTags
-        title={jobsResponse?.data?.seo?.title}
-        description={jobsResponse?.data?.seo?.description}
-        ogImage={jobsResponse?.data?.seo?.og_image}
-        schema={jobsResponse?.data?.schema}
+        title={(jobsResponse as any)?.data?.seo?.title}
+        description={(jobsResponse as any)?.data?.seo?.description}
+        ogImage={(jobsResponse as any)?.data?.seo?.og_image}
+        schema={(jobsResponse as any)?.data?.schema}
       />
     <div className="min-h-screen bg-background">
 
