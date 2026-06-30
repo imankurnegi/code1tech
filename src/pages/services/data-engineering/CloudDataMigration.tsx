@@ -737,7 +737,7 @@ const CloudDataMigration = () => {
                     </div>
                     <h3 className="text-lg font-bold text-foreground leading-snug">{s.title}</h3>
                   </div>
-                  <div className="text-sm text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: s.content ?? "" }} />
+                  <div className="grid sm:grid-cols-2 gap-2" dangerouslySetInnerHTML={{ __html: s.content ?? "" }} />
                 </div>
               );
             })}

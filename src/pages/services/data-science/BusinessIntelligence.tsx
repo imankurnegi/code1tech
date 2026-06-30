@@ -16,7 +16,15 @@ const cardStyle = {
   background: "rgba(255,255,255,0.025)",
   border: "1px solid rgba(148,163,184,0.12)",
 };
-
+function decodeHTMLEntities(str: string) {
+  return str
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&nbsp;/g, " ");
+}
 // ─── DATA ────────────────────────────────────────────────────────────────
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; btn: string; btnUrl: string }) => (
@@ -304,10 +312,8 @@ const ModernBITabs = ({ tabs }: { tabs: any[] }) => {
           style={{ background: "linear-gradient(160deg, rgba(15,23,42,0.7), rgba(11,18,32,0.5))", border: "1px solid rgba(148,163,184,0.12)", boxShadow: "0 12px 40px rgba(0,0,0,0.35)" }}>
           <div className="grid md:grid-cols-2 gap-0">
             {/* Visualization */}
-            <div className="relative h-64 md:h-auto md:min-h-[340px] overflow-hidden flex items-center justify-center" style={{ background: "rgba(8,13,24,0.55)", borderRight: "1px solid rgba(148,163,184,0.08)" }}>
-              <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: `linear-gradient(rgba(95,194,227,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(95,194,227,0.6) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
-              {/* <div dangerouslySetInnerHTML={{ __html: m?.image_data }} /> */}
-              <Visual i={active} />
+            <div className="relative h-64 md:h-auto md:min-h-[340px] overflow-hidden flex items-center justify-center" style={{ background: "rgba(8,13,24,0.55)", borderRight: "1px solid rgba(148,163,184,0.08)" }} dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(m?.image_data) }}>
+              {/* <Visual i={active} /> */}
             </div>
             {/* Text */}
             <div className="p-7 lg:p-9 flex flex-col justify-center">
@@ -491,6 +497,12 @@ const BusinessIntelligence = () => {
         </div>
         <style>{`@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }`}</style>
       </section>
+
+    <section style={{ display: "none" }} className="lg:grid-cols-[1.1fr_1fr]">
+    <span className="w-2.5 h-2.5 rounded-full bg-red-400/60 bg-[rgba(95,194,227,0.06)] border border-[rgba(95,194,227,0.15)]"></span>
+    <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/60 bg-[rgba(95,194,227,0.08)] border border-[rgba(95,194,227,0.2)]"></span>
+    <span className="w-2.5 h-2.5 rounded-full bg-green-400/60"></span>
+</section>
 
      {/* ─── WHY MODERN BI — ASYMMETRIC BENTO WITH NUMERAL MARKERS ─── */}
        <section
@@ -738,7 +750,8 @@ const BusinessIntelligence = () => {
                 boxShadow: "0 20px 60px rgba(0,0,0,0.45), 0 0 40px rgba(95,194,227,0.06)",
               }}
             >
-             <div dangerouslySetInnerHTML={{ __html: dashboardServices[activeDash].content }} />
+              
+             <div dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(dashboardServices[activeDash].content) }} />
             </div>
           </div>
           )}
