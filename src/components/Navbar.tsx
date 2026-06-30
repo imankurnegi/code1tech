@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, ChevronDown, ChevronRight } from "lucide-react";
 import { DynamicIcon } from "./DynamicIcon";
@@ -277,9 +277,9 @@ const Navbar = ({ data }: HeaderProps) => {
               ctaMenus?.map((menu, index) => {
                 if (menu.class === "btn") {
                   return (
-                    <Link to={menu.url} key={index}>
+                    <React.Fragment key={index}>
                       <EyeFollowButton text={menu.title} href={menu.url} eyeSize={22} pupilSize={8} />
-                    </Link>
+                    </React.Fragment>
                   );
                 }
                 return (

@@ -225,6 +225,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/business-intelligence-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch business intelligence engineers data");
     return response.json();
+  },
+
+  getPredictiveEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/predictive-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch predictive engineers data");
+    return response.json();
   }
 
 };
