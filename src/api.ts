@@ -231,6 +231,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/predictive-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch predictive engineers data");
     return response.json();
+  },
+
+  getBigDataEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/big-data-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch big data engineers data");
+    return response.json();
   }
 
 };

@@ -28,6 +28,7 @@ import DataOpsPipelineAutomation from "./pages/services/data-engineering/DataOps
 import CloudDataMigration from "./pages/services/data-engineering/CloudDataMigration";
 import BusinessIntelligence from "./pages/services/data-science/BusinessIntelligence";
 import PredictiveAdvancedAnalytics from "./pages/services/data-science/PredictiveAdvancedAnalytics";
+import BigDataSolutions from "./pages/services/data-science/BigDataSolutions";
 
 const AppRoutes = () => {
   return (
@@ -53,6 +54,7 @@ const AppRoutes = () => {
         <Route path="/services/data-engineering/cloud-data-migration" element={<CloudDataMigration />} />
         <Route path="/services/data-science/business-intelligence" element={<BusinessIntelligence />} />
         <Route path="/services/data-science/predictive-advanced-analytics" element={<PredictiveAdvancedAnalytics />} />
+        <Route path="/services/data-science/big-data-solutions" element={<BigDataSolutions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />

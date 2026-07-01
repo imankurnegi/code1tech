@@ -112,6 +112,10 @@ export async function render(url: string) {
           queryKey: ["predictive-engineers"],
           queryFn: api.getPredictiveEngineers,
         }),
+        queryClient.prefetchQuery({
+          queryKey: ["big-data-engineers"],
+          queryFn: api.getBigDataEngineers,
+        }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
