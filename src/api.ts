@@ -237,6 +237,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/big-data-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch big data engineers data");
     return response.json();
+  },
+
+  getDatabricksEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/data-bricks-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch databricks engineers data");
+    return response.json();
   }
 
 };

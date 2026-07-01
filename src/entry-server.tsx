@@ -116,6 +116,10 @@ export async function render(url: string) {
           queryKey: ["big-data-engineers"],
           queryFn: api.getBigDataEngineers,
         }),
+        queryClient.prefetchQuery({
+          queryKey: ["databricks-engineers"],
+          queryFn: api.getDatabricksEngineers,
+        }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
