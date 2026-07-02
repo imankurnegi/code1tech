@@ -30,6 +30,7 @@ import BusinessIntelligence from "./pages/services/data-science/BusinessIntellig
 import PredictiveAdvancedAnalytics from "./pages/services/data-science/PredictiveAdvancedAnalytics";
 import BigDataSolutions from "./pages/services/data-science/BigDataSolutions";
 import Databricks from "./pages/services/tools/Databricks";
+import Snowflake from "./pages/services/tools/Snowflake";
 
 const AppRoutes = () => {
   return (
@@ -56,7 +57,8 @@ const AppRoutes = () => {
         <Route path="/services/data-science/business-intelligence" element={<BusinessIntelligence />} />
         <Route path="/services/data-science/predictive-advanced-analytics" element={<PredictiveAdvancedAnalytics />} />
         <Route path="/services/data-science/big-data-solutions" element={<BigDataSolutions />} />
-        <Route path="/services/tools/databricks" element={<Databricks />} />
+        <Route path="/databricks" element={<Databricks />} />
+        <Route path="/snowflake" element={<Snowflake />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />

@@ -120,6 +120,10 @@ export async function render(url: string) {
           queryKey: ["databricks-engineers"],
           queryFn: api.getDatabricksEngineers,
         }),
+        queryClient.prefetchQuery({
+          queryKey: ["snowflake-engineers"],
+          queryFn: api.getSnowflakeEngineers,
+        }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
