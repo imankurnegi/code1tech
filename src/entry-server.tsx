@@ -18,7 +18,7 @@ export async function render(url: string) {
   });
 
   const baseUrl = import.meta.env.VITE_API_URL || '';
-  const jobSlugMatch = url.match(/^\/jobs\/([^/?]+)/);
+  const jobSlugMatch = url.match(/^\/careers\/([^/?]+)/);
   const jobSlug = jobSlugMatch ? jobSlugMatch[1] : null;
 
   if (baseUrl) {
@@ -123,6 +123,10 @@ export async function render(url: string) {
         queryClient.prefetchQuery({
           queryKey: ["snowflake-engineers"],
           queryFn: api.getSnowflakeEngineers,
+        }),
+         queryClient.prefetchQuery({
+          queryKey: ["aws-engineers"],
+          queryFn: api.getAwsEngineers,
         }),
 
         // Engineer as a Service page

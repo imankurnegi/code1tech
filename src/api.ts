@@ -249,6 +249,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/snowflake-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch snowflake engineers data");
     return response.json();
+  },
+
+  getAwsEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/aws-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch AWS engineers data");
+    return response.json();
   }
 
 };
