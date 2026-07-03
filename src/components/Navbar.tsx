@@ -132,7 +132,7 @@ const Navbar = ({ data }: HeaderProps) => {
                         {/* Arrow */}
                         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-background/95 rotate-45" />
 
-                        <div className="grid grid-cols-1 gap-2 relative">
+                        <div className={`grid gap-2 relative ${link.title == 'Services' ? "grid-cols-1" : "grid-cols-2 min-w-[500px]"} `}>
                           {link.children?.map(l2 => {
                             const hasL2Children = (l2.children?.length ?? 0) > 0;
                             const isL2Open      = hoveredL2 === l2.title;
