@@ -255,6 +255,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/aws-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch AWS engineers data");
     return response.json();
+  },
+
+  getPowerBIEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/power-bi-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Power BI engineers data");
+    return response.json();
   }
 
 };

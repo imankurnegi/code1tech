@@ -277,10 +277,13 @@ const decodeHTMLEntities = (value?: string) => {
 const Databricks = () => {
   const { setRef, inViewMap: visible } = useInViewMap();
 
-  const { data } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["databricks-engineers"],
     queryFn: api.getDatabricksEngineers,
   });
+
+   if (isLoading) return null;
+  if (error) return null;
 
   const pageData = data?.data;
   const heroBanner = pageData?.tools_main_banner;

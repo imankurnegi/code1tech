@@ -128,6 +128,10 @@ export async function render(url: string) {
           queryKey: ["aws-engineers"],
           queryFn: api.getAwsEngineers,
         }),
+        queryClient.prefetchQuery({
+            queryKey: ["powerbi-engineers"],
+            queryFn: api.getPowerBIEngineers,
+          }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

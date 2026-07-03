@@ -32,6 +32,7 @@ import BigDataSolutions from "./pages/services/data-science/BigDataSolutions";
 import Databricks from "./pages/services/tools/Databricks";
 import Snowflake from "./pages/services/tools/Snowflake";
 import AWS from "./pages/services/tools/AWS";
+import PowerBI from "./pages/services/tools/PowerBI";
 
 const AppRoutes = () => {
   return (
@@ -61,6 +62,7 @@ const AppRoutes = () => {
         <Route path="/databricks" element={<Databricks />} />
         <Route path="/snowflake" element={<Snowflake />} />
         <Route path="/aws" element={<AWS />} />
+        <Route path="/power-bi" element={<PowerBI />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
