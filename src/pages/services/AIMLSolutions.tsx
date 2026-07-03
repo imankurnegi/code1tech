@@ -239,7 +239,7 @@ const techStackData = data.map((item) => ({
         </div>
 
         {/* Summary strip — all categories at a glance */}
-        <div className="mt-6 grid grid-cols-3 md:grid-cols-6 gap-3">
+        {/* <div className="mt-6 grid grid-cols-3 md:grid-cols-6 gap-3">
           {techStackData.map((cat, i) => {
             const SumIcon = cat.icon;
             const isActive = activeTab === i;
@@ -264,7 +264,7 @@ const techStackData = data.map((item) => ({
               </button>
             );
           })}
-        </div>
+        </div> */}
       </div>
     </section>
   );
