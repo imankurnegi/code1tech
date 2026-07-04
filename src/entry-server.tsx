@@ -133,6 +133,11 @@ export async function render(url: string) {
             queryFn: api.getPowerBIEngineers,
           }),
 
+          queryClient.prefetchQuery({
+              queryKey: ["tableau-engineers"],
+              queryFn: api.getTableauEngineers,
+            }),
+
         // Engineer as a Service page
         queryClient.prefetchQuery({
           queryKey: ["engineerServicePage"],

@@ -261,6 +261,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/power-bi-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Power BI engineers data");
     return response.json();
+  },
+
+  getTableauEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/tableau-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Tableau engineers data");
+    return response.json();
   }
 
 };
