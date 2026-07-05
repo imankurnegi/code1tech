@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useInViewMap } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
 
-type ServiceItem = { icon?: string; title: string; desc: string; image: string };
+type ServiceItem = { icon?: string; title: string; desc: string; image: string, imageCaption: string };
 
 const PBIServicesTabs = ({ services }: { services: ServiceItem[] }) => {
   const [active, setActive] = useState(0);
@@ -123,7 +123,7 @@ const PBIServicesTabs = ({ services }: { services: ServiceItem[] }) => {
             <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(10,18,35,0.6)", border: "1px solid rgba(95,194,227,0.35)", backdropFilter: "blur(8px)" }}>
               <span className="text-[11px] font-mono text-accent">{String(active + 1).padStart(2, "0")}</span>
               <span className="w-px h-3 bg-white/20" />
-              <span className="text-[11px] uppercase tracking-wider text-muted-foreground">Power BI Service</span>
+              <span className="text-[11px] uppercase tracking-wider text-muted-foreground">{s.imageCaption}</span>
             </div>
 
             <div className="absolute bottom-4 left-4 w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.9), rgba(0,119,182,0.9))", border: "1px solid rgba(95,194,227,0.5)", boxShadow: "0 10px 30px rgba(0,119,182,0.4)" }}>
@@ -249,6 +249,7 @@ const PowerBI = () => {
     title: tab?.title ?? "",
     desc: tab?.content ?? "",
     image: tab?.image?.url ?? "",
+    imageCaption: tab?.image_text ?? "",
   }));
   const keyFeatureItems = (keyFeaturesContent?.cards ?? []).map((card: any) => ({
     icon: card?.icon,

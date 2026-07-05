@@ -7,20 +7,20 @@ import { useEffect, useRef, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
-import SeoTags from "@/components/SeoTags";
+import { useInViewMap } from "@/hooks/useInView";
 import ContactUsForm from "@/components/ContactUsForm";
+import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
-import { useInViewMap } from "@/hooks/useInView";
 
-type ServiceItem = { icon: any; title: string; desc: string; image: string; imageCaption: string };
+type ServiceItem = { icon: any; title: string; desc: string; image: string, imageCaption: string };
 
-const TableauServicesTabs = ({ services }: { services: ServiceItem[] }) => {
+const N8NServicesTabs = ({ services }: { services: ServiceItem[] }) => {
   const [active, setActive] = useState(0);
   const tabsRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const s = services[active];
-
+  
   const goTo = (i: number) => {
     const next = ((i % services.length) + services.length) % services.length;
     setActive(next);
@@ -58,7 +58,6 @@ const TableauServicesTabs = ({ services }: { services: ServiceItem[] }) => {
 
   return (
     <div>
-      {/* Preload */}
       <div aria-hidden className="hidden">
         {services.map((item, i) => (
           <img key={i} src={item.image} alt="" loading="eager" decoding="async" width={1} height={1} />
@@ -78,7 +77,7 @@ const TableauServicesTabs = ({ services }: { services: ServiceItem[] }) => {
         <div
           ref={tabsRef}
           role="tablist"
-          aria-label="Tableau Development Services"
+          aria-label="n8n Automation Services"
           className="relative flex gap-2 overflow-x-auto hide-scrollbar snap-x snap-mandatory scroll-px-4 lg:snap-none lg:overflow-visible lg:flex-wrap lg:justify-center pb-2 lg:p-3"
           style={{ WebkitOverflowScrolling: "touch", overscrollBehaviorX: "contain" }}
         >
@@ -89,9 +88,9 @@ const TableauServicesTabs = ({ services }: { services: ServiceItem[] }) => {
                 key={i}
                 data-tab={i}
                 role="tab"
-                id={`tab-tab-${i}`}
+                id={`n8n-tab-${i}`}
                 aria-selected={isActive}
-                aria-controls={`tab-panel-${i}`}
+                aria-controls={`n8n-panel-${i}`}
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setActive(i)}
                 onKeyDown={(e) => onTabKey(e, i)}
@@ -136,12 +135,11 @@ const TableauServicesTabs = ({ services }: { services: ServiceItem[] }) => {
         </div>
       </div>
 
-      {/* PANEL */}
       <div
         key={active}
         role="tabpanel"
-        id={`tab-panel-${active}`}
-        aria-labelledby={`tab-tab-${active}`}
+        id={`n8n-panel-${active}`}
+        aria-labelledby={`n8n-tab-${active}`}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         className="relative rounded-3xl overflow-hidden animate-panel-in"
@@ -230,7 +228,7 @@ const TableauServicesTabs = ({ services }: { services: ServiceItem[] }) => {
   );
 };
 
-const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string, btnUrl:string }) => (
+const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl: string }) => (
   <div className="mt-12 lg:mt-14">
     <div
       className="relative rounded-2xl overflow-hidden flex flex-col sm:flex-row items-center gap-6 px-4 sm:px-8 py-7"
@@ -257,44 +255,40 @@ const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string, btnUrl:
   </div>
 );
 
-const Tableau = () => {
+const N8N = () => {
   const { setRef, inViewMap: visible } = useInViewMap();
   const { data, isLoading, error } = useQuery({
-      queryKey: ["tableau-engineers"],
-      queryFn: api.getTableauEngineers,
+      queryKey: ["n8n-engineers"],
+      queryFn: api.getN8NEngineers,
     });
 
     if (isLoading) return null;
-  if (error) return null;
+    if (error) return null;
 
   const pageData = data?.data;
 
-  // ─── DATA ────────────────────────────────────────────────────────────────
+  
+// ─── DATA ────────────────────────────────────────────────────────────────
+const heroBanner = pageData?.tools_main_banner;
+  const heroContent = pageData?.enterprise_n8n_automation_that_helps_you_scale_faster || {};
 
-  const heroBanner = pageData?.tools_main_banner;
-  const heroContent = pageData?.transform_business_data_into_confident_decisions_with_tableau || {};
-
-  const serviceSection = pageData?.tableau_development_services_designed_around_your_business || {};
-  const whychooseSection = pageData?.why_choose_tableau_for_business_intelligence || {};
-  const trustExpertSection = pageData?.why_businesses_trust_our_tableau_experts || {};
-  const partnerSection = pageData?.partner_with_tableau_experts_who_understand_your_business || {};
-  const popularIntegrationsSection = pageData?.popular_tableau_integrations || {};
-  const processSection = pageData?.our_tableau_development_process || {};
-  const industrySection = pageData?.tableau_solutions_for_every_industry || {};
-  const contactSection  = pageData?.services_get_started_section || {}
-  const actionableBusinessIntelligenceSection = pageData?.turn_complex_data_into_actionable_business_intelligence || {}
-  const cta_section_70 = pageData?.cta_section_70;
-  const cta_section_77 = pageData?.cta_section_77;
-  const cta_section_111 = pageData?.cta_section_111;
-  const cta_section_113 = pageData?.cta_section_113;
-  const cta_section_114 = pageData?.cta_section_114;
-  const cta_section_130 = pageData?.cta_section_130;
+const industriesSection = pageData?.industries_we_help_automate || {}
+const processSection = pageData?.our_n8n_development_process || {}
+const whyChooseSection = pageData?.why_choose_code1_tech_systems_for_n8n_development || {}
+const whyN8nSection = pageData?.why_choose_n8n_for_business_automation || {}
+const whatCanYouAutomateSection = pageData?.what_can_you_automate_with_n8n || {}
+const contactSection  = pageData?.services_get_started_section || {}
+const cta_section_70 = pageData?.cta_section_70;
+const cta_section_77 = pageData?.cta_section_77;
+const cta_section_111 = pageData?.cta_section_111;
+const cta_section_113 = pageData?.cta_section_113;
+const cta_section_114 = pageData?.cta_section_114;
 
 const heroBadges = heroBanner?.badges || [];
 const heroStats = heroBanner?.bottom_section || [];
 const heroImageUrl = heroBanner?.image?.url || "";
 
-const services: ServiceItem[] = serviceSection?.tabs?.map((tab: any) => ({
+const automationServices: ServiceItem[] = whatCanYouAutomateSection?.tabs?.map((tab: any) => ({
   icon: tab.icon,
   title: tab.title,
   desc: tab.content,
@@ -302,41 +296,28 @@ const services: ServiceItem[] = serviceSection?.tabs?.map((tab: any) => ({
   imageCaption: tab.image_text,
 })) || [];
 
-const whyTableau = whychooseSection?.cards?.map((item: any) => ({
-  icon: item.icon,
-  title: item.title,
-  desc: item.content,
+const whyN8n = whyN8nSection?.cards?.map((card: any) => ({
+  icon: card.icon,
+  title: card.title,
+  desc: card.content,
 })) || [];
 
-const whyTrust = trustExpertSection?.cards?.map((item: any) => ({
-  icon: item.icon,
-  title: item.title,
-  desc: item.content,
+const whyUs = whyChooseSection?.cards?.map((card: any) => ({
+  icon: card.icon,
+  title: card.title,
+  desc: card.content,
 })) || [];
 
-const partner = partnerSection?.cards?.map((item: any) => ({
-  icon: item.icon,
-  title: item.title,
-  desc: item.content,
+const process = processSection?.cards?.map((card: any) => ({
+  icon: card.icon,
+  title: card.title,
+  desc: card.content,
 })) || [];
 
-const integrations = popularIntegrationsSection?.cards?.map((item: any) => ({
-  icon: item.icon,
-  title: item.title,
-  desc: item.content,
+const industries = industriesSection?.cards?.map((card: any) => ({
+  icon: card.icon,
+  label: card.title,
 })) || [];
-
-const process = processSection?.cards?.map((item: any) => ({
-  icon: item.icon,
-  title: item.title,
-  desc: item.content,
-})) || [];
-
-const industries = industrySection?.cards?.map((item: any) => ({
-  icon: item.icon,
-  label: item.title
-})) || [];
-  
 
   return (
     <>
@@ -465,24 +446,27 @@ const industries = industrySection?.cards?.map((item: any) => ({
         `}</style>
       </section>
 
-      {/* INTRO — Turn Complex Data */}
+      {/* WHY n8n */}
       <section
         ref={setRef("intro")}
         className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.intro ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center mb-8 lg:mb-10">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html:addClassToSpan(actionableBusinessIntelligenceSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+          <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(whyN8nSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+            <p className="text-muted-foreground text-base sm:text-lg leading-[1.75] text-center mb-4" dangerouslySetInnerHTML={{__html: whyN8nSection?.paragraph}} />
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
-            {actionableBusinessIntelligenceSection?.blocks?.map((block: any, index: number) => (
-              <div key={index} className="rounded-2xl p-6 lg:p-8" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
-              <p className="text-[15px] text-muted-foreground leading-[1.75] text-left">
-                {block?.content || ""}
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-fr max-w-6xl mx-auto">
+            {whyN8n.map((w, i) => (
+              <div key={i} className="group relative p-5 lg:p-6 rounded-2xl flex flex-col h-full transition-all duration-300 hover:-translate-y-1" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 mb-4" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.18))", border: "1px solid rgba(95,194,227,0.25)" }}>
+                  <DynamicIcon name={w.icon} className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-base lg:text-lg font-semibold text-foreground text-left leading-snug mb-2">{w.title}</h3>
+                <p className="text-[13.5px] text-muted-foreground leading-[1.65] text-left">{w.desc}</p>
+              </div>
             ))}
           </div>
 
@@ -496,58 +480,49 @@ const industries = industrySection?.cards?.map((item: any) => ({
         </div>
       </section>
 
-      {/* WHY CHOOSE TABLEAU */}
+      {/* AUTOMATION SERVICES - TABS */}
       <section
-        ref={setRef("why")}
-        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.why ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        ref={setRef("services")}
+        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         style={{ background: "linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 5%) 100%)" }}
       >
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: `linear-gradient(rgba(95,194,227,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(95,194,227,0.4) 1px, transparent 1px)`, backgroundSize: "80px 80px" }} />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html:addClassToSpan(whychooseSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+          <div className="max-w-5xl mx-auto text-center mb-6 lg:mb-8">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(whatCanYouAutomateSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
             <p className="text-muted-foreground text-base sm:text-lg leading-[1.65] text-center">
-             {whychooseSection?.paragraph || ""}
+              {whatCanYouAutomateSection?.paragraph || ""}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
-            {whyTableau.map((w, i) => (
-              <div key={i} className="group relative p-5 lg:p-7 rounded-2xl flex flex-col h-full transition-all duration-300 hover:-translate-y-1" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.18))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                    <DynamicIcon name={w.icon} className="w-6 h-6 text-accent" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground text-left leading-snug">{w.title}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground leading-[1.65] text-left">{w.desc}</p>
-              </div>
-            ))}
-          </div>
-        {cta_section_77?.cta_content && (<InlineCTA
+          <N8NServicesTabs services={automationServices} />
+
+          {cta_section_77?.cta_content && (
+            <InlineCTA
             title={cta_section_77?.cta_content || ""}
             btn={cta_section_77?.button_text || ""}
             btnUrl={cta_section_77?.button_url || ""}
-          />)}
+          />)
+          }
         </div>
       </section>
 
-      {/* WHY TRUST OUR EXPERTS */}
+      {/* WHY CHOOSE US */}
       <section
-        ref={setRef("trust")}
-        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.trust ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        ref={setRef("whyus")}
+        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.whyus ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(trustExpertSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+          <div className="max-w-6xl mx-auto text-center mb-10 lg:mb-14">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(whyChooseSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
             <p className="text-muted-foreground text-base sm:text-lg leading-[1.65] text-center">
-              {trustExpertSection?.paragraph || ""}
+              {whyChooseSection?.paragraph || ""}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-fr">
-            {whyTrust.map((w, i) => (
+            {whyUs.map((w, i) => (
               <div key={i} className="group relative p-5 lg:p-6 rounded-2xl flex flex-col h-full transition-all duration-300 hover:-translate-y-1" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 mb-4" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.18))", border: "1px solid rgba(95,194,227,0.25)" }}>
                   <DynamicIcon name={w.icon} className="w-6 h-6 text-accent" />
@@ -557,96 +532,14 @@ const industries = industrySection?.cards?.map((item: any) => ({
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* SERVICES TABS */}
-      <section
-        ref={setRef("services")}
-        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 5%) 100%)" }}
-      >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center mb-6 lg:mb-8">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html:addClassToSpan(serviceSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
-            <p className="text-muted-foreground text-base sm:text-lg leading-[1.65] text-center">
-              {serviceSection?.paragraph || ""}
-            </p>
-          </div>
-
-          <TableauServicesTabs services={services} />
-
-          {cta_section_111?.content && (<InlineCTA
+          {cta_section_111?.content && (
+            <InlineCTA
             title={cta_section_111?.content || ""}
             btn={cta_section_111?.button_text || ""}
             btnUrl={cta_section_111?.button_url || ""}
-          />)}
-        </div>
-      </section>
-
-      {/* PARTNER WITH EXPERTS */}
-      <section
-        ref={setRef("partner")}
-        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.partner ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 100%)" }}
-      >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(partnerSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
-            <p className="text-muted-foreground text-base sm:text-lg leading-[1.65] text-center">
-              {partnerSection?.paragraph || ""}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
-            {partner.map((w, i) => (
-              <div key={i} className="group relative p-5 lg:p-7 rounded-2xl flex flex-col h-full transition-all duration-300 hover:-translate-y-1" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.18))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                    <DynamicIcon name={w.icon} className="w-6 h-6 text-accent" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground text-left leading-snug">{w.title}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground leading-[1.65] text-left">{w.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {cta_section_113?.content && (<InlineCTA
-            title={cta_section_113?.content || ""}
-            btn={cta_section_113?.button_text || ""}
-            btnUrl={cta_section_113?.button_url || ""}
-          />)}
-        </div>
-      </section>
-
-      {/* INTEGRATIONS */}
-      <section
-        ref={setRef("integrations")}
-        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.integrations ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 5%) 100%)" }}
-      >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(popularIntegrationsSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
-            <p className="text-muted-foreground text-base sm:text-lg leading-[1.65] text-center">
-              {popularIntegrationsSection?.paragraph || ""}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
-            {integrations.map((w, i) => (
-              <div key={i} className="group relative p-5 lg:p-7 rounded-2xl flex flex-col h-full transition-all duration-300 hover:-translate-y-1" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.18))", border: "1px solid rgba(95,194,227,0.25)" }}>
-                    <DynamicIcon name={w.icon} className="w-6 h-6 text-accent" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground text-left leading-snug">{w.title}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground leading-[1.65] text-left">{w.desc}</p>
-              </div>
-            ))}
-          </div>
+          />)
+          }
         </div>
       </section>
 
@@ -654,7 +547,7 @@ const industries = industrySection?.cards?.map((item: any) => ({
       <section
         ref={setRef("process")}
         className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 100%)" }}
+        style={{ background: "linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 5%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
@@ -677,11 +570,14 @@ const industries = industrySection?.cards?.map((item: any) => ({
               </div>
             ))}
           </div>
-          {cta_section_114?.content && (<InlineCTA
-            title={cta_section_114?.content || ""}
-            btn={cta_section_114?.button_text || ""}
-            btnUrl={cta_section_114?.button_url || ""}
-          />)}
+
+            {cta_section_113?.content && (
+            <InlineCTA
+            title={cta_section_113?.content || ""}
+            btn={cta_section_113?.button_text || ""}
+            btnUrl={cta_section_113?.button_url || ""}
+          />)
+          }
         </div>
       </section>
 
@@ -689,17 +585,17 @@ const industries = industrySection?.cards?.map((item: any) => ({
       <section
         ref={setRef("industries")}
         className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.industries ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 5%) 100%)" }}
+        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <div className="max-w-5xl mx-auto text-center mb-10 lg:mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(industrySection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] mb-5 text-center" dangerouslySetInnerHTML={{__html: addClassToSpan(industriesSection?.heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
             <p className="text-muted-foreground text-base sm:text-lg leading-[1.65] text-center">
-              {industrySection?.paragraph || ""}
+              {industriesSection?.paragraph || ""}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {industries.map((it, i) => (
               <div key={i} className="group flex items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(148,163,184,0.12)" }}>
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg, rgba(95,194,227,0.18), rgba(0,119,182,0.18))", border: "1px solid rgba(95,194,227,0.25)" }}>
@@ -709,15 +605,18 @@ const industries = industrySection?.cards?.map((item: any) => ({
               </div>
             ))}
           </div>
-          {cta_section_130?.content && (<InlineCTA
-            title={cta_section_130?.content || ""}
-            btn={cta_section_130?.button_text || ""}
-            btnUrl={cta_section_130?.button_url || ""}
-          />)}
+
+           {cta_section_114?.content && (
+            <InlineCTA
+            title={cta_section_114?.content || ""}
+            btn={cta_section_114?.button_text || ""}
+            btnUrl={cta_section_114?.button_url || ""}
+          />)
+          }
         </div>
       </section>
 
-      {/* FINAL CTA + CONTACT */}
+      {/* FINAL CONTACT */}
       <section
         ref={setRef("contact")}
         className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${visible.contact ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
@@ -739,4 +638,4 @@ const industries = industrySection?.cards?.map((item: any) => ({
   );
 };
 
-export default Tableau;
+export default N8N;

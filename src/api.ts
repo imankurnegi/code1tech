@@ -267,6 +267,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/tableau-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Tableau engineers data");
     return response.json();
+  },
+
+  getN8NEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/n8n-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch N8N engineers data");
+    return response.json();
   }
 
 };

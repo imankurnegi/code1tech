@@ -138,6 +138,11 @@ export async function render(url: string) {
               queryFn: api.getTableauEngineers,
             }),
 
+            queryClient.prefetchQuery({
+            queryKey: ["n8n-engineers"],
+            queryFn: api.getN8NEngineers,
+          }),
+
         // Engineer as a Service page
         queryClient.prefetchQuery({
           queryKey: ["engineerServicePage"],
