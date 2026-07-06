@@ -146,6 +146,10 @@ export async function render(url: string) {
             queryKey: ["oracle-engineers"],
             queryFn: api.getOracleEngineers,
           }),
+          queryClient.prefetchQuery({
+            queryKey: ["microsoft-engineers"],
+            queryFn: api.getMicrosoftEngineers,
+          }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

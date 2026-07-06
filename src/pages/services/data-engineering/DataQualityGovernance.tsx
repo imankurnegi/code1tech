@@ -1060,7 +1060,7 @@ const DataQualityGovernance = () => {
                   size="lg"
                   className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
                 >
-                  {contactButton?.cta_text ?? "Schedule a Consultation"}
+                  {contactButton?.cta_text ?? ""}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
                 </Button>
               </Link>
