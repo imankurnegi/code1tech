@@ -142,6 +142,10 @@ export async function render(url: string) {
             queryKey: ["n8n-engineers"],
             queryFn: api.getN8NEngineers,
           }),
+          queryClient.prefetchQuery({
+            queryKey: ["oracle-engineers"],
+            queryFn: api.getOracleEngineers,
+          }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

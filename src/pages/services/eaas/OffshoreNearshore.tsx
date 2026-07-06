@@ -357,7 +357,7 @@ const OffshoreNearshore = () => {
                   {pageData.banner_section.highlighted_text}
                 </p>
               )}
-              <Link to={pageData?.banner_section?.cta_url ?? "/contact"}>
+              <Link to={pageData?.banner_section?.cta_url ?? ""}>
                 <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                   {pageData?.banner_section?.cta_text}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
@@ -426,7 +426,7 @@ const OffshoreNearshore = () => {
           heading={pageData.data_engineers_security_brief_cta.heading}
           content={pageData.data_engineers_security_brief_cta.content}
           ctaText={pageData.data_engineers_security_brief_cta.cta_text}
-          ctaUrl={pageData.data_engineers_security_brief_cta.cta_url ?? "/contact"}
+          ctaUrl={pageData.data_engineers_security_brief_cta.cta_url ?? ""}
         />
       )}
 
@@ -451,7 +451,7 @@ const OffshoreNearshore = () => {
           heading={pageData.on_demand_cta.heading}
           content={pageData.on_demand_cta.content}
           ctaText={pageData.on_demand_cta.cta_text}
-          ctaUrl={pageData.on_demand_cta.cta_url ?? "/contact"}
+          ctaUrl={pageData.on_demand_cta.cta_url ?? ""}
         />
       )}
 
@@ -498,7 +498,7 @@ const OffshoreNearshore = () => {
         <CtaBanner
           heading={pageData.cta_section_70.content}
           ctaText={pageData.cta_section_70.cta_text}
-          ctaUrl={pageData.cta_section_70.cta_url ?? "/contact"}
+          ctaUrl={pageData.cta_section_70.cta_url ?? ""}
         />
       )}
 
@@ -538,7 +538,7 @@ const OffshoreNearshore = () => {
           {pageData?.offshore_vs_nearshore_setup?.bottom_paragraph && (
             <div className="max-w-4xl mx-auto mb-10 rounded-2xl p-5 sm:p-6 backdrop-blur-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left" style={{ background: "linear-gradient(120deg, rgba(95,194,227,0.08) 0%, rgba(15,23,42,0.55) 50%, rgba(0,119,182,0.10) 100%)", border: "1px solid rgba(95,194,227,0.22)" }}>
               <p className="text-base sm:text-lg font-semibold text-foreground leading-snug" dangerouslySetInnerHTML={{ __html: addClassToSpan(pageData.offshore_vs_nearshore_setup.bottom_paragraph, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-              <Link to={pageData.offshore_vs_nearshore_setup.bottom_button_url ?? "/contact"} className="flex-shrink-0 w-full sm:w-auto">
+              <Link to={pageData.offshore_vs_nearshore_setup.bottom_button_url ?? ""} className="flex-shrink-0 w-full sm:w-auto">
                 <Button variant="hero" size="lg" className="w-full sm:w-auto group">
                   {pageData.offshore_vs_nearshore_setup.bottom_button_text}
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -596,7 +596,7 @@ const OffshoreNearshore = () => {
                 </div>
                 <div className="hidden lg:block w-px h-16 self-center" style={{ background: "linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent)" }} />
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed flex-1 text-left" dangerouslySetInnerHTML={{ __html: pageData.offshore_vs_nearshore.bottom_blocks_content ?? "" }} />
-                <Link to={pageData.offshore_vs_nearshore.bottom_blocks_button_url ?? "/contact"} className="flex-shrink-0 w-full lg:w-auto">
+                <Link to={pageData.offshore_vs_nearshore.bottom_blocks_button_url ?? ""} className="flex-shrink-0 w-full lg:w-auto">
                   <Button variant="outline" size="lg" className="w-full lg:w-auto group">
                     {pageData.offshore_vs_nearshore.bottom_blocks_button_text ?? "Help Me Decide"}
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -648,7 +648,7 @@ const OffshoreNearshore = () => {
                     </div>
                     <p className="text-sm sm:text-base text-foreground font-semibold">{pageData.when_should_you_consider_offshore.cta_content}</p>
                   </div>
-                  <Link to={pageData.when_should_you_consider_offshore.button_url ?? "/contact"} className="w-full sm:w-auto flex-shrink-0">
+                  <Link to={pageData.when_should_you_consider_offshore.button_url ?? ""} className="w-full sm:w-auto flex-shrink-0">
                     <Button variant="hero" size="lg" className="w-full sm:w-auto group">
                       {pageData.when_should_you_consider_offshore.button_text}
                       <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -687,7 +687,7 @@ const OffshoreNearshore = () => {
               </>
             )}
             {pageData.global_capability_centre.cta_content && (
-              <CtaBanner heading={pageData.global_capability_centre.cta_content} ctaText={pageData.global_capability_centre.button_text ?? "Discuss Your Capability Center!"} ctaUrl={pageData.global_capability_centre.button_url ?? "/contact"} />
+              <CtaBanner heading={pageData.global_capability_centre.cta_content} ctaText={pageData.global_capability_centre.button_text ?? "Discuss Your Capability Center!"} ctaUrl={pageData.global_capability_centre.button_url ?? ""} />
             )}
           </div>
         </section>
@@ -720,7 +720,7 @@ const OffshoreNearshore = () => {
             )}
             {pageData.what_is_a_center_of_excellence.button_text && (
               <div className="text-center">
-                <Link to={pageData.what_is_a_center_of_excellence.button_url ?? "/contact"}>
+                <Link to={pageData.what_is_a_center_of_excellence.button_url ?? ""}>
                   <Button variant="hero" size="lg" className="group">
                     {pageData.what_is_a_center_of_excellence.button_text}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -784,7 +784,7 @@ const OffshoreNearshore = () => {
         <CtaBanner
           heading={pageData.cta_section_77.cta_content}
           ctaText={pageData.cta_section_77.button_text}
-          ctaUrl={pageData.cta_section_77.button_url ?? "/contact"}
+          ctaUrl={pageData.cta_section_77.button_url ?? ""}
         />
       )}
 

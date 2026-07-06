@@ -269,7 +269,7 @@ const DataIngestion = () => {
               {banner.highlighted_text && (
                 <p className="text-sm font-semibold text-accent mb-6 text-left" style={{ animation: "pulse 3s ease-in-out infinite" }}>{banner.highlighted_text}</p>
               )}
-              <Link to={banner.cta_url || "/contact"}>
+              <Link to={banner.cta_url || ""}>
                 <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                   {banner.cta_text || "Talk to a Data Integration Expert"}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
@@ -388,8 +388,8 @@ const DataIngestion = () => {
             <CtaBanner
               heading={briefCta.heading}
               content={briefCta.content}
-              ctaText={briefCta.cta_text || "Get Started"}
-              ctaUrl={briefCta.cta_url || "/contact"}
+              ctaText={briefCta.cta_text || ""}
+              ctaUrl={briefCta.cta_url || ""}
             />
           </div>
         </section>
@@ -418,7 +418,7 @@ const DataIngestion = () => {
                   </div>
                   <div className="text-sm" dangerouslySetInnerHTML={{ __html: c.content ?? "" }} />
                   {(c.link_text || c.link_url) && (
-                    <Link to={c.link_url || "/contact"} className="inline-flex items-center gap-1 mt-5 text-sm font-medium text-accent hover:gap-2 transition-all">
+                    <Link to={c.link_url || ""} className="inline-flex items-center gap-1 mt-5 text-sm font-medium text-accent hover:gap-2 transition-all">
                       <span dangerouslySetInnerHTML={{ __html: c.link_text ?? "Learn more" }} />
                       <ArrowRight className="w-4 h-4" />
                     </Link>
@@ -502,7 +502,7 @@ const DataIngestion = () => {
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed">{m.content}</p>
                       <div className="mt-5 h-px w-full" style={{ background: "linear-gradient(90deg, rgba(95,194,227,0.45), transparent)" }} />
-                      <Link to={m.link_url || "/contact"} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:gap-2 transition-all">
+                      <Link to={m.link_url || ""} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:gap-2 transition-all">
                         {m.link_label || "Discuss this model"} <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>
@@ -513,7 +513,7 @@ const DataIngestion = () => {
             </div>
             {(engageSection.button_text || engageSection.button_url) && (
               <div className="text-center">
-                <Link to={engageSection.button_url || "/contact"}>
+                <Link to={engageSection.button_url || ""}>
                   <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                     {engageSection.button_text || "Hire Data Integration Experts"}
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
@@ -695,7 +695,7 @@ const DataIngestion = () => {
                 </ul>
               )}
               {contactButton && (
-                <Link to={contactButton.cta_url || "/contact"}>
+                <Link to={contactButton.cta_url || ""}>
                   <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                     <span dangerouslySetInnerHTML={{ __html: contactButton.cta_text ?? "Schedule a Data Integration Consultation" }} />
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />

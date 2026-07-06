@@ -251,7 +251,7 @@ const TechTeamBuilding = () => {
                   {pageData.banner_section.highlighted_text}
                 </p>
               )}
-              <Link to={pageData?.banner_section?.cta_url ?? "/contact"}>
+              <Link to={pageData?.banner_section?.cta_url ?? ""}>
                 <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                   {pageData?.banner_section?.cta_text}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
@@ -304,7 +304,7 @@ const TechTeamBuilding = () => {
                   />
                   {scaleSection.button_text && (
                     <div className="pt-6">
-                      <Link to={scaleSection.button_url ?? "/contact"} className="inline-block">
+                      <Link to={scaleSection.button_url ?? ""} className="inline-block">
                         <Button variant="hero" size="lg" className="group rounded-xl px-8 py-6 text-base font-semibold">
                           {scaleSection.button_text}
                           <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -390,7 +390,7 @@ const TechTeamBuilding = () => {
           heading={cta1.heading}
           content={cta1.content}
           ctaText={cta1.cta_text}
-          ctaUrl={cta1.cta_url ?? "/contact"}
+          ctaUrl={cta1.cta_url ?? ""}
         />
       )}
 
@@ -490,7 +490,7 @@ const TechTeamBuilding = () => {
           heading={cta2.heading}
           content={cta2.content}
           ctaText={cta2.cta_text}
-          ctaUrl={cta2.cta_url ?? "/contact"}
+          ctaUrl={cta2.cta_url ?? ""}
         />
       )}
 
@@ -625,7 +625,7 @@ const TechTeamBuilding = () => {
             )}
             {benefitsSection.bottom_cta_text && (
               <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
-                <Link to={benefitsSection.bottom_cta_url ?? "/contact"}>
+                <Link to={benefitsSection.bottom_cta_url ?? ""}>
                   <Button variant="hero" size="lg">
                     {benefitsSection.bottom_cta_text}
                     <ArrowRight className="w-4 h-4 ml-1" />

@@ -273,6 +273,18 @@ export const api = {
     const response = await fetch(`${BASE_URL}/n8n-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch N8N engineers data");
     return response.json();
+  },
+
+  getOracleEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/oracle-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Oracle engineers data");
+    return response.json();
+  },
+
+  getMicrosoftEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/microsoft-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Microsoft engineers data");
+    return response.json();
   }
 
 };

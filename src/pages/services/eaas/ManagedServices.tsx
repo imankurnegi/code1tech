@@ -286,7 +286,7 @@ const ManagedServices = () => {
               {banner.highlighted_text && (
                 <p className="text-sm font-semibold text-accent mb-6 text-left" style={{ animation: "pulse 3s ease-in-out infinite" }}>{banner.highlighted_text}</p>
               )}
-              <Link to={banner.cta_url || "/contact"}>
+              <Link to={banner.cta_url || ""}>
                 <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
                   {banner.cta_text || "Get a Free IT Assessment Today"}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
@@ -620,7 +620,7 @@ const ManagedServices = () => {
                   heading={ctaSection.heading}
                   content={ctaSection.content}
                   ctaText={ctaSection.cta_text}
-                  ctaUrl={ctaSection.cta_url ?? "/contact"}
+                  ctaUrl={ctaSection.cta_url ?? ""}
                 />
               </div>
             )}
@@ -726,7 +726,7 @@ const ManagedServices = () => {
               )}
 
               <div className="mt-auto pt-6" style={{ borderTop: "1px dashed rgba(148,163,184,0.18)" }}>
-                <Link to={getStarted.button_url ?? "/contact"} className="block">
+                <Link to={getStarted.button_url ?? ""} className="block">
                   <Button variant="hero" size="lg" className="group w-full text-sm sm:text-base">
                     {getStarted.button_text || "Book Your Free Consultation Now"}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

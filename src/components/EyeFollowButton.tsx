@@ -73,7 +73,7 @@ const Eye = ({
 
 const EyeFollowButton = ({
   text = "Get Started",
-  href = "/contact",
+  href = "/contactus",
   eyeCount = 2,
   eyeSize = 32,
   pupilSize = 12,

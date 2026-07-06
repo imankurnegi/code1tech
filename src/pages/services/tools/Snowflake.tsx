@@ -409,7 +409,7 @@ const Snowflake = () => {
             <p className="text-sm sm:text-base text-foreground/85 font-medium text-center sm:text-left">
               {heroContent?.white_text || ""}
             </p>
-            <Link to={heroContent?.button_url || "/contact"}>
+            <Link to={heroContent?.button_url || ""}>
               <Button
                 size="lg"
                 className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"

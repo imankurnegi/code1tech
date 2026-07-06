@@ -49,7 +49,7 @@ const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; bt
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug text-center sm:text-left">{title}</h3>
           {sub && <p className="text-muted-foreground text-sm mt-1 text-center sm:text-left">{sub}</p>}
         </div>
-        <Link to={btnUrl ?? "/contact"} className="flex-shrink-0 relative z-10">
+        <Link to={btnUrl ?? ""} className="flex-shrink-0 relative z-10">
           <Button variant="hero" size="xl" className="group w-full sm:w-auto text-sm sm:text-base shadow-[0_8px_32px_-8px_rgba(95,194,227,0.55)]">
             {btn}
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 group-hover:translate-x-1 transition-transform flex-shrink-0" />
@@ -85,8 +85,8 @@ const DataQualityGovernance = () => {
   const heroImage = bannerSection.banner_image?.url;
   const heroImageAlt = bannerSection.banner_image?.alt;
   const heroParagraph = bannerSection.banner_description ?? "";
-  const heroBackLink = bannerSection.back_link_url ?? "/services/data-engineering";
-  const heroCtaLink = bannerSection.cta_link ?? "/contact";
+  const heroBackLink = bannerSection.back_link_url ?? "";
+  const heroCtaLink = bannerSection.cta_link ?? "";
   const heroCtaText = bannerSection.cta_text ?? "";
   const heroBadge1 = bannerSection.floating_badge_fields?.[0]?.badge_heading ?? "";
   const heroBadge1Text = bannerSection.floating_badge_fields?.[0]?.badge_text ?? "";
@@ -161,7 +161,7 @@ const DataQualityGovernance = () => {
     title: w.title ?? "",
     content: w.content ?? "",
   }));
-  const whyBottomButtonUrl = whySection.bottom_button_url ?? "/contact";
+  const whyBottomButtonUrl = whySection.bottom_button_url ?? "";
   const whyBottomButtonText = whySection.bottom_button_text ?? "";
 
   const industriesSection = pageData?.industries_we_support ?? {};
@@ -1055,7 +1055,7 @@ const DataQualityGovernance = () => {
                   </li>
                 ))}
               </ul>
-              <Link to={contactButton?.cta_url ?? "/contact"}>
+              <Link to={contactButton?.cta_url ?? ""}>
                 <Button
                   size="lg"
                   className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
