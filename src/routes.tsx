@@ -37,6 +37,7 @@ import Tableau from "./pages/services/tools/Tableau";
 import N8N from "./pages/services/tools/N8N";
 import Oracle from "./pages/services/tools/Oracle";
 import Microsoft from "./pages/services/tools/Microsoft";
+import Azure from "./pages/services/tools/Azure";
 
 const AppRoutes = () => {
   return (
@@ -71,6 +72,7 @@ const AppRoutes = () => {
         <Route path="/n8n" element={<N8N />} />
         <Route path="/oracle" element={<Oracle />} />
         <Route path="/microsoft" element={<Microsoft />} />
+        <Route path="/azure" element={<Azure />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />

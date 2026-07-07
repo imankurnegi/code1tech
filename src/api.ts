@@ -285,6 +285,12 @@ export const api = {
     const response = await fetch(`${BASE_URL}/microsoft-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Microsoft engineers data");
     return response.json();
+  },
+
+  getAzureEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/azure-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Azure engineers data");
+    return response.json();
   }
 
 };

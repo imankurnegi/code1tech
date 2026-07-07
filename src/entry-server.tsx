@@ -150,6 +150,10 @@ export async function render(url: string) {
             queryKey: ["microsoft-engineers"],
             queryFn: api.getMicrosoftEngineers,
           }),
+        queryClient.prefetchQuery({
+              queryKey: ["azure-engineers"],
+              queryFn: api.getAzureEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
