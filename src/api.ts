@@ -291,6 +291,11 @@ export const api = {
     const response = await fetch(`${BASE_URL}/azure-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Azure engineers data");
     return response.json();
-  }
+  },
 
+  getD365Engineers: async () => {
+    const response = await fetch(`${BASE_URL}/d365-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch D365 engineers data");
+    return response.json();
+  }
 };

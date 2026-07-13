@@ -38,6 +38,7 @@ import N8N from "./pages/services/tools/N8N";
 import Oracle from "./pages/services/tools/Oracle";
 import Microsoft from "./pages/services/tools/Microsoft";
 import Azure from "./pages/services/tools/Azure";
+import Dynamics365 from "./pages/services/tools/Dynamics365";
 
 const AppRoutes = () => {
   return (
@@ -73,6 +74,7 @@ const AppRoutes = () => {
         <Route path="/oracle" element={<Oracle />} />
         <Route path="/microsoft" element={<Microsoft />} />
         <Route path="/azure" element={<Azure />} />
+        <Route path="/dynamics-365" element={<Dynamics365 />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
