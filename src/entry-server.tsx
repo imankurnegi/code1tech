@@ -158,6 +158,10 @@ export async function render(url: string) {
               queryKey: ["d365-engineers"],
               queryFn: api.getD365Engineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["powerapps-engineers"],
+              queryFn: api.getPowerAppsEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
