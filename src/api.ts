@@ -303,5 +303,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/powerapps-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Power Apps engineers data");
     return response.json();
+  },
+  getFintechEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/fintech-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Fintech engineers data");
+    return response.json();
   }
 };
