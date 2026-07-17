@@ -163,9 +163,13 @@ export async function render(url: string) {
               queryFn: api.getPowerAppsEngineers,
             }),
             queryClient.prefetchQuery({
-                  queryKey: ["fintech-engineers"],
-                  queryFn: api.getFintechEngineers,
-                }),
+              queryKey: ["fintech-engineers"],
+              queryFn: api.getFintechEngineers,
+            }),
+            queryClient.prefetchQuery({
+              queryKey: ["banking-engineers"],
+              queryFn: api.getBankingEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

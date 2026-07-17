@@ -41,6 +41,7 @@ import Azure from "./pages/services/tools/Azure";
 import Dynamics365 from "./pages/services/tools/Dynamics365";
 import PowerApps from "./pages/services/tools/PowerApps";
 import FinTech from "./pages/industries/FinTech";
+import BankingSoftware from "./pages/industries/BankingSoftware";
 
 const AppRoutes = () => {
   return (
@@ -79,6 +80,7 @@ const AppRoutes = () => {
         <Route path="/dynamics-365" element={<Dynamics365 />} />
         <Route path="/power-apps" element={<PowerApps />} />
         <Route path="/industries/fintech" element={<FinTech />} />
+        <Route path="/industries/banking-software" element={<BankingSoftware />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />

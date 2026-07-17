@@ -308,5 +308,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/fintech-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Fintech engineers data");
     return response.json();
+  },
+  getBankingEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/banking-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Banking engineers data");
+    return response.json();
   }
 };
