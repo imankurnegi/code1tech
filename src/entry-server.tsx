@@ -170,6 +170,10 @@ export async function render(url: string) {
               queryKey: ["banking-engineers"],
               queryFn: api.getBankingEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["healthcare-engineers"],
+              queryFn: api.getHealthcareEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

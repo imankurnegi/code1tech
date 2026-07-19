@@ -313,5 +313,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/banking-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Banking engineers data");
     return response.json();
+  },
+  getHealthcareEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/healthcare-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Healthcare engineers data");
+    return response.json();
   }
 };
