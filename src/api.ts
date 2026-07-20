@@ -318,5 +318,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/healthcare-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Healthcare engineers data");
     return response.json();
+  },
+  getRetailEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/retail-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Retail engineers data");
+    return response.json();
   }
 };
