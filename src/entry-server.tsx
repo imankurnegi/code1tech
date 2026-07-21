@@ -178,6 +178,10 @@ export async function render(url: string) {
               queryKey: ["retail-engineers"],
               queryFn: api.getRetailEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["real-estate-engineers"],
+              queryFn: api.getRealEstateEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

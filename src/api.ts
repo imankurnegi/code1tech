@@ -323,5 +323,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/retail-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Retail engineers data");
     return response.json();
+  },
+  getRealEstateEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/real-estate-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Real Estate engineers data");
+    return response.json();
   }
 };
