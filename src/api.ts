@@ -333,5 +333,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/travel-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Travel engineers data");
     return response.json();
+  },
+  getProfessionalEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/professional-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Professional engineers data");
+    return response.json();
   }
 };

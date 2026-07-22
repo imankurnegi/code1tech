@@ -186,6 +186,10 @@ export async function render(url: string) {
               queryKey: ["travel-engineers"],
               queryFn: api.getTravelEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["professional-engineers"],
+              queryFn: api.getProfessionalEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

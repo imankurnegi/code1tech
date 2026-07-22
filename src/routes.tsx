@@ -46,6 +46,7 @@ import Healthcare from "./pages/industries/Healthcare";
 import RetailEcommerce from "./pages/industries/RetailEcommerce";
 import RealEstate from "./pages/industries/RealEstate";
 import TravelHospitality from "./pages/industries/TravelHospitality";
+import ProfessionalServices from "./pages/industries/ProfessionalServices";
 
 const AppRoutes = () => {
   return (
@@ -89,6 +90,7 @@ const AppRoutes = () => {
         <Route path="/industries/retail-ecommerce" element={<RetailEcommerce />} />
         <Route path="/industries/real-estate" element={<RealEstate />} />
         <Route path="/industries/travel-hospitality" element={<TravelHospitality />} />
+        <Route path="/industries/professional-services" element={<ProfessionalServices />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />
