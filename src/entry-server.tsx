@@ -190,6 +190,10 @@ export async function render(url: string) {
               queryKey: ["professional-engineers"],
               queryFn: api.getProfessionalEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["education-engineers"],
+              queryFn: api.getEducationEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

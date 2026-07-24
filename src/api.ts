@@ -338,5 +338,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/professional-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Professional engineers data");
     return response.json();
+  },
+  getEducationEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/education-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Education engineers data");
+    return response.json();
   }
 };
