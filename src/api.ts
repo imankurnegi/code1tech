@@ -343,5 +343,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/education-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Education engineers data");
     return response.json();
+  },
+  getGCPEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/gcp-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch GCP engineers data");
+    return response.json();
   }
 };

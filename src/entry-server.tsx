@@ -194,6 +194,10 @@ export async function render(url: string) {
               queryKey: ["education-engineers"],
               queryFn: api.getEducationEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["gcp-engineers"],
+              queryFn: api.getGCPEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

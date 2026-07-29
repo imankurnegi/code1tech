@@ -48,6 +48,7 @@ import RealEstate from "./pages/industries/RealEstate";
 import TravelHospitality from "./pages/industries/TravelHospitality";
 import ProfessionalServices from "./pages/industries/ProfessionalServices";
 import EducationEdTech from "./pages/industries/EducationEdTech";
+import GCP from "./pages/services/tools/GCP";
 
 const AppRoutes = () => {
   return (
@@ -85,6 +86,7 @@ const AppRoutes = () => {
         <Route path="/azure" element={<Azure />} />
         <Route path="/dynamics-365" element={<Dynamics365 />} />
         <Route path="/power-apps" element={<PowerApps />} />
+        <Route path="/gcp" element={<GCP />} />
         <Route path="/industries/fintech" element={<FinTech />} />
         <Route path="/industries/banking-software" element={<BankingSoftware />} />
         <Route path="/industries/healthcare" element={<Healthcare />} />
