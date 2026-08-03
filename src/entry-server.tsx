@@ -198,6 +198,10 @@ export async function render(url: string) {
               queryKey: ["gcp-engineers"],
               queryFn: api.getGCPEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["modal-fine-engineers"],
+              queryFn: api.getModalFineEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

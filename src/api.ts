@@ -348,5 +348,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/gcp-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch GCP engineers data");
     return response.json();
+  },
+  getModalFineEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/modal-fine-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Modal Fine engineers data");
+    return response.json();
   }
 };
