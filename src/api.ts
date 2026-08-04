@@ -353,5 +353,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/modal-fine-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Modal Fine engineers data");
     return response.json();
+  },
+  getComputerEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/computer-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Computer engineers data");
+    return response.json();
   }
 };
