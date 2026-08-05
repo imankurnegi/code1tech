@@ -358,5 +358,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/computer-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Computer engineers data");
     return response.json();
+  },
+  getNaturalEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/natural-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Natural engineers data");
+    return response.json();
   }
 };

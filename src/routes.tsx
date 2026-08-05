@@ -51,6 +51,7 @@ import EducationEdTech from "./pages/industries/EducationEdTech";
 import GCP from "./pages/services/tools/GCP";
 import ModelFineTuning from "./pages/services/ai-ml/ModelFineTuning";
 import ComputerVision from "./pages/services/ai-ml/ComputerVision";
+import NLP from "./pages/services/ai-ml/NLP";
 
 const AppRoutes = () => {
   return (
@@ -79,6 +80,7 @@ const AppRoutes = () => {
         <Route path="/services/data-science/big-data-solutions" element={<BigDataSolutions />} />
         <Route path="/services/ai-ml/model-fine-tuning" element={<ModelFineTuning />} />
         <Route path="/services/ai-ml/computer-vision" element={<ComputerVision />} />
+        <Route path="/services/ai-ml/natural-language-processing" element={<NLP />} />
         <Route path="/databricks" element={<Databricks />} />
         <Route path="/snowflake" element={<Snowflake />} />
         <Route path="/aws" element={<AWS />} />
