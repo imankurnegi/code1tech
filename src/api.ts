@@ -368,5 +368,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/strategy-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Strategy engineers data");
     return response.json();
+  },
+  getAgentsEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/agents-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Agents engineers data");
+    return response.json();
   }
 };

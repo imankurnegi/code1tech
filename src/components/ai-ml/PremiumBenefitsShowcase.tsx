@@ -79,6 +79,84 @@ const CardVisual = ({ variant }: { variant: number }) => {
   );
 };
 
+/** Visual for the wide card: continuous AI agent optimization loop. */
+const AutomationLoopVisual = () => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 260 150"
+    className="relative w-full max-w-[320px] h-auto opacity-85 group-hover:opacity-100 transition-opacity duration-500"
+  >
+    <defs>
+      <linearGradient id="agentLoopStroke" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="rgba(95,194,227,0.95)" />
+        <stop offset="100%" stopColor="rgba(0,119,182,0.75)" />
+      </linearGradient>
+    </defs>
+
+    {/* Continuous optimization loop */}
+    <ellipse
+      cx="130"
+      cy="75"
+      rx="88"
+      ry="52"
+      fill="none"
+      stroke="url(#agentLoopStroke)"
+      strokeWidth="1.6"
+      strokeDasharray="6 6"
+    >
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="0 130 75"
+        to="360 130 75"
+        dur="24s"
+        repeatCount="indefinite"
+      />
+    </ellipse>
+
+    {/* Central agent core */}
+    <circle cx="130" cy="75" r="22" fill="rgba(0,119,182,0.20)" stroke="rgba(95,194,227,0.55)" strokeWidth="1.4" />
+    <circle cx="130" cy="75" r="9" fill="rgba(95,194,227,0.35)" stroke="rgba(95,194,227,0.9)" strokeWidth="1.2" />
+    <circle cx="130" cy="75" r="30" fill="none" stroke="rgba(95,194,227,0.18)" strokeWidth="1" />
+
+    {/* Workflow stage nodes around the loop */}
+    {[
+      [130, 23],
+      [212, 62],
+      [186, 122],
+      [74, 122],
+      [48, 62],
+    ].map(([x, y], i) => (
+      <g key={i}>
+        <line x1="130" y1="75" x2={x} y2={y} stroke="rgba(95,194,227,0.28)" strokeWidth="1" />
+        <rect
+          x={x - 11}
+          y={y - 8}
+          width="22"
+          height="16"
+          rx="5"
+          fill="rgba(9,14,26,0.95)"
+          stroke="rgba(95,194,227,0.55)"
+          strokeWidth="1.2"
+        />
+        <circle cx={x} cy={y} r="2.4" fill="rgba(95,194,227,0.95)">
+          <animate
+            attributeName="opacity"
+            values="0.35;1;0.35"
+            dur="3s"
+            begin={`${i * 0.5}s`}
+            repeatCount="indefinite"
+          />
+        </circle>
+      </g>
+    ))}
+
+    {/* Improvement arrow on the loop */}
+    <path d="M214 52 L222 62 L210 66" fill="none" stroke="rgba(95,194,227,0.9)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 /** Visual for the wide card: collaboration / shared MLOps workflow. */
 const CollaborationVisual = () => (
   <svg
@@ -144,7 +222,7 @@ const BenefitCard = ({
   wide?: boolean;
   shown: boolean;
   chips?: string[];
-  wideVisual?: "growth" | "collaboration";
+  wideVisual?: "growth" | "collaboration" | "automation";
 }) => {
   return (
     <article
@@ -199,8 +277,11 @@ const BenefitCard = ({
                   "radial-gradient(circle at 60% 50%, rgba(95,194,227,0.16) 0%, transparent 68%)",
               }}
             />
-            {wideVisual === "collaboration" ? (
+            {wideVisual === "automation" ? (
+              <AutomationLoopVisual />
+            ) : wideVisual === "collaboration" ? (
               <CollaborationVisual />
+
             ) : (
             <svg
               aria-hidden="true"
@@ -274,7 +355,6 @@ const BenefitCard = ({
       )}
     </article>
   );
-
 };
 
 export const PremiumBenefitsShowcase = ({
@@ -296,7 +376,7 @@ export const PremiumBenefitsShowcase = ({
   visible: Record<string, boolean>;
   setRef: (key: string) => (el: HTMLElement | null) => void;
   wideChips?: string[];
-  wideVisual?: "growth" | "collaboration";
+  wideVisual?: "growth" | "collaboration" | "automation";
 }) => {
   const shown = !!visible[sectionId];
   const head = items.slice(0, 6);

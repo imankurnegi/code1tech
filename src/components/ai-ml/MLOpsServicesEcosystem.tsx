@@ -1,7 +1,8 @@
 import { LucideIcon } from "lucide-react";
+import { DynamicIcon } from "@/components/DynamicIcon";
 
 export interface EcosystemService {
-  icon: LucideIcon;
+  icon: LucideIcon | string;
   title: string;
   desc: string;
 }
@@ -9,36 +10,12 @@ export interface EcosystemService {
 interface Props {
   services: EcosystemService[];
   visible?: boolean;
+  lifecycle?: string[];
+  stages?: string[];
+  ariaLabel?: string;
 }
 
-const LIFECYCLE = [
-  "Design",
-  "Data",
-  "Features",
-  "Training",
-  "CI/CD",
-  "Deployment",
-  "Monitoring",
-  "Retraining",
-  "Governance",
-  "Optimization",
-];
 
-/** Stage label per service index (matches the 12 services order). */
-const STAGES = [
-  "Planning & Design",
-  "Data & Features",
-  "Data & Features",
-  "Training & Delivery",
-  "Training & Delivery",
-  "Training & Delivery",
-  "Operations & Scale",
-  "Operations & Scale",
-  "Planning & Design",
-  "Operations & Scale",
-  "Operations & Scale",
-  "Operations & Scale",
-];
 
 /** Minimal abstract micro-illustrations, cycled per card. */
 const MicroVisual = ({ index }: { index: number }) => {
@@ -95,12 +72,13 @@ const ServiceCard = ({
   service,
   index,
   visible,
+  stageLabel,
 }: {
   service: EcosystemService;
   index: number;
   visible: boolean;
+  stageLabel?: string;
 }) => {
-  const Icon = service.icon;
   return (
     <article
       className={`group relative flex h-full flex-col overflow-hidden rounded-[20px] p-5 transition-all duration-500 hover:-translate-y-1 ${
@@ -130,12 +108,14 @@ const ServiceCard = ({
           border: "1px solid rgba(95,194,227,0.28)",
         }}
       >
-        <Icon className="h-5 w-5 text-accent" />
+        <DynamicIcon name={typeof service.icon === 'string' ? service.icon : ''} className="h-5 w-5 text-accent" />
       </div>
 
-      <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.16em] text-accent/60">
-        {STAGES[index] ?? ""}
-      </p>
+      {stageLabel && (
+        <p className="mb-1 text-[10px] font-medium uppercase tracking-[0.16em] text-accent/60">
+          {stageLabel}
+        </p>
+      )}
       <h3 className="mb-2 min-h-[2.6rem] text-[0.95rem] font-semibold leading-snug text-foreground">
         {service.title}
       </h3>
@@ -144,62 +124,68 @@ const ServiceCard = ({
   );
 };
 
-export const MLOpsServicesEcosystem = ({ services, visible = true }: Props) => {
+export const MLOpsServicesEcosystem = ({ services, visible = true, lifecycle, stages, ariaLabel }: Props) => {
+  const lifecycleToUse = lifecycle && lifecycle.length > 0 ? lifecycle : null;
+  const stagesToUse = stages && stages.length > 0 ? stages : null;
+  const ariaLabelToUse = ariaLabel || "";
+
   return (
     <div className="relative mx-auto w-full" style={{ maxWidth: "1450px" }}>
-      {/* Lifecycle strip */}
-      <div className="relative mb-8 overflow-hidden rounded-[22px] px-4 py-5 lg:px-8"
-        style={{
-          background: "linear-gradient(120deg, rgba(10,20,38,0.75) 0%, rgba(6,12,24,0.85) 100%)",
-          border: "1px solid rgba(95,194,227,0.12)",
-        }}
-      >
-        <div
-          className="pointer-events-none absolute inset-0"
+      {/* Lifecycle strip - only show if lifecycle data is provided */}
+      {lifecycleToUse && (
+        <div className="relative mb-8 overflow-hidden rounded-[22px] px-4 py-5 lg:px-8"
           style={{
-            background:
-              "radial-gradient(60% 120% at 50% 50%, rgba(0,120,210,0.22) 0%, transparent 70%)",
+            background: "linear-gradient(120deg, rgba(10,20,38,0.75) 0%, rgba(6,12,24,0.85) 100%)",
+            border: "1px solid rgba(95,194,227,0.12)",
           }}
-          aria-hidden="true"
-        />
-        <ol
-          className="relative z-10 flex items-center gap-0 overflow-x-auto scrollbar-hide"
-          aria-label="Machine learning lifecycle stages"
         >
-          {LIFECYCLE.map((stage, i) => (
-            <li key={stage} className="flex flex-1 min-w-[104px] items-center gap-0">
-              <div className="flex flex-col items-center gap-2">
-                <span
-                  className="relative flex h-3 w-3 items-center justify-center rounded-full"
-                  style={{
-                    background: "hsl(191 65% 62%)",
-                    boxShadow: "0 0 12px rgba(95,194,227,0.8)",
-                  }}
-                  aria-hidden="true"
-                />
-                <span className="whitespace-nowrap text-[11px] font-medium tracking-wide text-muted-foreground">
-                  {stage}
-                </span>
-              </div>
-              {i < LIFECYCLE.length - 1 && (
-                <span
-                  className="mx-2 mb-6 h-px flex-1"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(95,194,227,0.55) 0%, rgba(0,120,210,0.3) 100%)",
-                  }}
-                  aria-hidden="true"
-                />
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(60% 120% at 50% 50%, rgba(0,120,210,0.22) 0%, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
+          <ol
+            className="relative z-10 flex items-center gap-0 overflow-x-auto scrollbar-hide"
+            aria-label={ariaLabelToUse}
+          >
+            {lifecycleToUse.map((stage, i) => (
+              <li key={stage} className="flex flex-1 min-w-[104px] items-center gap-0">
+                <div className="flex flex-col items-center gap-2">
+                  <span
+                    className="relative flex h-3 w-3 items-center justify-center rounded-full"
+                    style={{
+                      background: "hsl(191 65% 62%)",
+                      boxShadow: "0 0 12px rgba(95,194,227,0.8)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <span className="whitespace-nowrap text-[11px] font-medium tracking-wide text-muted-foreground">
+                    {stage}
+                  </span>
+                </div>
+                {i < lifecycleToUse.length - 1 && (
+                  <span
+                    className="mx-2 mb-6 h-px flex-1"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, rgba(95,194,227,0.55) 0%, rgba(0,120,210,0.3) 100%)",
+                    }}
+                    aria-hidden="true"
+                  />
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
 
       {/* Service grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {services.map((s, idx) => (
-          <ServiceCard key={s.title} service={s} index={idx} visible={visible} />
+          <ServiceCard key={s.title} service={s} index={idx} visible={visible} stageLabel={stagesToUse ? stagesToUse[idx] : undefined} />
         ))}
       </div>
     </div>

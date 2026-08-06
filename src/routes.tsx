@@ -53,6 +53,7 @@ import ModelFineTuning from "./pages/services/ai-ml/ModelFineTuning";
 import ComputerVision from "./pages/services/ai-ml/ComputerVision";
 import NLP from "./pages/services/ai-ml/NLP";
 import AIStrategyConsulting from "./pages/services/ai-ml/AIStrategyConsulting";
+import AIAgents from "./pages/services/ai-ml/AIAgents";
 
 const AppRoutes = () => {
   return (
@@ -83,6 +84,7 @@ const AppRoutes = () => {
         <Route path="/services/ai-ml/computer-vision" element={<ComputerVision />} />
         <Route path="/services/ai-ml/natural-language-processing" element={<NLP />} />
         <Route path="/services/ai-ml/ai-strategy-consulting" element={<AIStrategyConsulting />} />
+        <Route path="/services/ai-ml/ai-agents-workflow" element={<AIAgents />} />
         <Route path="/databricks" element={<Databricks />} />
         <Route path="/snowflake" element={<Snowflake />} />
         <Route path="/aws" element={<AWS />} />

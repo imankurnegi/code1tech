@@ -214,6 +214,10 @@ export async function render(url: string) {
               queryKey: ["strategy-engineers"],
               queryFn: api.getStrategyEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["ai-agents-workflow"],
+              queryFn: api.getAgentsEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
