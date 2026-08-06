@@ -1,4 +1,6 @@
+import { addClassToSpan } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
+import { DynamicIcon } from "../DynamicIcon";
 
 export type PremiumBenefitItem = {
   icon: LucideIcon;
@@ -144,7 +146,6 @@ const BenefitCard = ({
   chips?: string[];
   wideVisual?: "growth" | "collaboration";
 }) => {
-  const Icon = item.icon;
   return (
     <article
       aria-label={item.title}
@@ -183,25 +184,11 @@ const BenefitCard = ({
                   border: "1px solid rgba(95,194,227,0.32)",
                 }}
               >
-                <Icon className="w-6 h-6 text-accent" strokeWidth={1.5} aria-hidden="true" />
+                <DynamicIcon name={typeof item.icon === 'string' ? item.icon : ''} className="w-6 h-6 text-accent" />
               </span>
               <h3 className="text-lg font-bold text-foreground leading-snug">{item.title}</h3>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-            <ul className="mt-5 flex flex-wrap gap-2.5" aria-label="Key outcomes">
-              {(chips ?? ["Sustainable Growth", "Better Customer Experience", "Long-Term Value"]).map((chip) => (
-                <li
-                  key={chip}
-                  className="rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-foreground/75"
-                  style={{
-                    background: "rgba(95,194,227,0.07)",
-                    border: "1px solid rgba(95,194,227,0.22)",
-                  }}
-                >
-                  {chip}
-                </li>
-              ))}
-            </ul>
+            <div dangerouslySetInnerHTML={{__html: item.desc}} />
           </div>
 
           <div className="relative flex items-center justify-center min-h-[150px]">
@@ -278,7 +265,7 @@ const BenefitCard = ({
                 border: "1px solid rgba(95,194,227,0.32)",
               }}
             >
-              <Icon className="w-6 h-6 text-accent" strokeWidth={1.5} aria-hidden="true" />
+              <DynamicIcon name={typeof item.icon === 'string' ? item.icon : ''} className="w-6 h-6 text-accent" />
             </span>
             <h3 className="text-lg font-bold text-foreground leading-snug">{item.title}</h3>
           </div>
@@ -340,12 +327,7 @@ export const PremiumBenefitsShowcase = ({
           <h2
             id={`${sectionId}-title`}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4"
-          >
-            {pre && <span>{pre} </span>}
-            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-              {hi}
-            </span>
-          </h2>
+          dangerouslySetInnerHTML={{ __html: addClassToSpan(hi || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
           {sub && (
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mx-auto max-w-[900px]">
               {sub}

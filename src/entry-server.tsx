@@ -210,6 +210,10 @@ export async function render(url: string) {
               queryKey: ["natural-engineers"],
               queryFn: api.getNaturalEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["strategy-engineers"],
+              queryFn: api.getStrategyEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({
