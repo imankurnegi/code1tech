@@ -1,145 +1,138 @@
-import ServicePageLayout from "@/components/ServicePageLayout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Workflow,
-  Rocket,
-  Gauge,
-  Boxes,
-  GitBranch,
-  Database,
-  Layers,
-  RefreshCw,
-  Cog,
-  ServerCog,
-  Activity,
-  ShieldCheck,
-  Lightbulb,
-  Repeat,
-  Timer,
-  DollarSign,
-  Users,
-  Eye,
-  AlertTriangle,
-  Wrench,
-  HeartPulse,
-  Landmark,
-  ShieldAlert,
-  ShoppingBag,
-  Factory,
-  Truck,
-  PhoneCall,
-  Zap,
-  Clapperboard,
-  Cloud,
-  Handshake,
-  LifeBuoy,
-  Target,
-  Settings2,
-  TrendingUp,
-} from "lucide-react";
-import heroImg from "@/assets/core-mlops.jpg";
-import ftWhy1 from "@/assets/mlops/mlops-why-1.jpg";
-import ftWhy2 from "@/assets/mlops/mlops-why-2.jpg";
-import ftWhy3 from "@/assets/mlops/mlops-why-3.jpg";
-import ftWhy4 from "@/assets/mlops/mlops-why-4.jpg";
-import indHealthcareImg from "@/assets/industry-healthcare.jpg";
-import indFinanceImg from "@/assets/industry-finance.jpg";
-import indRetailImg from "@/assets/industry-retail.jpg";
-import indManufacturingImg from "@/assets/industry-manufacturing.jpg";
-import indTechnologyImg from "@/assets/industry-technology.jpg";
-import indLogisticsImg from "@/assets/de-automation-hero.jpg";
-import wubImg1 from "@/assets/finetuning/why/why-1.jpg";
-import wubImg2 from "@/assets/finetuning/why/why-2.jpg";
-import wubImg3 from "@/assets/finetuning/why/why-3.jpg";
-import wubImg4 from "@/assets/finetuning/why/why-4.jpg";
-import wubImg5 from "@/assets/finetuning/why/why-5.jpg";
-import wubImg6 from "@/assets/finetuning/why/why-6.jpg";
-import ChallengeHub from "@/components/finetuning/ChallengeHub";
-import FineTuningIndustryOrbit from "@/components/ai-ml/FineTuningIndustryOrbit";
+import { ArrowRight, GitBranch } from "lucide-react";
 import WhyUsBlueprint from "@/components/WhyUsBlueprint";
-import {
-  useReveal,
-  InlineCTA,
-  WhyMattersSticky,
-  ClosingContact,
-  SectionTitle,
-} from "@/components/ai-ml/AIMLPageSections";
 import { PremiumBenefitsShowcase } from "@/components/ai-ml/PremiumBenefitsShowcase";
 import MLOpsServicesEcosystem from "@/components/ai-ml/MLOpsServicesEcosystem";
+import SeoTags from "@/components/SeoTags";
+import { useInViewMap } from "@/hooks/useInView";
+import { addClassToSpan } from "@/lib/utils";
+import { api } from "@/api";
+import { DynamicIcon } from "@/components/DynamicIcon";
+import ContactUsForm from "@/components/ContactUsForm";
+import { useQuery } from "@tanstack/react-query";
+import ChallengeHub from "@/components/finetuning/ChallengeHub";
+import FineTuningIndustryOrbit from "@/components/ai-ml/FineTuningIndustryOrbit";
 
 
-const whyMatters = [
-  { icon: Workflow, image: ftWhy1, title: "Streamline the Machine Learning Lifecycle", desc: "Disconnected workflows can slow down AI process delivery and add complexity to operations. Machine Learning Pipeline Development automates data ingestion, feature creation, algorithm training and validation, and ML model deployment and monitoring." },
-  { icon: Rocket, image: ftWhy2, title: "Accelerate Model Deployment", desc: "Bringing a model from development to production should not cause any significant problems. Implementing CI/CD for machine learning automates testing, versioning, and deploying ML models, making the release of validated models fast and consistent." },
-  { icon: Gauge, image: ftWhy3, title: "Improve Model Reliability and Performance", desc: "Machine learning models need to be monitored to stay relevant and accurate as data changes. Through model monitoring, it is possible to detect performance issues, trigger retraining, and ensure models produce quality results." },
-  { icon: Boxes, image: ftWhy4, title: "Enable Scalable AI Operations", desc: "As AI initiatives grow, operational complexity increases. Our AI Model Lifecycle Management framework provides consistency across activities, governance, and infrastructure, allowing companies to manage multiple machine learning models together and support enterprise-wide AI operations and future development." },
-];
-
-const services = [
-  { icon: Workflow, title: "ML Pipeline Design and Development", desc: "As part of our Machine Learning Pipeline Development services, we create automated, complex systems that interconnect processes such as data intake, preparation, feature creation, training, evaluation, deployment, and monitoring." },
-  { icon: Database, title: "Data Pipeline Engineering", desc: "We create high-quality data pipelines to automate the processes of gathering, converting, checking, and merging data so that your models can work with the right data formats necessary for correct functioning." },
-  { icon: Layers, title: "Feature Engineering Pipelines", desc: "We engineer automated pipelines that convert raw data into informative features, improve your model's accuracy, minimize manual work, and ensure consistent processes throughout the machine learning cycle." },
-  { icon: Cog, title: "Automating Models’ Training", desc: "By automating model training, we streamline data preparation, hyperparameter tuning, experiment tracking, and model validation, speeding up iterations and improving process reproducibility." },
-  { icon: GitBranch, title: "Machine Learning CI/CD", desc: "New types of Artificial Intelligence solutions need CI/CD processes that correspond to the standards of the software engineering industry. Our CI/CD for machine learning ensures the released product is reliable and ready to operate." },
-  { icon: Rocket, title: "Model Deployment and Service", desc: "Transferring models into operation requires high flexibility, strong reliability, and short response times. We provide trustworthy Model Deployment Services that work easily with your applications and allow real-time and batch inference." },
-  { icon: Activity, title: "Model Monitoring and Observability", desc: "Models in use require constant tracking to work effectively. Our Model Monitoring system tracks prediction performance, data drift, concept drift, and productivity activities, enabling quick prevention of potential failures." },
-  { icon: RefreshCw, title: "Model Retraining and Continuous Learning", desc: "Business data changes constantly, and machine learning models have to change in the same way. We create Continuous Learning systems that allow models to change automatically, test revised models, and implement changes to keep them efficient." },
-  { icon: Lightbulb, title: "MLOps Consulting", desc: "Our MLOps services help companies develop effective practices for automation, management, infrastructure, and process execution. We analyze the existing situation and suggest scalable architectures and implementation approaches to encourage company-wide machine learning." },
-  { icon: ServerCog, title: "Infrastructure Automation", desc: "Reliable infrastructure is vital in building scalable machine learning models. We use cloud-native technologies to automate provisioning, configuration, orchestration, and resource management, creating stable environments and improving deployment speed, efficiency, and infrastructure reliability." },
-  { icon: ShieldCheck, title: "Model Governance and Compliance", desc: "Enterprise AI needs robust governance throughout the entire ML lifecycle. We employ AI Governance frameworks that enable model versioning, auditability, security, compliance, and responsible AI use, ensuring companies maintain transparency and readiness for any regulation." },
-  { icon: Settings2, title: "ML Workflow Optimization", desc: "By enhancing workflow processes, we can improve productivity and reduce operational costs. We review existing ML processes, remove bottlenecks, automate repetitive initiatives, and implement engineering best practices to speed model development and improve collaboration across different teams" },
-];
-
-const challenges = [
-  { icon: Timer, title: "Slow and Complex Model Deployment", desc: "Entering the production stage for systems developed with machine learning requires manual work and complicated processes. Our Model deployment services address this by automating deployment processes to reduce deployment time." },
-  { icon: Cog, title: "Manual Machine Learning Workflows", desc: "Preparing data manually, training the model, and validating results can take a lot of effort from engineers. With ML Workflow Automation, we automate repetitive tasks, establish uniform specifications, and develop coordinated workflows, giving freedom to focus on building important AI products." },
-  { icon: Database, title: "Inconsistent Data Pipelines", desc: "Any machine learning model is no more reliable than the data that is used for its training. Our Data Pipeline Engineering services help us develop automated, certified, and scalable data pipelines to assure the reliability of data flow used for training, testing, and production." },
-  { icon: AlertTriangle, title: "Model Performance Degradation", desc: "Previously trained models can lose their efficiency over time. With Model Monitoring and Drift Detection services, we analyze model performance on an ongoing basis, identify symptoms of drift, and start retraining accordingly." },
-  { icon: Eye, title: "Limited Visibility into Model Health", desc: "Performance issues typically go unnoticed until they impact business operations. We deploy observability frameworks designed to measure prediction accuracy, latency, resource utilization, and operational metrics, resulting in useful insights for services to mitigate the problem." },
-  { icon: Boxes, title: "Scaling Machine Learning Across the Enterprise", desc: "As the implementation of AI in enterprises grows, coordinating models, teams, and environments becomes more challenging. Our approach to AI Model Lifecycle Management standardizes governance, automation, and deployment processes, allowing organizations to successfully scale their machine learning systems." },
-  { icon: ShieldCheck, title: "Governance, Security, and Compliance Challenges", desc: "Succeeding with enterprise AI systems requires transparency and accountability, as well as regulatory compliance. We use an AI Governance framework that provides model versioning, audit trail creation, and secure access policies, helping ensure compliance and transparency for machine learning solutions." },
-  { icon: Wrench, title: "Managing Infrastructure Complexity", desc: "To support machine learning in production, it is crucial to have reliable infrastructure and effective resource management. For this reason, we build fully automated, cloud-native infrastructure that makes resources easier to operate and use more efficiently." },
-];
-
-const industries = [
-  { icon: HeartPulse, title: "Healthcare", tag: "Life Sciences", image: indHealthcareImg, intro: "Healthcare companies need accurate, scalable AI systems to improve clinical decision-making and enhance operational performance. We develop secure, internet-ready ML pipelines that automate the deployment, monitoring, and retraining of models." },
-  { icon: Landmark, title: "Banking and Financial Services", tag: "BFSI", image: indFinanceImg, intro: "Financial service companies require machine learning solutions that are secure, explainable, and scalable. Our Machine Learning Pipeline Development services simplify fraud detection, risk modeling, customer analytics, and compliance processes through automated MLOps practices." },
-  { icon: ShieldAlert, title: "Insurance", tag: "InsurTech", image: indFinanceImg, intro: "Every day, insurance companies deal with enormous amounts of claims, policies, and other customer data. Our team offers Data Pipeline Engineering and automated ML workflows that make underwriting more precise, speed up claims processing, and improve fraud detection and customer service." },
-  { icon: ShoppingBag, title: "Retail and eCommerce", tag: "Commerce", image: indRetailImg, intro: "The retail industry relies on up-to-date information to enhance consumer satisfaction and ensure operational efficiency. We develop flexible ML systems for recommendation engines, demand prediction, inventory management, pricing strategies, and personalized shopping experiences across digital platforms." },
-  { icon: Factory, title: "Manufacturing", tag: "Industry 4.0", image: indManufacturingImg, intro: "The manufacturing industry applies machine learning technologies to improve product quality, productivity, and operational resilience. Our MLOps systems allow us to automate predictive maintenance, manufacturing analytics, quality inspection processes, and monitoring of prediction models." },
-  { icon: Truck, title: "Logistics and Supply Chain", tag: "Logistics", image: indLogisticsImg, intro: "The supply chain generates dynamic data and requires continuous improvement of operational processes. Our ML systems automate numerous processes such as demand prediction, route optimization, warehouse data analysis, and delivery tracking." },
-  { icon: PhoneCall, title: "Telecommunications", tag: "Telecom", image: indTechnologyImg, intro: "The telecommunications industry needs AI capabilities that can handle huge volumes of real-time data. Our systems are designed to enable reliable operations for telecommunications companies by implementing ML for network optimization, maintenance prediction, customer experience analytics, and effective service management." },
-  { icon: Zap, title: "Energy and Utilities", tag: "Energy", image: indManufacturingImg, intro: "Energy companies deploy different machine learning technologies for infrastructure optimization, demand modeling, and improved asset reliability. Our AI Model Lifecycle Management process keeps all models updated and running through regular check-ups and automated learning across key operational processes." },
-  { icon: Clapperboard, title: "Media and Entertainment", tag: "Media", image: indRetailImg, intro: "Organizations operating in the media business use machine learning technologies to adapt personalized content for audiences and track their behavior. We offer automated ML pipelines and models that improve content personalization, audience segmentation, and advertising on social media." },
-  { icon: Cloud, title: "Technology and SaaS", tag: "SaaS", image: indTechnologyImg, intro: "In the technology sector, it is critical to run a large number of experiments without disrupting production. Our MLOps Services offer the automation needed to speed up AI development and ensure optimal functionality." },
-];
-
-const benefits = [
-  { icon: Rocket, title: "Accelerate Time-to-Production", desc: "Without automation, deploying ML solutions takes a lot of time. The ML pipeline development method automates model training and deployment, making the process fast while maintaining quality." },
-  { icon: Gauge, title: "Improve Model Reliability", desc: "Tracking and automated validation, along with optimizing model performance, ensure the necessary responsiveness and accuracy, supported by the continuous nature of our services." },
-  { icon: Workflow, title: "Enhance Operational Efficiency", desc: "Automated ML workflows eliminate repetitive engineering activities, increasing productivity, reducing development delays, and allowing teams to focus on innovation rather than manual tasks." },
-  { icon: ShieldCheck, title: "Reduce Deployment Risks", desc: "Deploying requires proper validation and a controlled release process. Our solution, based on the principles of CI/CD for Machine Learning, helps minimize deployment failures and improve system reliability." },
-  { icon: DollarSign, title: "Optimize Infrastructure Costs", desc: "Automated selection of computational resources, provision of needed infrastructure, and effective architecture enable optimized operational and infrastructure costs." },
-  { icon: TrendingUp, title: "Scale AI with Confidence", desc: "As the number of machine learning projects increases, organizations need to implement standardized processes and reliable infrastructure. Our AI Model Lifecycle Management method makes it easy." },
-  { icon: Users, title: "Strengthen Team Collaboration", desc: "Effective MLOps brings data science, data engineering, and operations together through shared processes and automation. We set up collaboration to enhance communication, accelerate delivery, and manage machine learning models." },
-];
-
-const whyChoose = [
-  { icon: Boxes, image: wubImg1, title: "End-to-End MLOps Expertise", desc: "From data pipeline engineering and model training to deployment, monitoring, and lifecycle management, our MLOps Services cover all aspects of machine learning operations, allowing clients to deploy reliable, scalable, production-ready AI solutions that generate profits." },
-  { icon: Target, image: wubImg2, title: "Business-Driven Engineering Approach", desc: "Every MLOps solution is aligned with clients' objectives, workflows, and development strategies. We devise automated machine learning pipelines to streamline operations, accelerate innovation, reduce complexity, and achieve objectives." },
-  { icon: Cloud, image: wubImg3, title: "Cloud-Native and Scalable Architectures", desc: "Our engineers create cloud-native ML architectures that ensure high availability while optimizing resources. The ML systems function well regardless of being deployed on AWS, Azure, or Google Cloud." },
-  { icon: ShieldCheck, image: wubImg4, title: "Secure and Governed ML Pipelines", desc: "Our machine learning processes are characterized by security, governance, and compliance. We use AI Governance procedures, security measures, model logging, change tracking, and the proper application of AI technologies to protect data and ensure operational transparency." },
-  { icon: Handshake, image: wubImg5, title: "Collaborative Delivery and Transparency", desc: "Effective AI solutions cannot be achieved without interaction and good communication between us and the other side. Our staff cooperates with your representatives, keeping them abreast of the developments and offering technical support." },
-  { icon: LifeBuoy, image: wubImg6, title: "Continuous Optimization and Long-Term Support", desc: "Changing business needs and data usage patterns require constant improvements in machine learning systems. We provide constant supervision, fine-tuning, improvement, and overall management of AI technologies to keep them efficient." },
-];
+const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; btn: string, btnUrl?:string }) => (
+  <div style={{ background: "#070B12" }} className="py-6">
+    <div className="container mx-auto px-4 lg:px-8">
+      <div
+        className="relative rounded-2xl overflow-hidden flex flex-col sm:flex-row items-center gap-6 px-4 sm:px-8 py-7"
+        style={{
+          background: "linear-gradient(110deg, #0E1525 0%, #0B1220 40%, #12102A 70%, #0E1525 100%)",
+          border: "1px solid rgba(148,163,184,0.15)",
+          boxShadow: "0 4px 32px rgba(0,0,0,0.6)",
+        }}
+      >
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute" style={{ top: "-30%", right: "18%", width: "340px", height: "340px", background: "radial-gradient(ellipse at center, rgba(120,60,220,0.28) 0%, transparent 70%)", transform: "rotate(-30deg) scale(1.4)", filter: "blur(24px)" }} />
+          <div className="absolute" style={{ bottom: "-20%", right: "30%", width: "200px", height: "200px", background: "radial-gradient(ellipse at center, rgba(56,189,248,0.18) 0%, transparent 70%)", filter: "blur(20px)" }} />
+          <div className="absolute" style={{ top: "-60%", right: "10%", width: "420px", height: "280px", background: "transparent", border: "1.5px solid rgba(140,80,220,0.25)", borderRadius: "50%", transform: "rotate(-20deg)" }} />
+          <div className="absolute" style={{ bottom: "-70%", right: "22%", width: "380px", height: "260px", background: "transparent", border: "1.5px solid rgba(56,189,248,0.15)", borderRadius: "50%", transform: "rotate(15deg)" }} />
+        </div>
+        <div className="flex-1 relative z-10">
+          <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{title}</h3>
+          <p className="text-muted-foreground text-sm mt-1">{sub}</p>
+        </div>
+        <Link to={btnUrl || ""} className="flex-shrink-0 relative z-10">
+          <Button variant="hero" size="xl" className="group w-full sm:w-auto text-sm sm:text-base shadow-[0_8px_32px_-8px_rgba(95,194,227,0.55)]">
+            {btn}
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+          </Button>
+        </Link>
+      </div>
+    </div>
+  </div>
+);
 
 const MLOps = () => {
-  const { visible, setRef } = useReveal();
+  const { inViewMap, setRef } = useInViewMap({ threshold: 0.12, once: true });
+
+  const { data, isLoading, error } = useQuery({
+      queryKey: ["mlops-engineers"],
+      queryFn: api.getMLOpsEngineers,
+    });
+
+  if (isLoading) return null;
+  if (error) return null;
+
+  const pageData = data?.data;
+
+  // ─── DATA EXTRACTION FROM JSON ────────────────────────────────────────────────
+  const heroBanner = pageData?.ai_ml_banner_section || {};
+  const cta_section_70 = pageData?.data_engineers_security_brief_cta;
+  const cta_section_111 = pageData?.on_demand_cta;
+  const cta_section_113 = pageData?.cta_section_104;
+  const cta_section_106 = pageData?.cta_section_106;
+  const cta_section_322 = pageData?.cta_section_322;
+  const cta_section_320 = pageData?.cta_section_320;
+  const whyMattersSection = pageData?.section_below_banner || {};
+  const servicesSection = pageData?.our_ai_model_fine_tuning_services || {};
+  const challengesSection = pageData?.ai_challenges_section || {};
+  const whyChooseSection = pageData?.ai_why_what_code1tech_section || {};
+  const contactSection = pageData?.services_get_started_section || {};
+  const businessOutcomesSection = pageData?.business_outcomes_you_can_expect_from_industrial_computer_vision_solutions || {};
+  const industriesSection = pageData?.ai_industries_section || {};
+  const seoSection = pageData?.seo || {};
+  const schemaSection = pageData?.schema || {};
+
+  const whyMatters = whyMattersSection?.cards?.map((card: any) => ({
+    icon: card.icon,
+    title: card.title,
+    desc: card.content,
+    image: card.image?.url || "",
+  })) || [];
+
+  const services = servicesSection?.cards?.map((card: any) => ({
+    icon: card.icon,
+    title: card.title,
+    desc: card.content,
+    topText: card.top_text || "",
+    image: card.image || "",
+  })) || [];
+
+  const serviceStages = servicesSection?.cards?.map((card: any) => card.top_text || "") || [];
+  const agentLifecycle = servicesSection?.icons_line?.map((item: any) => item.label || "") || [];
+
+  const challenges = challengesSection?.cards?.map((card: any) => ({
+    icon: card.icon,
+    title: card.title,
+    desc: card.content,
+  })) || [];
+
+  const whyChoose = whyChooseSection?.tabs?.map((tab: any) => ({
+    icon: tab.icon,
+    title: tab.title,
+    desc: tab.content,
+    image: tab.image?.url || "",
+    bottomText: tab.bottom_text || "",
+  })) || [];
+
+  const businessOutcomes = businessOutcomesSection?.cards?.map((card: any) => ({
+    icon: card.icon,
+    title: card.title,
+    desc: card.content,
+    bottomIcon: card.bottom_icon || "",
+  })) || [];
+
+  const industries = industriesSection?.tabs?.map((tab: any) => ({
+    icon: tab.icon || "",
+    title: tab.title || "",
+    tag: tab.top_label || "",
+    image: tab.image?.url || "",
+    intro: tab.content || "",
+  })) || [];
 
   return (
-    <ServicePageLayout>
+    <>
+      <SeoTags
+        title={seoSection?.title}
+        description={seoSection?.description}
+        ogImage={seoSection?.og_image}
+        schema={schemaSection}
+      />
       {/* HERO */}
       <section
         ref={setRef("hero")}
@@ -152,9 +145,9 @@ const MLOps = () => {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-6 lg:pt-10">
           <div className="grid lg:grid-cols-[5fr_6fr] gap-8 lg:gap-12 items-center">
-            <div className={`relative transition-all duration-700 ease-out ${visible.hero ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
+            <div className={`relative transition-all duration-700 ease-out ${inViewMap.hero ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}>
               <div className="relative rounded-2xl overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(95,194,227,0.08)" }}>
-                <img src={heroImg} alt="ML pipeline engineering and MLOps automation" className="w-full h-[300px] sm:h-[360px] lg:h-[420px] object-cover" loading="eager" fetchPriority="high" width={1280} height={960} />
+                <img src={heroBanner.image?.url || ""} alt={heroBanner.image?.alt || ""} className="w-full h-[300px] sm:h-[360px] lg:h-[420px] object-cover" loading="eager" width={heroBanner.image?.width || 1280} height={heroBanner.image?.height || 960} />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5" />
               </div>
@@ -162,20 +155,17 @@ const MLOps = () => {
               <div className="absolute -bottom-2 -right-2 w-16 h-16 border-b-2 border-r-2 border-accent/30 rounded-br-2xl hidden sm:block" style={{ animation: "pulse 3s ease-in-out infinite", animationDelay: "1.5s" }} />
             </div>
 
-            <div className={`transition-all duration-1000 ease-out delay-150 ${visible.hero ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
-              <Link to="/services/ai-ml-solutions" className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 text-xs sm:text-sm font-medium text-accent bg-accent/10 rounded-full border border-accent/20 hover:bg-accent/20 transition-colors">
-                ← AI / ML
+            <div className={`transition-all duration-1000 ease-out delay-150 ${inViewMap.hero ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
+              <Link to={heroBanner.top_link || ""} className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 text-xs sm:text-sm font-medium text-accent bg-accent/10 rounded-full border border-accent/20 hover:bg-accent/20 transition-colors">
+                ← {heroBanner.top_text || ""}
               </Link>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5 text-left">
-                <span className="text-foreground">ML Pipeline Engineering & MLOps Services for </span>
-                <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Production-Ready AI</span>
-              </h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5 text-left" dangerouslySetInnerHTML={{ __html: addClassToSpan(heroBanner.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
               <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 text-left">
-                <p>Building an AI model is just the first step. To create real business value, machines must be used consistently, and for that, processes must be managed effectively and monitored constantly. Code1 Tech Systems offers ML Pipeline Engineering &amp; MLOps Services to help automate machine learning lifecycle management, deploy algorithms in production, and maintain high-quality AI systems.</p>
+                <p>{heroBanner.paragraph || ""}</p>
               </div>
-              <Link to="/contact">
+              <Link to={heroBanner.button_consultation_url || ""}>
                 <Button size="lg" className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300">
-                  Talk to Our MLOps Experts
+                  {heroBanner.button_consultation_text || ""}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
                 </Button>
               </Link>
@@ -184,20 +174,68 @@ const MLOps = () => {
         </div>
       </section>
 
-      <WhyMattersSticky
-        sectionId="why-matters"
-        pre="Why ML Pipeline Engineering &"
-        hi="MLOps Matter"
-        sub="Deploying ML models in the absence of formal operational methodology often results in delays, inconsistencies, and growing costs. MLOps Services establishes automated, scalable workflows that keep AI systems efficient, reliable, and production-ready."
-        items={whyMatters}
-        visible={visible}
-        setRef={setRef}
-      />
+      {/* ======= WHY IT MATTERS ======= */}
+      <section
+        ref={setRef("why-matters")}
+        className="relative py-10 lg:py-14"
+        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 7%) 50%, hsl(222 47% 5%) 100%)" }}
+      >
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(whyMattersSection.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <p className="text-muted-foreground text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">{whyMattersSection.paragraph || ""}</p>
+          </div>
+          <div className="relative space-y-6 lg:space-y-8">
+            {whyMatters.map((g, i) => {
+              const reverse = i % 2 === 1;
+              const isVisible = !!inViewMap["why-matters"];
+              const top = 6 + i * 0.75;
+              return (
+                <div
+                  key={i}
+                  className={`relative lg:sticky grid lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden transition-all duration-700 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  }`}
+                  style={{
+                    background: "hsl(222 47% 6%)",
+                    boxShadow: "0 20px 60px -20px rgba(0,0,0,0.6)",
+                    border: "1px solid rgba(148,163,184,0.14)",
+                    transitionDelay: `${i * 90}ms`,
+                    top: `${top}rem`,
+                  }}
+                >
+                  {/* Image */}
+                  <div className={`relative min-h-[240px] lg:min-h-[300px] ${reverse ? "lg:order-2" : ""}`}>
+                    <img
+                      src={g.image}
+                      alt={g.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                  </div>
+
+                  {/* Content */}
+                  <div className={`flex flex-col justify-center p-6 lg:p-10 ${reverse ? "lg:order-1" : ""}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: "rgba(95,194,227,0.1)", border: "1px solid rgba(95,194,227,0.25)" }}>
+                        <DynamicIcon name={g.icon} className="w-6 h-6 text-accent" />
+                      </div>
+                      <h3 className="text-xl lg:text-2xl font-bold text-foreground">{g.title}</h3>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">{g.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       <InlineCTA
-        title="Ready to operationalize machine learning with scalable, automated pipelines?"
-        sub="Partner with our engineers to automate your ML lifecycle end to end."
-        btn="Build Your MLOps Strategy"
+        title={cta_section_70?.heading || ""}
+        sub={cta_section_70?.content || ""}
+        btn={cta_section_70?.cta_text || ""}
+        btnUrl={cta_section_70?.cta_url || ""}
       />
 
       <section
@@ -206,20 +244,25 @@ const MLOps = () => {
         style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <SectionTitle
-            pre="Our ML Pipeline Engineering &"
-            hi="MLOps Services"
-            sub="Establishing a good machine learning solution is more than just making advanced models. We offer ML Engineering & MLOps Services that automate, standardize, and optimize all processes related to the machine learning lifecycle so models can be deployed faster, operate more reliably, and scale."
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicesSection.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <p className="text-muted-foreground text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">{servicesSection.paragraph || ""}</p>
+          </div>
+          <MLOpsServicesEcosystem
+            services={services}
+            visible={inViewMap.services}
+            lifecycle={agentLifecycle}
+            stages={serviceStages}
+            ariaLabel="MLOps services lifecycle stages"
           />
-          <MLOpsServicesEcosystem services={services} visible={visible.services} />
-
         </div>
       </section>
 
       <InlineCTA
-        title="Looking to build reliable ML pipelines that scale with your business?"
-        sub="Our engineers design automated pipelines built for production."
-        btn="Consult Our MLOps Engineers"
+        title={cta_section_111?.heading || ""}
+        sub={cta_section_111?.content || ""}
+        btn={cta_section_111?.cta_text || ""}
+        btnUrl={cta_section_111?.cta_url || ""}
       />
 
       <section
@@ -228,11 +271,10 @@ const MLOps = () => {
         style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <SectionTitle
-            pre="Business"
-            hi="Challenges We Solve"
-            sub="Many organizations have developed promising systems using machine learning technologies but face difficulties ensuring their operation is feasible at scale. Our ML pipeline engineering & operations services solve problems related to operational feasibility by automating workflows and ensuring models perform correctly during execution/service life."
-          />
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(challengesSection.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <p className="text-muted-foreground text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">{challengesSection.paragraph || ""}</p>
+          </div>
           <ChallengeHub
             items={challenges}
             centerIcon={GitBranch}
@@ -249,48 +291,61 @@ const MLOps = () => {
       </section>
 
       <InlineCTA
-        title="Ready to overcome operational challenges and scale machine learning with confidence?"
-        sub="Bring us your toughest ML operations blocker and we'll clear the path."
-        btn="Talk to Our MLOps Experts"
+        title={cta_section_113?.heading || ""}
+        sub={cta_section_113?.paragraph || ""}
+        btn={cta_section_113?.button_text || ""}
+        btnUrl={cta_section_113?.button_url || ""}
       />
 
-      <section
-        ref={setRef("industries")}
-        className="relative py-10 lg:py-14 overflow-hidden"
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 100%)" }}
-      >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <SectionTitle
-            pre="Industries"
-            hi="We Serve"
-            sub="The adoption of machine learning differs from industry to industry, given that specific engineering practices and scalable operational structures have to be made. To help businesses build robust machine learning infrastructure, we offer our ML Pipeline Engineering & MLOps Services."
-          />
-          <FineTuningIndustryOrbit items={industries} />
-        </div>
-      </section>
+      {industriesSection && industries.length > 0 && (
+        <section
+          ref={setRef("industries")}
+          className="relative py-10 lg:py-14 overflow-hidden"
+          style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 100%)" }}
+        >
+          <div className="container mx-auto px-4 lg:px-8 relative z-10">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(industriesSection.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <p className="text-muted-foreground text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">{industriesSection.paragraph || ""}</p>
+            </div>
+            <FineTuningIndustryOrbit
+              items={industries.map((ind) => ({
+                icon: typeof ind.icon === 'string' ? ind.icon : '',
+                title: ind.title,
+                tag: ind.tag,
+                image: ind.image,
+                intro: ind.intro,
+              }))}
+            />
+          </div>
+        </section>
+      )}
 
-      <InlineCTA
-        title="Looking for ML pipelines designed around your industry's unique operational needs?"
-        sub="Our industry specialists tailor MLOps to your workflows and outcomes."
-        btn="Discuss Your MLOps Requirements"
-      />
+      {cta_section_106 && (
+        <InlineCTA
+          title={cta_section_106?.heading || ""}
+          sub={cta_section_106?.paragraph || ""}
+          btn={cta_section_106?.button_text || ""}
+          btnUrl={cta_section_106?.button_url || ""}
+        />
+      )}
 
       <PremiumBenefitsShowcase
         sectionId="benefits"
-        pre="Business Benefits of"
-        hi="ML Pipeline Engineering & MLOps"
-        sub="Proper MLOps implementation can turn machine learning processes from isolated trial-and-error experiments into scalable business operations. Standardization and automation of processes lead to faster innovation and improved operational efficiency, giving businesses the highest possible returns on investment in artificial intelligence."
-        items={benefits}
-        visible={visible}
+        pre={businessOutcomesSection.heading || ""}
+        hi={businessOutcomesSection.heading || ""}
+        sub={businessOutcomesSection.paragraph || ""}
+        items={businessOutcomes}
+        visible={inViewMap}
         setRef={setRef}
         wideVisual="collaboration"
-        wideChips={["Shared Processes", "Automated Workflows", "Faster Delivery"]}
       />
 
       <InlineCTA
-        title="Ready to transform machine learning into a scalable business advantage?"
-        sub="Turn experiments into reliable, automated production systems."
-        btn="Unlock the Value of MLOps"
+        title={cta_section_320?.heading || ""}
+        sub={cta_section_320?.paragraph || ""}
+        btn={cta_section_320?.button_text || ""}
+        btnUrl={cta_section_320?.button_url || ""}
       />
 
       <section
@@ -299,46 +354,74 @@ const MLOps = () => {
         style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 100%)" }}
       >
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <SectionTitle
-            pre="Why Choose"
-            hi="Code1 Tech Systems"
-            sub="Producing machine learning systems ready for production entails more than just technical skills. Code1 Tech Systems brings together engineering know-how, cloud-native architectures, and years of experience in ML Pipeline Engineering & MLOps Services to help organizations implement AI solutions successfully and achieve business results."
-          />
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(whyChooseSection.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+            <p className="text-muted-foreground text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">{whyChooseSection.paragraph || ""}</p>
+          </div>
           <WhyUsBlueprint
             items={whyChoose}
             centerIcon={GitBranch}
             centerLabel="CODE1 MLOPS"
             centerTagline="Pipelines to Production"
-            lifecycleLabel="ML LIFECYCLE"
+            lifecycleLabel={whyChoose[0]?.bottomText}
             ariaLabel="ML pipeline engineering and MLOps capabilities"
           />
         </div>
       </section>
 
       <InlineCTA
-        title="Looking for an experienced MLOps partner to scale your AI operations?"
-        sub="Work with engineers who ship production-ready machine learning."
-        btn="Partner with Code1 Tech Systems"
+        title={cta_section_322?.heading || ""}
+        sub={cta_section_322?.paragraph || ""}
+        btn={cta_section_322?.button_text || ""}
+        btnUrl={cta_section_322?.button_url || ""}
       />
 
-      <ClosingContact
-        sectionId="contact"
-        heading="Ready to Operationalize"
-        hi="Machine Learning"
-        tail="with Confidence?"
-        para="Building a machine learning model is only the first step. Creating lasting business value requires reliable processes. To generate sustainable business value, consistent processes, automated workflows, and continual improvement are necessary. With Code1 Tech System's ML pipeline engineering services, customers gain a dependable engineering partner that ensures the successful introduction, operation, and expansion of their AI systems."
-        bullets={[
-          "Automated, end-to-end machine learning pipelines",
-          "CI/CD, deployment, monitoring, and continuous retraining",
-          "Cloud-native infrastructure automation and scalability",
-          "Governance, security, and compliance across the ML lifecycle",
-        ]}
-        serviceName="ML Pipeline Engineering & MLOps"
-        btn="Start Your MLOps Journey"
-        visible={visible}
-        setRef={setRef}
-      />
-    </ServicePageLayout>
+      {/* ======= CLOSING CTA + CONTACT ======= */}
+      <section
+        ref={setRef("contact")}
+        className="relative py-10 lg:py-14 overflow-hidden"
+        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 6%) 100%)" }}
+      >
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+            <div
+              className={`transition-all duration-700 ${
+                inViewMap.contact ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
+              }`}
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(contactSection?.heading || "", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-6">
+                {contactSection?.paragraph || ""}
+              </p>
+              <ul className="space-y-3 mb-6">
+                {contactSection.lists?.map((list: any, index: number) => (
+                  <li key={index} className="flex items-start gap-3 text-sm text-foreground/85">
+                    <DynamicIcon name="lucide-check-circle" className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span>{list.list || ""}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link to={contactSection.buttons?.[0]?.cta_url || ""}>
+                <Button
+                  size="lg"
+                  className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
+                >
+                  {contactSection.buttons?.[0]?.cta_text || ""}
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                </Button>
+              </Link>
+            </div>
+            <div
+              className={`transition-all duration-700 delay-150 ${
+                inViewMap.contact ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"
+              }`}
+            >
+              <ContactUsForm />
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

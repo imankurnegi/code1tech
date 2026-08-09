@@ -218,6 +218,10 @@ export async function render(url: string) {
               queryKey: ["ai-agents-workflow"],
               queryFn: api.getAgentsEngineers,
             }),
+            queryClient.prefetchQuery({
+              queryKey: ["mlops-engineers"],
+              queryFn: api.getMLOpsEngineers,
+            }),
 
         // Engineer as a Service page
         queryClient.prefetchQuery({

@@ -373,5 +373,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/agents-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Agents engineers data");
     return response.json();
+  },
+  getMLOpsEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/mlops-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch MLOps engineers data");
+    return response.json();
   }
 };
