@@ -13,6 +13,8 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl?: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -231,8 +233,8 @@ const {
     };
   }, [services]);
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   return (
     <>

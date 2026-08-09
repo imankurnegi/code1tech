@@ -16,6 +16,8 @@ import { api } from "@/api";
 import SeoTags from "@/components/SeoTags";
 import WhyUsBlueprint from "@/components/WhyUsBlueprint";
 import ContactUsForm from "@/components/ContactUsForm";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const cardBase =
   "rounded-2xl p-6 transition-all duration-500 hover:border-accent/30 hover:-translate-y-1";
@@ -95,8 +97,8 @@ const ModelFineTuning = () => {
       queryKey: ["modal-fine-engineers"],
       queryFn: api.getModalFineEngineers,
     });
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

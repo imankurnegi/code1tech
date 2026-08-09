@@ -10,6 +10,8 @@ import SeoTags from "@/components/SeoTags";
 import { useInViewMap } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl: string }) => (
@@ -177,8 +179,8 @@ const Azure = () => {
     if (Math.abs(diff) > 40) diff > 0 ? goServiceNext() : goServicePrev();
   };
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   return (
     <>

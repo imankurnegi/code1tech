@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { useInView } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const Contact = () => {
   const { ref: heroRef, inView: isHeroVisible } = useInView<HTMLElement>();
@@ -32,8 +34,8 @@ const Contact = () => {
     },
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const contact = data?.contactData?.data;
   const clientLogosData = data?.clientLogos?.data ?? [];

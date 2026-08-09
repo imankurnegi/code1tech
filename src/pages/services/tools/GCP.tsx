@@ -1159,6 +1159,8 @@ import SeoTags from "@/components/SeoTags";
 import ContactUsForm from "@/components/ContactUsForm";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 type WhyChooseItem = { icon: string | LucideIcon; image: string; title: string; desc: string };
 
@@ -1839,8 +1841,8 @@ const GCP = () => {
       queryKey: ["gcp-engineers"],
       queryFn: api.getGCPEngineers,
     });
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

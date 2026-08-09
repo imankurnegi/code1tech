@@ -10,6 +10,8 @@ import SeoTags from "@/components/SeoTags";
 import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 // Helper function to generate random vibrant colors
@@ -138,8 +140,8 @@ const { data, isLoading, error } = useQuery({
     };
   }, [pageData]);
 
-   if (isLoading) return null;
-  if (error) return null;
+   if (isLoading) return <LoadingSkeleton type="hero" />;
+     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   // ── DATA ─────────────────────────────────────────────────────────────────
   const heroBanner = pageData?.tools_main_banner;

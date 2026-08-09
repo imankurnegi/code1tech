@@ -8,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import SeoTags from "@/components/SeoTags";
 import ContactUsForm from "@/components/ContactUsForm";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 const CTABanner = ({ text, buttonText, linkUrl }: { text: string; buttonText: string; linkUrl?: string }) => (
@@ -346,8 +348,8 @@ const RealEstate = () => {
       queryFn: api.getRealEstateEngineers,
     });
 
-    if (isLoading) return null;
-    if (error) return null;
+    if (isLoading) return <LoadingSkeleton type="hero" />;
+      if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

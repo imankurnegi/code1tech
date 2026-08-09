@@ -18,6 +18,8 @@ import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -574,8 +576,8 @@ const DataScience = () => {
     },
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.serviceData?.data ?? null;
 

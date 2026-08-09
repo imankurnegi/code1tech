@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import careersHero from "@/assets/careers-hero.jpg";
 import SeoTags from "@/components/SeoTags";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 const JobDetail = () => {
   const { id: jobSlug } = useParams<{ id: string }>();
@@ -52,34 +53,7 @@ const JobDetail = () => {
 
   if (isLoading) {
     return (
-      <>
-        <SeoTags
-          title={(jobsResponse as any)?.data?.seo?.title}
-          description={(jobsResponse as any)?.data?.seo?.description}
-          ogImage={(jobsResponse as any)?.data?.seo?.og_image}
-          schema={(jobsResponse as any)?.data?.schema}
-        />
-        <div className="min-h-screen bg-background">
-          <div className="pt-24 pb-20">
-            <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
-              <div className="animate-pulse space-y-6">
-                <div className="h-8 bg-muted rounded w-1/3" />
-                <div className="h-6 bg-muted rounded w-1/4" />
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-                  <div className="lg:col-span-1 space-y-4">
-                    <div className="h-48 bg-muted rounded-2xl" />
-                  </div>
-                  <div className="lg:col-span-2 space-y-4">
-                    <div className="h-6 bg-muted rounded w-full" />
-                    <div className="h-6 bg-muted rounded w-5/6" />
-                    <div className="h-6 bg-muted rounded w-4/6" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
+      <LoadingSkeleton type="hero" />
     );
   }
 

@@ -17,6 +17,8 @@ import SeoTags from "@/components/SeoTags";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { addClassToSpan } from "@/lib/utils";
 import { useInViewMap } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 const cardBase =
@@ -76,8 +78,8 @@ const DataOpsPipelineAutomation = () => {
       queryFn: api.getDataOpsEngineers,
     });
   
-    if (isLoading) return null;
-    if (error) return null;
+    if (isLoading) return <LoadingSkeleton type="hero" />;
+      if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
   
     const pageData = data?.data;
 

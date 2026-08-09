@@ -13,6 +13,8 @@ import {
   Code, Database, Brain, BarChart3, Cloud, Rocket, Building2
 } from "lucide-react";
 import SeoTags from "@/components/SeoTags";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const Careers = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -24,15 +26,18 @@ const Careers = () => {
     setHeroVisible(true);
   }, []);
 
-  const { data: careersResponse } = useQuery({
+  const { data: careersResponse, isLoading: careersLoading, error: careersError } = useQuery({
     queryKey: ["careers-page"],
     queryFn: api.getCareersData,
   });
 
-  const { data: jobsResponse, isLoading } = useQuery({
+  const { data: jobsResponse, isLoading: jobsLoading, error: jobsError } = useQuery({
     queryKey: ["job-listings"],
     queryFn: api.getAllJobs,
   });
+
+if (careersLoading || jobsLoading) return <LoadingSkeleton type="hero" />;
+  if (careersError || jobsError) return <ErrorFallback error={(careersError || jobsError) as Error} onRetry={() => window.location.reload()} />;
 
   const careersData = careersResponse?.data?.careers_data;
   const careersSeo = careersResponse?.data?.seo;
@@ -377,18 +382,7 @@ const Careers = () => {
           </div>
 
           <div className="max-w-4xl 2xl:max-w-5xl mx-auto space-y-3">
-            {isLoading ? (
-              Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="bg-[rgba(255,255,255,0.03)] border border-border/40 rounded-xl animate-pulse p-6">
-                  <div className="h-5 bg-muted/30 rounded w-2/3 mb-4" />
-                  <div className="flex gap-3">
-                    <div className="h-4 bg-muted/20 rounded w-24" />
-                    <div className="h-4 bg-muted/20 rounded w-20" />
-                    <div className="h-4 bg-muted/20 rounded w-28" />
-                  </div>
-                </div>
-              ))
-            ) : filteredJobs.map((job, i) => (
+            {filteredJobs.map((job, i) => (
               <Link to={`/careers/${job.slug || job.id}`} key={i} className="block group">
                 <div className="relative bg-[rgba(255,255,255,0.02)] border border-border/30 rounded-xl p-5 sm:p-6 hover:bg-[rgba(255,255,255,0.04)] hover:border-accent/30 transition-all duration-500 overflow-hidden">
                   {/* Subtle left accent bar */}
@@ -438,7 +432,7 @@ const Careers = () => {
             ))}
           </div>
 
-          {!isLoading && filteredJobs.length === 0 && (
+          {!jobsLoading && filteredJobs.length === 0 && (
             <p className="text-center text-muted-foreground mt-8">No jobs match your search criteria. Try adjusting your filters.</p>
           )}
 

@@ -12,6 +12,8 @@ import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import { useLocation } from "react-router-dom";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -496,8 +498,8 @@ const AIMLSolutions = () => {
     },
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const serviceData = data?.serviceData?.data;
 

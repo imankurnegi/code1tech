@@ -1,4 +1,6 @@
 import { api } from "@/api";
+import ErrorFallback from "@/components/ErrorFallback";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
@@ -9,8 +11,8 @@ const TermsConditions = () => {
     queryFn: api.getTermsCondition,
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const termsData = data?.data;
 

@@ -14,6 +14,8 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import ContactUsForm from "@/components/ContactUsForm";
 import { useInViewMap } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub?: string; btn: string; btnUrl?: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -65,8 +67,8 @@ const PredictiveAdvancedAnalytics = () => {
       queryFn: api.getPredictiveEngineers,
     });
   
-    if (isLoading) return null;
-    if (error) return null;
+    if (isLoading) return <LoadingSkeleton type="hero" />;
+      if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
   
     const pageData = data?.data;
 

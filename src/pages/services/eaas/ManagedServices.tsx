@@ -11,6 +11,8 @@ import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import eaasManagedImg from "@/assets/eaas-managed.jpg";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 /* ── Animated network canvas ── */
 const NetworkCanvas = () => {
@@ -126,8 +128,8 @@ const ManagedServices = () => {
     queryFn: async () => await api.getManagedServices(),
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

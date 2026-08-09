@@ -7,6 +7,8 @@ import { api } from "@/api";
 import ContactUsForm from "@/components/ContactUsForm";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 const BankingSoftware = () => {
@@ -15,8 +17,8 @@ const BankingSoftware = () => {
       queryFn: api.getBankingEngineers,
     });
 
-    if (isLoading) return null;
-    if (error) return null;
+    if (isLoading) return <LoadingSkeleton type="hero" />;
+      if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

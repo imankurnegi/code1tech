@@ -10,6 +10,8 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import { Button } from "@/components/ui/button";
 import { useInViewMap } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 type ServiceItem = { icon?: string; title: string; desc: string; image: string, imageCaption: string };
 
@@ -223,8 +225,8 @@ const PowerBI = () => {
     queryFn: api.getPowerBIEngineers,
   });
 
-   if (isLoading) return null;
-  if (error) return null;
+   if (isLoading) return <LoadingSkeleton type="hero" />;
+     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
   const heroBanner = pageData?.tools_main_banner;

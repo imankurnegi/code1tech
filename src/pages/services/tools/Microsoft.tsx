@@ -9,6 +9,8 @@ import ContactUsForm from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -132,8 +134,8 @@ const industries = industriesSection?.cards?.map((card: any) => ({
 
  const filteredServices = services.find((s) => s.category === activeCat);
 
- if (isLoading) return null;
-    if (error) return null;
+ if (isLoading) return <LoadingSkeleton type="hero" />;
+   if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
     
   return (
     <>

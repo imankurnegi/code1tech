@@ -17,6 +17,8 @@ import { addClassToSpan } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import { useInViewMap } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 const cardBase =
@@ -159,8 +161,8 @@ const DataWarehousing = () => {
     queryFn: api.getDataWarehousing,
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

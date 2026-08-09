@@ -17,6 +17,8 @@ import ContactSection from "@/components/ContactSection";
 import { useQuery } from "@tanstack/react-query";
 import SeoTags from "@/components/SeoTags";
 import { api } from "@/api";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const Index = () => {
   const { data, isLoading, error } = useQuery({
@@ -35,8 +37,8 @@ const Index = () => {
     },
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+  if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const homepageData = data?.homeData;
   const clientLogosData = data?.clientLogos?.data ?? [];

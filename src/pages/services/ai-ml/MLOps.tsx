@@ -13,6 +13,8 @@ import ContactUsForm from "@/components/ContactUsForm";
 import { useQuery } from "@tanstack/react-query";
 import ChallengeHub from "@/components/finetuning/ChallengeHub";
 import FineTuningIndustryOrbit from "@/components/ai-ml/FineTuningIndustryOrbit";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; btn: string, btnUrl?:string }) => (
@@ -55,8 +57,8 @@ const MLOps = () => {
       queryFn: api.getMLOpsEngineers,
     });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

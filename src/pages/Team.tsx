@@ -9,6 +9,8 @@ import { addClassToSpan } from "@/lib/utils";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const getInitials = (name: string) => {
   return name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
@@ -55,8 +57,8 @@ const Team = () => {
     queryFn: api.getTeamData,
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const teamData = data?.data;
 

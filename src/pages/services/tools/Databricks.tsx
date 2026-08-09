@@ -15,6 +15,8 @@ import { addClassToSpan } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import { useInViewMap } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 type ServiceItem = { icon?: string; title: string; desc: string; image: string, image_label: string };
 
@@ -282,8 +284,8 @@ const Databricks = () => {
     queryFn: api.getDatabricksEngineers,
   });
 
-   if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
   const heroBanner = pageData?.tools_main_banner;

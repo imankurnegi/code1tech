@@ -9,6 +9,8 @@ import SeoTags from "@/components/SeoTags";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { addClassToSpan } from "@/lib/utils";
 import { useInViewMap } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 type ServiceItem = { icon?: string; title: string; desc: string; image: string; image_label: string };
 
@@ -267,10 +269,13 @@ const decodeHTMLEntities = (value?: string) => {
 
 const Snowflake = () => {
   const { setRef, inViewMap: visible } = useInViewMap();
-  const { data } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["snowflake-engineers"],
     queryFn: api.getSnowflakeEngineers,
   });
+
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
   const heroBanner = pageData?.tools_main_banner;

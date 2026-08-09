@@ -13,6 +13,8 @@ import ContactUsForm from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import { useInView, useInViewMap } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -168,8 +170,8 @@ const EngineerAsAService = () => {
     },
   });
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const serviceData = data?.serviceData?.data;
   

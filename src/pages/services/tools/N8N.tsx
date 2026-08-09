@@ -12,6 +12,8 @@ import ContactUsForm from "@/components/ContactUsForm";
 import SeoTags from "@/components/SeoTags";
 import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 type ServiceItem = { icon: any; title: string; desc: string; image: string, imageCaption: string };
 
@@ -262,8 +264,8 @@ const N8N = () => {
       queryFn: api.getN8NEngineers,
     });
 
-    if (isLoading) return null;
-    if (error) return null;
+    if (isLoading) return <LoadingSkeleton type="hero" />;
+      if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;
 

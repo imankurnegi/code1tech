@@ -12,6 +12,8 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import { useQuery } from "@tanstack/react-query";
 import { useInView } from "@/hooks/useInView";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const About = () => {
   const [activeTab, setActiveTab] = useState("vision");
@@ -39,8 +41,8 @@ const About = () => {
   });
 
 
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+  if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const about = data?.aboutData?.data;
   const clientLogosData = data?.clientLogos?.data ?? [];
