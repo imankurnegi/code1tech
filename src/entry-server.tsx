@@ -1,4 +1,3 @@
-import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./App";
@@ -18,314 +17,598 @@ export async function render(url: string) {
   });
 
   const baseUrl = import.meta.env.VITE_API_URL || '';
-  const jobSlugMatch = url.match(/^\/careers\/([^/?]+)/);
+  const pathname = url.split("?")[0].split("#")[0].replace(/\/+$/, "") || "/";
+  const jobSlugMatch = pathname.match(/^\/careers\/([^/]+)$/);
   const jobSlug = jobSlugMatch ? jobSlugMatch[1] : null;
+  
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  const blogSlug = blogSlugMatch ? blogSlugMatch[1] : null;
+  
+  const authorSlugMatch = pathname.match(/^\/author\/([^/]+)$/);
+  const authorSlug = authorSlugMatch ? authorSlugMatch[1] : null;
 
   if (baseUrl) {
     try {
-      await Promise.all([
-        // Homepage data + client logos + contact form fields
-        queryClient.prefetchQuery({
-          queryKey: ["homepage"],
-          queryFn: async () => {
-            const [homeData, clientLogos, formFields] = await Promise.all([
-              api.getHomeData(),
-              api.getClientLogos(),
-              api.getContactFormFields(),
-            ]);
-            return { homeData, clientLogos, formFields };
-          },
-        }),
+      const prefetches: Promise<unknown>[] = [];
 
-        // Layout/top menu data
+      // Layout/top menu data
+      prefetches.push(
         queryClient.prefetchQuery({
           queryKey: ["layout"],
           queryFn: api.getLayoutData,
-        }),
+        })
+      );
 
-        // About page
-        queryClient.prefetchQuery({
-          queryKey: ["aboutPageData"],
-          queryFn: async () => {
-            const [aboutData, clientLogos] = await Promise.all([
-              api.getAboutData(),
-              api.getClientLogos(),
-            ]);
-            return { aboutData, clientLogos }; // match component structure
-          },
-        }),
+      // Homepage data + client logos + contact form fields
+      if (pathname === "/") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["homepage"],
+            queryFn: async () => {
+              const [homeData, clientLogos, formFields] = await Promise.all([
+                api.getHomeData(),
+                api.getClientLogos(),
+                api.getContactFormFields(),
+              ]);
+              return { homeData, clientLogos, formFields };
+            },
+          })
+        );
+      }
 
-        // Team page
-        queryClient.prefetchQuery({
-          queryKey: ["team"],
-          queryFn: api.getTeamData,
-        }),
+      // About page
+      if (pathname === "/about") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["aboutPageData"],
+            queryFn: async () => {
+              const [aboutData, clientLogos] = await Promise.all([
+                api.getAboutData(),
+                api.getClientLogos(),
+              ]);
+              return { aboutData, clientLogos }; // match component structure
+            },
+          })
+        );
+      }
 
-        // On Demand Engineers page
-        queryClient.prefetchQuery({
-          queryKey: ["on-demand-engineers"],
-          queryFn: api.getOnDemandEngineers,
-        }),
+      // Team page
+      if (pathname === "/team") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["team"],
+            queryFn: api.getTeamData,
+          })
+        );
+      }
 
-        // Data engineering page
-        queryClient.prefetchQuery({
-          queryKey: ["dataEngineeringPage"],
-          queryFn: async () => {
-            const [serviceData, contactFormFields] = await Promise.all([
-              api.getDataEngineering(),
-              api.getContactFormFields(),
-            ]);
+      // Contact page
+      if (pathname === "/contactus") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["contactPageData"],
+            queryFn: async () => {
+              const [contactData, clientLogos, contactFormFields] = await Promise.all([
+                api.getContactData(),
+                api.getClientLogos(),
+                api.getContactFormFields(),
+              ]);
+              return { contactData, clientLogos, contactFormFields };
+            },
+          })
+        );
+      }
 
-            return {
-              serviceData,
-              contactFormFields,
-            };
-          },
-        }),
+      // Engineer as a Service
+      if (pathname === "/services/engineer-as-a-service") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["engineerServicePage"],
+            queryFn: async () => {
+              const [serviceData, contactFormFields] = await Promise.all([
+                api.getEngineerAsAService(),
+                api.getContactFormFields(),
+              ]);
+              return { serviceData, contactFormFields };
+            },
+          })
+        );
+      }
 
-        // Data Warehousing page
-        queryClient.prefetchQuery({
-          queryKey: ["data-warehousing"],
-          queryFn: api.getDataWarehousing,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["data-advanced-engineers"],
-          queryFn: api.getDataAdvancedEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["dataQualityEngineers"],
-          queryFn: api.getDataQualityEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["data-ops-engineers"],
-          queryFn: api.getDataOpsEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["cloudDataMigrationPageData"],
-          queryFn: api.getDataCloudEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["business-intelligence-engineers"],
-          queryFn: api.getBusinessIntelligenceEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["predictive-engineers"],
-          queryFn: api.getPredictiveEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["big-data-engineers"],
-          queryFn: api.getBigDataEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["databricks-engineers"],
-          queryFn: api.getDatabricksEngineers,
-        }),
-        queryClient.prefetchQuery({
-          queryKey: ["snowflake-engineers"],
-          queryFn: api.getSnowflakeEngineers,
-        }),
-         queryClient.prefetchQuery({
-          queryKey: ["aws-engineers"],
-          queryFn: api.getAwsEngineers,
-        }),
-        queryClient.prefetchQuery({
+      // Data Science
+      if (pathname === "/services/data-science") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["dataSciencePage"],
+            queryFn: async () => {
+              const [serviceData, contactFormFields] = await Promise.all([
+                api.getDataScience(),
+                api.getContactFormFields(),
+              ]);
+              return { serviceData, contactFormFields };
+            },
+          })
+        );
+      }
+
+      // AI/ML Solutions
+      if (pathname === "/services/ai-ml-solutions") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["aiMLPage"],
+            queryFn: async () => {
+              const [serviceData, contactFormFields] = await Promise.all([
+                api.getAIMLData(),
+                api.getContactFormFields(),
+              ]);
+              return { serviceData, contactFormFields };
+            },
+          })
+        );
+      }
+
+      // Privacy Policy
+      if (pathname === "/privacy-policy") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["privacyPolicy"],
+            queryFn: api.getPrivacyPolicyData,
+          })
+        );
+      }
+
+      // Terms & Conditions
+      if (pathname === "/terms-conditions") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["termsCondition"],
+            queryFn: api.getTermsCondition,
+          })
+        );
+      }
+
+      // Blog
+      if (pathname === "/blog") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["blog-page"],
+            queryFn: api.getBlogPageData,
+          })
+        );
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["posts"],
+            queryFn: () => api.getAllPosts(),
+          })
+        );
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["categories"],
+            queryFn: api.getCategories,
+          })
+        );
+      }
+
+      // EAAS routes
+      if (pathname === "/services/eaas/offshore-nearshore") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["offshore-engineers"],
+            queryFn: api.getOffshoreEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/eaas/tech-team-building") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["tech-team-engineers"],
+            queryFn: api.getTechTeamEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/eaas/managed-services") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["managed-services-engineers"],
+            queryFn: api.getManagedServices,
+          })
+        );
+      }
+
+      // On Demand Engineers page
+      if (pathname === "/services/eaas/on-demand-engineers") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["on-demand-engineers"],
+            queryFn: api.getOnDemandEngineers,
+          })
+        );
+      }
+
+      // Data engineering page
+      if (pathname === "/services/data-engineering") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["dataEngineeringPage"],
+            queryFn: async () => {
+              const [serviceData, contactFormFields] = await Promise.all([
+                api.getDataEngineering(),
+                api.getContactFormFields(),
+              ]);
+
+              return {
+                serviceData,
+                contactFormFields,
+              };
+            },
+          })
+        );
+      }
+
+      // Data Warehousing page
+      if (pathname === "/services/data-engineering/data-warehousing") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["data-warehousing"],
+            queryFn: api.getDataWarehousing,
+          })
+        );
+      }
+
+      // Data Ingestion page
+      if (pathname === "/services/data-engineering/data-ingestion") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["data-ingestion"],
+            queryFn: api.getDataIngestion,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-engineering/data-modelling") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["data-advanced-engineers"],
+            queryFn: api.getDataAdvancedEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-engineering/data-quality-governance") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["dataQualityEngineers"],
+            queryFn: api.getDataQualityEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-engineering/dataops-pipeline-automation") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["data-ops-engineers"],
+            queryFn: api.getDataOpsEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-engineering/cloud-data-migration") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["cloudDataMigrationPageData"],
+            queryFn: api.getDataCloudEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-science/business-intelligence") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["business-intelligence-engineers"],
+            queryFn: api.getBusinessIntelligenceEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-science/predictive-advanced-analytics") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["predictive-engineers"],
+            queryFn: api.getPredictiveEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/data-science/big-data-solutions") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["big-data-engineers"],
+            queryFn: api.getBigDataEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/databricks") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["databricks-engineers"],
+            queryFn: api.getDatabricksEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/snowflake") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["snowflake-engineers"],
+            queryFn: api.getSnowflakeEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/aws") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["aws-engineers"],
+            queryFn: api.getAwsEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/power-bi") {
+        prefetches.push(
+          queryClient.prefetchQuery({
             queryKey: ["powerbi-engineers"],
             queryFn: api.getPowerBIEngineers,
-          }),
+          })
+        );
+      }
 
+      if (pathname === "/tableau") {
+        prefetches.push(
           queryClient.prefetchQuery({
-              queryKey: ["tableau-engineers"],
-              queryFn: api.getTableauEngineers,
-            }),
+            queryKey: ["tableau-engineers"],
+            queryFn: api.getTableauEngineers,
+          })
+        );
+      }
 
-            queryClient.prefetchQuery({
+      if (pathname === "/n8n") {
+        prefetches.push(
+          queryClient.prefetchQuery({
             queryKey: ["n8n-engineers"],
             queryFn: api.getN8NEngineers,
-          }),
+          })
+        );
+      }
+
+      if (pathname === "/oracle") {
+        prefetches.push(
           queryClient.prefetchQuery({
             queryKey: ["oracle-engineers"],
             queryFn: api.getOracleEngineers,
-          }),
+          })
+        );
+      }
+
+      if (pathname === "/microsoft") {
+        prefetches.push(
           queryClient.prefetchQuery({
             queryKey: ["microsoft-engineers"],
             queryFn: api.getMicrosoftEngineers,
-          }),
-        queryClient.prefetchQuery({
-              queryKey: ["azure-engineers"],
-              queryFn: api.getAzureEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["d365-engineers"],
-              queryFn: api.getD365Engineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["powerapps-engineers"],
-              queryFn: api.getPowerAppsEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["fintech-engineers"],
-              queryFn: api.getFintechEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["banking-engineers"],
-              queryFn: api.getBankingEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["healthcare-engineers"],
-              queryFn: api.getHealthcareEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["retail-engineers"],
-              queryFn: api.getRetailEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["real-estate-engineers"],
-              queryFn: api.getRealEstateEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["travel-engineers"],
-              queryFn: api.getTravelEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["professional-engineers"],
-              queryFn: api.getProfessionalEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["education-engineers"],
-              queryFn: api.getEducationEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["gcp-engineers"],
-              queryFn: api.getGCPEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["modal-fine-engineers"],
-              queryFn: api.getModalFineEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["modal-fine-engineers"],
-              queryFn: api.getComputerEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["natural-engineers"],
-              queryFn: api.getNaturalEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["strategy-engineers"],
-              queryFn: api.getStrategyEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["ai-agents-workflow"],
-              queryFn: api.getAgentsEngineers,
-            }),
-            queryClient.prefetchQuery({
-              queryKey: ["mlops-engineers"],
-              queryFn: api.getMLOpsEngineers,
-            }),
-
-        // Engineer as a Service page
-        queryClient.prefetchQuery({
-          queryKey: ["engineerServicePage"],
-          queryFn: async () => {
-            const [serviceData, contactFormFields] = await Promise.all([
-              api.getEngineerAsAService(),
-              api.getContactFormFields(),
-            ]);
-
-            return {
-              serviceData,
-              contactFormFields,
-            };
-          },
-        }),
-
-        // Data Science page
-        queryClient.prefetchQuery({
-          queryKey: ["dataSciencePage"],
-          queryFn: async () => {
-            const [serviceData, contactFormFields] = await Promise.all([
-              api.getDataScience(),
-              api.getContactFormFields(),
-            ]);
-
-            return {
-              serviceData,
-              contactFormFields,
-            };
-          },
-        }),
-
-        // AI/ML page
-        queryClient.prefetchQuery({
-          queryKey: ["aiMLPage"],
-          queryFn: async () => {
-            const [serviceData, contactFormFields] = await Promise.all([
-              api.getAIMLData(),
-              api.getContactFormFields(),
-            ]);
-
-            return {
-              serviceData,
-              contactFormFields,
-            };
-          },
-        }),
-
-        // Privacy Policy
-        queryClient.prefetchQuery({
-          queryKey: ["privacyPolicy"],
-          queryFn: api.getPrivacyPolicyData,
-        }),
-
-        // Terms & Conditions
-        queryClient.prefetchQuery({
-          queryKey: ["termsCondition"],
-          queryFn: api.getTermsCondition,
-        }),
-
-        queryClient.prefetchQuery({
-          queryKey: ["careers-page"],
-          queryFn: api.getCareersData,
-        }),
-
-        queryClient.prefetchQuery({
-          queryKey: ["job-listings"],
-          queryFn: api.getAllJobs,
-        }),
-
-        // Contact data (if needed separately)
-        queryClient.prefetchQuery({
-          queryKey: ["contactPageData"],
-          queryFn: async () => {
-            const [contactData, clientLogos, contactFormFields] = await Promise.all([
-              api.getContactData(),
-              api.getClientLogos(),
-              api.getContactFormFields(),
-            ]);
-
-            return { contactData, clientLogos, contactFormFields };
-          },
-        })
-      ]);
-      if (jobSlug) {
-        await queryClient.prefetchQuery({
-          queryKey: ["job-detail", jobSlug],
-          queryFn: () => api.getJobsBySlug(jobSlug),
-        })
+          })
+        );
       }
+
+      if (pathname === "/azure") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["azure-engineers"],
+            queryFn: api.getAzureEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/dynamics-365") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["d365-engineers"],
+            queryFn: api.getD365Engineers,
+          })
+        );
+      }
+
+      if (pathname === "/power-apps") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["powerapps-engineers"],
+            queryFn: api.getPowerAppsEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/fintech") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["fintech-engineers"],
+            queryFn: api.getFintechEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/banking-software") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["banking-engineers"],
+            queryFn: api.getBankingEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/healthcare") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["healthcare-engineers"],
+            queryFn: api.getHealthcareEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/retail-ecommerce") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["retail-engineers"],
+            queryFn: api.getRetailEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/real-estate") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["real-estate-engineers"],
+            queryFn: api.getRealEstateEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/travel-hospitality") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["travel-engineers"],
+            queryFn: api.getTravelEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/professional-services") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["professional-engineers"],
+            queryFn: api.getProfessionalEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/industries/education-edtech") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["education-engineers"],
+            queryFn: api.getEducationEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/gcp") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["gcp-engineers"],
+            queryFn: api.getGCPEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/ai-ml/model-fine-tuning") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["modal-fine-engineers"],
+            queryFn: api.getModalFineEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/ai-ml/computer-vision") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["computer-engineers"],
+            queryFn: api.getComputerEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/ai-ml/natural-language-processing") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["natural-engineers"],
+            queryFn: api.getNaturalEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/ai-ml/ai-strategy-consulting") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["strategy-engineers"],
+            queryFn: api.getStrategyEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/ai-ml/ai-agents-workflow") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["ai-agents-workflow"],
+            queryFn: api.getAgentsEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/services/ai-ml/ml-pipeline-mlops") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["mlops-engineers"],
+            queryFn: api.getMLOpsEngineers,
+          })
+        );
+      }
+
+      if (pathname === "/careers") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["careers-page"],
+            queryFn: api.getCareersData,
+          }),
+          queryClient.prefetchQuery({
+            queryKey: ["job-listings"],
+            queryFn: api.getAllJobs,
+          })
+        );
+      }
+
+      if (jobSlug) {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["job-detail", jobSlug],
+            queryFn: () => api.getJobsBySlug(jobSlug),
+          })
+        );
+      }
+
+      // Blog detail and author pages fetch data client-side via useEffect
+      if (blogSlug) {
+        console.log("Blog detail page detected, data will be fetched client-side");
+      }
+
+      if (authorSlug) {
+        console.log("Author page detected, data will be fetched client-side");
+      }
+
+      await Promise.all(prefetches);
     } catch (e) {
       console.error("SSR Prefetch Error:", e);
     }
   }
 
   const html = renderToString(
-    <QueryClientProvider client={queryClient}>
-      <HelmetProvider context={helmetContext}>
+    <HelmetProvider context={helmetContext}>
+      <QueryClientProvider client={queryClient}>
         <StaticRouter location={url} basename="/">
           <App />
         </StaticRouter>
-      </HelmetProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 
   const { helmet } = helmetContext;
