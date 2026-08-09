@@ -48,7 +48,10 @@ if (careersLoading || jobsLoading) return <LoadingSkeleton type="hero" />;
     slug: job?.slug || "",
     title: he.decode(job.title || ""),
     category: he.decode(job?.job_categories?.[0]?.name || ""),
-    location: `${he.decode(job?.job_career_city?.[0]?.name || "")}, ${he.decode(job?.job_career_country?.[0]?.name || "")}`.replace(/,\s*$/, ""),
+    location: [
+  he.decode(job?.job_career_city?.[0]?.name || ""),
+  he.decode(job?.job_career_country?.[0]?.name || "")
+].filter(Boolean).join(", "),
     city: he.decode(job?.job_career_city?.[0]?.name || ""),
     country: he.decode(job?.job_career_country?.[0]?.name || ""),
     type: he.decode(job?.job_career_hire_type?.[0]?.name || ""),
@@ -394,9 +397,10 @@ if (careersLoading || jobsLoading) return <LoadingSkeleton type="hero" />;
                         <h3 className="font-semibold text-foreground text-base sm:text-lg group-hover:text-accent transition-colors duration-300 truncate">
                           {job.title}
                         </h3>
-                        <span className="hidden sm:inline-flex shrink-0 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/20">
+                        {job.type && (<span className="hidden sm:inline-flex shrink-0 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-accent/10 text-accent border border-accent/20">
                           {job.type}
-                        </span>
+                        </span>)
+                        }
                       </div>
                       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1.5">

@@ -83,7 +83,7 @@ export default function LoadingSkeleton({
           {/* Loading overlay */}
           <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/20 backdrop-blur-[2px]">
             <div className="flex flex-col items-center gap-3">
-              <div className="h-9 w-9 animate-spin rounded-full border-[3px] border-muted/30 border-t-primary" />
+              <div className="h-20 w-20 animate-spin rounded-full border-[3px] border-muted/30 border-t-primary" />
 
               <span className="text-sm text-muted-foreground">
                 Loading...
