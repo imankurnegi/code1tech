@@ -2,6 +2,7 @@ import { hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
+import ErrorBoundary from "./components/ErrorBoundary";
 import "./index.css";
 import {
   QueryClient,
@@ -22,12 +23,14 @@ if (dehydratedState) {
 
 hydrateRoot(
   document.getElementById("root") as HTMLElement,
-  <HelmetProvider>
-    <BrowserRouter basename="/">
-    <ScrollToTop />
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </BrowserRouter>
-  </HelmetProvider>
+  <ErrorBoundary>
+    <HelmetProvider>
+      <BrowserRouter basename="/">
+        <ScrollToTop />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </HelmetProvider>
+  </ErrorBoundary>
 );
