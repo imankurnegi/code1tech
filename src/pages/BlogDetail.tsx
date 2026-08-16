@@ -52,11 +52,11 @@ interface ApiPost {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const categoryColors: Record<string, string> = {
-  AI:       "bg-accent/15 text-accent border-accent/30",
-  Data:     "bg-sky-500/15 text-sky-400 border-sky-500/30",
-  Cloud:    "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  DevOps:   "bg-purple-500/15 text-purple-400 border-purple-500/30",
-  Security: "bg-rose-500/15 text-rose-400 border-rose-500/30",
+  AI: "bg-accent/15 text-accent border-accent/30",
+  Data: "bg-sky-500/15 text-sky-400 border-sky-500/30",
+  Cloud: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+  DevOps: "bg-purple-500/15 text-purple-400 border-purple-500/30",
+  Business: "bg-amber-500/15 text-amber-400 border-amber-500/30"
 };
 
 const getCategoryColor = (name: string) =>
@@ -286,7 +286,7 @@ const BlogDetail = () => {
             Talk to our team — get a tailored roadmap for your enterprise.
           </p>
         </div>
-        <Link to="/contact" className="shrink-0">
+        <Link to="/contactus" className="shrink-0">
           <Button variant="hero" size="lg" className="group w-full md:w-auto">
             Book a Free Consult
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -419,7 +419,7 @@ const BlogDetail = () => {
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-10 lg:gap-12">
 
               {/* Article */}
-              <article className={`min-w-0 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <article className={`post-content-container min-w-0 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
 
                 {/* Mobile TOC */}
                 {toc.length > 0 && (
@@ -701,7 +701,7 @@ const BlogDetail = () => {
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </Link>
                       <Link
-                        to="/contact"
+                        to="/contactus"
                         className="mt-4 group flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-gradient-to-r from-accent to-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider shadow-[0_8px_24px_-8px_hsl(var(--accent)/0.6)] hover:shadow-[0_12px_28px_-8px_hsl(var(--accent)/0.8)] transition-all"
                       >
                         <MessageSquare className="w-3.5 h-3.5" />
@@ -722,7 +722,7 @@ const BlogDetail = () => {
                       <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
                         Get a free 30-minute strategy session with our experts.
                       </p>
-                      <Link to="/contact" className="block">
+                      <Link to="/contactus" className="block">
                         <Button variant="hero" size="sm" className="w-full group">
                           Get in Touch
                           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -815,7 +815,7 @@ const BlogDetail = () => {
                         </p>
                       </div>
                     </div>
-                    <Link to="/contact" className="shrink-0">
+                    <Link to="/contactus" className="shrink-0">
                       <Button variant="hero" size="lg" className="group w-full md:w-auto">
                         <Phone className="w-4 h-4" />
                         Contact Us
@@ -847,7 +847,7 @@ const BlogDetail = () => {
                 Let's discuss how we can help you apply these concepts to drive real business outcomes for your organization.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/contact">
+                <Link to="/contactus">
                   <Button variant="hero" size="lg" className="group w-full sm:w-auto">
                     <Phone className="w-4 h-4" />
                     Schedule Strategy Call

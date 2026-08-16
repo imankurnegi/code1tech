@@ -345,7 +345,7 @@ const AuthorProfile = () => {
                   Get a free 30-minute strategy session with our team and turn your toughest challenges into shipped outcomes.
                 </p>
               </div>
-              <Link to="/contact" className="shrink-0">
+              <Link to="/contactus" className="shrink-0">
                 <Button variant="hero" size="lg" className="group">
                   Contact Us
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

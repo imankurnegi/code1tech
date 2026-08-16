@@ -77,7 +77,7 @@ export const InlineCTA = ({ title, sub, btn }: { title: string; sub: string; btn
           <h3 className="text-xl lg:text-2xl font-bold text-foreground leading-snug">{title}</h3>
           <p className="text-muted-foreground text-sm mt-1">{sub}</p>
         </div>
-        <Link to="/contact" className="flex-shrink-0 relative z-10">
+        <Link to="/contactus" className="flex-shrink-0 relative z-10">
           <Button variant="hero" size="xl" className="group w-full sm:w-auto text-sm sm:text-base shadow-[0_8px_32px_-8px_rgba(95,194,227,0.55)]">
             {btn}
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 group-hover:translate-x-1 transition-transform flex-shrink-0" />
@@ -581,7 +581,7 @@ export const ClosingContact = ({
               </li>
             ))}
           </ul>
-          <Link to="/contact">
+          <Link to="/contactus">
             <Button
               size="lg"
               className="group bg-gradient-to-r from-accent to-primary text-primary-foreground font-medium px-8 py-6 rounded-lg shadow-[0_0_20px_rgba(0,194,255,0.3)] hover:shadow-[0_0_40px_rgba(0,194,255,0.5)] hover:scale-105 transition-all duration-300"
