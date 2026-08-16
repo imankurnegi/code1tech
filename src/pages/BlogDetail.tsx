@@ -83,13 +83,49 @@ const primaryCategorySlug = (post: ApiPost) => post.categories?.[0]?.slug ?? "";
 
 // ── Content renderer ─────────────────────────────────────────────────────────
 // Parses basic Markdown-like syntax in the content string
-const renderContent = (block: string, index: number) => {
-  // H2 heading
+const renderContent = (block: string, index: number, h2Index: number) => {
+  // H2 heading (HTML format - add ID and scroll margin to all h2s)
+  const h2Matches = block.match(/<h2[^>]*>(.*?)<\/h2>/gi);
+  if (h2Matches) {
+    let modifiedBlock = block;
+    let localCounter = h2Index;
+    modifiedBlock = modifiedBlock.replace(/<h2([^>]*)>/gi, (match, attrs) => {
+      // Add scroll margin to avoid sticky header overlap
+      const scrollMargin = 'scroll-mt-28';
+      const hasScrollMargin = attrs.includes('scroll-mt-') || attrs.includes('scroll-margin');
+      
+      // Add ID if missing
+      let newAttrs = attrs;
+      if (!attrs.includes('id=')) {
+        const newId = `section-${localCounter}`;
+        localCounter++;
+        newAttrs = `${attrs} id="${newId}"`;
+      }
+      
+      // Add scroll margin if missing
+      if (!hasScrollMargin) {
+        const classMatch = attrs.match(/class=["']([^"']+)["']/);
+        if (classMatch) {
+          // Append to existing class
+          newAttrs = attrs.replace(/class=["']([^"']+)["']/, `class="${classMatch[1]} ${scrollMargin}"`);
+        } else {
+          // Add new class attribute
+          newAttrs = `${newAttrs} class="${scrollMargin}"`;
+        }
+      }
+      
+      return `<h2${newAttrs}>`;
+    });
+    return (
+      <div key={index} dangerouslySetInnerHTML={{ __html: modifiedBlock }} />
+    );
+  }
+  // H2 heading (Markdown format)
   if (block.startsWith("## ")) {
     return (
       <h2
         key={index}
-        id={`section-${index}`}
+        id={`section-${h2Index}`}
         className="scroll-mt-28 text-2xl md:text-3xl font-bold text-foreground mt-12 mb-5 tracking-tight"
       >
         <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
@@ -226,11 +262,39 @@ const BlogDetail = () => {
   }, [post]);
 
   const toc = useMemo(() => {
-    return contentBlocks
-      .map((c, i) => ({ c, i }))
-      .filter(({ c }) => c.startsWith("## "))
-      .map(({ c, i }) => ({ id: `section-${i}`, title: c.replace("## ", "") }));
-  }, [contentBlocks]);
+    const headings: { id: string; title: string }[] = [];
+    let h2Counter = 0;
+    
+    // Parse entire content as HTML to find all h2 tags
+    if (typeof window !== 'undefined' && post?.content) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = post.content;
+      const h2Elements = tempDiv.querySelectorAll('h2');
+      
+      h2Elements.forEach((h2) => {
+        headings.push({
+          id: `section-${h2Counter}`,
+          title: h2.textContent?.trim() || ''
+        });
+        h2Counter++;
+      });
+    }
+    
+    // Fallback: check for markdown ## headings if no HTML h2 found
+    if (headings.length === 0) {
+      contentBlocks.forEach((block) => {
+        if (block.startsWith("## ")) {
+          headings.push({
+            id: `section-${h2Counter}`,
+            title: block.replace("## ", "")
+          });
+          h2Counter++;
+        }
+      });
+    }
+    
+    return headings;
+  }, [post?.content, contentBlocks]);
 
   // Midpoint for inline CTA
   const midCtaAfterIndex = useMemo(() => {
@@ -461,12 +525,23 @@ const BlogDetail = () => {
                 )}
 
                 {/* Content blocks */}
-                {contentBlocks.map((block, index) => (
-                  <div key={index}>
-                    {renderContent(block, index)}
-                    {index === midCtaAfterIndex && <InlineCTA />}
-                  </div>
-                ))}
+                {(() => {
+                  let h2Counter = 0;
+                  return contentBlocks.map((block, index) => {
+                    const h2Matches = block.match(/<h2[^>]*>.*?<\/h2>/gi);
+                    const h2Count = h2Matches ? h2Matches.length : 0;
+                    const currentH2Index = h2Counter;
+                    if (h2Count > 0 || block.startsWith("## ")) {
+                      h2Counter += h2Count || 1;
+                    }
+                    return (
+                      <div key={index}>
+                        {renderContent(block, index, currentH2Index)}
+                        {index === midCtaAfterIndex && <InlineCTA />}
+                      </div>
+                    );
+                  });
+                })()}
 
                 {/* Tags */}
                 {(post.tags ?? []).length > 0 && (
