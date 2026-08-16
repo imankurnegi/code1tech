@@ -12,6 +12,7 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 // Helper function to generate random vibrant colors
@@ -68,6 +69,11 @@ const { data, isLoading, error } = useQuery({
   // It will only execute when services array is populated after data loads
   const pageData = data?.data;
   const servicesSection = pageData?.our_microsoft_dynamics_365_consulting_services || {};
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
   const services = servicesSection?.tabs?.map((tab: any) => ({
     icon: tab.icon,
     title: tab.title,
@@ -842,6 +848,13 @@ const { data, isLoading, error } = useQuery({
           )}
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* FINAL CTA + CONTACT */}
       <section

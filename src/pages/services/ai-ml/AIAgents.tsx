@@ -13,6 +13,7 @@ import ContactUsForm from "@/components/ContactUsForm";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; btn: string, btnUrl?:string }) => (
   <div style={{ background: "#070B12" }} className="py-6">

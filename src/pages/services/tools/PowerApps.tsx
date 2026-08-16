@@ -10,6 +10,7 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl: string }) => (
@@ -66,6 +67,11 @@ const cta_section_70 = pageData?.cta_section_70;
 const cta_section_77 = pageData?.cta_section_77;
 const cta_section_111 = pageData?.cta_section_111;
 const cta_section_113 = pageData?.cta_section_113;
+
+const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  q: item.post_title ?? "",
+  a: item.post_content ?? "",
+}));
 
 const heroBadges = heroBanner?.badges || [];
 const heroStats = heroBanner?.bottom_section || [];
@@ -528,6 +534,13 @@ const partner = partnerSection?.cards?.map((card: any) => ({
           )}
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* FINAL CTA + CONTACT */}
       <section

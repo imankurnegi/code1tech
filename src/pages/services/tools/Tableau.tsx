@@ -14,6 +14,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 type ServiceItem = { icon: any; title: string; desc: string; image: string; imageCaption: string };
 
@@ -286,6 +287,11 @@ const Tableau = () => {
   const contactSection  = pageData?.services_get_started_section || {}
   const actionableBusinessIntelligenceSection = pageData?.turn_complex_data_into_actionable_business_intelligence || {}
   const cta_section_70 = pageData?.cta_section_70;
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
   const cta_section_77 = pageData?.cta_section_77;
   const cta_section_111 = pageData?.cta_section_111;
   const cta_section_113 = pageData?.cta_section_113;
@@ -718,6 +724,13 @@ const industries = industrySection?.cards?.map((item: any) => ({
           />)}
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* FINAL CTA + CONTACT */}
       <section

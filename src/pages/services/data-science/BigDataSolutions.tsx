@@ -16,6 +16,7 @@ import { api } from "@/api";
 import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 const cardStyle = {
@@ -199,6 +200,11 @@ const BigDataSolutions = () => {
   const contactParagraph = contactSection.paragraph ?? "";
   const contactButtons = Array.isArray(contactSection.buttons) ? contactSection.buttons : [];
   const contactButton = contactButtons[0] ?? null;
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
 
   const architectureImage = bigDataArchitecturePlatformDevelopmentSection.left_image?.url ?? "";
   const architectureImageAlt = bigDataArchitecturePlatformDevelopmentSection.left_image?.alt ?? "";
@@ -713,6 +719,13 @@ const BigDataSolutions = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* CONTACT */}
       <section ref={setRef("contact")} className="relative py-8 lg:py-12 overflow-hidden"

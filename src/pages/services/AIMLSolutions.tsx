@@ -11,9 +11,9 @@ import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import { useLocation } from "react-router-dom";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -1253,32 +1253,11 @@ const AIMLSolutions = () => {
        <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ── FAQs ── */}
+      {serviceData?.faq_section_heading && (
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}>
-        <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-          <RevealOnScroll>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{__html: addClassToSpan(serviceData?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent")}} />
-            </div>
-          </RevealOnScroll>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div key={i} className="rounded-2xl overflow-hidden" style={cardStyle}>
-                <button
-                  className="w-full flex items-center justify-between p-5 text-left gap-4"
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                >
-                  <span className="text-foreground font-medium text-sm sm:text-base">{faq.q}</span>
-                  {openFaq === i ? <ChevronUp className="w-4 h-4 text-accent flex-shrink-0" /> : <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />}
-                </button>
-                {openFaq === i && (
-                  // <div className="px-5 pb-5 text-muted-foreground text-sm leading-relaxed" dangerouslySetInnerHTML={{__html: faq.a}} />
-                  <div dangerouslySetInnerHTML={{__html: faq.a}} />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        <Faqs heading={serviceData?.faq_section_heading} faqs={faqs} />
       </section>
+      )}
 
       {/* ── CONTACT FORM ── */}
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 100%)" }}>

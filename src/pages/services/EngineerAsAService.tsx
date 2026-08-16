@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useInView, useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -228,6 +229,11 @@ const EngineerAsAService = () => {
       description: item.box_description
     }
   }) || [];
+
+  const faqs = (serviceData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
 
   // Animated stat counter with number count-up
   const AnimatedStat = ({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) => {
@@ -1204,6 +1210,13 @@ const EngineerAsAService = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQs */}
+      {serviceData?.faq_section_heading && faqs.length > 0 && (
+        <section id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={serviceData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* ===== PRE-CONTACT CTA BANNER ====== */}
       <section className="relative py-6 overflow-hidden" style={{ background: "hsl(222 47% 5%)" }}>

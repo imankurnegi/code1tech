@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ContactUsForm from "@/components/ContactUsForm";
@@ -16,6 +10,7 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 /* ── Animated network canvas (same as ManagedServices) ── */
 const NetworkCanvas = () => {
@@ -638,28 +633,9 @@ const DataIngestion = () => {
       )}
 
       {/* ======= FAQ ======= */}
-      {faqs.length > 0 && (
+      {pageData?.faq_section_heading && faqs.length > 0 && (
         <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="text-center mb-10">
-              <h2
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"
-                dangerouslySetInnerHTML={{ __html: addClassToSpan(pageData?.faq_section_heading || "Frequently Asked <span>Questions</span>", "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
-              />
-            </div>
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-3">
-                {faqs.map((f: any, i: number) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="border border-border/30 rounded-lg bg-card/30 backdrop-blur-sm px-4">
-                    <AccordionTrigger className="text-left text-foreground font-semibold text-sm sm:text-base hover:no-underline">{f.q}</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="text-muted-foreground text-sm leading-relaxed text-left" dangerouslySetInnerHTML={{ __html: f.a }} />
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
 

@@ -17,6 +17,7 @@ import catFinance      from "@/assets/industry-finance.jpg";
 import catHealthcare   from "@/assets/industry-healthcare.jpg";
 import catRetail       from "@/assets/industry-retail.jpg";
 import catTechnology   from "@/assets/industry-technology.jpg";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 // ── API types ─────────────────────────────────────────────────────────────────
 interface ApiCategory {
@@ -361,18 +362,7 @@ const BlogDetail = () => {
   );
 
   // ── Loading state ────────────────────────────────────────────────────────────
-  if (loading) {
-    return (
-
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <div className="w-12 h-12 rounded-full border-2 border-accent/30 border-t-accent animate-spin mx-auto" />
-            <p className="text-muted-foreground text-sm">Loading article…</p>
-          </div>
-        </div>
-
-    );
-  }
+   if (loading) return <LoadingSkeleton type="hero" />;
 
   // ── Error state ──────────────────────────────────────────────────────────────
   if (error || !post) {

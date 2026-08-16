@@ -1,4 +1,3 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, Sparkles, FileCheck, Quote } from "lucide-react";
@@ -12,6 +11,7 @@ import { api } from "@/api";
 import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 const cardStyle = {
@@ -1022,34 +1022,15 @@ const BusinessIntelligence = () => {
             </section>
 
       {/* FAQ */}
-      <section
-        className="relative py-10 lg:py-14 overflow-hidden"
-        style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 6%) 100%)" }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight" dangerouslySetInnerHTML={{ __html: addClassToSpan(faqHeading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-          </div>
-
-          <Accordion type="single" collapsible className="space-y-3">
-            {faqsData.map((f: any, i: number) => (
-              <AccordionItem
-                key={i}
-                value={`faq-${i}`}
-                className="border rounded-2xl px-5 backdrop-blur-sm"
-                style={{ background: "rgba(15,23,42,0.50)", borderColor: "rgba(255,255,255,0.06)" }}
-              >
-                <AccordionTrigger className="text-left text-base font-semibold text-foreground hover:text-accent py-4">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed text-left">
-                  <div dangerouslySetInnerHTML={{ __html: f.a }} />
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
+      {faqHeading && faqsData.length > 0 && (
+        <section
+        ref={setRef("faq")}
+          className="relative py-10 lg:py-14 overflow-hidden"
+          style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 6%) 100%)" }}
+        >
+          <Faqs heading={faqHeading} faqs={faqsData} />
+        </section>
+      )}
 
 
       {/* ─── CONTACT ─── */}

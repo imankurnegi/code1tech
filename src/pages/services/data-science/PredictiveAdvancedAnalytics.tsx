@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import SeoTags from "@/components/SeoTags";
 import { DynamicIcon } from "@/components/DynamicIcon";
@@ -16,6 +10,7 @@ import ContactUsForm from "@/components/ContactUsForm";
 import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub?: string; btn: string; btnUrl?: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -648,46 +643,20 @@ const PredictiveAdvancedAnalytics = () => {
       </section>
 
       {/* FAQ */}
-      <section
-        ref={setRef("faq")}
-        className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${
-          visible["faq"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-        }`}
-        style={{
-          background:
-            "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(222 47% 6%) 100%)",
-        }}
-      >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center mb-10">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1]" dangerouslySetInnerHTML={{ __html: addClassToSpan(faqHeading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-          </div>
-
-          <div className="max-w-5xl mx-auto">
-
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqsData.map((f: any, i: number) => (
-                <AccordionItem
-                  key={i}
-                  value={`item-${i}`}
-                  className="rounded-xl border-0 px-5"
-                  style={{
-                    background: "rgba(255,255,255,0.025)",
-                    border: "1px solid rgba(148,163,184,0.12)",
-                  }}
-                >
-                  <AccordionTrigger className="text-left text-base sm:text-lg font-semibold text-foreground hover:no-underline py-5">
-                    {f.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm sm:text-base text-muted-foreground leading-[1.65] text-left pb-5">
-                    <div dangerouslySetInnerHTML={{ __html: f.a }} />
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </section>
+      {faqHeading && faqsData.length > 0 && (
+        <section
+          ref={setRef("faq")}
+          className={`relative py-8 lg:py-12 overflow-hidden transition-all duration-700 ${
+            visible["faq"] ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+          style={{
+            background:
+              "linear-gradient(180deg, hsl(222 47% 4%) 0%, hsl(222 47% 6%) 100%)",
+          }}
+        >
+          <Faqs heading={faqHeading} faqs={faqsData} />
+        </section>
+      )}
 
       {/* READY CTA + CONTACT */}
       <section

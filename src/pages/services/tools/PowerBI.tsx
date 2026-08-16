@@ -12,6 +12,7 @@ import { useInViewMap } from "@/hooks/useInView";
 import { addClassToSpan } from "@/lib/utils";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 type ServiceItem = { icon?: string; title: string; desc: string; image: string, imageCaption: string };
 
@@ -242,6 +243,11 @@ const PowerBI = () => {
   const cta70 = pageData?.cta_section_70;
   const cta77 = pageData?.cta_section_77;
   const cta111 = pageData?.cta_section_111;
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
 
   const heroImageUrl = heroBanner?.image?.url;
   const heroBadges = heroBanner?.badges ?? [];
@@ -611,6 +617,13 @@ const PowerBI = () => {
           <InlineCTA title={cta111?.content} btn={cta111?.button_text} btnUrl={cta111?.button_url} />
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* FINAL CONTACT */}
       <section

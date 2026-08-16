@@ -9,6 +9,7 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 const FinTech = () => {
@@ -60,6 +61,11 @@ const heroBlocks = heroBanner?.blocks?.map((block: any) => ({
   icon: block.icon,
   label: block.title,
 })) || [];
+
+const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  q: item.post_title ?? "",
+  a: item.post_content ?? "",
+}));
 
 
 
@@ -719,6 +725,14 @@ const heroBlocks = heroBanner?.blocks?.map((block: any) => ({
           </div>
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
+
       {/* ================= CONTACT ================= */}
       <section className="py-16 lg:py-24 relative overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(222 47% 8%) 100%)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(0,119,182,0.18), transparent 60%)" }} />

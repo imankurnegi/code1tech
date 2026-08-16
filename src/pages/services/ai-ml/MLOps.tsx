@@ -15,6 +15,7 @@ import ChallengeHub from "@/components/finetuning/ChallengeHub";
 import FineTuningIndustryOrbit from "@/components/ai-ml/FineTuningIndustryOrbit";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; btn: string, btnUrl?:string }) => (
@@ -76,6 +77,11 @@ const MLOps = () => {
   const whyChooseSection = pageData?.ai_why_what_code1tech_section || {};
   const contactSection = pageData?.services_get_started_section || {};
   const businessOutcomesSection = pageData?.business_outcomes_you_can_expect_from_industrial_computer_vision_solutions || {};
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
   const industriesSection = pageData?.ai_industries_section || {};
   const seoSection = pageData?.seo || {};
   const schemaSection = pageData?.schema || {};
@@ -377,6 +383,13 @@ const MLOps = () => {
         btn={cta_section_322?.button_text || ""}
         btnUrl={cta_section_322?.button_url || ""}
       />
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* ======= CLOSING CTA + CONTACT ======= */}
       <section

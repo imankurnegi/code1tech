@@ -1,14 +1,7 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { CheckCircle, ArrowRight } from "lucide-react";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import ContactUsForm from "@/components/ContactUsForm";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
@@ -17,6 +10,7 @@ import { addClassToSpan } from "@/lib/utils";
 import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 /* ── Animated network canvas background ── */
 const NetworkCanvas = () => {
@@ -640,26 +634,9 @@ const TechTeamBuilding = () => {
       )}
 
       {/* ====== FAQs ====== */}
-      {faqs.length > 0 && (
-        <section id="faqs" ref={setSectionRef("faqs")} className="relative py-12 lg:py-16 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 6%) 100%)" }}>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <div className={`text-center mb-10 transition-all duration-700 opacity-100 translate-y-0`}>
-              <h2
-                className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
-                dangerouslySetInnerHTML={{ __html: addClassToSpan(pageData?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}
-              />
-            </div>
-            <div className={`transition-all duration-700 opacity-100 translate-y-0`} style={{ transitionDelay: "150ms" }}>
-              <Accordion type="single" collapsible className="space-y-4">
-                {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="border rounded-2xl px-5 backdrop-blur-sm" style={{ background: "rgba(15,23,42,0.50)", borderColor: "rgba(255,255,255,0.06)" }}>
-                    <AccordionTrigger className="text-left text-base font-semibold text-foreground hover:text-accent">{faq.q}</AccordionTrigger>
-                    <AccordionContent className="text-sm text-muted-foreground leading-relaxed text-left">{faq.a}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section id="faqs" ref={setSectionRef("faq")} className="relative py-12 lg:py-16 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
 

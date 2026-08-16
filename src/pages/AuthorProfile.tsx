@@ -12,6 +12,7 @@ import blogAi          from "@/assets/blog-ai.jpg";
 import blogData        from "@/assets/blog-data.jpg";
 import blogCloud       from "@/assets/blog-cloud.jpg";
 import blogDevops      from "@/assets/blog-devops.jpg";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface ApiCategory { id: number; name: string; slug: string; }
@@ -101,18 +102,7 @@ const AuthorProfile = () => {
   );
 
   // ── Loading ────────────────────────────────────────────────────────────────
-  if (loading) {
-    return (
-
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <div className="w-12 h-12 rounded-full border-2 border-accent/30 border-t-accent animate-spin mx-auto" />
-            <p className="text-muted-foreground text-sm">Loading author profile…</p>
-          </div>
-        </div>
-
-    );
-  }
+   if (loading) return <LoadingSkeleton type="hero" />;
 
   // ── Error ──────────────────────────────────────────────────────────────────
   if (error || !author) {

@@ -17,6 +17,7 @@ import SeoTags from "@/components/SeoTags";
 import ContactUsForm from "@/components/ContactUsForm";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 const cardBase =
   "rounded-2xl p-6 transition-all duration-500 hover:border-accent/30 hover:-translate-y-1";
@@ -120,6 +121,11 @@ const ComputerVision = () => {
   const whyChooseSection = pageData?.ai_why_what_code1tech_section || {};
   const contactSection = pageData?.services_get_started_section || {};
   const businessOutcomesSection = pageData?.business_outcomes_you_can_expect_from_industrial_computer_vision_solutions || {};
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
   const seoSection = pageData?.seo || {};
   const schemaSection = pageData?.schema || {};
 
@@ -695,7 +701,12 @@ const ComputerVision = () => {
         btnUrl={cta_section_327?.button_url || ""}
       />
 
-
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
        <section
         ref={setRef("contact")}

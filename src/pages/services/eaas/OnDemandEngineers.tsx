@@ -3,13 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import he from "he";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Shield,
   Code,
   Database,
   Brain,
@@ -31,6 +24,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import { useInView, useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 /* ── Animated network canvas background ── */
 const NetworkCanvas = () => {
@@ -1032,27 +1026,11 @@ const OnDemandEngineers = () => {
       </div>
 
       {/* ====== FAQs ====== */}
-      <section id="faqs" ref={setSectionRef("faqs")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4" dangerouslySetInnerHTML={{ __html: addClassToSpan(pageData?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} />
-          </div>
-          <div className={`max-w-3xl mx-auto transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "150ms" }}>
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`} className="rounded-xl border border-border/30 bg-card/30 backdrop-blur-sm px-5 overflow-hidden">
-                  <AccordionTrigger className="text-sm font-medium text-foreground hover:text-accent transition-colors py-4 text-left">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm sm:text-base text-muted-foreground leading-relaxed pb-4">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
+      {pageData?.faq_section_heading && (
+      <section id="faqs" ref={setSectionRef("faq")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+        <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
       </section>
+      )}
 
       {/* ====== FINAL CTA + CONTACT FORM ====== */}
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 6%) 100%)" }}>

@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
   ArrowRight,
   CheckCircle
 } from "lucide-react";
@@ -19,6 +13,7 @@ import { api } from "@/api";
 import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 
 const cardBase =
@@ -1068,35 +1063,15 @@ const CloudDataMigration = () => {
       </section>
 
       {/* FAQ */}
+      {pageData?.faq_section_heading && (
       <section
-        ref={setRef("faqs")}
+        ref={setRef("faq")}
         className="relative py-10 lg:py-14 overflow-hidden"
         style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}
       >
-        <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-3xl">
-          <div
-            className={`text-center mb-10 transition-all duration-700 ${visible.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
-              Frequently Asked{" "}
-              <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Questions</span>
-            </h2>
-          </div>
-          <Accordion type="single" collapsible className="space-y-3">
-            {faqsData.map((f, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="rounded-xl px-5 border" style={cardStyle}>
-                <AccordionTrigger className="text-left text-foreground hover:no-underline text-sm sm:text-base">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Faqs heading={pageData?.faq_section_heading} faqs={faqsData} />
       </section>
+      )}
 
       {/* CONTACT */}
       <section

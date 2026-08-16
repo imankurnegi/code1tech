@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl?: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -54,6 +55,11 @@ const Oracle = () => {
     });
 
   const pageData = data?.data;
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
 
   const ORACLE_TAB_KEY = "oracle:activeSvc";
   const [activeSvc, setActiveSvc] = useState<number>(() => {
@@ -753,6 +759,13 @@ const {
           />
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* FINAL CTA + CONTACT */}
       <section

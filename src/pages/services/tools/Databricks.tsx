@@ -17,6 +17,7 @@ import { api } from "@/api";
 import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 type ServiceItem = { icon?: string; title: string; desc: string; image: string, image_label: string };
 
@@ -302,6 +303,11 @@ const Databricks = () => {
   const whyUsContent = pageData?.why_choose_code1_tech_systems_for_databricks_consulting;
   const cta114 = pageData?.cta_section_114;
   const finalSectionContent = pageData?.services_get_started_section;
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
   const heroImageUrl = heroBanner?.image?.url || "";
   const heroBadges = heroBanner?.badges || [];
   const heroStats = heroBanner?.bottom_section || [];
@@ -634,6 +640,13 @@ const Databricks = () => {
           <InlineCTA title={cta114?.content || ""} btn={cta114?.button_text || ""} btnUrl={cta114?.button_url} />
         </div>
       </section>
+
+      {/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
 
       {/* FINAL CONTACT */}
       <section

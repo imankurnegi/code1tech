@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -1412,42 +1413,11 @@ const DataScience = () => {
        <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ===== 13. FAQs ===== */}
+      {faqSectionHeading && (
       <section ref={faqRef} className="py-8 lg:py-12" style={sectionBg3}>
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className={`text-center mb-12 transition-all duration-700 ${faqVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-foreground mb-4"
-              dangerouslySetInnerHTML={{
-                __html: addClassToSpan(
-                  faqSectionHeading ?? "",
-                  "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent"
-                )
-              }}
-            />
-
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`faq-${index}`}
-                  className="rounded-xl px-6 border-none"
-                  style={cardStyle}
-                >
-                  <AccordionTrigger className="text-foreground hover:no-underline text-left text-base font-medium py-5">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-sm text-left pb-5">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
+        <Faqs heading={faqSectionHeading} faqs={faqs} />
       </section>
+      )}
 
       {/* ===== 14. FINAL CTA: Get Started ===== */}
       <section className="py-8 lg:py-12" style={sectionBg2}>

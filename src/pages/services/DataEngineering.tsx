@@ -1,12 +1,4 @@
-import CertificationsSection from "@/components/CertificationsSection";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from
-  "@/components/ui/accordion";
 import {
   ArrowRight,
   Shield,
@@ -27,6 +19,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import { useInView, useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import { Faqs } from "@/components/Faqs";
 
 // ── Animated Network Canvas ──
 const NetworkCanvas = () => {
@@ -1220,21 +1213,11 @@ const DataEngineering = () => {
       <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ====== FAQs ====== */}
-      <section id="faqs" ref={setSectionRef("faqs")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 5%) 100%)" }}>
-        <div className="container mx-auto px-4 lg:px-8 relative z-10 max-w-3xl">
-          <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3" dangerouslySetInnerHTML={{ __html: addClassToSpan(servicePage?.faq_section_heading, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }}></h2>
-          </div>
-          <Accordion type="single" collapsible className={`space-y-3 transition-all duration-700 ${visibleSections.faqs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            {faqs.map((faq, index) =>
-              <AccordionItem key={index} value={`faq-${index}`} className="border-none rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <AccordionTrigger className="px-5 py-4 text-foreground hover:text-accent hover:no-underline text-left text-sm font-semibold">{faq.q}</AccordionTrigger>
-                <AccordionContent className="px-5 pb-4 text-muted-foreground text-sm leading-[1.7]">{faq.a}</AccordionContent>
-              </AccordionItem>
-            )}
-          </Accordion>
-        </div>
+      {servicePage?.faq_section_heading && (
+      <section id="faqs" ref={setSectionRef("faq")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 5%) 100%)" }}>
+        <Faqs heading={servicePage?.faq_section_heading} faqs={faqs} />
       </section>
+      )}
 
       {/* ====== BLOGS ====== */}
       {/* <section id="blogs" ref={setSectionRef("blogs")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 6%) 100%)" }}>
