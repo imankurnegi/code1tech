@@ -70,7 +70,7 @@ const { data, isLoading, error } = useQuery({
   const pageData = data?.data;
   const servicesSection = pageData?.our_microsoft_dynamics_365_consulting_services || {};
 
-  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
