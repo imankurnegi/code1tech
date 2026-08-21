@@ -165,14 +165,29 @@ export const api = {
 
   // GET all posts — https://backend.code1.dev/wp-json/v1/posts
   // GET posts by category — https://backend.code1.dev/wp-json/v1/posts?category=cloud
-  getAllPosts: async (categorySlug?: string) => {
-    const url = categorySlug
-      ? `${BASE_URL}/posts?category=${encodeURIComponent(categorySlug)}`
-      : `${BASE_URL}/posts`;
-    const response = await fetch(url, { headers });
-    if (!response.ok) throw new Error("Failed to fetch posts");
-    return response.json();
-  },
+  getAllPosts: async (categorySlugs?: string[], limit?: number) => {
+  const params = new URLSearchParams();
+
+  if (categorySlugs?.length) {
+    categorySlugs.forEach((slug) => {
+      params.append("category", slug);
+    });
+  }
+
+  if (limit) {
+    params.append("limit", limit.toString());
+  }
+
+  const url = `${BASE_URL}/posts${
+    params.toString() ? `?${params.toString()}` : ""
+  }`;
+
+  const response = await fetch(url, { headers });
+
+  if (!response.ok) throw new Error("Failed to fetch posts");
+
+  return response.json();
+},
 
   // GET single post by slug — https://backend.code1.dev/wp-json/v1/posts?slug=my-post
   getPostBySlug: async (slug: string) => {
@@ -377,6 +392,11 @@ export const api = {
   getMLOpsEngineers: async () => {
     const response = await fetch(`${BASE_URL}/mlops-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch MLOps engineers data");
+    return response.json();
+  },
+  getInsurTechEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/insurtech-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch InsurTech engineers data");
     return response.json();
   }
 };

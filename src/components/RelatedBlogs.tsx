@@ -1,36 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock } from "lucide-react";
-import blogAi from "@/assets/blog-ai.jpg";
-import blogData from "@/assets/blog-data.jpg";
-import blogCloud from "@/assets/blog-cloud.jpg";
-
-const blogs = [
-  {
-    id: "ai-agents-enterprise",
-    category: "AI",
-    title: "How AI Agents Are Reshaping Enterprise Operations in 2024",
-    preview: "Discover why forward-thinking companies are deploying autonomous AI agents to handle complex workflows.",
-    readingTime: "6 min read",
-    image: blogAi
-  },
-  {
-    id: "modern-data-stack",
-    category: "Data",
-    title: "The Modern Data Stack: From Chaos to Clarity",
-    preview: "Building a unified data architecture that scales with your business growth and analytical ambitions.",
-    readingTime: "8 min read",
-    image: blogData
-  },
-  {
-    id: "cloud-migration-lessons",
-    category: "Cloud",
-    title: "Cloud Migration Done Right: Lessons from Fortune 500 Transformations",
-    preview: "Key strategies that separate successful cloud migrations from costly failures.",
-    readingTime: "5 min read",
-    image: blogCloud
-  }
-];
 
 const categoryColors: Record<string, string> = {
   AI: "bg-accent/15 text-accent border-accent/30",
@@ -38,10 +8,36 @@ const categoryColors: Record<string, string> = {
   Cloud: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
 };
 
-const RelatedBlogs = () => {
+interface BlogPost {
+  id?: string | number;
+  slug?: string;
+  title?: { rendered?: string } | string;
+  excerpt?: { rendered?: string } | string;
+  category?: string;
+  featured_image?: string;
+  reading_time?: string;
+}
+
+interface RelatedBlogsProps {
+  dataRelatedBlogs?: BlogPost[];
+}
+
+const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Map API data to component format
+  const displayBlogs = dataRelatedBlogs.map((post: BlogPost) => ({
+    id: post.slug || post.id?.toString() || '',
+    category: post.category || 'Blog',
+    title: typeof post.title === 'string' ? post.title : post.title?.rendered || '',
+    preview: typeof post.excerpt === 'string'
+      ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
+      : post.excerpt?.rendered?.replace(/<[^>]*>/g, '').substring(0, 150) + '...' || '',
+    readingTime: post.reading_time || '5 min read',
+    image: post.featured_image || ""
+  }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -110,7 +106,7 @@ const RelatedBlogs = () => {
 
         {/* Blog Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-12">
-          {blogs.map((blog, index) => {
+          {displayBlogs.map((blog, index) => {
             const isHovered = hoveredIndex === index;
             return (
               <Link

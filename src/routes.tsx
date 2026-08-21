@@ -55,6 +55,7 @@ import NLP from "./pages/services/ai-ml/NLP";
 import AIStrategyConsulting from "./pages/services/ai-ml/AIStrategyConsulting";
 import AIAgents from "./pages/services/ai-ml/AIAgents";
 import MLOps from "./pages/services/ai-ml/MLOps";
+import InsurTech from "./pages/industries/InsurTech";
 
 const AppRoutes = () => {
   return (
@@ -107,6 +108,7 @@ const AppRoutes = () => {
         <Route path="/industries/travel-hospitality" element={<TravelHospitality />} />
         <Route path="/industries/professional-services" element={<ProfessionalServices />} />
         <Route path="/industries/education-edtech" element={<EducationEdTech />} />
+        <Route path="/industries/insurtech" element={<InsurTech />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/careers" element={<Careers />} />

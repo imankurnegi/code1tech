@@ -437,6 +437,14 @@ export async function render(url: string) {
           })
         );
       }
+      if (pathname === "/industries/insurtech") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["insurtech-engineers"],
+            queryFn: api.getInsurTechEngineers,
+          })
+        );
+      }
 
       if (pathname === "/industries/banking-software") {
         prefetches.push(

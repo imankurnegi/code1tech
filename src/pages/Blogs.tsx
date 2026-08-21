@@ -202,17 +202,24 @@ const Blogs = () => {
 
   // ── Fetch posts (server-side category filter) ───────────────────────────────
   useEffect(() => {
-    setPostsLoading(true);
-    setPostsError(null);
-    const slug = activeCategory === "all" ? undefined : activeCategory;
-    api.getAllPosts(slug)
-      .then(res => {
-        // API returns { status, count, data: [...] }
-        setPosts(res?.data ?? []);
-      })
-      .catch(err => setPostsError(err.message ?? "Failed to load posts"))
-      .finally(() => setPostsLoading(false));
-  }, [activeCategory]);
+  setPostsLoading(true);
+  setPostsError(null);
+
+  const categorySlugs =
+    activeCategory === "all" ? undefined : [activeCategory];
+
+  api.getAllPosts(categorySlugs)
+    .then((res) => {
+      // API returns { status, count, data: [...] }
+      setPosts(res?.data ?? []);
+    })
+    .catch((err) => {
+      setPostsError(err.message ?? "Failed to load posts");
+    })
+    .finally(() => {
+      setPostsLoading(false);
+    });
+}, [activeCategory]);
 
   // ── Client-side search on top of server filter ──────────────────────────────
   const filteredPosts = posts.filter(post => {

@@ -24,11 +24,10 @@ const Index = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["homepage"],
     queryFn: async () => {
-      const [homeData, clientLogos] =
-        await Promise.all([
-          api.getHomeData(),
-          api.getClientLogos(),
-        ]);
+      const [homeData, clientLogos] = await Promise.all([
+        api.getHomeData(),
+        api.getClientLogos(),
+      ]);
 
       return {
         homeData,
@@ -37,11 +36,25 @@ const Index = () => {
     },
   });
 
-  if (isLoading) return <LoadingSkeleton type="hero" />;
-  if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
-
   const homepageData = data?.homeData;
   const clientLogosData = data?.clientLogos?.data ?? [];
+
+  const blogCategory = homepageData?.data?.blog_category;
+
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory
+      .map((category) => category?.slug)
+      .filter((slug): slug is string => Boolean(slug))
+  : [];
+
+const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+});
+
+  if (isLoading) return <LoadingSkeleton type="hero" />;
+  if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
   return (
     <>
       <SeoTags
@@ -74,7 +87,7 @@ const Index = () => {
       <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
       <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
       <TestimonialsSection dataTestimonials={homepageData?.data?.testimonial_section} />
-      {/* <RelatedBlogs dataRelatedBlogs={homepageData?.data?.blog_section}/> */}
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data ?? []}/>
       <ContactSection dataContact={homepageData?.data?.contact_form_fields} />
 
     </>
