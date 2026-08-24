@@ -398,5 +398,10 @@ export const api = {
     const response = await fetch(`${BASE_URL}/insurtech-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch InsurTech engineers data");
     return response.json();
+  },
+  getManufacturingEngineers: async () => {
+    const response = await fetch(`${BASE_URL}/manufacturing-engineers`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Manufacturing engineers data");
+    return response.json();
   }
 };

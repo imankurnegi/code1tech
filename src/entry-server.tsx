@@ -445,6 +445,14 @@ export async function render(url: string) {
           })
         );
       }
+      if (pathname === "/industries/manufacturing") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+             queryKey: ["manufacturing-engineers"],
+                queryFn: api.getManufacturingEngineers,
+          })
+        );
+      }
 
       if (pathname === "/industries/banking-software") {
         prefetches.push(
