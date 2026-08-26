@@ -13,6 +13,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 
 // Helper function to generate random vibrant colors
@@ -74,6 +75,17 @@ const { data, isLoading, error } = useQuery({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
+
+  const blogCategory = pageData?.blog_category;
+        const categorySlugs = Array.isArray(blogCategory)
+          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+          : [];
+        const { data: relatedPostsData } = useQuery({
+          queryKey: ["relatedPosts", categorySlugs],
+          queryFn: () => api.getAllPosts(categorySlugs, 10),
+          enabled: categorySlugs.length > 0,
+        });
+        
   const services = servicesSection?.tabs?.map((tab: any) => ({
     icon: tab.icon,
     title: tab.title,
@@ -855,6 +867,8 @@ const { data, isLoading, error } = useQuery({
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* FINAL CTA + CONTACT */}
       <section

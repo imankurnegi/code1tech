@@ -14,6 +14,7 @@ import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 
 const cardBase =
@@ -167,6 +168,16 @@ const DataModelling = () => {
         a: item.post_content ?? "",
       }))
     : [];
+
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
 
   const platformServices = Array.isArray(platformSection.service_list)
     ? platformSection.service_list.map((item: any) => item.text)
@@ -1058,7 +1069,7 @@ const DataModelling = () => {
 
 
       {/* ======= FAQ ======= */}
-      {faqHeading && (
+      {faqHeading && faqs.length > 0 && (
       <section
         ref={setRef("faq")}
         className="relative py-10 lg:py-14 overflow-hidden"
@@ -1070,6 +1081,8 @@ const DataModelling = () => {
         <Faqs heading={faqHeading} faqs={faqs} />
       </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ======= CONTACT ======= */}
       <section

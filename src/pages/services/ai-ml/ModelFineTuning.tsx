@@ -19,6 +19,7 @@ import ContactUsForm from "@/components/ContactUsForm";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const cardBase =
   "rounded-2xl p-6 transition-all duration-500 hover:border-accent/30 hover:-translate-y-1";
@@ -127,6 +128,16 @@ const ModelFineTuning = () => {
   }));
   const seoSection = pageData?.seo || {};
   const schemaSection = pageData?.schema || {};
+
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
 
   const whyMatters = whyMattersSection?.cards?.map((card: any) => ({
     icon: card.icon,
@@ -905,6 +916,8 @@ const ModelFineTuning = () => {
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ======= CLOSING CTA + CONTACT ======= */}
       <section

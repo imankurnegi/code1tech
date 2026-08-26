@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub: string; btn: string, btnUrl?:string }) => (
   <div style={{ background: "#070B12" }} className="py-6">
@@ -76,6 +77,21 @@ const AIAgents = () => {
   const businessOutcomesSection = pageData?.business_outcomes_you_can_expect_from_industrial_computer_vision_solutions || {};
   const seoSection = pageData?.seo || {};
   const schemaSection = pageData?.schema || {};
+
+  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
+  
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
 
   const whyMatters = whyMattersSection?.cards?.map((card: any) => ({
     icon: card.icon,
@@ -356,6 +372,15 @@ const AIAgents = () => {
         btnUrl={cta_section_322?.button_url || ""}
       />
 
+{/* FAQs */}
+      {pageData?.faq_section_heading && faqs.length > 0 && (
+        <section ref={setRef("faq")} id="faqs" className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
+          <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
+        </section>
+      )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
+
       <section
         ref={setRef("contact")}
         className="relative py-10 lg:py-14 overflow-hidden"
@@ -400,6 +425,7 @@ const AIAgents = () => {
           </div>
         </div>
       </section>
+
     </>
   );
 };

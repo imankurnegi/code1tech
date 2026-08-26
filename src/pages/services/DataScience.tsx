@@ -18,6 +18,7 @@ import he from "he";
 import SeoTags from "@/components/SeoTags";
 import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import RelatedBlogs from "@/components/RelatedBlogs";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
@@ -582,6 +583,20 @@ const DataScience = () => {
 
   const pageData = data?.serviceData?.data ?? null;
 
+  const blogCategory = pageData?.blog_category;
+
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory
+      .map((category) => category?.slug)
+      .filter((slug): slug is string => Boolean(slug))
+  : [];
+
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
+
   const banner = pageData?.banner_section;
   const statsFields = pageData?.stats_section?.stats_fields ?? [];
   const industriesApi = pageData?.box_data ?? [];
@@ -597,8 +612,7 @@ const DataScience = () => {
   const caseStudiesApi = pageData?.case_studies ?? [];
   const caseStudiesSectionHeading = pageData?.case_study_section_heading;
   const faqSectionHeading = pageData?.faq_section_heading;
-  const faqsApi = pageData?.frequently_asked_question ?? [];
-
+  
   const dataTestimonials = {
     testimonial_heading: pageData?.testimonial_section_heading,
     testimonials: pageData?.testimonials ?? []
@@ -713,11 +727,10 @@ const DataScience = () => {
       icon: cs?.acf?.hover_icon,
     })) || [];
 
-  const faqs =
-    faqsApi.map((f: any) => ({
-      question: f.post_title,
-      answer: stripTags(f.post_content || ""),
-    })) || [];
+    const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+    q: item.post_title ?? "",
+    a: item.post_content ?? "",
+  }));
 
   const cardStyle = {
     background: "rgba(255, 255, 255, 0.03)",
@@ -1413,11 +1426,14 @@ const DataScience = () => {
        <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ===== 13. FAQs ===== */}
-      {faqSectionHeading && (
+      {faqSectionHeading && faqs.length > 0 && (
       <section ref={faqRef} className="py-8 lg:py-12" style={sectionBg3}>
         <Faqs heading={faqSectionHeading} faqs={faqs} />
       </section>
       )}
+
+      {/* ===== RELATED BLOGS ===== */}
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ===== 14. FINAL CTA: Get Started ===== */}
       <section className="py-8 lg:py-12" style={sectionBg2}>

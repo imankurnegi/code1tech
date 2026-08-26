@@ -15,6 +15,7 @@ import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 type ServiceItem = { icon: any; title: string; desc: string; image: string; imageCaption: string };
 
@@ -292,6 +293,17 @@ const Tableau = () => {
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
+
+  const blogCategory = pageData?.blog_category;
+        const categorySlugs = Array.isArray(blogCategory)
+          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+          : [];
+        const { data: relatedPostsData } = useQuery({
+          queryKey: ["relatedPosts", categorySlugs],
+          queryFn: () => api.getAllPosts(categorySlugs, 10),
+          enabled: categorySlugs.length > 0,
+        });
+        
   const cta_section_77 = pageData?.cta_section_77;
   const cta_section_111 = pageData?.cta_section_111;
   const cta_section_113 = pageData?.cta_section_113;
@@ -731,6 +743,8 @@ const industries = industrySection?.cards?.map((item: any) => ({
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* FINAL CTA + CONTACT */}
       <section

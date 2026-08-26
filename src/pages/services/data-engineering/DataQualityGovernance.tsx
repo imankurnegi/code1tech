@@ -15,6 +15,7 @@ import { Sparkles } from "lucide-react";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 /* Static content replaced by JSON-driven bindings inside the component. */
 
@@ -184,6 +185,16 @@ const DataQualityGovernance = () => {
     q: f.post_title ?? "",
     a: f.post_content ?? "",
   }));
+
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
 
   const contactSection = pageData?.services_get_started_section ?? {};
   const contactHeading = contactSection.heading ?? "";
@@ -988,7 +999,7 @@ const DataQualityGovernance = () => {
       ) : null}
 
       {/* ======= FAQ ======= */}
-      {faqHeading && (
+      {faqHeading && faqs.length > 0 && (
       <section
         ref={setRef("faq")}
         className="relative py-10 lg:py-14 overflow-hidden"
@@ -1000,6 +1011,8 @@ const DataQualityGovernance = () => {
         <Faqs heading={faqHeading} faqs={faqs} />
       </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ======= CONTACT ======= */}
       <section

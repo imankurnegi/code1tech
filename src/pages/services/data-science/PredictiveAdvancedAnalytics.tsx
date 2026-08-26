@@ -11,6 +11,7 @@ import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const InlineCTA = ({ title, sub, btn, btnUrl }: { title: string; sub?: string; btn: string; btnUrl?: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -88,6 +89,16 @@ const PredictiveAdvancedAnalytics = () => {
         a: item.post_content ?? "",
       }))
     : [];
+
+    const blogCategory = pageData?.blog_category;
+      const categorySlugs = Array.isArray(blogCategory)
+        ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+        : [];
+      const { data: relatedPostsData } = useQuery({
+        queryKey: ["relatedPosts", categorySlugs],
+        queryFn: () => api.getAllPosts(categorySlugs, 10),
+        enabled: categorySlugs.length > 0,
+      });
 
   // Extract specific data with fallbacks
   const heroImage = bannerSection.banner_image?.url;
@@ -657,6 +668,8 @@ const PredictiveAdvancedAnalytics = () => {
           <Faqs heading={faqHeading} faqs={faqsData} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* READY CTA + CONTACT */}
       <section

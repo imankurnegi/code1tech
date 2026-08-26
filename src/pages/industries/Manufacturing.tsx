@@ -10,6 +10,7 @@ import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const CTABanner = ({ text, buttonText, linkUrl }: { text: string; buttonText: string; linkUrl?: string }) => (
   <div
@@ -100,6 +101,20 @@ const Manufacturing = () => {
 
     const pageData = data?.data;
 
+    const blogCategory = pageData?.blog_category;
+
+    const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory
+        .map((category) => category?.slug)
+        .filter((slug): slug is string => Boolean(slug))
+    : [];
+
+    const { data: relatedPostsData } = useQuery({
+      queryKey: ["relatedPosts", categorySlugs],
+      queryFn: () => api.getAllPosts(categorySlugs, 10),
+      enabled: categorySlugs.length > 0,
+    });
+
 // ─── DATA MAPPING ────────────────────────────────────────────────────────────────
 const heroBanner = pageData?.industries_banner;
 const businessOutcomesSection = pageData?.business_outcomes_that_drive_real_estate_growth;
@@ -172,8 +187,8 @@ const whyChoose = whyChooseSection?.cards?.map((card: any) => ({
 })) || [];
 
 const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
-  q: item.question ?? item.post_title ?? "",
-  a: item.answer ?? item.post_content ?? "",
+  q: item.post_title ?? "",
+  a: item.post_content ?? "",
 }));
 
 const heroBlocks = heroBanner?.blocks?.map((block: any) => ({
@@ -508,6 +523,9 @@ const heroBlocks = heroBanner?.blocks?.map((block: any) => ({
                 <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
               </section>
             )}
+
+      {/* ================= RELATED BLOGS ================= */}
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ================= CONTACT ================= */}
       <section className="py-16 lg:py-24 relative overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(222 47% 8%) 100%)" }}>

@@ -14,6 +14,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -503,6 +504,20 @@ const AIMLSolutions = () => {
 
   const serviceData = data?.serviceData?.data;
 
+  const blogCategory = serviceData?.blog_category;
+
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory
+      .map((category) => category?.slug)
+      .filter((slug): slug is string => Boolean(slug))
+  : [];
+
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
+
   const engagementModels = serviceData?.engagement_models_section?.right_side_box?.map((model: any) => ({
     icon: model.icon,
     title: model.title,
@@ -517,8 +532,8 @@ const AIMLSolutions = () => {
   })) || [];
 
   const faqs = serviceData?.frequently_asked_question?.map((faq: any) => ({
-    q: faq.post_title,
-    a: faq.post_content
+    q: faq.post_title ?? "",
+    a: faq.post_content ?? ""
   })) || [];
 
   const dataTestimonials = {
@@ -1253,11 +1268,14 @@ const AIMLSolutions = () => {
        <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ── FAQs ── */}
-      {serviceData?.faq_section_heading && (
+      {serviceData?.faq_section_heading && faqs.length > 0 && (
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(220 50% 7%) 0%, hsl(222 47% 5%) 100%)" }}>
         <Faqs heading={serviceData?.faq_section_heading} faqs={faqs} />
       </section>
       )}
+
+      {/* ── RELATED BLOGS ── */}
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ── CONTACT FORM ── */}
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 7%) 100%)" }}>

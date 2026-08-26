@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import { useInView, useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
+import RelatedBlogs from "@/components/RelatedBlogs";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
 
@@ -370,6 +371,20 @@ const DataEngineering = () => {
 
   const servicePage = data?.serviceData?.data;
 
+  const blogCategory = servicePage?.blog_category;
+
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory
+      .map((category) => category?.slug)
+      .filter((slug): slug is string => Boolean(slug))
+  : [];
+
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
+
   const engagementModels = servicePage?.data_engineers_engagement_models_section?.cards?.map((item) => {
     return {
       icon: item.icon,
@@ -440,8 +455,8 @@ const DataEngineering = () => {
 
   const faqs = servicePage?.frequently_asked_question?.map((item) => {
     return {
-      q: item.post_title,
-      a: item.post_content
+      q: item.post_title ?? "",
+      a: item.post_content ?? ""
     }
   }) || [];
 
@@ -1213,44 +1228,15 @@ const DataEngineering = () => {
       <TestimonialsSection dataTestimonials={dataTestimonials} />
 
       {/* ====== FAQs ====== */}
-      {servicePage?.faq_section_heading && (
+      {servicePage?.faq_section_heading && faqs.length > 0 && (
       <section id="faqs" ref={setSectionRef("faq")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 5%) 100%)" }}>
         <Faqs heading={servicePage?.faq_section_heading} faqs={faqs} />
       </section>
       )}
 
-      {/* ====== BLOGS ====== */}
-      {/* <section id="blogs" ref={setSectionRef("blogs")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(220 50% 6%) 100%)" }}>
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <div className={`text-center mb-10 transition-all duration-700 ${visibleSections.blogs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
-              Latest <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Insights</span> on Data Engineering
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
-            {[
-            { title: "Building Real-Time Data Pipelines with Apache Kafka", tag: "Data Streaming", excerpt: "Learn how to architect high-throughput, low-latency data pipelines using Kafka for real-time analytics." },
-            { title: "Data Lakehouse: The Future of Data Architecture", tag: "Architecture", excerpt: "Discover why leading enterprises are adopting the lakehouse paradigm to unify their data strategy." },
-            { title: "DataOps Best Practices for Enterprise Teams", tag: "DataOps", excerpt: "Implement CI/CD for data pipelines and automate quality checks for reliable, production-grade data systems." }].
-            map((blog, index) =>
-            <div key={index} className={`group relative p-6 rounded-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer ${visibleSections.blogs ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", backdropFilter: "blur(20px)", boxShadow: "0 8px 32px rgba(0,0,0,0.3)", transitionDelay: `${index * 150}ms` }}>
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "linear-gradient(180deg, rgba(95,194,227,0.06) 0%, transparent 60%)" }} />
-                <div className="relative z-10">
-                  <span className="text-[10px] font-semibold text-accent/60 uppercase tracking-wider">{blog.tag}</span>
-                  <h3 className="text-base font-bold text-foreground mt-2 mb-3 group-hover:text-accent transition-colors duration-300">{blog.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-[1.7] mb-4">{blog.excerpt}</p>
-                  <div className="flex items-center gap-1 text-accent text-sm font-medium group-hover:gap-2 transition-all duration-300">
-                    <BookOpen className="w-4 h-4" />Read More <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section> */}
+      {/* ====== RELATED BLOGS ====== */}
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
-      {/* ====== FAQs ====== */}
       {/* ====== CONTACT ====== */}
       <section id="contact" ref={setSectionRef("contact")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(220 50% 6%) 0%, hsl(222 47% 5%) 100%)" }}>
         <PulsingGlow className="top-0 left-0 w-[500px] h-[500px]" />

@@ -14,6 +14,7 @@ import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 
 const cardBase =
@@ -155,13 +156,22 @@ const CloudDataMigration = () => {
   const contactBullets = Array.isArray(contactSection.lists) ? contactSection.lists.map((item: any) => item.list) : [];
   const contactButton = Array.isArray(contactSection.buttons) ? contactSection.buttons[0] : null;
 
-  const faqHeading = pageData?.faq_section_heading ?? "";
   const faqsData = Array.isArray(pageData?.frequently_asked_question)
     ? pageData.frequently_asked_question.map((item: any) => ({
         q: item.post_title ?? "",
         a: item.post_content ?? "",
       }))
     : [];
+
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
 
   const RenderIcon = ({ icon, className }: any) => {
     if (!icon) return null;
@@ -1063,7 +1073,7 @@ const CloudDataMigration = () => {
       </section>
 
       {/* FAQ */}
-      {pageData?.faq_section_heading && (
+      {pageData?.faq_section_heading && faqsData.length > 0 && (
       <section
         ref={setRef("faq")}
         className="relative py-10 lg:py-14 overflow-hidden"
@@ -1072,6 +1082,8 @@ const CloudDataMigration = () => {
         <Faqs heading={pageData?.faq_section_heading} faqs={faqsData} />
       </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* CONTACT */}
       <section

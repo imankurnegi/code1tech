@@ -18,6 +18,7 @@ import { useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 type ServiceItem = { icon?: string; title: string; desc: string; image: string, image_label: string };
 
@@ -308,6 +309,17 @@ const Databricks = () => {
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
+
+  const blogCategory = pageData?.blog_category;
+        const categorySlugs = Array.isArray(blogCategory)
+          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+          : [];
+        const { data: relatedPostsData } = useQuery({
+          queryKey: ["relatedPosts", categorySlugs],
+          queryFn: () => api.getAllPosts(categorySlugs, 10),
+          enabled: categorySlugs.length > 0,
+        });
+        
   const heroImageUrl = heroBanner?.image?.url || "";
   const heroBadges = heroBanner?.badges || [];
   const heroStats = heroBanner?.bottom_section || [];
@@ -647,6 +659,8 @@ const Databricks = () => {
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* FINAL CONTACT */}
       <section

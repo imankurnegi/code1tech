@@ -11,6 +11,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 /* ── Animated network canvas background ── */
 const NetworkCanvas = () => {
@@ -144,6 +145,16 @@ const TechTeamBuilding = () => {
         a: item.post_content ?? item.answer ?? item.a ?? "",
       }))
     : [];
+
+    const blogCategory = pageData?.blog_category;
+      const categorySlugs = Array.isArray(blogCategory)
+        ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+        : [];
+      const { data: relatedPostsData } = useQuery({
+        queryKey: ["relatedPosts", categorySlugs],
+        queryFn: () => api.getAllPosts(categorySlugs, 10),
+        enabled: categorySlugs.length > 0,
+      });
 
   const scaleSection = pageData?.scale_your_team_with_the_right_talent ?? {};
   const whySection = pageData?.why_businesses_choose_tech_team_building_services ?? {};
@@ -639,6 +650,8 @@ const TechTeamBuilding = () => {
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ====== FINAL CTA + CONTACT FORM ====== */}
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>

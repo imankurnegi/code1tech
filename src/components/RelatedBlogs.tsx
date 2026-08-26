@@ -27,6 +27,11 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Don't render if no related blogs
+  if (!dataRelatedBlogs || dataRelatedBlogs.length === 0) {
+    return null;
+  }
+
   // Map API data to component format
   const displayBlogs = dataRelatedBlogs.map((post: BlogPost) => ({
     id: post.slug || post.id?.toString() || '',
@@ -110,7 +115,7 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
             const isHovered = hoveredIndex === index;
             return (
               <Link
-                to={`/blogs/${blog.id}`}
+                to={`/blog/${blog.id}`}
                 key={index}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -196,7 +201,7 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <Link to="/blogs" className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors">
+          <Link to="/blog" className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors">
             <span className="relative">
               Explore All Insights
               <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />

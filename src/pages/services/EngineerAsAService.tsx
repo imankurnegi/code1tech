@@ -16,6 +16,7 @@ import { useInView, useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 // Animated network canvas background
 const NetworkCanvas = () => {
@@ -175,7 +176,21 @@ const EngineerAsAService = () => {
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const serviceData = data?.serviceData?.data;
-  
+
+  const blogCategory = serviceData?.blog_category;
+
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory
+      .map((category) => category?.slug)
+      .filter((slug): slug is string => Boolean(slug))
+  : [];
+
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
+
   const pillars = serviceData?.engineer_as_a_service_page_section?.box_fields?.map((item) => {
     return {
       icon: item.box_icon,
@@ -1217,6 +1232,9 @@ const EngineerAsAService = () => {
           <Faqs heading={serviceData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      {/* ===== RELATED BLOGS ===== */}
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ===== PRE-CONTACT CTA BANNER ====== */}
       <section className="relative py-6 overflow-hidden" style={{ background: "hsl(222 47% 5%)" }}>

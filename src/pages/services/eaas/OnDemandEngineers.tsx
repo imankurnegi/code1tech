@@ -25,6 +25,7 @@ import { useInView, useInViewMap } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 /* ── Animated network canvas background ── */
 const NetworkCanvas = () => {
@@ -448,6 +449,16 @@ const OnDemandEngineers = () => {
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
+
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+  const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+  });
 
   return (
     <div ref={pageRef}>
@@ -1026,11 +1037,13 @@ const OnDemandEngineers = () => {
       </div>
 
       {/* ====== FAQs ====== */}
-      {pageData?.faq_section_heading && (
+      {pageData?.faq_section_heading && faqs.length > 0 && (
       <section id="faqs" ref={setSectionRef("faq")} className="relative py-10 lg:py-14 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(220 50% 8%) 50%, hsl(222 47% 6%) 100%)" }}>
         <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
       </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* ====== FINAL CTA + CONTACT FORM ====== */}
       <section className="py-12 lg:py-16" style={{ background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 6%) 100%)" }}>

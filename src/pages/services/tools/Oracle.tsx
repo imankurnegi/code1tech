@@ -16,6 +16,7 @@ import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl?: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -60,6 +61,16 @@ const Oracle = () => {
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
+
+  const blogCategory = pageData?.blog_category;
+        const categorySlugs = Array.isArray(blogCategory)
+          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+          : [];
+        const { data: relatedPostsData } = useQuery({
+          queryKey: ["relatedPosts", categorySlugs],
+          queryFn: () => api.getAllPosts(categorySlugs, 10),
+          enabled: categorySlugs.length > 0,
+        });
 
   const ORACLE_TAB_KEY = "oracle:activeSvc";
   const [activeSvc, setActiveSvc] = useState<number>(() => {
@@ -766,6 +777,8 @@ const {
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* FINAL CTA + CONTACT */}
       <section

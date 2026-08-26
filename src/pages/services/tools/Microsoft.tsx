@@ -12,6 +12,7 @@ import { DynamicIcon } from "@/components/DynamicIcon";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
+import RelatedBlogs from "@/components/RelatedBlogs";
 
 const InlineCTA = ({ title, btn, btnUrl }: { title: string; btn: string; btnUrl: string }) => (
   <div className="mt-12 lg:mt-14">
@@ -77,6 +78,16 @@ const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
   q: item.post_title ?? "",
   a: item.post_content ?? "",
 }));
+
+const blogCategory = pageData?.blog_category;
+      const categorySlugs = Array.isArray(blogCategory)
+        ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+        : [];
+      const { data: relatedPostsData } = useQuery({
+        queryKey: ["relatedPosts", categorySlugs],
+        queryFn: () => api.getAllPosts(categorySlugs, 10),
+        enabled: categorySlugs.length > 0,
+      });
 
 const heroBadges = heroBanner?.badges || [];
 const heroStats = heroBanner?.bottom_section || [];
@@ -629,6 +640,8 @@ const industries = industriesSection?.cards?.map((card: any) => ({
           <Faqs heading={pageData?.faq_section_heading} faqs={faqs} />
         </section>
       )}
+
+      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
 
       {/* FINAL CTA + CONTACT */}
       <section
