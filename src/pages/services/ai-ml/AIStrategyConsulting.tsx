@@ -96,10 +96,22 @@ const AIStrategyConsulting = () => {
     queryKey: ["ai-strategy-consulting"],
     queryFn: api.getStrategyEngineers,
   });
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton type="hero" />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
 
   // ─── DATA EXTRACTION FROM JSON ────────────────────────────────────────────────
   const heroBanner = pageData?.ai_ml_banner_section || {};
@@ -127,15 +139,7 @@ const AIStrategyConsulting = () => {
   const seoSection = pageData?.seo || {};
   const schemaSection = pageData?.schema || {};
 
-  const blogCategory = pageData?.blog_category;
-  const categorySlugs = Array.isArray(blogCategory)
-    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-    : [];
-  const { data: relatedPostsData } = useQuery({
-    queryKey: ["relatedPosts", categorySlugs],
-    queryFn: () => api.getAllPosts(categorySlugs, 10),
-    enabled: categorySlugs.length > 0,
-  });
+  
 
   const whyMatters = whyMattersSection?.cards?.map((card: any) => ({
     icon: typeof card.icon === 'string' ? card.icon : '',
