@@ -499,24 +499,28 @@ const AIMLSolutions = () => {
     },
   });
 
+
+  const serviceData = data?.serviceData?.data;
+  const blogCategory = serviceData?.blog_category;
+  
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory
+  .map((category) => category?.slug)
+  .filter((slug): slug is string => Boolean(slug))
+  : [];
+  
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton type="hero" />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const serviceData = data?.serviceData?.data;
+  
 
-  const blogCategory = serviceData?.blog_category;
-
-  const categorySlugs = Array.isArray(blogCategory)
-  ? blogCategory
-      .map((category) => category?.slug)
-      .filter((slug): slug is string => Boolean(slug))
-  : [];
-
-  const { data: relatedPostsData } = useQuery({
-    queryKey: ["relatedPosts", categorySlugs],
-    queryFn: () => api.getAllPosts(categorySlugs, 10),
-    enabled: categorySlugs.length > 0,
-  });
+  
 
   const engagementModels = serviceData?.engagement_models_section?.right_side_box?.map((model: any) => ({
     icon: model.icon,

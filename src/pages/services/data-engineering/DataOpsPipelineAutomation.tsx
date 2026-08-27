@@ -74,10 +74,22 @@ const DataOpsPipelineAutomation = () => {
       queryFn: api.getDataOpsEngineers,
     });
   
+
+    const pageData = data?.data;
+    const blogCategory = pageData?.blog_category;
+    const categorySlugs = Array.isArray(blogCategory)
+    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+    : [];
+    const { data: relatedPostsData } = useQuery({
+    queryKey: ["relatedPosts", categorySlugs],
+    queryFn: () => api.getAllPosts(categorySlugs, 10),
+    enabled: categorySlugs.length > 0,
+    });
+
     if (isLoading) return <LoadingSkeleton type="hero" />;
       if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
   
-    const pageData = data?.data;
+    
 
   // Extract JSON data sections
   const bannerSection = pageData?.banner_section ?? {};
@@ -102,15 +114,7 @@ const DataOpsPipelineAutomation = () => {
       }))
     : [];
 
-  const blogCategory = pageData?.blog_category;
-  const categorySlugs = Array.isArray(blogCategory)
-    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-    : [];
-  const { data: relatedPostsData } = useQuery({
-    queryKey: ["relatedPosts", categorySlugs],
-    queryFn: () => api.getAllPosts(categorySlugs, 10),
-    enabled: categorySlugs.length > 0,
-  });
+  
 
   // Extract card arrays
   const automationCards = Array.isArray(automationSection.cards) ? automationSection.cards : [];

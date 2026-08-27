@@ -131,10 +131,22 @@ const TechTeamBuilding = () => {
   // No-op ref — sections are always visible via CSS animations
   const setSectionRef = (_id: string) => (_el: HTMLElement | null) => {};
 
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton type="hero" />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
 
   /* ── Derived data arrays ── */
   const stats = pageData?.stats_section?.stats_fields ?? [];
@@ -146,15 +158,7 @@ const TechTeamBuilding = () => {
       }))
     : [];
 
-    const blogCategory = pageData?.blog_category;
-      const categorySlugs = Array.isArray(blogCategory)
-        ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-        : [];
-      const { data: relatedPostsData } = useQuery({
-        queryKey: ["relatedPosts", categorySlugs],
-        queryFn: () => api.getAllPosts(categorySlugs, 10),
-        enabled: categorySlugs.length > 0,
-      });
+    
 
   const scaleSection = pageData?.scale_your_team_with_the_right_talent ?? {};
   const whySection = pageData?.why_businesses_choose_tech_team_building_services ?? {};

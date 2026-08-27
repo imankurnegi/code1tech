@@ -47,10 +47,22 @@ const PowerApps = () => {
       queryKey: ["powerapps-engineers"],
       queryFn: api.getPowerAppsEngineers,
     });
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton type="hero" />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
 
   // ─── DATA ────────────────────────────────────────────────────────────────
 const heroBanner = pageData?.tools_main_banner;
@@ -74,15 +86,7 @@ const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
   a: item.post_content ?? "",
 }));
 
-const blogCategory = pageData?.blog_category;
-      const categorySlugs = Array.isArray(blogCategory)
-        ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-        : [];
-      const { data: relatedPostsData } = useQuery({
-        queryKey: ["relatedPosts", categorySlugs],
-        queryFn: () => api.getAllPosts(categorySlugs, 10),
-        enabled: categorySlugs.length > 0,
-      });
+
 
 const heroBadges = heroBanner?.badges || [];
 const heroStats = heroBanner?.bottom_section || [];
