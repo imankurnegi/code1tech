@@ -151,7 +151,7 @@ const industries = industriesSection?.cards?.map((card: any) => ({
 
  const filteredServices = services.find((s) => s.category === activeCat);
 
- if (isLoading) return <LoadingSkeleton type="hero" />;
+ if (isLoading) return <LoadingSkeleton />;
    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
     
   return (

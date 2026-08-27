@@ -157,7 +157,7 @@ const DataWarehousing = () => {
     queryFn: api.getDataWarehousing,
   });
 
-  if (isLoading) return <LoadingSkeleton type="hero" />;
+  if (isLoading) return <LoadingSkeleton />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const pageData = data?.data;

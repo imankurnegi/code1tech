@@ -23,9 +23,13 @@ export async function render(url: string) {
   
   const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
   const blogSlug = blogSlugMatch ? blogSlugMatch[1] : null;
-  
+
   const authorSlugMatch = pathname.match(/^\/author\/([^/]+)$/);
   const authorSlug = authorSlugMatch ? authorSlugMatch[1] : null;
+
+  // Extract blog category from URL params
+  const searchParams = url.split('?')[1] || '';
+  const blogCategory = new URLSearchParams(searchParams).get('category');
 
   if (baseUrl) {
     try {
@@ -175,10 +179,12 @@ export async function render(url: string) {
             queryFn: api.getBlogPageData,
           })
         );
+        // If category is specified, fetch filtered posts
+        const categorySlugs = blogCategory ? [blogCategory] : undefined;
         prefetches.push(
           queryClient.prefetchQuery({
-            queryKey: ["posts"],
-            queryFn: () => api.getAllPosts(),
+            queryKey: ["posts", blogCategory || "all"],
+            queryFn: () => api.getAllPosts(categorySlugs),
           })
         );
         prefetches.push(
@@ -602,11 +608,23 @@ export async function render(url: string) {
         );
       }
 
-      // Blog detail and author pages fetch data client-side via useEffect
+      // Blog detail prefetching for SEO meta tags
       if (blogSlug) {
-        console.log("Blog detail page detected, data will be fetched client-side");
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["blog-post", blogSlug],
+            queryFn: () => api.getPostBySlug(blogSlug),
+          })
+        );
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["posts"],
+            queryFn: () => api.getAllPosts(),
+          })
+        );
       }
 
+      // Author page fetch data client-side via useEffect
       if (authorSlug) {
         console.log("Author page detected, data will be fetched client-side");
       }

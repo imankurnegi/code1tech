@@ -1,4 +1,5 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, useMemo, FormEvent } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,11 @@ interface BlogPageData {
     nofollow?: string;
   };
   schema?: Record<string, any>;
+  acf?: {
+    hero_heading?: string;
+    hero_subtitle?: string;
+  };
+  description?: string;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -137,14 +143,9 @@ const Blogs = () => {
   const [isSubscribing,   setIsSubscribing]  = useState(false);
   const [visibleCount,    setVisibleCount]   = useState(ARTICLES_PER_PAGE);
 
-  const [posts,        setPosts]        = useState<ApiPost[]>([]);
-  const [categories,   setCategories]   = useState<ApiCategoryItem[]>([]);
-  const [postsLoading, setPostsLoading] = useState(true);
-  const [catsLoading,  setCatsLoading]  = useState(true);
-  const [postsError,   setPostsError]   = useState<string | null>(null);
   const [pageMeta,     setPageMeta]     = useState<BlogPageData | null>(null);
 
-  const featuredImageRef = useElementParallax(0.18) as React.RefObject<HTMLDivElement>;
+  const featuredImageRef = useElementParallax(0.18).ref as React.RefObject<HTMLDivElement>;
 
   // Derive phrases inline — no useMemo needed, safe when pageMeta is null
   const rotatingPhrases: string[] = pageMeta?.blog_page_banner?.changeable_text
@@ -185,43 +186,35 @@ const Blogs = () => {
   }, [activeCategory, searchQuery]);
 
   // ── Fetch blog page meta ────────────────────────────────────────────────────
-  useEffect(() => {
-    api.getBlogPageData()
-      .then(res => setPageMeta(res?.data ?? null))
-      .catch(() => {});
-  }, []);
+  const { data: pageMetaResponse } = useQuery({
+    queryKey: ["blog-page"],
+    queryFn: api.getBlogPageData,
+  });
 
   // ── Fetch categories ────────────────────────────────────────────────────────
-  useEffect(() => {
-    setCatsLoading(true);
-    api.getCategories()
-      .then(res => setCategories(res?.data ?? res ?? []))
-      .catch(() => setCategories([]))
-      .finally(() => setCatsLoading(false));
-  }, []);
+  const { data: categoriesResponse, isLoading: catsLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: api.getCategories,
+  });
 
   // ── Fetch posts (server-side category filter) ───────────────────────────────
+  const categorySlugs = activeCategory === "all" ? undefined : [activeCategory];
+
+  const { data: postsResponse, isLoading: postsLoading, error: postsError } = useQuery({
+    queryKey: ["posts", activeCategory],
+    queryFn: () => api.getAllPosts(categorySlugs),
+  });
+
+  // Process data
+  const categories = useMemo(() => categoriesResponse?.data ?? categoriesResponse ?? [], [categoriesResponse]);
+  const posts = useMemo(() => postsResponse?.data ?? [], [postsResponse]);
+
+  // Update page meta
   useEffect(() => {
-  setPostsLoading(true);
-  setPostsError(null);
+    setPageMeta(pageMetaResponse?.data ?? null);
+  }, [pageMetaResponse]);
 
-  const categorySlugs =
-    activeCategory === "all" ? undefined : [activeCategory];
-
-  api.getAllPosts(categorySlugs)
-    .then((res) => {
-      // API returns { status, count, data: [...] }
-      setPosts(res?.data ?? []);
-    })
-    .catch((err) => {
-      setPostsError(err.message ?? "Failed to load posts");
-    })
-    .finally(() => {
-      setPostsLoading(false);
-    });
-}, [activeCategory]);
-
-  // ── Client-side search on top of server filter ──────────────────────────────
+  // ── Client-side search filter (category is handled server-side) ─────────────
   const filteredPosts = posts.filter(post => {
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
@@ -484,7 +477,7 @@ const Blogs = () => {
               {/* Error */}
               {postsError && !postsLoading && (
                 <div className="text-center py-12">
-                  <p className="text-rose-400 text-sm">{postsError}</p>
+                  <p className="text-rose-400 text-sm">{postsError.message || "Failed to load posts"}</p>
                   <button onClick={() => setActiveCategory(activeCategory)} className="mt-4 text-accent text-sm underline">
                     Try again
                   </button>

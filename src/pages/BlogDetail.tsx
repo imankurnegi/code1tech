@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, FormEvent } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight, ArrowLeft, Clock, Calendar, User, Share2,
@@ -194,54 +195,51 @@ const BlogDetail = () => {
   const { id: slug } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const [post,        setPost]        = useState<ApiPost | null>(null);
-  const [latestPosts, setLatestPosts] = useState<ApiPost[]>([]);
-  const [allPosts,    setAllPosts]    = useState<ApiPost[]>([]);
-  const [loading,     setLoading]     = useState(true);
-  const [error,       setError]       = useState<string | null>(null);
-
   const [isVisible,      setIsVisible]      = useState(false);
   const [mobileTocOpen,  setMobileTocOpen]  = useState(false);
   const [readProgress,   setReadProgress]   = useState(0);
   const [sidebarSearch,  setSidebarSearch]  = useState("");
 
   // ── Fetch post by slug ──────────────────────────────────────────────────────
-  useEffect(() => {
-    if (!slug) { navigate("/blog", { replace: true }); return; }
-    setLoading(true);
-    setError(null);
-    setIsVisible(false);
-    window.scrollTo(0, 0);
-
-    api.getPostBySlug(slug)
-      .then(res => {
-        // API may return array or single object — handle both
-        const data = res?.data;
-        const found: ApiPost | null = Array.isArray(data)
-          ? (data.find((p: ApiPost) => p.slug === slug) ?? data[0] ?? null)
-          : (data ?? null);
-
-        if (!found) {
-          navigate("/blog", { replace: true });
-          return;
-        }
-        setPost(found);
-        setTimeout(() => setIsVisible(true), 50);
-      })
-      .catch(() => setError("Failed to load article. Please try again."))
-      .finally(() => setLoading(false));
-  }, [slug]);
+  const { data: postResponse, isLoading: postLoading, error: postError } = useQuery({
+    queryKey: ["blog-post", slug],
+    queryFn: () => api.getPostBySlug(slug || ""),
+    enabled: !!slug,
+  });
 
   // ── Fetch all posts for sidebar latest + prev/next ──────────────────────────
+  const { data: allPostsResponse } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => api.getAllPosts(),
+  });
+  // Process post data
+  const post = useMemo(() => {
+    if (!postResponse?.data) return null;
+    const data = postResponse.data;
+    // API may return array or single object — handle both
+    const found: ApiPost | null = Array.isArray(data)
+      ? (data.find((p: ApiPost) => p.slug === slug) ?? data[0] ?? null)
+      : (data ?? null);
+    return found;
+  }, [postResponse, slug]);
+
+  const allPosts = useMemo(() => allPostsResponse?.data ?? [], [allPostsResponse]);
+  const latestPosts = useMemo(() => allPosts.filter(p => p.slug !== slug).slice(0, 4), [allPosts, slug]);
+
+  // Handle post not found or error
   useEffect(() => {
-    api.getAllPosts()
-      .then(res => {
-        const data: ApiPost[] = res?.data ?? [];
-        setAllPosts(data);
-        setLatestPosts(data.filter(p => p.slug !== slug).slice(0, 4));
-      })
-      .catch(() => {});
-  }, [slug]);
+    if (!slug) {
+      navigate("/blog", { replace: true });
+      return;
+    }
+    if (!postLoading && !post && !postError) {
+      navigate("/blog", { replace: true });
+    }
+    if (post) {
+      setIsVisible(true);
+      window.scrollTo(0, 0);
+    }
+  }, [slug, post, postLoading, postError, navigate]);
 
   // ── Read progress ───────────────────────────────────────────────────────────
   useEffect(() => {
@@ -362,15 +360,15 @@ const BlogDetail = () => {
   );
 
   // ── Loading state ────────────────────────────────────────────────────────────
-   if (loading) return <LoadingSkeleton type="hero" />;
+   if (postLoading) return <LoadingSkeleton />;
 
   // ── Error state ──────────────────────────────────────────────────────────────
-  if (error || !post) {
+  if (postError || !post) {
     return (
 
         <div className="min-h-screen flex items-center justify-center px-4">
           <div className="text-center space-y-4 max-w-md">
-            <p className="text-rose-400">{error ?? "Article not found."}</p>
+            <p className="text-rose-400">{postError ? "Failed to load article. Please try again." : "Article not found."}</p>
             <Link to="/blog">
               <Button variant="outline" className="mt-2">← Back to Blog</Button>
             </Link>
@@ -392,6 +390,7 @@ const BlogDetail = () => {
         title={post.seo?.title ?? post.title}
         description={post.seo?.description ?? post.content?.slice(0, 160)}
         ogImage={post.seo?.og_image ?? (post.image || heroImage)}
+        schema={(postResponse as any)?.data?.schema}
       />
 
 
@@ -612,7 +611,7 @@ const BlogDetail = () => {
                       <img
                         src={authorAvatar}
                         alt={authorName}
-                        className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shrink-0 ring-2 ring-background/60"
+                        className="w-16 h-16 md:w-20 md:h-20 rounded-full !mt-0 object-cover shrink-0 ring-2 ring-background/60"
                       />
                     ) : (
                       <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center shrink-0">

@@ -36,7 +36,7 @@ const Careers = () => {
     queryFn: api.getAllJobs,
   });
 
-if (careersLoading || jobsLoading) return <LoadingSkeleton type="hero" />;
+if (careersLoading || jobsLoading) return <LoadingSkeleton />;
   if (careersError || jobsError) return <ErrorFallback error={(careersError || jobsError) as Error} onRetry={() => window.location.reload()} />;
 
   const careersData = careersResponse?.data?.careers_data;

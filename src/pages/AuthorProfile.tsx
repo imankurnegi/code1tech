@@ -102,7 +102,7 @@ const AuthorProfile = () => {
   );
 
   // ── Loading ────────────────────────────────────────────────────────────────
-   if (loading) return <LoadingSkeleton type="hero" />;
+   if (loading) return <LoadingSkeleton />;
 
   // ── Error ──────────────────────────────────────────────────────────────────
   if (error || !author) {

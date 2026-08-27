@@ -53,7 +53,7 @@ const JobDetail = () => {
 
   if (isLoading) {
     return (
-      <LoadingSkeleton type="hero" />
+      <LoadingSkeleton />
     );
   }
 
