@@ -563,3 +563,11 @@
   .post-content-container .size-full {
     @apply max-w-full;
   }
+
+/* Custom utility overrides for dynamic content from CMS */
+.border-destructive\/40 {
+  border-color: #ef434366 !important;
+}
+.border-accent\/50 {
+  border-color: #60c3e180 !important;
+}

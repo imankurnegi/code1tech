@@ -239,10 +239,22 @@ const AWS = () => {
   });
   
 
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
   const heroBanner = pageData?.tools_main_banner;
   const heroContent = pageData?.build_a_secure_scalable_and_future_ready_with_aws_cloud_environment;
   const servicesContent = pageData?.end_to_end_aws_consulting_services;
@@ -260,15 +272,7 @@ const AWS = () => {
     a: item.post_content ?? "",
   }));
 
-  const blogCategory = pageData?.blog_category;
-        const categorySlugs = Array.isArray(blogCategory)
-          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-          : [];
-        const { data: relatedPostsData } = useQuery({
-          queryKey: ["relatedPosts", categorySlugs],
-          queryFn: () => api.getAllPosts(categorySlugs, 10),
-          enabled: categorySlugs.length > 0,
-        });
+  
         
   const heroBadges = heroBanner?.badges || [];
   const heroStats = heroBanner?.bottom_section || [];

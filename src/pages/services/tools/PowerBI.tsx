@@ -227,10 +227,22 @@ const PowerBI = () => {
     queryFn: api.getPowerBIEngineers,
   });
 
+
+   const pageData = data?.data;
+   const blogCategory = pageData?.blog_category;
+   const categorySlugs = Array.isArray(blogCategory)
+   ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+   : [];
+   const { data: relatedPostsData } = useQuery({
+   queryKey: ["relatedPosts", categorySlugs],
+   queryFn: () => api.getAllPosts(categorySlugs, 10),
+   enabled: categorySlugs.length > 0,
+   });
+
    if (isLoading) return <LoadingSkeleton />;
      if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
   const heroBanner = pageData?.tools_main_banner;
   const heroContent = pageData?.turn_business_data_into_actionable_insights_with_microsoft_power_bi;
   const introContent = pageData?.why_choose_power_bi_for_business_intelligence;
@@ -250,15 +262,7 @@ const PowerBI = () => {
     a: item.post_content ?? "",
   }));
 
-  const blogCategory = pageData?.blog_category;
-        const categorySlugs = Array.isArray(blogCategory)
-          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-          : [];
-        const { data: relatedPostsData } = useQuery({
-          queryKey: ["relatedPosts", categorySlugs],
-          queryFn: () => api.getAllPosts(categorySlugs, 10),
-          enabled: categorySlugs.length > 0,
-        });
+  
 
   const heroImageUrl = heroBanner?.image?.url;
   const heroBadges = heroBanner?.badges ?? [];

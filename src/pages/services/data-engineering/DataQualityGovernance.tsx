@@ -66,10 +66,22 @@ const DataQualityGovernance = () => {
     queryFn: api.getDataQualityEngineers,
   });
 
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
 
   const RenderIcon = ({ icon, className }: { icon: any; className?: string }) => {
     if (!icon) return null;
@@ -186,15 +198,7 @@ const DataQualityGovernance = () => {
     a: f.post_content ?? "",
   }));
 
-  const blogCategory = pageData?.blog_category;
-  const categorySlugs = Array.isArray(blogCategory)
-    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-    : [];
-  const { data: relatedPostsData } = useQuery({
-    queryKey: ["relatedPosts", categorySlugs],
-    queryFn: () => api.getAllPosts(categorySlugs, 10),
-    enabled: categorySlugs.length > 0,
-  });
+  
 
   const contactSection = pageData?.services_get_started_section ?? {};
   const contactHeading = contactSection.heading ?? "";

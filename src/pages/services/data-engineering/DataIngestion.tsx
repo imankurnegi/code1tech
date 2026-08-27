@@ -132,10 +132,22 @@ const DataIngestion = () => {
     queryFn: async () => await api.getDataIngestion(),
   });
 
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
 
   /* ── Derived data (all null-safe) ── */
   const stats             = pageData?.stats_section?.stats_fields ?? [];
@@ -169,15 +181,7 @@ const DataIngestion = () => {
       }))
     : [];
 
-  const blogCategory = pageData?.blog_category;
-  const categorySlugs = Array.isArray(blogCategory)
-    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-    : [];
-  const { data: relatedPostsData } = useQuery({
-    queryKey: ["relatedPosts", categorySlugs],
-    queryFn: () => api.getAllPosts(categorySlugs, 10),
-    enabled: categorySlugs.length > 0,
-  });
+  
 
   return (
     <div>

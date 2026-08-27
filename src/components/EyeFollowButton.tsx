@@ -31,28 +31,14 @@ const Eye = ({
 
   return (
     <div
-      className="rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
+      className="rounded-full flex items-center justify-center flex-shrink-0"
       style={{
         width: size,
         height: size,
         background: "white",
       }}
     >
-      {/* Eyelid (top) — does most of the closing like a real eye */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 z-10"
-        style={{ background: "hsl(222 47% 5%)", borderRadius: "0 0 50% 50%" }}
-        animate={{ height: isBlinking ? size * 0.55 : 0 }}
-        transition={{ duration: isBlinking ? 0.08 : 0.18, ease: [0.4, 0, 0.2, 1] }}
-      />
-      {/* Eyelid (bottom) — barely moves, like a real lower lid */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 z-10"
-        style={{ background: "hsl(222 47% 5%)", borderRadius: "50% 50% 0 0" }}
-        animate={{ height: isBlinking ? size * 0.15 : 0 }}
-        transition={{ duration: isBlinking ? 0.08 : 0.18, ease: [0.4, 0, 0.2, 1] }}
-      />
-      {/* Pupil */}
+      {/* Pupil — hidden when sleeping, leaving a solid white circle */}
       <motion.div
         className="rounded-full"
         style={{
@@ -61,8 +47,9 @@ const Eye = ({
           background: "hsl(222 47% 5%)",
         }}
         animate={{
-          x: pupilX * maxOffset,
-          y: pupilY * maxOffset,
+          x: isBlinking ? 0 : pupilX * maxOffset,
+          y: isBlinking ? 0 : pupilY * maxOffset,
+          scale: isBlinking ? 0 : 1,
           opacity: isBlinking ? 0 : 1,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 25, mass: 0.5 }}
@@ -105,7 +92,10 @@ const EyeFollowButton = ({
       const dx = e.clientX - centerX;
       const dy = e.clientY - centerY;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      const maxDist = (trackingRange / 100) * Math.max(window.innerWidth, window.innerHeight) * 0.5;
+      const maxDist =
+        (trackingRange / 100) *
+        Math.max(window.innerWidth, window.innerHeight) *
+        0.5;
 
       const clampedDist = Math.min(distance, maxDist);
       const ratio = clampedDist / maxDist;
@@ -117,7 +107,7 @@ const EyeFollowButton = ({
         });
       }
     },
-    [trackingRange, resetIdleTimer]
+    [trackingRange, resetIdleTimer],
   );
 
   useEffect(() => {
@@ -138,15 +128,18 @@ const EyeFollowButton = ({
         setIsBlinking(true);
         // Occasional double-blink (~25% chance)
         const isDouble = Math.random() < 0.25;
-        setTimeout(() => {
-          setIsBlinking(false);
-          if (isDouble) {
-            setTimeout(() => {
-              setIsBlinking(true);
-              setTimeout(() => setIsBlinking(false), 90);
-            }, 120);
-          }
-        }, 100 + Math.random() * 40);
+        setTimeout(
+          () => {
+            setIsBlinking(false);
+            if (isDouble) {
+              setTimeout(() => {
+                setIsBlinking(true);
+                setTimeout(() => setIsBlinking(false), 90);
+              }, 120);
+            }
+          },
+          100 + Math.random() * 40,
+        );
         timer = scheduleBlink();
       }, delay);
     };
@@ -172,40 +165,42 @@ const EyeFollowButton = ({
     <div ref={containerRef} className={`relative ${className}`}>
       {/* Floating Z-z-z */}
       <AnimatePresence>
-        {isSleeping && zLetters.map((z, i) => (
-          <motion.span
-            key={i}
-            className="absolute pointer-events-none font-bold select-none"
-            style={{
-              right: -4 + i * 7,
-              top: -6 - i * 6,
-              fontSize: 14 - i * 3,
-              color: "hsl(var(--accent))",
-              zIndex: 20,
-            }}
-            initial={{ opacity: 0, y: 4, scale: 0.5 }}
-            animate={{
-              opacity: [0, 0.9, 0.9, 0],
-              y: [4, -6 - i * 4],
-              scale: [0.5, 1],
-            }}
-            exit={{ opacity: 0, scale: 0.3, transition: { duration: 0.2 } }}
-            transition={{
-              duration: 2.2,
-              repeat: Infinity,
-              delay: i * 0.5,
-              ease: "easeInOut",
-            }}
-          >
-            {z}
-          </motion.span>
-        ))}
+        {isSleeping &&
+          zLetters.map((z, i) => (
+            <motion.span
+              key={i}
+              className="absolute pointer-events-none font-bold select-none"
+              style={{
+                right: -4 + i * 7,
+                top: -6 - i * 6,
+                fontSize: 14 - i * 3,
+                color: "hsl(var(--accent))",
+                zIndex: 20,
+              }}
+              initial={{ opacity: 0, y: 4, scale: 0.5 }}
+              animate={{
+                opacity: [0, 0.9, 0.9, 0],
+                y: [4, -6 - i * 4],
+                scale: [0.5, 1],
+              }}
+              exit={{ opacity: 0, scale: 0.3, transition: { duration: 0.2 } }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                delay: i * 0.5,
+                ease: "easeInOut",
+              }}
+            >
+              {z}
+            </motion.span>
+          ))}
       </AnimatePresence>
       <Link to={href}>
         <motion.div
           className="inline-flex items-center gap-5 cursor-pointer select-none"
           style={{
-            background: "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))",
+            background:
+              "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))",
             padding: "4px 5px 4px 16px",
             borderRadius: 24,
             boxShadow: "0 3px 10px rgba(0, 194, 255, 0.2)",

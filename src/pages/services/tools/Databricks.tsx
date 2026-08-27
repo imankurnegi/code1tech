@@ -286,10 +286,22 @@ const Databricks = () => {
     queryFn: api.getDatabricksEngineers,
   });
 
+
+  const pageData = data?.data;
+  const blogCategory = pageData?.blog_category;
+  const categorySlugs = Array.isArray(blogCategory)
+  ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
+  : [];
+  const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", categorySlugs],
+  queryFn: () => api.getAllPosts(categorySlugs, 10),
+  enabled: categorySlugs.length > 0,
+  });
+
   if (isLoading) return <LoadingSkeleton />;
     if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
-  const pageData = data?.data;
+  
   const heroBanner = pageData?.tools_main_banner;
   const heroContent = pageData?.modernize_your_data_analytics_and_ai_with_databricks_consulting_services;
   const whyContent = pageData?.why_choose_the_databricks_platform;
@@ -310,15 +322,7 @@ const Databricks = () => {
     a: item.post_content ?? "",
   }));
 
-  const blogCategory = pageData?.blog_category;
-        const categorySlugs = Array.isArray(blogCategory)
-          ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-          : [];
-        const { data: relatedPostsData } = useQuery({
-          queryKey: ["relatedPosts", categorySlugs],
-          queryFn: () => api.getAllPosts(categorySlugs, 10),
-          enabled: categorySlugs.length > 0,
-        });
+  
         
   const heroImageUrl = heroBanner?.image?.url || "";
   const heroBadges = heroBanner?.badges || [];
