@@ -13,10 +13,49 @@ const Layout = () => {
     if (isLoading) return null;
     if (error) return null;
 
+    // Deep clone primary_menu to avoid mutating React Query cache directly
+    const primaryMenu = data?.data?.primary_menu ? JSON.parse(JSON.stringify(data.data.primary_menu)) : [];
+    
+    // Find the "Industries" menu
+    const industriesMenu = primaryMenu.find((menu: any) => menu.title === "Industries");
+    if (industriesMenu) {
+        if (!industriesMenu.children) {
+            industriesMenu.children = [];
+        }
+        
+        // Add InsurTech if it doesn't exist
+        const hasInsurTech = industriesMenu.children.some((child: any) => child.title === "InsurTech" || child.url === "/industries/insurtech");
+        if (!hasInsurTech) {
+            industriesMenu.children.push({
+                id: 9991,
+                title: "InsurTech",
+                url: "/industries/insurtech",
+                class: "lucide-shield",
+                subtitle: "Insurance technology solutions",
+                icon: "",
+                children: []
+            });
+        }
+        
+        // Add Manufacturing if it doesn't exist
+        const hasManufacturing = industriesMenu.children.some((child: any) => child.title === "Manufacturing" || child.url === "/industries/manufacturing");
+        if (!hasManufacturing) {
+            industriesMenu.children.push({
+                id: 9992,
+                title: "Manufacturing",
+                url: "/industries/manufacturing",
+                class: "lucide-factory",
+                subtitle: "Smart manufacturing solutions",
+                icon: "",
+                children: []
+            });
+        }
+    }
+
     const headerData = {
         logo: data?.data?.full,
         alt: data?.data?.alt,
-        primary_menu: data?.data?.primary_menu,
+        primary_menu: primaryMenu,
         secondary_menu: data?.data?.secondary_menu
     }
     const footerData = {
