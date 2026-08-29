@@ -57,6 +57,8 @@ import AIAgents from "./pages/services/ai-ml/AIAgents";
 import MLOps from "./pages/services/ai-ml/MLOps";
 import InsurTech from "./pages/industries/InsurTech";
 import Manufacturing from "./pages/industries/Manufacturing";
+import CaseStudies from "./pages/CaseStudies";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 
 const AppRoutes = () => {
   return (
@@ -117,7 +119,9 @@ const AppRoutes = () => {
         <Route path="/careers/:id" element={<JobDetail />} />
         <Route path="/blog" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/author/:slug" element={<AuthorProfile />} />
+        <Route path="/author/:slug" element={<AuthorProfile />} />     
+        <Route path="/case-studies" element={<CaseStudies />} />
+        {/* <Route path="/case-studies/:slug" element={<CaseStudyDetail />} /> */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

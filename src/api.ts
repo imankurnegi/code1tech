@@ -403,5 +403,18 @@ export const api = {
     const response = await fetch(`${BASE_URL}/manufacturing-engineers`, { headers });
     if (!response.ok) throw new Error("Failed to fetch Manufacturing engineers data");
     return response.json();
-  }
+  },
+  getCaseStudies: async () => {
+    const response = await fetch(`${BASE_URL}/case-studies`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch Case studies data");
+    return response.json();
+  },
+  getCaseStudyBySlug: async (slug: string) => {
+    const url = slug 
+      ? `${BASE_URL}/casestudies?slug=${encodeURIComponent(slug)}`
+      : `${BASE_URL}/casestudies`;
+    const response = await fetch(url, { headers });
+    if (!response.ok) throw new Error("Failed to fetch case study");
+    return response.json();
+  },
 };

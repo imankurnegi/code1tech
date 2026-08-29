@@ -195,6 +195,16 @@ export async function render(url: string) {
         );
       }
 
+      // case-studies
+      if (pathname === "/case-studies") {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["case-studies"],
+            queryFn: api.getCaseStudies,
+          })
+        );
+      }
+
       // EAAS routes
       if (pathname === "/services/eaas/offshore-nearshore") {
         prefetches.push(
