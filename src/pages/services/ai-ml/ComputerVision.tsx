@@ -135,7 +135,7 @@ const ComputerVision = () => {
   const contactSection = pageData?.services_get_started_section || {};
   const businessOutcomesSection = pageData?.business_outcomes_you_can_expect_from_industrial_computer_vision_solutions || {};
 
-  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));

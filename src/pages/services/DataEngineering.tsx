@@ -457,7 +457,7 @@ const DataEngineering = () => {
   }
 
 
-  const faqs = servicePage?.frequently_asked_question?.map((item) => {
+  const faqs = (Array.isArray(servicePage?.frequently_asked_question) ? servicePage.frequently_asked_question : []).map((item) => {
     return {
       q: item.post_title ?? "",
       a: item.post_content ?? ""

@@ -249,7 +249,7 @@ const EngineerAsAService = () => {
     }
   }) || [];
 
-  const faqs = (serviceData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(serviceData?.frequently_asked_question) ? serviceData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));

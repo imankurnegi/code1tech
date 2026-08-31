@@ -134,7 +134,7 @@ const ModelFineTuning = () => {
   const whyChooseSection = pageData?.ai_why_what_code1tech_section || {};
   const contactSection = pageData?.services_get_started_section || {};
 
-  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));

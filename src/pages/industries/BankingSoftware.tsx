@@ -83,7 +83,7 @@ const heroBlocks = heroBanner?.blocks?.map((block: any) => ({
   label: block.title,
 })) || [];
 
-const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
   q: item.post_title ?? "",
   a: item.post_content ?? "",
 }));
