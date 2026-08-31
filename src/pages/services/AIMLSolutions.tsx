@@ -535,7 +535,7 @@ const AIMLSolutions = () => {
     bottomTxt: step.bottom_text
   })) || [];
 
-  const faqs = serviceData?.frequently_asked_question?.map((faq: any) => ({
+  const faqs = (Array.isArray(serviceData?.frequently_asked_question) ? serviceData.frequently_asked_question : []).map((faq: any) => ({
     q: faq.post_title ?? "",
     a: faq.post_content ?? ""
   })) || [];

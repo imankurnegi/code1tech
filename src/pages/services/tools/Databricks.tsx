@@ -317,7 +317,7 @@ const Databricks = () => {
   const cta114 = pageData?.cta_section_114;
   const finalSectionContent = pageData?.services_get_started_section;
 
-  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));

@@ -301,7 +301,7 @@ const Tableau = () => {
   const actionableBusinessIntelligenceSection = pageData?.turn_complex_data_into_actionable_business_intelligence || {}
   const cta_section_70 = pageData?.cta_section_70;
 
-  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));

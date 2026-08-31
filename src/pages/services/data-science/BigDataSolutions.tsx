@@ -214,7 +214,7 @@ const BigDataSolutions = () => {
   const contactButtons = Array.isArray(contactSection.buttons) ? contactSection.buttons : [];
   const contactButton = contactButtons[0] ?? null;
 
-  const faqs = (pageData?.frequently_asked_question ?? []).map((item: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item: any) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));

@@ -193,7 +193,7 @@ const DataQualityGovernance = () => {
   }));
 
   const faqHeading = pageData.faq_section_heading ?? "";
-  const faqs = (pageData?.frequently_asked_question ?? []).map((f: any) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((f: any) => ({
     q: f.post_title ?? "",
     a: f.post_content ?? "",
   }));

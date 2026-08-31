@@ -457,7 +457,7 @@ const OnDemandEngineers = () => {
     status: item.status ?? "",
   }));
 
-  const faqs = (pageData.frequently_asked_question ?? []).map((item) => ({
+  const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.frequently_asked_question : []).map((item) => ({
     q: item.post_title ?? "",
     a: item.post_content ?? "",
   }));
