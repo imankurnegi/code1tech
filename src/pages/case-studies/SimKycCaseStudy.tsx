@@ -253,12 +253,24 @@ const mapArchitectureFlow = (blocks: CaseStudyData["content"]["tab_3_second_bloc
 };
 
 const mapSolutionModules = (cards: CaseStudyData["content"]["tab_3_second_components_cards"]) => {
-  return cards.map((card, index) => ({
-    name: card.title,
-    icon: mapIconName(card.icon),
-    tone: index === 1 ? "mint" as const : undefined,
-    items: [], // Will be populated from HTML content if needed
-  }));
+  return cards.map((card, index) => {
+    // Extract items from HTML content using regex
+    const liRegex = /<li[^>]*>.*?<\/li>/gs;
+    const matches = card.content.match(liRegex) || [];
+    
+    const items = matches.map(li => {
+      // Extract text content from li, removing HTML tags
+      const text = li.replace(/<[^>]*>/g, '').trim();
+      return { text };
+    }).filter(item => item.text);
+
+    return {
+      name: card.title,
+      icon: mapIconName(card.icon),
+      tone: index === 1 ? "mint" as const : undefined,
+      items,
+    };
+  });
 };
 
 const mapTeamNodes = (blocks: CaseStudyData["content"]["tab_4_first_left_blocks"]) => {
@@ -327,7 +339,7 @@ const extractQALabels = (blocks: CaseStudyData["content"]["tab_4_second_right_co
 /* ------------------------------------------------------------------ */
 
 const chapterSpace = "pt-10 sm:pt-12 md:pt-14 lg:pt-16";
-const blockSpace = "mt-[2.5rem]";
+const blockSpace = "py-8 sm:py-9 md:py-10 lg:py-12";
 
 
 const SimKycCaseStudy = ({ data }: SimKycCaseStudyProps) => {

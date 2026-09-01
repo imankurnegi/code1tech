@@ -47,8 +47,8 @@ const IntegrationLayer = ({ modules }: { modules: LayerModule[] }) => (
                     mint ? "text-[#A9E7C2]" : "text-[#69D6FF]"
                   )}
                 >
-                  {it.icon ? (
-                    <DynamicIcon name={it.icon} className="h-4 w-4" />
+                  {m.icon ? (
+                    <DynamicIcon name={m.icon} className="h-4 w-4" />
                   ) : (
                     <span className="mt-1.5 block h-1.5 w-1.5 rounded-full bg-current" />
                   )}
