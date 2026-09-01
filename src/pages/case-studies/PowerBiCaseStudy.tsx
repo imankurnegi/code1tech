@@ -387,7 +387,7 @@ const getSparklesMessage = (blocks: CaseStudyData["content"]["tab_3_first_blocks
 /* ------------------------------------------------------------------ */
 
 const chapterSpace = "pt-10 sm:pt-12 md:pt-14 lg:pt-16";
-const blockSpace = "mt-[2.5rem]";
+const blockSpace = "py-8 sm:py-9 md:py-10 lg:py-12";
 
 
 const PowerBiCaseStudy = ({ data }: PowerBiCaseStudyProps) => {
@@ -451,7 +451,7 @@ const PowerBiCaseStudy = ({ data }: PowerBiCaseStudyProps) => {
   const overviewParagraphs = extractParagraphs(content.tab_1_left_content);
   const businessContextParagraphs = extractParagraphs(content.tab_1_right_content);
   const solutionParagraphs = extractParagraphs(content.tab_3_first_content);
-  const dataLakeParagraphs = extractParagraphs(content.tab_3_second_content);
+  const dataLakeParagraphs = content.tab_3_second_content;
   const securityParagraphs = extractParagraphs(content.tab_3_fourth_content);
   const daxParagraphs = extractParagraphs(content.tab_3_fifth_content);
   const reportingParagraphs = extractParagraphs(content.tab_3_sixth_content);
@@ -681,7 +681,7 @@ const PowerBiCaseStudy = ({ data }: PowerBiCaseStudyProps) => {
                 ))}
               </div>
 
-              {content.tab_2_text_block && (
+              {/* {content.tab_2_text_block && (
                 <Reveal delay={200}>
                   <div className="mt-8 flex max-w-[720px] items-start gap-4 rounded-[20px] border border-[#A9E7C2]/25 bg-[#A9E7C2]/[0.06] px-5 py-4">
                     <Sparkles aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#A9E7C2]" />
@@ -690,7 +690,7 @@ const PowerBiCaseStudy = ({ data }: PowerBiCaseStudyProps) => {
                     </p>
                   </div>
                 </Reveal>
-              )}
+              )} */}
             </section>
 
             <section id="objectives" className={cn("focus:outline-none", blockSpace)}>
@@ -782,12 +782,12 @@ const PowerBiCaseStudy = ({ data }: PowerBiCaseStudyProps) => {
               </Reveal>
 
               <div className="space-y-5">
-                {dataLakeParagraphs.map((paragraph, i) => (
-                  <Reveal key={i} delay={110 + i * 40}>
-                    <Body className="max-w-none">{paragraph}</Body>
+                  <Reveal delay={110}>
+                    <Body className="max-w-none">
+                      <div dangerouslySetInnerHTML={{ __html: dataLakeParagraphs }} />
+                    </Body>
                   </Reveal>
-                ))}
-              </div>
+               </div>
 
               <div className="mt-10">
                 <IntegrationLayer modules={solutionModules} />
