@@ -348,7 +348,7 @@ const extractQALabels = (blocks: CaseStudyData["content"]["tab_4_second_right_co
 /* ------------------------------------------------------------------ */
 
 const chapterSpace = "pt-10 sm:pt-12 md:pt-14 lg:pt-16";
-const blockSpace = "mt-[2.5rem]";
+const blockSpace = "py-8 sm:py-9 md:py-10 lg:py-12;";
 
 
 const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => {
@@ -555,7 +555,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
 
             {/* Overview */}
             <section id="overview" className="focus:outline-none">
-              <div className="grid items-center gap-10 lg:grid-cols-[55fr_45fr] lg:gap-16">
+              <div className="grid items-stretch gap-10 lg:grid-cols-[55fr_45fr] lg:gap-16">
                 <div>
                   <Reveal delay={60}>
                     <SectionTitle className="mb-6">{content.tab_1_left_heading}</SectionTitle>
@@ -570,7 +570,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
                 </div>
 
                 <Reveal delay={160}>
-                  <div className={cn(cjCard, "overflow-hidden")}>
+                  <div className={cn(cjCard, "h-full overflow-hidden")}>
                     <SmartImage
                       src={content.tab_1_right_image.url}
                       alt={content.tab_1_right_image.alt || ""}
@@ -586,9 +586,9 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
 
             {/* Business Context */}
             <section id="business-context" className={cn("focus:outline-none", blockSpace)}>
-              <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+              <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-16">
                 <Reveal>
-                  <div className={cn(cjCard, "relative overflow-hidden")}>
+                  <div className={cn(cjCard, "relative h-full overflow-hidden")}>
                     <SmartImage
                       src={content.tab_1_left_image.url}
                       alt={content.tab_1_left_image.alt || ""}
@@ -644,22 +644,6 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
                   </Reveal>
                 ))}
               </div>
-
-              <Reveal delay={320}>
-                <div
-                  className={cn(
-                    "relative mt-9 overflow-hidden rounded-[24px] border border-[#69D6FF]/25 bg-[#69D6FF]/[0.05] p-7 lg:p-9"
-                  )}
-                >
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#69D6FF]/10 blur-3xl"
-                  />
-                  <p className="relative text-left text-[1.15rem] font-medium leading-[1.55] text-[#F7FAFC] sm:text-[1.35rem]">
-                    {content.tab_2_text_block}
-                  </p>
-                </div>
-              </Reveal>
             </section>
 
             {/* Objectives */}
@@ -670,12 +654,8 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
 
               <div className="grid items-stretch gap-5 md:grid-cols-2 lg:gap-6">
                 {objectives.map((o, i) => (
-                  <Reveal
-                    key={o.no}
-                    delay={i * 70}
-                    className={cn("h-full", i === 0 && "md:col-span-2")}
-                  >
-                    <ObjectiveCard item={o} featured={i === 0} />
+                  <Reveal key={o.no} delay={i * 70} className="h-full">
+                    <ObjectiveCard item={o} />
                   </Reveal>
                 ))}
               </div>
@@ -704,7 +684,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
             </Reveal>
 
             {/* Solution */}
-            <section id="solution" className="focus:outline-none">
+            <section id="solution-ingestion" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
                 <SectionTitle className="mb-6">{content.tab_3_first_heading}</SectionTitle>
               </Reveal>
@@ -717,18 +697,48 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
                 ))}
               </div>
 
-              {content.tab_3_first_blocks.map((block, i) => (
-                <Reveal key={i} delay={220 + i * 50}>
-                  <div className="mt-7 flex max-w-[680px] items-start gap-4 rounded-[20px] border border-[#A9E7C2]/25 bg-[#A9E7C2]/[0.06] px-5 py-4">
-                    <DynamicIcon name={mapIconName(block.icon)} aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#A9E7C2]" />
-                    <p className="text-left text-[15px] leading-[1.7] text-[#F7FAFC]">
-                      {block.title}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {content.tab_3_first_blocks.map((block, i) => (
+                  <Reveal key={i} delay={220 + i * 50}>
+                    <div className="flex h-full items-start gap-3 rounded-[18px] border border-white/[0.07] bg-[#102236]/60 px-4 py-3.5">
+                      <DynamicIcon
+                        name={mapIconName(block.icon)}
+                        aria-hidden="true"
+                        className="mt-0.5 h-4 w-4 shrink-0 text-[#A9E7C2]"
+                      />
+                      <span className="text-[14px] leading-[1.6] text-[#A8B8C7]">{block.title}</span>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
 
-              {/* Journey diagram */}
+              {/* <Reveal delay={300}>
+                <div className="mt-7 flex max-w-[680px] items-start gap-4 rounded-[20px] border border-[#A9E7C2]/25 bg-[#A9E7C2]/[0.06] px-5 py-4">
+                  <DynamicIcon
+                    name="sparkles"
+                    aria-hidden="true"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-[#A9E7C2]"
+                  />
+                  <p className="text-left text-[15px] leading-[1.7] text-[#F7FAFC]">
+                    This provided a consistent mechanism for bringing Oracle Fusion data into the Databricks environment.
+                  </p>
+                </div>
+              </Reveal> */}
+            </section>
+
+            <section id="solution-medallion" className={cn("focus:outline-none", blockSpace)}>
+              <Reveal delay={60}>
+                <SectionTitle className="mb-6">Databricks Medallion Architecture</SectionTitle>
+              </Reveal>
+
+              <div className="space-y-5">
+                {solutionParagraphs.map((paragraph, i) => (
+                  <Reveal key={i} delay={120 + i * 50}>
+                    <Body className="max-w-none">{paragraph}</Body>
+                  </Reveal>
+                ))}
+              </div>
+
               <div className={cn(cjCard, "mt-10 p-6 md:p-8 lg:p-10")}>
                 <Reveal>
                   <p className="mb-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#A8B8C7]">
@@ -738,7 +748,6 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
                 <JourneyDiagram nodes={architectureFlow} />
               </div>
 
-              {/* Solution modules */}
               <Reveal delay={120}>
                 <Body className="mb-6 mt-12">{content.tab_3_second_components}</Body>
               </Reveal>
@@ -781,26 +790,31 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
               <Reveal delay={60}>
                 <SectionTitle className="mb-6">{content.tab_3_fourth_heading}</SectionTitle>
               </Reveal>
+              <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+                <div className="space-y-5">
               <Reveal delay={110}>
                 <Body className="max-w-none">
                   {extractParagraphs(content.tab_3_fourth_content)[0]}
                 </Body>
+                </Reveal>
+                <Reveal delay={160}>
+                <Body className="mt-8">{extractParagraphs(content.tab_3_fourth_content)[1] || ""}</Body>
               </Reveal>
-
-              <div className={cn(cjCard, "mt-8 p-6 md:p-8 lg:p-10")}>
+              </div>
+              
+              <Reveal delay={140} className="h-full">
+                <div className={cn(cjCard, "h-full overflow-hidden")}>
                 <SmartImage
                   src={content.tab_3_fourth_image.url}
                   alt={content.tab_3_fourth_image.alt || ""}
                   width={content.tab_3_fourth_image.width}
                   height={content.tab_3_fourth_image.height}
                   loading="eager"
-                  className="h-full w-full object-cover"
+                  className="h-full min-h-[240px] w-full object-cover lg:min-h-[320px]"
                 />
               </div>
-
-              <Reveal delay={200}>
-                <Body className="mt-8">{extractParagraphs(content.tab_3_fourth_content)[1] || ""}</Body>
               </Reveal>
+              </div>
             </section>
 
             {/* Power BI */}
@@ -843,7 +857,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
             </Reveal>
 
             {/* Teams */}
-            <section id="solution-teams" className="focus:outline-none">
+            <section id="delivery-platform" className="focus:outline-none">
               <Reveal delay={60}>
                 <SectionTitle className="mb-[2.25rem]">{content.tab_4_first_heading}</SectionTitle>
               </Reveal>
@@ -873,7 +887,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
             </section>
 
             {/* Testing */}
-            <section id="solution-testing" className={cn("focus:outline-none", blockSpace)}>
+            <section id="delivery-validation" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
                 <SectionTitle className="mb-[2.25rem]">{content.tab_4_second_heading}</SectionTitle>
               </Reveal>
@@ -931,12 +945,12 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
               <Reveal delay={60}>
                 <SectionTitle className="mb-[2.25rem]">{content.tab_5_second_heading}</SectionTitle>
               </Reveal>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
                 {benefits.map((b, i) => (
                   <Reveal
                     key={b.text}
                     delay={i * 70}
-                    className="h-full w-full sm:w-[calc(50%-0.625rem)] sm:max-w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.833rem)] lg:max-w-[calc(33.333%-0.833rem)]"
+                    className="h-full"
                   >
                     <BenefitCard item={b} />
                   </Reveal>
@@ -949,23 +963,34 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
               <Reveal delay={60}>
                 <SectionTitle className="mb-[2.25rem]">{content.tab_5_third_heading}</SectionTitle>
               </Reveal>
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-                {deliverables.map((d, i) => (
-                  <Reveal key={d.title} delay={i * 80} className="h-full">
-                    <DeliverableCard item={d} />
-                  </Reveal>
-                ))}
-              </div>
+               <div className="mx-auto grid w-full max-w-[1240px] grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+                              {deliverables.map((d, i) => {
+                                const isLast = i === deliverables.length - 1;
+                                const isLandscape = isLast && deliverables.length % 3 === 1;
+                                return (
+                                  <Reveal
+                                    key={d.title}
+                                    delay={i * 70}
+                                    className={cn(
+                                      "h-full w-full",
+                                      isLandscape && "sm:col-span-2 xl:col-span-3"
+                                    )}
+                                  >
+                                    <DeliverableCard item={d} variant={isLandscape ? "landscape" : "portrait"} />
+                                  </Reveal>
+                                );
+                              })}
+                            </div>
             </section>
 
             {/* Result */}
-            <section id="result" className={cn("focus:outline-none", blockSpace)}>
+             <section id="result" className={cn("focus:outline-none", blockSpace)}>
               <div className={cn(cjCard, "relative overflow-hidden p-7 md:p-10 lg:p-12")}>
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#69D6FF]/10 blur-3xl"
                 />
-                <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+                <div className="relative grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
                   <div>
                     <Reveal delay={60}>
                       <SectionTitle className="mb-6">{content.tab_5_fourth_heading}</SectionTitle>
@@ -979,15 +1004,15 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
                     </div>
                   </div>
 
-                  <Reveal delay={140}>
-                    <div className="overflow-hidden rounded-[22px] border border-white/[0.08]">
+                  <Reveal delay={140} className="h-full">
+                    <div className="h-full overflow-hidden rounded-[22px] border border-white/[0.08]">
                       <SmartImage
                         src={content.tab_5_fourth_right_image.url}
                         alt={content.tab_5_fourth_right_image.alt || ""}
                         width={content.tab_5_fourth_right_image.width}
                         height={content.tab_5_fourth_right_image.height}
                         loading="eager"
-                        className="h-full w-full object-cover"
+                        className="h-full min-h-[240px] w-full object-cover lg:min-h-[320px]"
                       />
                     </div>
                   </Reveal>
@@ -1014,7 +1039,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
                 ))}
               </div>
 
-              <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
+              <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3 lg:gap-6">
                 {atAGlanceStats.slice(3).map((s, i) => (
                   <Reveal key={s.label} delay={i * 80} className="h-full">
                     <div className="h-full rounded-[24px] border border-[#A9E7C2]/20 bg-[#A9E7C2]/[0.05] p-6 lg:p-8">

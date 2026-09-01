@@ -575,10 +575,3 @@
 .border-accent\/50 {
   border-color: #60c3e180 !important;
 }
-
-.text-gradient-brand {
-    background-image: linear-gradient(to right, #5FC2E3, #0077B6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
