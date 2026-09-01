@@ -189,7 +189,7 @@ const CaseStudies = () => {
       </section>
 
       {/* ================= CASE STUDIES GRID ================= */}
-      {caseStudiesList.length > 0 && (
+      {rest.length > 0 && (
       <section
         ref={gridRef}
         className="py-10 lg:py-16 relative"
@@ -267,7 +267,7 @@ const CaseStudies = () => {
                         {study.results?.map((result: any, i: number) => (
                           <div key={i} className="text-left">
                             <span className="text-foreground font-mono font-semibold text-base block">{result.value}</span>
-                            <span className="text-muted-foreground text-[11px] leading-snug">{result.label}</span>
+                            <span className="text-muted-foreground text-[11px] leading-normal block">{result.label}</span>
                           </div>
                         ))}
                       </div>

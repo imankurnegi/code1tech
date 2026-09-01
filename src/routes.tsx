@@ -121,7 +121,7 @@ const AppRoutes = () => {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/author/:slug" element={<AuthorProfile />} />     
         <Route path="/case-studies" element={<CaseStudies />} />
-        {/* <Route path="/case-studies/:slug" element={<CaseStudyDetail />} /> */}
+        <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

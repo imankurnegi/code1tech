@@ -85,55 +85,53 @@ const primaryCategorySlug = (post: ApiPost) => post.categories?.[0]?.slug ?? "";
 
 // ── Content renderer ─────────────────────────────────────────────────────────
 // Parses basic Markdown-like syntax in the content string
-const renderContent = (block: string, index: number, h2Index: number) => {
-  // H2 heading (HTML format - add ID and scroll margin to all h2s)
-  const h2Matches = block.match(/<h2[^>]*>(.*?)<\/h2>/gi);
-  if (h2Matches) {
-    let modifiedBlock = block;
-    let localCounter = h2Index;
-    modifiedBlock = modifiedBlock.replace(/<h2([^>]*)>/gi, (match, attrs) => {
-      // Add scroll margin to avoid sticky header overlap
-      const scrollMargin = 'scroll-mt-28';
-      const hasScrollMargin = attrs.includes('scroll-mt-') || attrs.includes('scroll-margin');
-      
-      // Add ID if missing
-      let newAttrs = attrs;
-      if (!attrs.includes('id=')) {
-        const newId = `section-${localCounter}`;
-        localCounter++;
-        newAttrs = `${attrs} id="${newId}"`;
-      }
-      
-      // Add scroll margin if missing
-      if (!hasScrollMargin) {
-        const classMatch = attrs.match(/class=["']([^"']+)["']/);
-        if (classMatch) {
-          // Append to existing class
-          newAttrs = attrs.replace(/class=["']([^"']+)["']/, `class="${classMatch[1]} ${scrollMargin}"`);
-        } else {
-          // Add new class attribute
-          newAttrs = `${newAttrs} class="${scrollMargin}"`;
+const renderContent = (
+  block: string,
+  index: number,
+  headingIndex: number
+) => {
+    // HTML H2 + H3 headings
+  const headingMatches = block.match(/<h[23][^>]*>.*?<\/h[23]>/gis);
+
+  if (headingMatches) {
+    let localCounter = headingIndex;
+
+    const modifiedBlock = block.replace(
+      /<h([23])([^>]*)>/gi,
+      (match, level, attrs) => {
+        let newAttrs = attrs;
+
+        // Add ID if missing
+        if (!attrs.includes("id=")) {
+          const newId = `section-${localCounter}`;
+          localCounter++;
+
+          newAttrs = `${newAttrs} id="${newId}"`;
         }
+
+        // Add scroll margin if missing
+        if (!newAttrs.includes("scroll-mt-")) {
+          const classMatch = newAttrs.match(/class=["']([^"']*)["']/i);
+
+          if (classMatch) {
+            newAttrs = newAttrs.replace(
+              /class=["']([^"']*)["']/i,
+              `class="${classMatch[1]} scroll-mt-28"`
+            );
+          } else {
+            newAttrs = `${newAttrs} class="scroll-mt-28"`;
+          }
+        }
+
+        return `<h${level}${newAttrs}>`;
       }
-      
-      return `<h2${newAttrs}>`;
-    });
-    return (
-      <div key={index} dangerouslySetInnerHTML={{ __html: modifiedBlock }} />
     );
-  }
-  // H2 heading (Markdown format)
-  if (block.startsWith("## ")) {
+
     return (
-      <h2
+      <div
         key={index}
-        id={`section-${h2Index}`}
-        className="scroll-mt-28 text-2xl md:text-3xl font-bold text-foreground mt-12 mb-5 tracking-tight"
-      >
-        <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
-          {block.replace("## ", "")}
-        </span>
-      </h2>
+        dangerouslySetInnerHTML={{ __html: modifiedBlock }}
+      />
     );
   }
   // Bold title + body separated by \n
@@ -268,12 +266,12 @@ const BlogDetail = () => {
     if (typeof window !== 'undefined' && post?.content) {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = post.content;
-      const h2Elements = tempDiv.querySelectorAll('h2');
+      const headingElements = tempDiv.querySelectorAll('h2, h3');
       
-      h2Elements.forEach((h2) => {
+      headingElements.forEach((heading) => {
         headings.push({
           id: `section-${h2Counter}`,
-          title: h2.textContent?.trim() || ''
+          title: heading.textContent?.trim() || ''
         });
         h2Counter++;
       });
@@ -515,17 +513,19 @@ const BlogDetail = () => {
 
                 {/* Content blocks */}
                 {(() => {
-                  let h2Counter = 0;
+                  let headingCounter = 0;
+
                   return contentBlocks.map((block, index) => {
-                    const h2Matches = block.match(/<h2[^>]*>.*?<\/h2>/gi);
-                    const h2Count = h2Matches ? h2Matches.length : 0;
-                    const currentH2Index = h2Counter;
-                    if (h2Count > 0 || block.startsWith("## ")) {
-                      h2Counter += h2Count || 1;
-                    }
+                    const headingMatches = block.match(/<h[23][^>]*>.*?<\/h[23]>/gi);
+                    const headingCount = headingMatches ? headingMatches.length : 0;
+
+                    const currentHeadingIndex = headingCounter;
+
+                    headingCounter += headingCount;
+
                     return (
                       <div key={index}>
-                        {renderContent(block, index, currentH2Index)}
+                        {renderContent(block, index, currentHeadingIndex)}
                         {index === midCtaAfterIndex && <InlineCTA />}
                       </div>
                     );

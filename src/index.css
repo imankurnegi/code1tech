@@ -401,6 +401,10 @@
     @apply relative pl-5;
   }
 
+  .post-content-container ul > li li {
+    margin-top: 10px !important;
+  }
+
   .post-content-container ul > li::before {
     content: "";
     @apply absolute left-0 top-[0.6em] h-[7px] w-[7px] shrink-0 rounded-full;
@@ -570,4 +574,11 @@
 }
 .border-accent\/50 {
   border-color: #60c3e180 !important;
+}
+
+.text-gradient-brand {
+    background-image: linear-gradient(to right, #5FC2E3, #0077B6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
