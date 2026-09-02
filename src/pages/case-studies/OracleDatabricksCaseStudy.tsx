@@ -106,6 +106,7 @@ interface CaseStudyData {
       icon: string;
       title: string;
     }>;
+    tab_3_second_heading: string;
     tab_3_second_blocks_heading: string;
     tab_3_second_blocks: Array<{
       icon: string;
@@ -728,7 +729,7 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
 
             <section id="solution-medallion" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">Databricks Medallion Architecture</SectionTitle>
+                <SectionTitle className="mb-6">{content.tab_3_second_heading}</SectionTitle>
               </Reveal>
 
               <div className="space-y-5">

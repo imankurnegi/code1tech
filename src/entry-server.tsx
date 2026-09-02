@@ -24,6 +24,9 @@ export async function render(url: string) {
   const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
   const blogSlug = blogSlugMatch ? blogSlugMatch[1] : null;
 
+  const caseStudySlugMatch = pathname.match(/^\/case-studies\/([^/]+)$/);
+  const caseStudySlug = caseStudySlugMatch ? caseStudySlugMatch[1] : null;
+
   const authorSlugMatch = pathname.match(/^\/author\/([^/]+)$/);
   const authorSlug = authorSlugMatch ? authorSlugMatch[1] : null;
 
@@ -630,6 +633,16 @@ export async function render(url: string) {
           queryClient.prefetchQuery({
             queryKey: ["posts"],
             queryFn: () => api.getAllPosts(),
+          })
+        );
+      }
+
+      // Case study detail prefetching for SSR
+      if (caseStudySlug) {
+        prefetches.push(
+          queryClient.prefetchQuery({
+            queryKey: ["case-study-detail", caseStudySlug],
+            queryFn: () => api.getCaseStudyBySlug(caseStudySlug),
           })
         );
       }
