@@ -2,6 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import SimKycCaseStudy from "@/pages/case-studies/SimKycCaseStudy";
 import OracleDatabricksCaseStudy from "@/pages/case-studies/OracleDatabricksCaseStudy";
+import FraudDetectionRiskIntelligence from "@/pages/case-studies/FraudDetectionRiskIntelligence";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
@@ -32,19 +33,12 @@ const CaseStudyDetail = () => {
     }
   }
 
-  // if (slug === "migration-of-oracle-with-databricks-analytics") {
-  //   const oracleDatabricksData = pageData?.data?.find((item: any) => item?.slug === "migration-of-oracle-with-databricks-analytics");
-  //   if (oracleDatabricksData) {
-  //     return <OracleDatabricksCaseStudy data={oracleDatabricksData} />;
-  //   }
-  // }
-
-  // if (slug === "seamless-power-bi-deployment") {
-  //   const powerBiData = pageData?.data?.find((item: any) => item?.slug === "seamless-power-bi-deployment");
-  //   if (powerBiData) {
-  //     return <PowerBiCaseStudy data={powerBiData} />;
-  //   }
-  // }
+  if (slug === "fraud-detection-risk-intelligence-platform") {
+    const fraudData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (fraudData) {
+      return <FraudDetectionRiskIntelligence data={fraudData} />;
+    }
+  }
 
   const study = pageData?.data?.find((item: any) => item?.slug === slug);
 
