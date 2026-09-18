@@ -7,7 +7,6 @@ import { addClassToSpan, cn } from "@/lib/utils";
 import {
   ArrowRight,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
 import {
   Reveal,
@@ -21,77 +20,98 @@ import {
   cjIconGlyph,
   cjFocus,
 } from "@/components/case-studies/simkyc/primitives";
-
 import ChapterNav, { type Chapter } from "@/components/case-studies/simkyc/ChapterNav";
 import CaseSnapshot from "@/components/case-studies/simkyc/CaseSnapshot";
 import ObjectiveCard from "@/components/case-studies/simkyc/ObjectiveCard";
 
-import TestingRail from "@/components/case-studies/simkyc/TestingRail";
 
-import { DeliverableCard } from "@/components/case-studies/simkyc/MetricCard";
 
-import PremiumBenefitsGrid from "@/components/case-studies/PremiumBenefitsGrid";
-import KpiCommandCenter from "@/components/case-studies/KpiCommandCenter";
+
+import {
+  BenefitCard,
+  DeliverableCard,
+} from "@/components/case-studies/simkyc/MetricCard";
+
 import SeoTags from "@/components/SeoTags";
 
-type FraudImage = {
-  url: string;
-  alt?: string;
-  title?: string;
-  width?: number;
-  height?: number;
-};
-
-type FraudCaseStudyData = {
+type ChurnImage = { url?: string; alt?: string; title?: string; width?: number; height?: number };
+type ChurnCaseStudyData = {
   title: string;
+  image?: string;
+  content?: any;
+  content_new?: any;
   seo?: { title?: string; description?: string; og_image?: string };
   schema?: any;
-  image?: string;
-  content: any;
-  content_new?: any;
 };
-
-type FraudCaseStudyProps = { data: FraudCaseStudyData };
+type CustomerChurnProps = { data: ChurnCaseStudyData };
 
 const iconName = (name?: string) => name?.replace(/^lucide-/, "") || "";
-const imageUrl = (image?: FraudImage | string, fallback = "") =>
-  typeof image === "string" ? image : image?.url || fallback;
-const imageAlt = (image?: FraudImage, fallback = "") => image?.alt || image?.title || fallback;
-const jsonIcon = (name?: string): LucideIcon => {
-  const JsonIcon = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
-    <span style={style}>
-      <DynamicIcon name={name} className={className} />
-    </span>
-  );
-  return JsonIcon as LucideIcon;
-};
-
-const extractParagraphs = (html = "") => {
-  const paragraphs = [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)];
-  return paragraphs
-    .map((match) => match[1].replace(/<[^>]*>/g, "").trim())
-    .filter(Boolean);
-};
-
-const extractListItems = (html = "") =>
-  [...html.matchAll(/<span class="text[^>]*>([\s\S]*?)<\/span>/gi)]
-    .map((match) => match[1].replace(/<[^>]*>/g, "").trim())
-    .filter(Boolean);
-
+const imageUrl = (image?: ChurnImage | string, fallback = "") => typeof image === "string" ? image : image?.url || fallback;
+const imageAlt = (image?: ChurnImage, fallback = "") => image?.alt || image?.title || fallback;
+const stripHtml = (html = "") => html.replace(/<[^>]*>/g, "").replace(/&amp;/g, "&").trim();
+const extractParagraphs = (html = "") => [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
 const extractMedallionLayers = (html = "") => {
   const rows = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(1);
   return rows.map((row) => {
-    const cells = [...row[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) =>
-      cell[1].replace(/<[^>]*>/g, "").trim()
-    );
-    const icon = row[1].match(/lucide-([a-z0-9-]+)/i)?.[1] || "";
+    const cells = [...row[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) => stripHtml(cell[1]));
+    const icon = row[1].match(/lucide-([a-z0-9-]+)/i)?.[1] || "layers";
     return { layer: cells[0] || "", purpose: cells[1] || "", examples: cells[2] || "", icon };
   });
 };
+const extractRiskBands = (html = "") => {
+  const rows = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(1);
+  return rows.map((row) => {
+    const cells = [...row[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) => stripHtml(cell[1]));
+    return { band: cells[0] || "", threshold: cells[1] || "" };
+  }).filter((item) => item.band && item.threshold);
+};
 const extractTableHeaders = (html = "") =>
-  [...html.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)]
-    .map((match) => match[1].replace(/<[^>]*>/g, "").trim())
-    .filter(Boolean);
+  [...html.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
+
+const mapCustomerChurnData = (data: ChurnCaseStudyData) => {
+  const content = data.content || {};
+  const newer = data.content_new || {};
+  const blocks = (key: string) => newer[key] || [];
+  const profileHeading = stripHtml((newer.new_tab_3_sixth_content || "").match(/<h3[^>]*>([\s\S]*?)<\/h3>/i)?.[1] || "");
+  const profileDimensions = blocks("new_tab_3_sixth_content_list").map((item: any) => {
+    const title = stripHtml((item.text.match(/<span[^>]*>([^<]+):?<\/span>/i) || ["", ""])[1]).replace(/:$/, "");
+    return { title, text: stripHtml(item.text).replace(`${title}:`, "").trim(), icon: "user-check" };
+  });
+
+  return {
+    chapters: [
+      { id: "chapter-opportunity", label: content.tab_1_text },
+      { id: "chapter-friction", label: content.tab_2_text },
+      { id: "chapter-solution", label: newer.new_tab_3_text },
+      { id: "chapter-delivery", label: newer.new_tab_4_text },
+      { id: "chapter-impact", label: newer.new_tab_5_text },
+    ] as Chapter[],
+    snapshot: (content.category_row || []).map((item: any, index: number) => ({ label: item.label, value: item.text, icon: iconName(item.icon), tone: index === 1 || index === 2 ? "mint" : undefined })),
+    challenges: (content.tab_2_cards || []).map((card: any, index: number) => ({ no: String(index + 1).padStart(2, "0"), icon: iconName(card.icon), img: imageUrl(card.image), alt: imageAlt(card.image, card.text), text: card.text })),
+    objectives: (content.tab_2_second_cards || []).map((card: any, index: number) => ({ no: String(index + 1).padStart(2, "0"), title: card.title, text: card.content, icon: iconName(card.icon), img: imageUrl(card.image), alt: imageAlt(card.image, card.title) })),
+    medallionLayers: extractMedallionLayers(newer.new_tab_3_second_content),
+    featureSignals: blocks("new_tab_3_third_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
+    mlSteps: blocks("new_tab_3_fourth_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
+    churnInsightOutputs: blocks("new_tab_3_fifth_content_list").map((item: any) => ({ text: item.text, icon: "" })),
+    profileHeading,
+    profileDimensions,
+    riskBands: extractRiskBands(newer.new_tab_3_seven_content),
+    medallionHeaders: extractTableHeaders(newer.new_tab_3_second_content),
+    riskHeaders: extractTableHeaders(newer.new_tab_3_seven_content),
+    nextActions: blocks("new_tab_3_eight_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
+    qualityControls: blocks("new_tab_3_nine_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
+    successMetricsList: blocks("new_tab_4_first_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
+    benefits: blocks("new_tab_5_first_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
+    deliverables: blocks("new_tab_5_second_content_blocks").map((item: any) => ({ title: item.title, text: item.content, icon: iconName(item.icon), image: imageUrl(item.image) })),
+    glanceStats: (newer.new_tab_5_fourth_content || []).map((item: any) => ({ value: item.col_1, label: item.col_2 })),
+    imageAlts: { hero: data.title, context: imageAlt(content.tab_1_right_image), business: imageAlt(content.tab_1_left_image), ml: imageAlt(newer.new_tab_3_fourth_image), profile: imageAlt(newer.new_tab_3_sixth_image), dashboard: imageAlt(newer.new_tab_5_third_image), banner: imageAlt(content.bottom_banner_image) },
+    images: { hero: imageUrl(data.image), context: imageUrl(content.tab_1_right_image), business: imageUrl(content.tab_1_left_image), ml: imageUrl(newer.new_tab_3_fourth_image), profile: imageUrl(newer.new_tab_3_sixth_image), dashboard: imageUrl(newer.new_tab_5_third_image), banner: imageUrl(content.bottom_banner_image) },
+    paragraphs: {
+      overview: extractParagraphs(content.tab_1_left_content), business: extractParagraphs(content.tab_1_right_content), generated: extractParagraphs(newer.new_tab_3_first_content), medallion: extractParagraphs(newer.new_tab_3_second_content), features: extractParagraphs(newer.new_tab_3_third_content), ml: extractParagraphs(newer.new_tab_3_fourth_content), insights: extractParagraphs(newer.new_tab_3_fifth_content), profile: extractParagraphs(newer.new_tab_3_sixth_content), outputs: extractParagraphs(newer.new_tab_3_seven_content), consent: newer.new_tab_3_eight_content, quality: newer.new_tab_3_nine_content, result: extractParagraphs(newer.new_tab_5_third_content),
+    },
+    headings: { overview: content.tab_1_left_heading, business: content.tab_1_right_heading, challenge: content.tab_2_heading, objectives: content.tab_2_second_heading, generated: newer.new_tab_3_first_heading, medallion: newer.new_tab_3_second_heading, features: newer.new_tab_3_third_heading, ml: newer.new_tab_3_fourth_heading, insights: newer.new_tab_3_fifth_heading, profile: newer.new_tab_3_sixth_heading, outputs: newer.new_tab_3_sevent_heading, consent: newer.new_tab_3_eight_heading, quality: newer.new_tab_3_nine_heading, success: newer.new_tab_4_first_heading, benefits: newer.new_tab_5_first_heading, deliverables: newer.new_tab_5_second_heading, result: newer.new_tab_5_third_heading, glance: newer.new_tab_5_fourth_heading },
+  };
+};
 
 const chapterSpace = "pt-10 sm:pt-12 md:pt-14 lg:pt-16";
 const blockSpace = "py-8 sm:py-9 md:py-10 lg:py-12";
@@ -99,17 +119,20 @@ const blockSpace = "py-8 sm:py-9 md:py-10 lg:py-12";
 const ListGrid = ({
   items,
   cols = "sm:grid-cols-2 lg:grid-cols-3",
+  lastFullWidth = false,
 }: {
   items: { text: string; icon: string }[];
   cols?: string;
+  lastFullWidth?: boolean;
 }) => (
   <div className={cn("mt-6 grid items-stretch gap-6", cols)}>
     {items.map((k, i) => {
+      const isLast = i === items.length - 1;
       return (
-        <Reveal key={k.text} delay={i * 40} className="h-full">
+        <Reveal key={k.text} delay={i * 40} className={cn("h-full", lastFullWidth && isLast && "col-span-full")}>
           <div className="group flex h-full items-center gap-4 rounded-[18px] border border-white/[0.07] bg-[#102236]/60 p-4 lg:p-5">
             <span className={cn(cjIconTile, "border-[#A9E7C2]/25 text-[#A9E7C2] group-hover:border-[#A9E7C2]/50")}>
-              <DynamicIcon name={k.icon} className={cjIconGlyph} aria-hidden="true" />
+              <DynamicIcon name={k.icon} aria-hidden="true" className={cjIconGlyph} />
             </span>
             <span className="min-w-0 flex-1 text-left text-[15px] font-medium leading-snug text-[#A8B8C7]">
               {k.text}
@@ -121,114 +144,16 @@ const ListGrid = ({
   </div>
 );
 
-const DocumentBulletList = ({
-  items,
-}: {
-  items: { text: string; icon?: string }[];
-}) => (
-  <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-    {items.map((item, i) => (
-      <Reveal key={item.text} delay={i * 40}>
-        <li className="flex items-start gap-3">
-          <span
-            aria-hidden="true"
-            className="mt-2.5 h-1.5 w-1.5 flex-none rotate-45 rounded-[1px] bg-[#55C7F3]"
-          />
-          <span className="text-[15px] leading-relaxed text-[#A8B8C7]">
-            {item.text}
-          </span>
-        </li>
-      </Reveal>
-    ))}
-  </ul>
-);
-
-const mapFraudData = (data: FraudCaseStudyData) => {
-  const content = data.content || {};
-  const newer = data.content_new || {};
-  const categories = content.category_row || [];
-  const challengeCards = content.tab_2_cards || [];
-  const objectiveCards = content.tab_2_second_cards || [];
-  const blocks = (key: string) => newer[key] || [];
-
-  return {
-    chapters: [
-      { id: "chapter-opportunity", label: content.tab_1_text },
-      { id: "chapter-friction", label: content.tab_2_text },
-      { id: "chapter-solution", label: newer.new_tab_3_text },
-      { id: "chapter-delivery", label: newer.new_tab_4_text },
-      { id: "chapter-impact", label: newer.new_tab_5_text },
-    ] as Chapter[],
-    snapshot: categories.map((item: any, index: number) => ({
-      label: item.label,
-      value: item.text,
-      icon: iconName(item.icon),
-      tone: index === 1 || index === 2 ? "mint" : undefined,
-    })),
-    challenges: challengeCards.map((card: any, index: number) => ({
-      no: String(index + 1).padStart(2, "0"),
-      icon: iconName(card.icon),
-      img: imageUrl(card.image),
-      alt: imageAlt(card.image, card.text),
-      text: card.text,
-    })),
-    objectives: objectiveCards.map((card: any, index: number) => ({
-      no: String(index + 1).padStart(2, "0"),
-      title: card.title,
-      text: card.content,
-      icon: iconName(card.icon),
-      img: imageUrl(card.image),
-      alt: imageAlt(card.image, card.title),
-    })),
-    eventFlow: blocks("new_tab_3_first_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
-    medallionLayers: extractMedallionLayers(newer.new_tab_3_second_content),
-    medallionHeaders: extractTableHeaders(newer.new_tab_3_second_content),
-    imageAlts: {
-      hero: data.title,
-      context: imageAlt(content.tab_1_right_image),
-      business: imageAlt(content.tab_1_left_image),
-      gold: imageAlt(newer.new_tab_3_fourth_right_image),
-      ml: imageAlt(newer.new_tab_3_seventh_image),
-      dashboard: imageAlt(newer.new_tab_5_third_image),
-      banner: imageAlt(content.bottom_banner_image),
-    },
-    reasonCodes: blocks("new_tab_3_third_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
-    goldModels: blocks("new_tab_3_fourth_content_blocks").map((item: any) => ({ title: item.text, text: "", icon: iconName(item.icon) })),
-    queuePriorities: blocks("new_tab_3_fifth_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
-    futureDecisions: blocks("new_tab_3_sixth_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
-    managedServices: blocks("new_tab_3_eight_content_blocks").map((item: any) => ({ text: item.text, icon: iconName(item.icon) })),
-    qualityControls: extractListItems(newer.new_tab_3_nine_content?.[0]?.content).map((text) => ({ text })),
-    securityItems: extractListItems(newer.new_tab_3_nine_content?.[1]?.content).map((text) => ({ text })),
-    operationalModel: extractListItems(newer.new_tab_3_nine_content?.[2]?.content).map((text) => ({ text })),
-    successMetricsList: (newer.new_tab_4_first_content || []).map((item: any) => ({ text: `${item.title}: ${item.content}`, icon: jsonIcon(item.icon), accent: "#55C7F3" })),
-    pipeline: (newer.new_tab_4_first_bottom_content || []).map((item: any) => ({ label: item.text, icon: iconName(item.icon) })),
-    qaLabels: (newer.new_tab_4_first_bottom_continuous_block || []).map((item: any) => item.text),
-    benefits: (newer.new_tab_5_first_content_block || []).map((item: any) => ({ label: item.title, text: item.content, icon: jsonIcon(item.icon) })),
-    deliverables: (newer.new_tab_5_second_content || []).map((item: any) => ({ title: item.title, text: item.content, icon: iconName(item.icon), image: imageUrl(item.image) })),
-    glanceStats: (newer.new_tab_5_fourth_content || []).map((item: any) => ({ value: item.col_first, label: item.col_second })),
-  };
-};
-
-
-const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
+const CustomerChurnIntelligence = ({ data }: CustomerChurnProps) => {
   const [progress, setProgress] = useState(0);
-  const { content } = data;
+  const content = data.content || {};
+  const mapped = mapCustomerChurnData(data);
+  const { chapters: mappedChapters, snapshot: mappedSnapshot, challenges: mappedChallenges, objectives: mappedObjectives,
+    medallionLayers: mappedMedallionLayers, featureSignals: mappedFeatureSignals, mlSteps: mappedMlSteps,
+    churnInsightOutputs: mappedChurnInsightOutputs, profileHeading: mappedProfileHeading, profileDimensions: mappedProfileDimensions, riskBands: mappedRiskBands,
+    nextActions: mappedNextActions, qualityControls: mappedQualityControls, successMetricsList: mappedSuccessMetricsList,
+    benefits: mappedBenefits, deliverables: mappedDeliverables, glanceStats: mappedGlanceStats, medallionHeaders: mappedMedallionHeaders, riskHeaders: mappedRiskHeaders, imageAlts, images, paragraphs, headings } = mapped;
   const newer = data.content_new || {};
-  const mapped = mapFraudData(data);
-  const { chapters, snapshot, challenges, objectives, eventFlow, medallionLayers, medallionHeaders, reasonCodes, goldModels,
-    queuePriorities, futureDecisions, managedServices, qualityControls, securityItems, operationalModel,
-    successMetricsList, pipeline, qaLabels, benefits, deliverables, glanceStats, imageAlts } = mapped;
-  const overviewParagraphs = extractParagraphs(content.tab_1_left_content);
-  const businessParagraphs = extractParagraphs(content.tab_1_right_content);
-  const solutionParagraphs = extractParagraphs(newer.new_tab_3_first_content);
-  const scoringParagraphs = extractParagraphs(newer.new_tab_3_third_content);
-  const queueParagraphs = extractParagraphs(newer.new_tab_3_fifth_bottom_content);
-  const actionParagraphs = extractParagraphs(newer.new_tab_3_sixth_content);
-  const medallionParagraphs = extractParagraphs(newer.new_tab_3_second_content);
-  const goldParagraphs = extractParagraphs(newer.new_tab_3_fourth_content);
-  const mlParagraphs = extractParagraphs(newer.new_tab_3_seventh_content);
-  const resultParagraphs = extractParagraphs(newer.new_tab_5_third_content);
-  const qualitySections = newer.new_tab_3_nine_content || [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -244,13 +169,12 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
   return (
     <>
     <SeoTags
-                title={data.seo.title}
-                description={data.seo.description}
-                ogImage={data.seo.og_image}
-                schema={data.schema}
-              />
+                    title={data.seo?.title || data.title}
+                    description={data.seo?.description || content.listing_highlight_content}
+                    ogImage={data.seo?.og_image || data.image}
+                    schema={data.schema}
+                  />
       <div className="bg-[#07111F]">
-        {/* Reading progress */}
         <div className="fixed left-0 right-0 top-0 z-50 h-[3px]" aria-hidden="true">
           <div
             className="h-full bg-gradient-to-r from-[#69D6FF] to-[#A9E7C2] transition-[width] duration-150"
@@ -334,7 +258,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               <Reveal delay={180} className="h-full">
                 <div className={cn(cjCard, "h-full overflow-hidden")}>
                   <SmartImage
-                    src={data.image || ""}
+                    src={images.hero}
                     alt={imageAlts.hero}
                     width={1200}
                     height={912}
@@ -347,12 +271,12 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
             </div>
 
             <Reveal delay={260}>
-              <CaseSnapshot items={snapshot} className="mt-12 lg:mt-16" />
+              <CaseSnapshot items={mappedSnapshot} className="mt-12 lg:mt-16" />
             </Reveal>
           </div>
         </section>
 
-        <ChapterNav chapters={chapters} />
+        <ChapterNav chapters={mappedChapters} />
 
         {/* ==================== CHAPTER 1 — OPPORTUNITY ==================== */}
         <div id="chapter-opportunity" className={cn("focus:outline-none", chapterSpace)}>
@@ -365,27 +289,22 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               <div className="grid items-stretch gap-10 lg:grid-cols-[55fr_45fr] lg:gap-16">
                 <div>
                   <Reveal delay={60}>
-                    <SectionTitle className="mb-6">{content.tab_1_left_heading}</SectionTitle>
+                    <SectionTitle className="mb-6">{headings.overview}</SectionTitle>
                   </Reveal>
                   <div className="space-y-5">
                     <Reveal delay={120}>
                       <Body>
-                        {overviewParagraphs[0]}
+                        {paragraphs.overview[0]}
                       </Body>
                     </Reveal>
                     <Reveal delay={150}>
                       <Body>
-                        {overviewParagraphs[1]}
+                        {paragraphs.overview[1]}
                       </Body>
                     </Reveal>
-                    <Reveal delay={180}>
-                      <Body>
-                        {overviewParagraphs[2]}
-                      </Body>
-                    </Reveal>
-                    <Reveal delay={210}>
-                      <Body>
-                        {overviewParagraphs[3]}
+                    <Reveal delay={170}>
+                    <Body>
+                        {paragraphs.overview[2]}
                       </Body>
                     </Reveal>
                   </div>
@@ -394,7 +313,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                 <Reveal delay={160} className="h-full">
                   <div className={cn(cjCard, "h-full overflow-hidden")}>
                     <SmartImage
-                      src={imageUrl(content.tab_1_right_image)}
+                      src={images.context}
                       alt={imageAlts.context}
                       width={1024}
                       height={576}
@@ -411,7 +330,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                 <Reveal className="h-full">
                   <div className={cn(cjCard, "relative h-full overflow-hidden")}>
                     <SmartImage
-                      src={imageUrl(content.tab_1_left_image)}
+                      src={images.business}
                       alt={imageAlts.business}
                       width={1024}
                       height={576}
@@ -424,27 +343,22 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
 
                 <div>
                   <Reveal delay={60}>
-                    <SectionTitle className="mb-6">{content.tab_1_right_heading}</SectionTitle>
+                    <SectionTitle className="mb-6">{headings.business}</SectionTitle>
                   </Reveal>
                   <div className="mt-7 space-y-5">
                     <Reveal delay={160}>
                       <Body>
-                        {businessParagraphs[0]}
+                        {paragraphs.business[0]}
+                      </Body>
+                    </Reveal>
+                    <Reveal delay={190}>
+                      <Body>
+                        {paragraphs.business[1]}
                       </Body>
                     </Reveal>
                     <Reveal delay={220}>
                       <Body>
-                        {businessParagraphs[1]}
-                      </Body>
-                    </Reveal>
-                    <Reveal delay={280}>
-                      <Body>
-                        {businessParagraphs[2]}
-                      </Body>
-                    </Reveal>
-                    <Reveal delay={340}>
-                      <Body>
-                        {businessParagraphs[3]}
+                        {paragraphs.business[2]}
                       </Body>
                     </Reveal>
                   </div>
@@ -463,37 +377,14 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
 
             <section id="challenge" className="focus:outline-none">
               <Reveal delay={60}>
-                <SectionTitle className="mb-8 md:mb-10">{content.tab_2_heading}</SectionTitle>
+                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.challenge}</SectionTitle>
               </Reveal>
 
-              <Reveal delay={110}>
-                <Body className="mb-8 max-w-none">
-                  {content.tab_2_content}
-                </Body>
-              </Reveal>
-
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-                {challenges.map((c, i) => {
-                  const isLast = i === challenges.length - 1;
-
-                  return (
-                  <Reveal
-                    key={c.no}
-                    delay={i * 50}
-                    className={cn(!isLast && "h-full", isLast && "sm:col-span-2 lg:col-span-4")}
-                  >
-                    <article
-                      className={cn(
-                        "group flex min-h-0 flex-col overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#102236]/70 transition-all duration-500 hover:border-[#69D6FF]/35 hover:shadow-[0_0_32px_rgba(105,214,255,0.10)]",
-                        isLast ? "lg:h-[150px] lg:flex-row" : "h-full"
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          "relative aspect-[16/9] shrink-0 overflow-hidden",
-                          isLast && "aspect-[16/7] sm:aspect-[21/9] lg:aspect-auto lg:w-[34%] lg:max-h-[150px]"
-                        )}
-                      >
+              <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+                {mappedChallenges.map((c, i) => (
+                  <Reveal key={c.no} delay={i * 50} className="h-full">
+                    <article className="group flex h-full min-h-0 flex-col overflow-hidden rounded-[20px] border border-white/[0.08] bg-[#102236]/70 transition-all duration-500 hover:border-[#69D6FF]/35 hover:shadow-[0_0_32px_rgba(105,214,255,0.10)]">
+                      <div className="relative aspect-[16/9] shrink-0 overflow-hidden">
                         <SmartImage
                           src={c.img}
                           alt={c.alt}
@@ -509,31 +400,25 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                           className="absolute inset-0 bg-gradient-to-t from-[#102236] via-transparent to-transparent"
                         />
                       </div>
-                      <div className={cn("flex flex-1 flex-col p-4 lg:p-5", isLast && "justify-center lg:px-8")}>
+                      <div className="flex flex-1 flex-col p-5 lg:p-6">
                         <p className="text-left text-[14.5px] font-medium leading-[1.7] text-[#F7FAFC] lg:text-[15px]">
                           {c.text}
                         </p>
                       </div>
                     </article>
                   </Reveal>
-                  );
-                })}
+                ))}
               </div>
 
-              <Reveal delay={200} className="mt-8">
-                <Body className="max-w-none">
-                  {content.tab_2_text_block}
-                </Body>
-              </Reveal>
             </section>
 
             <section id="objectives" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-8 md:mb-10">{content.tab_2_second_heading}</SectionTitle>
+                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.objectives}</SectionTitle>
               </Reveal>
 
               <div className="grid items-stretch gap-6 md:grid-cols-2 lg:gap-8">
-                {objectives.map((o, i) => (
+                {mappedObjectives.map((o, i) => (
                   <Reveal key={o.no} delay={i * 70} className="h-full">
                     <ObjectiveCard item={o} />
                   </Reveal>
@@ -563,51 +448,39 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               <ChapterLabel>Chapter 03 — {newer.new_tab_3_text}</ChapterLabel>
             </Reveal>
 
-            {/* Streaming ingestion */}
-            <section id="solution-ingestion" className="focus:outline-none">
+            <section id="solution-data" className="focus:outline-none">
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_first_heading}</SectionTitle>
+                <SectionTitle className="mb-6">{headings.generated}</SectionTitle>
               </Reveal>
 
               <div className="space-y-5">
                 <Reveal delay={110}>
                   <Body className="max-w-none">
-                    {solutionParagraphs[0]}
+                    {paragraphs.generated[0]}
                   </Body>
                 </Reveal>
                 <Reveal delay={140}>
                   <Body className="max-w-none">
-                    {solutionParagraphs[1]}
+                    {paragraphs.generated[1]}
                   </Body>
                 </Reveal>
                 <Reveal delay={170}>
                   <Body className="max-w-none">
-                    {solutionParagraphs[2]}
-                  </Body>
-                </Reveal>
-              </div>
-
-              <ListGrid items={eventFlow} cols="sm:grid-cols-2" />
-
-              <div className="mt-7">
-                <Reveal delay={200}>
-                  <Body className="max-w-none">
-                    {newer.new_tab_3_first_bottom_content}
+                    {paragraphs.generated[2]}
                   </Body>
                 </Reveal>
               </div>
 
             </section>
 
-            {/* Medallion */}
             <section id="solution-medallion" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_second_heading}</SectionTitle>
+                <SectionTitle className="mb-6">{headings.medallion}</SectionTitle>
               </Reveal>
 
               <Reveal delay={110}>
                 <Body className="max-w-none">
-                  {medallionParagraphs[0]}
+                  {paragraphs.medallion[0]}
                 </Body>
               </Reveal>
 
@@ -617,23 +490,23 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                     <thead>
                       <tr className="border-b border-white/[0.07] bg-white/[0.03]">
                         <th className="px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#69D6FF] sm:px-7">
-                          {medallionHeaders[0]}
+                          {mappedMedallionHeaders[0]}
                         </th>
                         <th className="px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#69D6FF] sm:px-7">
-                          {medallionHeaders[1]}
+                          {mappedMedallionHeaders[1]}
                         </th>
                         <th className="px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#69D6FF] sm:px-7">
-                          {medallionHeaders[2]}
+                          {mappedMedallionHeaders[2]}
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {medallionLayers.map((l, i) => (
+                      {mappedMedallionLayers.map((l, i) => (
                         <tr
                           key={l.layer}
                           className={cn(
                             "transition-colors hover:bg-white/[0.02]",
-                            i !== medallionLayers.length - 1 && "border-b border-white/[0.07]"
+                            i !== mappedMedallionLayers.length - 1 && "border-b border-white/[0.07]"
                           )}
                         >
                           <td className="px-5 py-4 align-top text-[14.5px] font-semibold text-[#F7FAFC] sm:px-7">
@@ -658,31 +531,32 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               <div className="mt-8">
                 <Reveal delay={240}>
                   <Body className="max-w-none">
-                    {medallionParagraphs[1]}
+                    {paragraphs.medallion[1]}
                   </Body>
                 </Reveal>
               </div>
 
             </section>
 
-            {/* Explainable scoring */}
-            <section id="solution-scoring" className={cn("focus:outline-none", blockSpace)}>
+            <section id="solution-features" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_third_heading}</SectionTitle>
+                <SectionTitle className="mb-6">{headings.features}</SectionTitle>
               </Reveal>
 
               <div className="space-y-5">
                 <Reveal delay={110}>
                   <Body className="max-w-none">
-                    {scoringParagraphs[0]}
+                    {paragraphs.features[0]}
                   </Body>
                 </Reveal>
                 <Reveal delay={140}>
-                  <Body className="max-w-none">{extractParagraphs(newer.new_tab_3_third_content)[1]}</Body>
+                  <Body className="max-w-none">
+                    {paragraphs.features[1]}
+                  </Body>
                 </Reveal>
               </div>
 
-              <ListGrid items={reasonCodes} cols="grid-cols-2 lg:grid-cols-4" />
+              <ListGrid items={mappedFeatureSignals} />
 
               <div className="mt-7">
                 <Reveal delay={200}>
@@ -693,35 +567,20 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               </div>
             </section>
 
-            {/* Gold models */}
-            <section id="solution-gold" className={cn("focus:outline-none", blockSpace)}>
+            <section id="solution-ml" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_fourth_heading}</SectionTitle>
+                <SectionTitle className="mb-6">{headings.ml}</SectionTitle>
               </Reveal>
 
               <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
                 <div className="space-y-5">
                   <Reveal delay={110}>
                     <Body>
-                      {goldParagraphs[0]}
+                      {paragraphs.ml[0]}
                     </Body>
                   </Reveal>
-                  <Reveal delay={140}><Body>{goldParagraphs[1]}</Body></Reveal>
-                  <div className="grid gap-6">
-                    {goldModels.map((m, i) => {
-                      return (
-                        <Reveal key={m.title} delay={i * 60}>
-                          <div className={cn(cjCard, "p-5 lg:p-6")}>
-                            <div className="flex items-center gap-2.5">
-                              <DynamicIcon name={m.icon} className="h-4 w-4 shrink-0 text-[#69D6FF]" aria-hidden="true" />
-                              <span className="text-[15px] font-semibold text-[#F7FAFC]">{m.title}</span>
-                            </div>
-                          </div>
-                        </Reveal>
-                      );
-                    })}
-                  </div>
-                  <Reveal delay={260}>
+                  <ListGrid items={mappedMlSteps} cols="sm:grid-cols-2" />
+                  <Reveal delay={240}>
                     <Body>
                       {newer.new_tab_3_fourth_bottom_content}
                     </Body>
@@ -731,111 +590,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                 <Reveal delay={140} className="h-full">
                   <div className={cn(cjCard, "h-full overflow-hidden")}>
                     <SmartImage
-                      src={imageUrl(newer.new_tab_3_fourth_right_image)}
-                      alt={imageAlts.gold}
-                      width={1024}
-                      height={576}
-                      loading="eager"
-                      className="h-full min-h-[240px] w-full object-cover lg:min-h-[320px]"
-                    />
-                  </div>
-                </Reveal>
-              </div>
-            </section>
-
-            {/* Investigation queue */}
-            <section id="solution-queue" className={cn("focus:outline-none", blockSpace)}>
-              <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_fifth_heading}</SectionTitle>
-              </Reveal>
-
-              <div className="space-y-5">
-                <Reveal delay={110}>
-                  <Body className="max-w-none">
-                    {newer.new_tab_3_fifth_content}
-                  </Body>
-                </Reveal>
-              </div>
-
-              <ListGrid items={queuePriorities} />
-
-              <div className="mt-7 space-y-5">
-                <Reveal delay={180}>
-                  <Body className="max-w-none">
-                    {queueParagraphs[0]}
-                  </Body>
-                </Reveal>
-                <Reveal delay={210}>
-                  <Body className="max-w-none">
-                    {queueParagraphs[1]}
-                  </Body>
-                </Reveal>
-              </div>
-            </section>
-
-            {/* Recommended actions */}
-            <section id="solution-actions" className={cn("focus:outline-none", blockSpace)}>
-              <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_sixth_heading}</SectionTitle>
-              </Reveal>
-
-              <div className="space-y-5">
-                <Reveal delay={110}>
-                  <Body className="max-w-none">
-                    {actionParagraphs[0]}
-                  </Body>
-                </Reveal>
-                <Reveal delay={140}>
-                  <Body className="max-w-none">{extractParagraphs(newer.new_tab_3_sixth_content)[1]}</Body>
-                </Reveal>
-              </div>
-
-              <ListGrid items={futureDecisions} cols="grid-cols-2 lg:grid-cols-4" />
-
-              <div className="mt-7">
-                <Reveal delay={200}>
-                  <Body className="max-w-none">
-                    {newer.new_tab_3_sixth_bottom_content}
-                  </Body>
-                </Reveal>
-              </div>
-            </section>
-
-            {/* AI/ML layer */}
-            <section id="solution-ml" className={cn("focus:outline-none", blockSpace)}>
-              <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_seventh_heading}</SectionTitle>
-              </Reveal>
-
-              <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
-                <div className="space-y-5">
-                  <Reveal delay={110}>
-                    <Body>
-                      {mlParagraphs[0]}
-                    </Body>
-                  </Reveal>
-                  <Reveal delay={140}>
-                    <Body>
-                      {mlParagraphs[1]}
-                    </Body>
-                  </Reveal>
-                  <Reveal delay={170}>
-                    <Body>
-                      {mlParagraphs[2]}
-                    </Body>
-                  </Reveal>
-                  <Reveal delay={220}>
-                    <Body>
-                      {mlParagraphs[3]}
-                    </Body>
-                  </Reveal>
-                </div>
-
-
-                <Reveal delay={140} className="h-full">
-                  <div className={cn(cjCard, "h-full overflow-hidden")}>
-                    <SmartImage
-                      src={imageUrl(newer.new_tab_3_seventh_image)}
+                      src={images.ml}
                       alt={imageAlts.ml}
                       width={1024}
                       height={576}
@@ -847,24 +602,150 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               </div>
             </section>
 
-            {/* Managed services */}
-            <section id="solution-managed" className={cn("focus:outline-none", blockSpace)}>
+            <section id="solution-insights" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_eight_heading}</SectionTitle>
+                <SectionTitle className="mb-6">{headings.insights}</SectionTitle>
+              </Reveal>
+
+              <div className="space-y-5">
+                <Reveal delay={110}>
+                  <Body className="max-w-none">{paragraphs.insights[0]}</Body>
+                </Reveal>
+                <Reveal delay={140}>
+                  <Body className="max-w-none">{paragraphs.insights[1]}</Body>
+                </Reveal>
+              </div>
+
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {mappedChurnInsightOutputs.map((item, i) => (
+                  <Reveal key={item.text} delay={120 + i * 40}>
+                    <li className="flex items-center gap-3 text-[15px] text-[#F7FAFC]">
+                      <span className="h-2 w-2 shrink-0 rotate-45 bg-[#69D6FF]" aria-hidden="true" />
+                      {item.text}
+                    </li>
+                  </Reveal>
+                ))}
+              </ul>
+
+              <div className="mt-7">
+                <Reveal delay={200}>
+                  <Body className="max-w-none">
+                    {newer.new_tab_3_fifth_bottom_content}
+                  </Body>
+                </Reveal>
+              </div>
+            </section>
+
+            <section id="solution-360" className={cn("focus:outline-none", blockSpace)}>
+              <Reveal delay={60}>
+                <SectionTitle className="mb-6">{headings.profile}</SectionTitle>
+              </Reveal>
+
+              <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+                <div className="space-y-5">
+                  <Reveal delay={110}>
+                    <h3 className="text-lg font-semibold text-[#F7FAFC] lg:text-xl">{mappedProfileHeading}</h3>
+                    <Body className="mt-2">{paragraphs.profile[0]}</Body>
+                  </Reveal>
+                  <Reveal delay={140}>
+                    <Body>{paragraphs.profile[1]}</Body>
+                  </Reveal>
+                  <ul className="space-y-3.5">
+                    {mappedProfileDimensions.map((p, i) => (
+                      <Reveal key={p.title} delay={i * 50}>
+                        <li className="flex items-start gap-3 text-[15px] leading-[1.65]">
+                          <span className="mt-[7px] h-2 w-2 shrink-0 rotate-45 bg-[#69D6FF]" aria-hidden="true" />
+                          <span className="text-[#F7FAFC]">
+                            <span className="font-semibold text-[#69D6FF]">{p.title}:</span>{" "}
+                            <span className="text-[#A8B8C7]">{p.text}</span>
+                          </span>
+                        </li>
+                      </Reveal>
+                    ))}
+                  </ul>
+                  <Reveal delay={280}>
+                    <Body>
+                      {newer.new_tab_3_sixth_bottom_content}
+                    </Body>
+                  </Reveal>
+                </div>
+
+                <Reveal delay={140} className="h-full">
+                  <div className={cn(cjCard, "h-full overflow-hidden")}>
+                    <SmartImage
+                      src={images.profile}
+                      alt={imageAlts.profile}
+                      width={1024}
+                      height={576}
+                      loading="eager"
+                      className="h-full min-h-[240px] w-full object-cover lg:min-h-[320px]"
+                    />
+                  </div>
+                </Reveal>
+              </div>
+            </section>
+
+            <section id="solution-bands" className={cn("focus:outline-none", blockSpace)}>
+              <Reveal delay={60}>
+                <SectionTitle className="mb-6">{headings.outputs}</SectionTitle>
               </Reveal>
 
               <div className="space-y-5">
                 <Reveal delay={110}>
                   <Body className="max-w-none">
-                    {newer.new_tab_3_eight_content}
+                    {paragraphs.outputs[0]}
+                  </Body>
+                </Reveal>
+                <Reveal delay={140}>
+                  <Body className="max-w-none">
+                    {paragraphs.outputs[1]}
                   </Body>
                 </Reveal>
               </div>
 
-              <ListGrid items={managedServices} cols="sm:grid-cols-2" />
+              <Reveal delay={140}>
+                <div className={cn(cjCard, "mt-8 max-w-2xl overflow-hidden")}>
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="border-b border-white/[0.09]">
+                        <th className="px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#69D6FF] lg:px-8">
+                          {mappedRiskHeaders[0]}
+                        </th>
+                        <th className="px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#69D6FF] lg:px-8">
+                          {mappedRiskHeaders[1]}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {mappedRiskBands.map((r) => (
+                        <tr key={r.band} className="border-b border-white/[0.06] last:border-0 transition-colors hover:bg-white/[0.02]">
+                          <td className="px-6 py-4 text-[1.0rem] font-semibold text-[#F7FAFC] lg:px-8">{r.band}</td>
+                          <td className="px-6 py-4 font-mono text-[14px] text-[#A9E7C2] lg:px-8">{r.threshold}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Reveal>
+            </section>
+
+            <section id="solution-consent" className={cn("focus:outline-none", blockSpace)}>
+              <Reveal delay={60}>
+                <SectionTitle className="mb-6">{headings.consent}</SectionTitle>
+              </Reveal>
+
+              <div className="space-y-5">
+                <Reveal delay={110}>
+                  <Body className="max-w-none">
+                    {paragraphs.consent}
+                  </Body>
+                </Reveal>
+              </div>
+
+              <ListGrid items={mappedNextActions} cols="grid-cols-2 lg:grid-cols-4" />
 
               <div className="mt-7">
-                <Reveal delay={220}>
+                <Reveal delay={200}>
                   <Body className="max-w-none">
                     {newer.new_tab_3_eight_bottom_content}
                   </Body>
@@ -872,68 +753,18 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               </div>
             </section>
 
-
-            {/* Data Quality, Security & Operations */}
-            <section id="data-quality" className={cn("focus:outline-none", blockSpace)}>
+            <section id="quality-security" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-6">{newer.new_tab_3_nine_heading}</SectionTitle>
+                <SectionTitle className="mb-6">{headings.quality}</SectionTitle>
               </Reveal>
-
-              <div className={cn(cjCard, "px-6 pt-10 pb-14 sm:px-10 sm:pt-12 sm:pb-16 lg:px-16 lg:pt-14 lg:pb-20")}>
-                <div className="space-y-14 lg:space-y-16">
-                  {/* Data Quality */}
-                  <div>
-                    <Reveal delay={80}>
-                      <h3 className="text-left text-[1.35rem] font-semibold leading-[1.2] tracking-tight text-[#F7FAFC] sm:text-[1.5rem]">
-                        {qualitySections[0]?.heading}
-                      </h3>
-                    </Reveal>
-                    <div className="mt-5 space-y-4">
-                      <Reveal delay={110}>
-                        <p className="max-w-[760px] text-left text-[16px] leading-[1.7] text-[#A8B8C7] sm:text-[17px]">
-                          {extractParagraphs(qualitySections[0]?.content)[0]}
-                        </p>
-                      </Reveal>
-                      <Reveal delay={140}>
-                        <p className="max-w-[760px] text-left text-[16px] leading-[1.7] text-[#A8B8C7] sm:text-[17px]">
-                          {extractParagraphs(qualitySections[0]?.content)[1]}
-                        </p>
-                      </Reveal>
-                    </div>
-                    <DocumentBulletList items={qualityControls} />
-                  </div>
-
-                  {/* Security & Governance */}
-                  <div>
-                    <Reveal delay={80}>
-                      <h3 className="text-left text-[1.35rem] font-semibold leading-[1.2] tracking-tight text-[#F7FAFC] sm:text-[1.5rem]">
-                        {qualitySections[1]?.heading}
-                      </h3>
-                    </Reveal>
-                    <Reveal delay={110}>
-                      <p className="mt-5 max-w-[760px] text-left text-[16px] leading-[1.7] text-[#A8B8C7] sm:text-[17px]">
-                        {extractParagraphs(qualitySections[1]?.content)[0]}
-                      </p>
-                    </Reveal>
-                    <DocumentBulletList items={securityItems} />
-                  </div>
-
-                  {/* Operational Model */}
-                  <div>
-                    <Reveal delay={80}>
-                      <h3 className="text-left text-[1.35rem] font-semibold leading-[1.2] tracking-tight text-[#F7FAFC] sm:text-[1.5rem]">
-                        {qualitySections[2]?.heading}
-                      </h3>
-                    </Reveal>
-                    <Reveal delay={110}>
-                      <p className="mt-5 max-w-[760px] text-left text-[16px] leading-[1.7] text-[#A8B8C7] sm:text-[17px]">
-                        {extractParagraphs(qualitySections[2]?.content)[0]}
-                      </p>
-                    </Reveal>
-                    <DocumentBulletList items={operationalModel} />
-                  </div>
-                </div>
+              <div className="space-y-5">
+                <Reveal delay={110}>
+                  <Body className="max-w-none">
+                    {paragraphs.quality}
+                  </Body>
+                </Reveal>
               </div>
+              <ListGrid items={mappedQualityControls} cols="grid-cols-1 md:grid-cols-2" lastFullWidth />
             </section>
           </div>
         </div>
@@ -946,13 +777,29 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
             </Reveal>
 
 
-            <section id="quality-pipeline" className={cn("focus:outline-none", blockSpace)}>
-              <KpiCommandCenter items={successMetricsList} id="success-metrics-grid" eyebrow="" />
-
-              <Reveal delay={140} className="mt-8 block">
-                <TestingRail stages={pipeline} qaLabels={qaLabels} />
+            <section id="success-metrics" className={cn("focus:outline-none", blockSpace)}>
+              <Reveal delay={60}>
+                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.success}</SectionTitle>
               </Reveal>
+
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {mappedSuccessMetricsList.map((m, i) => (
+                  <Reveal
+                    key={m.text}
+                    delay={i * 70}
+                    className={cn(
+                      "h-full",
+                      i === mappedSuccessMetricsList.length - 1 &&
+                        mappedSuccessMetricsList.length % 3 === 1 &&
+                        "sm:col-span-2 lg:col-span-3"
+                    )}
+                  >
+                    <BenefitCard item={m} />
+                  </Reveal>
+                ))}
+              </div>
             </section>
+
           </div>
         </div>
 
@@ -971,28 +818,44 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
               <ChapterLabel>Chapter 05 — {newer.new_tab_5_text}</ChapterLabel>
             </Reveal>
 
-
-            <PremiumBenefitsGrid
-              items={benefits}
-              eyebrow=""
-              subtitle={newer.new_tab_5_first_content}
-              className={blockSpace}
-            />
+            <section id="benefits" className="focus:outline-none">
+              <Reveal delay={60}>
+                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.benefits}</SectionTitle>
+              </Reveal>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-6">
+                {mappedBenefits.map((b, i) => {
+                  const isLast = i === mappedBenefits.length - 1;
+                  const isLastPair = i >= mappedBenefits.length - 2;
+                  return (
+                    <Reveal
+                      key={b.text}
+                      delay={i * 70}
+                      className={cn(
+                        "h-full",
+                        isLast
+                          ? "col-span-full sm:col-span-2 lg:col-span-3"
+                          : isLastPair
+                            ? "col-span-full sm:col-span-1 lg:col-span-3"
+                            : "col-span-full sm:col-span-1 lg:col-span-2"
+                      )}
+                    >
+                      <BenefitCard item={b} />
+                    </Reveal>
+                  );
+                })}
+              </div>
+            </section>
 
             <section id="deliverables" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-8 md:mb-10">{newer.new_tab_5_second_heading}</SectionTitle>
+                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.deliverables}</SectionTitle>
               </Reveal>
-              <div className="mx-auto grid w-full max-w-[1240px] grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 xl:gap-8">
-                {deliverables.map((d, i) => {
-                  const isLast = i === deliverables.length - 1 && deliverables.length % 3 === 1;
+              <div className="mx-auto grid w-full max-w-[1240px] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
+                {mappedDeliverables.map((d, i) => {
+                  const isLast = i === mappedDeliverables.length - 1;
                   return (
-                    <Reveal
-                      key={d.title}
-                      delay={i * 70}
-                      className={cn("h-full w-full", isLast && "sm:col-span-2 xl:col-span-3")}
-                    >
-                      <DeliverableCard item={d} variant={isLast ? "landscape" : "portrait"} />
+                    <Reveal key={d.title} delay={i * 70} className={cn("h-full w-full", isLast && "lg:col-span-2")}>
+                      <DeliverableCard item={d} variant="portrait" />
                     </Reveal>
                   );
                 })}
@@ -1008,37 +871,27 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                 <div className="relative grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
                   <div>
                     <Reveal delay={60}>
-                      <SectionTitle className="mb-6">{newer.new_tab_5_third_heading}</SectionTitle>
+                      <SectionTitle className="mb-6">{headings.result}</SectionTitle>
                     </Reveal>
                     <div className="space-y-5">
                       <Reveal delay={110}>
                         <Body>
-                          {resultParagraphs[0]}
+                          {paragraphs.result[0]}
                         </Body>
                       </Reveal>
                       <Reveal delay={140}>
                         <Body>
-                          {resultParagraphs[1]}
+                          {paragraphs.result[1]}
                         </Body>
                       </Reveal>
                       <Reveal delay={170}>
                         <Body>
-                          {resultParagraphs[2]}
+                          {paragraphs.result[2]}
                         </Body>
                       </Reveal>
                       <Reveal delay={200}>
                         <Body>
-                          {resultParagraphs[3]}
-                        </Body>
-                      </Reveal>
-                      <Reveal delay={230}>
-                        <Body>
-                          {resultParagraphs[4]}
-                        </Body>
-                      </Reveal>
-                      <Reveal delay={260}>
-                        <Body>
-                          {resultParagraphs[5]}
+                          {paragraphs.result[3]}
                         </Body>
                       </Reveal>
                     </div>
@@ -1047,7 +900,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                   <Reveal delay={140} className="h-full">
                     <div className="h-full overflow-hidden rounded-[22px] border border-white/[0.08]">
                       <SmartImage
-                        src={imageUrl(newer.new_tab_5_third_image)}
+                        src={images.dashboard}
                         alt={imageAlts.dashboard}
                         width={1200}
                         height={675}
@@ -1062,12 +915,12 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
 
             <section id="at-a-glance" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
-                <SectionTitle className="mb-8 md:mb-10">{newer.new_tab_5_fourth_heading}</SectionTitle>
+                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.glance}</SectionTitle>
               </Reveal>
 
               <div className="mx-auto w-full max-w-3xl">
                 <div className="divide-y divide-white/[0.08] rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-2 sm:px-10 sm:py-4">
-                  {glanceStats.map((s, i) => (
+                  {mappedGlanceStats.map((s, i) => (
                     <Reveal key={s.label} delay={i * 80}>
                       <div className="grid grid-cols-[80px_1fr] items-center gap-4 py-4 sm:grid-cols-[120px_1fr] sm:gap-8 sm:py-5">
                         <div className="font-mono text-lg font-semibold leading-none text-[#69D6FF] sm:text-xl">
@@ -1082,7 +935,6 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
                 </div>
               </div>
             </section>
-
           </div>
         </div>
 
@@ -1090,7 +942,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
         <section id="cta" className="relative overflow-hidden">
           <div className="absolute inset-0">
             <SmartImage
-              src={imageUrl(content.bottom_banner_image)}
+              src={images.banner}
               alt=""
               loading="eager"
               width={1920}
@@ -1102,7 +954,7 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
           </div>
 
           <div className={cn(cjContainer, "relative z-10 py-14 lg:py-20")}>
-                  <Reveal>
+            <Reveal>
               <div className="max-w-2xl">
                 <h2 className="text-left text-[1.85rem] font-bold leading-[1.12] tracking-tight sm:text-[2.25rem] lg:text-[2.6rem]">
                   <span className="text-gradient-brand">{content.bottom_banner_heading}</span>
@@ -1148,4 +1000,4 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
   );
 };
 
-export default FraudDetectionRiskIntelligence;
+export default CustomerChurnIntelligence;

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import SimKycCaseStudy from "@/pages/case-studies/SimKycCaseStudy";
 import OracleDatabricksCaseStudy from "@/pages/case-studies/OracleDatabricksCaseStudy";
 import FraudDetectionRiskIntelligence from "@/pages/case-studies/FraudDetectionRiskIntelligence";
+import CustomerChurnIntelligence from "@/pages/case-studies/CustomerChurnIntelligence";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
@@ -37,6 +38,13 @@ const CaseStudyDetail = () => {
     const fraudData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (fraudData) {
       return <FraudDetectionRiskIntelligence data={fraudData} />;
+    }
+  }
+
+  if (slug === "ai-powered-customer-360-churn-prediction-platform") {
+    const churnData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (churnData) {
+      return <CustomerChurnIntelligence data={churnData} />;
     }
   }
 
