@@ -74,19 +74,19 @@ const Footer = ({ data }: FooterProps) => {
 
   const addresses = data?.contact
     ? [
-      {
-        label: data.contact.address_heading_1 || "",
-        address: data.contact.address || "",
-      },
-      {
-        label: data.contact.address_heading_2 || "",
-        address: data.contact.address_2 || "",
-      },
-      {
-        label: data.contact.address_heading_3 || "",
-        address: data.contact.address_3 || "",
-      },
-    ].filter((addr) => addr.address)
+        {
+          label: data.contact.address_heading_1 || "",
+          address: data.contact.address || "",
+        },
+        {
+          label: data.contact.address_heading_2 || "",
+          address: data.contact.address_2 || "",
+        },
+        {
+          label: data.contact.address_heading_3 || "",
+          address: data.contact.address_3 || "",
+        },
+      ].filter((addr) => addr.address)
     : [];
 
   const code1Links = data?.footer_menus?.code?.items || [];
@@ -94,7 +94,11 @@ const Footer = ({ data }: FooterProps) => {
   const hireTalentLinks = data?.footer_menus?.hire?.items || [];
 
   const salesNumbers = data?.contact
-    ? [data.contact.sales_number_1, data.contact.sales_number_2, data.contact.sales_number_3].filter(Boolean)
+    ? [
+        data.contact.sales_number_1,
+        data.contact.sales_number_2,
+        data.contact.sales_number_3,
+      ].filter(Boolean)
     : [];
 
   const hrNumbers = data?.contact
@@ -125,7 +129,9 @@ const Footer = ({ data }: FooterProps) => {
           </div>
 
           {/* Main Grid */}
-          <div className={`${hireTalentLinks.length > 0 ? "grid-cols-4" : "grid-cols-3"} grid gap-8 lg:gap-12 mb-12`}>
+          <div
+            className={`${hireTalentLinks.length > 0 ? "grid-cols-4" : "grid-cols-3"} grid gap-8 lg:gap-12 mb-12`}
+          >
             {/* Locations Column */}
             <div>
               <h4 className="text-foreground font-semibold text-base mb-5">
@@ -156,31 +162,32 @@ const Footer = ({ data }: FooterProps) => {
                     <Link
                       to={link.url}
                       className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                     dangerouslySetInnerHTML={{ __html: link.title}}></Link>
+                      dangerouslySetInnerHTML={{ __html: link.title }}
+                    ></Link>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* Hire Talent Links */}
-            {hireTalentLinks.length > 0 &&
+            {hireTalentLinks.length > 0 && (
               <div>
-              <h4 className="text-foreground font-semibold text-base mb-5">
-                {data?.footer_menus?.hire?.title || "Hire Talent"}
-              </h4>
-              <ul className="space-y-3">
-                {hireTalentLinks.map((link) => (
-                  <li key={link.id}>
-                    <Link
-                      to={link.url}
-                      className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
-                    dangerouslySetInnerHTML={{ __html: link.title}}>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            }
+                <h4 className="text-foreground font-semibold text-base mb-5">
+                  {data?.footer_menus?.hire?.title || "Hire Talent"}
+                </h4>
+                <ul className="space-y-3">
+                  {hireTalentLinks.map((link) => (
+                    <li key={link.id}>
+                      <Link
+                        to={link.url}
+                        className="text-muted-foreground text-sm hover:text-foreground transition-colors duration-200"
+                        dangerouslySetInnerHTML={{ __html: link.title }}
+                      ></Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Follow Us & Email */}
             <div>
@@ -196,7 +203,11 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Ambition Box"
                   >
-                    <img src={`${import.meta.env.BASE_URL}ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
+                    <img
+                      src={`${import.meta.env.BASE_URL}ambitionbox.png`}
+                      alt="Ambition Box"
+                      className="w-4 h-4"
+                    />
                   </a>
                 )}
                 {data?.social_links?.facebook && (
@@ -207,7 +218,19 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Facebook"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-facebook w-4 h-4 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      className="lucide lucide-facebook w-4 h-4 text-muted-foreground"
+                    >
+                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
                   </a>
                 )}
                 {data?.social_links?.linkedin && (
@@ -218,7 +241,21 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="LinkedIn"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"
+                    >
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                      <rect width="4" height="12" x="2" y="9"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
                   </a>
                 )}
                 {data?.social_links?.instagram && (
@@ -229,7 +266,28 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Instagram"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-instagram w-4 h-4 text-muted-foreground"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      className="lucide lucide-instagram w-4 h-4 text-muted-foreground"
+                    >
+                      <rect
+                        width="20"
+                        height="20"
+                        x="2"
+                        y="2"
+                        rx="5"
+                        ry="5"
+                      ></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                    </svg>
                   </a>
                 )}
                 {data?.social_links?.twitter && (
@@ -240,7 +298,19 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Twitter"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-twitter w-4 h-4 text-muted-foreground"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      className="lucide lucide-twitter w-4 h-4 text-muted-foreground"
+                    >
+                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                    </svg>
                   </a>
                 )}
                 {data?.social_links?.pinterest && (
@@ -251,7 +321,13 @@ const Footer = ({ data }: FooterProps) => {
                     className="w-9 h-9 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center hover:border-accent/40 hover:bg-accent/10 transition-colors duration-200"
                     aria-label="Pinterest"
                   >
-                    <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path></svg>
+                    <svg
+                      className="w-4 h-4 text-muted-foreground"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path>
+                    </svg>
                   </a>
                 )}
               </div>
@@ -289,7 +365,9 @@ const Footer = ({ data }: FooterProps) => {
           {/* Phone Numbers Row */}
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 py-6 border-t border-border/20">
             <div className="flex items-center gap-3">
-              <span className="text-foreground font-semibold text-sm">Sales:</span>
+              <span className="text-foreground font-semibold text-sm">
+                Sales:
+              </span>
               {salesNumbers.map((num, index) => (
                 <a
                   key={index}
@@ -298,7 +376,9 @@ const Footer = ({ data }: FooterProps) => {
                 >
                   <Phone className="w-3.5 h-3.5 text-accent" />
                   {num}
-                  {index < salesNumbers.length - 1 && <span className="ml-2">,</span>}
+                  {index < salesNumbers.length - 1 && (
+                    <span className="ml-2">,</span>
+                  )}
                 </a>
               ))}
             </div>
@@ -312,7 +392,9 @@ const Footer = ({ data }: FooterProps) => {
                 >
                   <Phone className="w-3.5 h-3.5 text-accent" />
                   {num}
-                  {index < hrNumbers.length - 1 && <span className="ml-2">,</span>}
+                  {index < hrNumbers.length - 1 && (
+                    <span className="ml-2">,</span>
+                  )}
                 </a>
               ))}
             </div>
@@ -337,7 +419,9 @@ const Footer = ({ data }: FooterProps) => {
 
           {/* Locations */}
           <div className="mb-6 pb-6 border-b border-border/20">
-            <h4 className="text-foreground font-semibold text-sm mb-4">Locations</h4>
+            <h4 className="text-foreground font-semibold text-sm mb-4">
+              Locations
+            </h4>
             <div className="space-y-4">
               {addresses.map((loc, index) => (
                 <div key={index}>
@@ -362,19 +446,24 @@ const Footer = ({ data }: FooterProps) => {
                 {data?.footer_menus?.code?.title || "Code1"}
               </span>
               <ChevronDown
-                className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "code1" ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                  openSection === "code1" ? "rotate-180" : ""
+                }`}
               />
             </button>
             <div
-              className={`overflow-hidden transition-all duration-200 ${openSection === "code1" ? "max-h-64 pb-4" : "max-h-0"
-                }`}
+              className={`overflow-hidden transition-all duration-200 ${
+                openSection === "code1" ? "max-h-64 pb-4" : "max-h-0"
+              }`}
             >
               <ul className="space-y-3 pl-1">
                 {code1Links.map((link) => (
                   <li key={link.id}>
-                    <Link to={link.url} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
-                    </Link>
+                    <Link
+                      to={link.url}
+                      className="text-muted-foreground text-sm"
+                      dangerouslySetInnerHTML={{ __html: link.title }}
+                    ></Link>
                   </li>
                 ))}
               </ul>
@@ -383,33 +472,39 @@ const Footer = ({ data }: FooterProps) => {
 
           {/* Hire Talent Accordion */}
           {hireTalentLinks.length > 0 && (
-          <div className="border-b border-border/20">
-            <button
-              onClick={() => toggleSection("hireTalent")}
-              className="w-full flex items-center justify-between py-4"
-            >
-              <span className="text-foreground font-semibold text-sm">
-                {data?.footer_menus?.hire?.title || "Hire Talent"}
-              </span>
-              <ChevronDown
-                className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "hireTalent" ? "rotate-180" : ""
+            <div className="border-b border-border/20">
+              <button
+                onClick={() => toggleSection("hireTalent")}
+                className="w-full flex items-center justify-between py-4"
+              >
+                <span className="text-foreground font-semibold text-sm">
+                  {data?.footer_menus?.hire?.title || "Hire Talent"}
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                    openSection === "hireTalent" ? "rotate-180" : ""
                   }`}
-              />
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-200 ${openSection === "hireTalent" ? "max-h-64 pb-4" : "max-h-0"
+                />
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-200 ${
+                  openSection === "hireTalent" ? "max-h-64 pb-4" : "max-h-0"
                 }`}
-            >
-              <ul className="space-y-3 pl-1">
-                {hireTalentLinks.map((link) => (
-                  <li key={link.id}>
-                    <Link to={link.url} className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: link.title}}>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              >
+                <ul className="space-y-3 pl-1">
+                  {hireTalentLinks.map((link) => (
+                    <li key={link.id}>
+                      <Link
+                        to={link.url}
+                        className="text-muted-foreground text-sm"
+                        dangerouslySetInnerHTML={{ __html: link.title }}
+                      ></Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>)}
+          )}
 
           {/* Contact Accordion */}
           <div className="border-b border-border/20">
@@ -417,38 +512,58 @@ const Footer = ({ data }: FooterProps) => {
               onClick={() => toggleSection("contact")}
               className="w-full flex items-center justify-between py-4"
             >
-              <span className="text-foreground font-semibold text-sm">Contact</span>
+              <span className="text-foreground font-semibold text-sm">
+                Contact
+              </span>
               <ChevronDown
-                className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${openSection === "contact" ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                  openSection === "contact" ? "rotate-180" : ""
+                }`}
               />
             </button>
             <div
-              className={`overflow-hidden transition-all duration-200 ${openSection === "contact" ? "max-h-64 pb-4" : "max-h-0"
-                }`}
+              className={`overflow-hidden transition-all duration-200 ${
+                openSection === "contact" ? "max-h-64 pb-4" : "max-h-0"
+              }`}
             >
               <div className="space-y-4 pl-1">
                 <div>
-                  <p className="text-foreground text-sm font-medium mb-2">Email:</p>
+                  <p className="text-foreground text-sm font-medium mb-2">
+                    Email:
+                  </p>
                   <div className="space-y-2">
                     {data?.contact?.email && (
-                      <a href={`mailto:${data.contact.email}`} className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <Mail className="w-4 h-4 text-accent" /> {data.contact.email}
+                      <a
+                        href={`mailto:${data.contact.email}`}
+                        className="flex items-center gap-2 text-muted-foreground text-sm"
+                      >
+                        <Mail className="w-4 h-4 text-accent" />{" "}
+                        {data.contact.email}
                       </a>
                     )}
                     {data?.contact?.sales_email && (
-                      <a href={`mailto:${data.contact.sales_email}`} className="flex items-center gap-2 text-muted-foreground text-sm">
-                        <Mail className="w-4 h-4 text-accent" /> {data.contact.sales_email}
+                      <a
+                        href={`mailto:${data.contact.sales_email}`}
+                        className="flex items-center gap-2 text-muted-foreground text-sm"
+                      >
+                        <Mail className="w-4 h-4 text-accent" />{" "}
+                        {data.contact.sales_email}
                       </a>
                     )}
                   </div>
                 </div>
                 {salesNumbers.length > 0 && (
                   <div>
-                    <p className="text-foreground text-sm font-medium mb-2">Sales:</p>
+                    <p className="text-foreground text-sm font-medium mb-2">
+                      Sales:
+                    </p>
                     <div className="space-y-2">
                       {salesNumbers.map((num, i) => (
-                        <a key={i} href={`tel:${num.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-muted-foreground text-sm">
+                        <a
+                          key={i}
+                          href={`tel:${num.replace(/[^+\d]/g, "")}`}
+                          className="flex items-center gap-2 text-muted-foreground text-sm"
+                        >
                           <Phone className="w-4 h-4 text-accent" /> {num}
                         </a>
                       ))}
@@ -457,10 +572,16 @@ const Footer = ({ data }: FooterProps) => {
                 )}
                 {hrNumbers.length > 0 && (
                   <div>
-                    <p className="text-foreground text-sm font-medium mb-2">HR:</p>
+                    <p className="text-foreground text-sm font-medium mb-2">
+                      HR:
+                    </p>
                     <div className="space-y-2">
                       {hrNumbers.map((num, i) => (
-                        <a key={i} href={`tel:${num.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-muted-foreground text-sm">
+                        <a
+                          key={i}
+                          href={`tel:${num.replace(/[^+\d]/g, "")}`}
+                          className="flex items-center gap-2 text-muted-foreground text-sm"
+                        >
                           <Phone className="w-4 h-4 text-accent" /> {num}
                         </a>
                       ))}
@@ -473,7 +594,9 @@ const Footer = ({ data }: FooterProps) => {
 
           {/* Social Links */}
           <div className="py-6">
-            <p className="text-foreground text-sm font-medium mb-3">Follow US</p>
+            <p className="text-foreground text-sm font-medium mb-3">
+              Follow US
+            </p>
             <div className="flex items-center gap-2 flex-wrap">
               {data?.social_links?.ambition_box && (
                 <a
@@ -483,10 +606,14 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Ambition Box"
                 >
-                 <img src={`${import.meta.env.BASE_URL}ambitionbox.png`} alt="Ambition Box" className="w-4 h-4" />
+                  <img
+                    src={`${import.meta.env.BASE_URL}ambitionbox.png`}
+                    alt="Ambition Box"
+                    className="w-4 h-4"
+                  />
                 </a>
               )}
-              
+
               {data?.social_links?.facebook && (
                 <a
                   href={data.social_links.facebook}
@@ -495,7 +622,19 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Facebook"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-facebook w-4 h-4 text-muted-foreground"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="lucide lucide-facebook w-4 h-4 text-muted-foreground"
+                  >
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
                 </a>
               )}
               {data?.social_links?.linkedin && (
@@ -506,7 +645,21 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="LinkedIn"
                 >
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="lucide lucide-linkedin w-4 h-4 text-muted-foreground"
+                  >
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect width="4" height="12" x="2" y="9"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
                 </a>
               )}
               {data?.social_links?.instagram && (
@@ -517,7 +670,28 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Instagram"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-instagram w-4 h-4 text-muted-foreground"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="lucide lucide-instagram w-4 h-4 text-muted-foreground"
+                  >
+                    <rect
+                      width="20"
+                      height="20"
+                      x="2"
+                      y="2"
+                      rx="5"
+                      ry="5"
+                    ></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                  </svg>
                 </a>
               )}
               {data?.social_links?.twitter && (
@@ -528,7 +702,19 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Twitter"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="lucide lucide-twitter w-4 h-4 text-muted-foreground"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    className="lucide lucide-twitter w-4 h-4 text-muted-foreground"
+                  >
+                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                  </svg>
                 </a>
               )}
               {data?.social_links?.pinterest && (
@@ -539,7 +725,13 @@ const Footer = ({ data }: FooterProps) => {
                   className="w-10 h-10 rounded-lg bg-muted/20 border border-border/30 flex items-center justify-center"
                   aria-label="Pinterest"
                 >
-                <svg className="w-4 h-4 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path></svg>
+                  <svg
+                    className="w-4 h-4 text-muted-foreground"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path>
+                  </svg>
                 </a>
               )}
             </div>
@@ -562,6 +754,16 @@ const Footer = ({ data }: FooterProps) => {
               </Link>
             </>
           )}
+          <span className="hidden sm:block text-border">|</span>
+          <iframe
+            id="Iframe1"
+            src="https://dunsregistered.dnb.com/SealAuthentication.aspx?Cid=1"
+            width="114px"
+            height="97px"
+            frameBorder="0"
+            scrolling="no"
+            allowtransparency="true"
+          ></iframe>
         </div>
       </div>
     </footer>
