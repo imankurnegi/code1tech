@@ -359,6 +359,17 @@ const Footer = ({ data }: FooterProps) => {
                   </div>
                 )}
               </div>
+              <div className="mt-8">
+                <iframe
+                  id="Iframe1"
+                  src="https://dunsregistered.dnb.com/SealAuthentication.aspx?Cid=1"
+                  width="114px"
+                  height="97px"
+                  frameBorder="0"
+                  scrolling="no"
+                  allowtransparency="true"
+                ></iframe>
+              </div>
             </div>
           </div>
 
@@ -550,6 +561,17 @@ const Footer = ({ data }: FooterProps) => {
                         {data.contact.sales_email}
                       </a>
                     )}
+                  </div>
+                  <div className="mt-6">
+                    <iframe
+                      id="Iframe1"
+                      src="https://dunsregistered.dnb.com/SealAuthentication.aspx?Cid=1"
+                      width="114px"
+                      height="97px"
+                      frameBorder="0"
+                      scrolling="no"
+                      allowtransparency="true"
+                    ></iframe>
                   </div>
                 </div>
                 {salesNumbers.length > 0 && (
@@ -754,16 +776,6 @@ const Footer = ({ data }: FooterProps) => {
               </Link>
             </>
           )}
-          <span className="hidden sm:block text-border">|</span>
-          <iframe
-            id="Iframe1"
-            src="https://dunsregistered.dnb.com/SealAuthentication.aspx?Cid=1"
-            width="114px"
-            height="97px"
-            frameBorder="0"
-            scrolling="no"
-            allowtransparency="true"
-          ></iframe>
         </div>
       </div>
     </footer>
