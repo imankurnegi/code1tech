@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import RetailSalesIntelligence from "./case-studies/RetailSalesIntelligence";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -45,6 +46,12 @@ const CaseStudyDetail = () => {
     const churnData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (churnData) {
       return <CustomerChurnIntelligence data={churnData} />;
+    }
+  }
+   if (slug === "retail-sales-inventory-intelligence-platform") {
+    const retailData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (retailData) {
+      return <RetailSalesIntelligence data={retailData} />;
     }
   }
 
