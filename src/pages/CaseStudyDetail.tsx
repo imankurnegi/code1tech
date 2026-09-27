@@ -9,6 +9,7 @@ import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import RetailSalesIntelligence from "./case-studies/RetailSalesIntelligence";
+import EnterpriseDataGovernance from "./case-studies/EnterpriseDataGovernance";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -52,6 +53,12 @@ const CaseStudyDetail = () => {
     const retailData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (retailData) {
       return <RetailSalesIntelligence data={retailData} />;
+    }
+  }
+  if (slug === "enterprise-data-governance-data-quality-accelerator") {
+    const enterpriseData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (enterpriseData) {
+      return <EnterpriseDataGovernance data={enterpriseData} />;
     }
   }
 
