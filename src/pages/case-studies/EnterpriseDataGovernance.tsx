@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SmartImage from "@/components/SmartImage";
-import { DynamicIcon } from "@/components/DynamicIcon";
 import { addClassToSpan, cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 
@@ -23,10 +22,15 @@ import ChapterNav, { type Chapter } from "@/components/case-studies/simkyc/Chapt
 import CaseSnapshot from "@/components/case-studies/simkyc/CaseSnapshot";
 import ChallengeCard from "@/components/case-studies/simkyc/ChallengeCard";
 import ObjectiveCard from "@/components/case-studies/simkyc/ObjectiveCard";
-import { BenefitCard, DeliverableCard } from "@/components/case-studies/simkyc/MetricCard";
+import { DeliverableCard } from "@/components/case-studies/simkyc/MetricCard";
+import KpiCommandCenter from "@/components/case-studies/KpiCommandCenter";
+import PremiumBenefitsGrid from "@/components/case-studies/PremiumBenefitsGrid";
 
 import SeoTags from "@/components/SeoTags";
 
+import { DynamicIcon } from "@/components/DynamicIcon";
+
+type GovernanceImage = { url?: string; alt?: string; title?: string };
 type GovernanceCaseStudyData = {
   title: string;
   image?: string;
@@ -38,36 +42,38 @@ type GovernanceCaseStudyData = {
 };
 
 const iconName = (name?: string) => name?.replace(/^lucide-/, "") || "";
-const imageUrl = (image?: { url?: string } | string) =>
-  typeof image === "string" ? image : image?.url || "";
-const imageAlt = (image?: { alt?: string; title?: string }, fallback = "") =>
-  image?.alt || image?.title || fallback;
+const imageUrl = (image?: GovernanceImage | string) => typeof image === "string" ? image : image?.url || "";
+const imageAlt = (image?: GovernanceImage, fallback = "") => image?.alt || image?.title || fallback;
 const stripHtml = (html = "") => html.replace(/<[^>]*>/g, "").replace(/&amp;/g, "&").trim();
-const extractParagraphs = (html = "") =>
-  [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
-const extractRows = (html = "") =>
-  [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(1).map((row) =>
-    [...row[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((cell) => stripHtml(cell[1]))
-  );
-const extractMedallionLayers = (html = "") =>
-  [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(1).map((row) => {
-    const cells = [...row[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) => stripHtml(cell[1]));
-    const icon = row[1].match(/lucide-([a-z0-9-]+)/i)?.[1] || "layers";
-    return { layer: cells[0] || "", purpose: cells[1] || "", examples: cells[2] || "", icon };
-  });
-const extractCodes = (html = "") =>
-  [...html.matchAll(/<code[^>]*>([\s\S]*?)<\/code>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
+const extractParagraphs = (html = "") => [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
+const extractRows = (html = "") => [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(1).map((row) => [...row[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((cell) => stripHtml(cell[1])));
+const extractMedallionLayers = (html = "") => [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)].slice(1).map((row) => {
+  const cells = [...row[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((cell) => stripHtml(cell[1]));
+  return { layer: cells[0] || "", purpose: cells[1] || "", examples: cells[2] || "", icon: iconName(row[1].match(/lucide-([a-z0-9-]+)/i)?.[1] || "lucide-layers") };
+});
+const extractCodes = (html = "") => [...html.matchAll(/<code[^>]*>([\s\S]*?)<\/code>/gi)].map((match) => stripHtml(match[1])).filter(Boolean);
 
 const mapGovernanceData = (data: GovernanceCaseStudyData) => {
   const content = data.content || {};
   const newer = data.content_new || {};
-  const list = (key: string) => newer[key] || [];
-  const itemList = (items: any[] = []) => items.map((item) => ({ text: item.text, icon: iconName(item.icon) }));
+  const list = (key: string) => Array.isArray(newer[key]) ? newer[key] : [];
+  const textItems = (items: any[] = []) => items.map((item) => ({ text: item.text, icon: iconName(item.icon) }));
+  const paragraphs = {
+    overview: extractParagraphs(content.tab_1_left_content),
+    business: extractParagraphs(content.tab_1_right_content),
+    ingest: extractParagraphs(newer.new_tab_3_first_content),
+    medallion: extractParagraphs(newer.new_tab_3_second_content),
+    quality: extractParagraphs(newer.new_tab_3_third_content),
+    incident: extractParagraphs(newer.new_tab_3_fourth_content),
+    metadata: extractParagraphs(newer.new_tab_3_fifth_content),
+    security: extractParagraphs(newer.new_tab_3_sixth_content),
+    analytics: extractParagraphs(newer.new_tab_3_seven_content),
+    ai: extractParagraphs(newer.new_tab_3_eight_content),
+    managed: extractParagraphs(newer.new_tab_3_nine_content),
+    result: extractParagraphs(newer.new_tab_5_third_content),
+    operations: extractParagraphs(newer.new_tab_3_ten_second_sub_content),
+  };
   const htmlTable = newer.new_tab_5_fourth_content || "";
-  const medallionLayers = extractMedallionLayers(newer.new_tab_3_second_content || "");
-  const medallionHeaders = [...((newer.new_tab_3_second_content || "").matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi))]
-    .map((match) => stripHtml(match[1]));
-
   return {
     chapters: [
       { id: "chapter-opportunity", label: content.tab_1_text },
@@ -76,61 +82,31 @@ const mapGovernanceData = (data: GovernanceCaseStudyData) => {
       { id: "chapter-delivery", label: newer.new_tab_4_text },
       { id: "chapter-impact", label: newer.new_tab_5_text },
     ] as Chapter[],
-    snapshot: (content.category_row || []).map((item: any, index: number) => ({
-      label: item.label,
-      value: item.text,
-      icon: iconName(item.icon),
-      tone: index === 1 || index === 2 ? "mint" : undefined,
-    })),
-    challenges: (content.tab_2_cards || []).map((item: any, index: number) => ({
-      no: String(index + 1).padStart(2, "0"), icon: iconName(item.icon), img: imageUrl(item.image),
-      alt: imageAlt(item.image, item.text), text: item.text,
-    })),
-    objectives: (content.tab_2_second_cards || []).map((item: any, index: number) => ({
-      no: String(index + 1).padStart(2, "0"), title: item.title, text: item.content, icon: iconName(item.icon),
-      img: imageUrl(item.image),
-      alt: imageAlt(item.image, item.title),
-    })),
-    businessOutcomes: itemList(newer.new_tab_2_third_content),
-    medallionLayers,
-    medallionHeaders,
-    validationExamples: itemList(list("new_tab_3_third_content_blocks")),
+    snapshot: (content.category_row || []).map((item: any, index: number) => ({ label: item.label, value: item.text, icon: iconName(item.icon), tone: index === 1 || index === 2 ? "mint" : undefined })),
+    challenges: (content.tab_2_cards || []).map((item: any, index: number) => ({ no: String(index + 1).padStart(2, "0"), icon: iconName(item.icon), img: imageUrl(item.image), alt: imageAlt(item.image, item.text), text: item.text })),
+    objectives: (content.tab_2_second_cards || []).map((item: any, index: number) => ({ no: String(index + 1).padStart(2, "0"), title: item.title, text: item.content, icon: iconName(item.icon), img: imageUrl(item.image), alt: imageAlt(item.image, item.title) })),
+    outcomes: textItems(list("new_tab_2_third_content")),
+    medallionLayers: extractMedallionLayers(newer.new_tab_3_second_content || ""),
+    medallionHeaders: [...(newer.new_tab_3_second_content || "").matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((match) => stripHtml(match[1])),
+    validationExamples: textItems(list("new_tab_3_third_content_blocks")),
     incidentSignals: list("new_tab_3_fourth_content_blocks").map((item: any) => ({ value: item.col_1, label: item.col_2 })),
-    metadataCapabilities: itemList(list("new_tab_3_fifth_content_lists")),
-    sensitiveControls: itemList(list("new_tab_3_sixth_content_lists")),
-    governanceAnalytics: itemList(list("new_tab_3_seven_content_lists")),
+    metadataCapabilities: textItems(list("new_tab_3_fifth_content_lists")),
+    sensitiveControls: textItems(list("new_tab_3_sixth_content_lists")),
+    governanceAnalytics: textItems(list("new_tab_3_seven_content_lists")),
     featureLayer: extractCodes(newer.new_tab_3_eight_content || ""),
-    managedServices: itemList(list("new_tab_3_nine_content_lists")),
-    securityItems: itemList(list("new_tab_3_ten_content_lists")),
-    operationalItems: itemList(list("new_tab_3_ten_second_sub_content_lists")),
-    successMetricsList: list("new_tab_4_first_content_blocks").map((item: any) => ({
-      text: `${item.title}: ${item.content}`, icon: iconName(item.icon),
-    })),
+    ingestExamples: extractCodes(newer.new_tab_3_first_content || ""),
+    managedServices: textItems(list("new_tab_3_nine_content_lists")),
+    securityItems: textItems(list("new_tab_3_ten_content_lists")),
+    operationalItems: textItems(list("new_tab_3_ten_second_sub_content_lists")),
+    successMetricsList: list("new_tab_4_first_content_blocks").map((item: any, index: number) => ({ text: `${item.title}: ${item.content}`, icon: iconName(item.icon), accent: index === 1 || index === 4 ? "#A9E7C2" : "#69D6FF" })),
     benefits: list("new_tab_5_first_content_blocks").map((item: any) => ({ text: item.content, icon: iconName(item.icon) })),
-    deliverables: list("new_tab_5_second_content_blocks").map((item: any) => ({
-      title: item.title,
-      text: item.content,
-      icon: iconName(item.icon),
-      image: imageUrl(item.image),
-    })),
-    glanceStats: extractRows(htmlTable).map((cells) => ({ value: cells[1] || "", label: cells[0] || "" })),
-    paragraphs: {
-      overview: extractParagraphs(content.tab_1_left_content),
-      business: extractParagraphs(content.tab_1_right_content),
-      ingest: extractParagraphs(newer.new_tab_3_first_content),
-      medallion: extractParagraphs(newer.new_tab_3_second_content),
-      quality: extractParagraphs(newer.new_tab_3_third_content),
-      incident: extractParagraphs(newer.new_tab_3_fourth_content),
-      metadata: extractParagraphs(newer.new_tab_3_fifth_content),
-      security: extractParagraphs(newer.new_tab_3_sixth_content),
-      analytics: extractParagraphs(newer.new_tab_3_seven_content),
-      ai: extractParagraphs(newer.new_tab_3_eight_content),
-      managed: extractParagraphs(newer.new_tab_3_nine_content),
-      result: extractParagraphs(newer.new_tab_5_third_content),
-    },
+    deliverables: list("new_tab_5_second_content_blocks").map((item: any) => ({ title: item.title, text: item.content, icon: iconName(item.icon), image: imageUrl(item.image) })),
+    glanceStats: extractRows(htmlTable).map((cells) => ({ label: cells[0] || "", value: cells[1] || "" })),
+    glanceHeaders: [...htmlTable.matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((match) => stripHtml(match[1])),
+    paragraphs,
     headings: {
-      overview: content.tab_1_left_heading, business: content.tab_1_right_heading, challenge: content.tab_2_heading,
-      objectives: content.tab_2_second_heading, outcomes: newer.new_tab_2_third_heading,
+      overview: content.tab_1_left_heading, business: content.tab_1_right_heading,
+      challenge: content.tab_2_heading, objectives: content.tab_2_second_heading, outcomes: newer.new_tab_2_third_heading,
       ingest: newer.new_tab_3_first_heading, medallion: newer.new_tab_3_second_heading,
       quality: newer.new_tab_3_third_heading, incident: newer.new_tab_3_fourth_heading,
       metadata: newer.new_tab_3_fifth_heading, security: newer.new_tab_3_sixth_heading,
@@ -141,11 +117,11 @@ const mapGovernanceData = (data: GovernanceCaseStudyData) => {
       glance: newer.new_tab_5_fourth_heading,
     },
     images: {
-      context: imageUrl(content.tab_1_right_image), business: imageUrl(content.tab_1_left_image),
-      incident: imageUrl(newer.new_tab_3_fourth_image), metadata: imageUrl(newer.new_tab_3_fifth_image),
-      predictive: imageUrl(newer.new_tab_3_eight_image), managed: imageUrl(newer.new_tab_3_nine_image),
-      result: imageUrl(newer.new_tab_5_third_image), banner: imageUrl(content.bottom_banner_image),
-      ingest: imageUrl(newer.new_tab_3_first_image),
+      hero: imageUrl(data.image), context: imageUrl(content.tab_1_right_image), business: imageUrl(content.tab_1_left_image),
+      ingest: imageUrl(newer.new_tab_3_first_image), incident: imageUrl(newer.new_tab_3_fourth_image),
+      metadata: imageUrl(newer.new_tab_3_fifth_image),
+      managed: imageUrl(newer.new_tab_3_nine_image), result: imageUrl(newer.new_tab_5_third_image),
+      banner: imageUrl(content.bottom_banner_image),
     },
   };
 };
@@ -161,20 +137,18 @@ const ListGrid = ({
   cols?: string;
 }) => (
   <div className={cn("mt-6 grid items-stretch gap-6", cols)}>
-    {items.map((k, i) => {
-      return (
-        <Reveal key={k.text} delay={i * 40} className="h-full">
-          <div className="group flex h-full items-center gap-4 rounded-[18px] border border-white/[0.07] bg-[#102236]/60 p-4 lg:p-5">
-            <span className={cn(cjIconTile, "border-[#A9E7C2]/25 text-[#A9E7C2] group-hover:border-[#A9E7C2]/50")}>
-              <DynamicIcon name={k.icon} aria-hidden="true" className={cjIconGlyph} />
-            </span>
-            <span className="min-w-0 flex-1 text-left text-[15px] font-medium leading-snug text-[#A8B8C7]">
-              {k.text}
-            </span>
-          </div>
-        </Reveal>
-      );
-    })}
+    {items.map((item, index) => (
+      <Reveal key={item.text} delay={index * 40} className="h-full">
+        <div className="group flex h-full items-center gap-4 rounded-[18px] border border-white/[0.07] bg-[#102236]/60 p-4 lg:p-5">
+          <span className={cn(cjIconTile, "border-[#A9E7C2]/25 text-[#A9E7C2] group-hover:border-[#A9E7C2]/50")}>
+            <DynamicIcon name={item.icon} aria-hidden="true" className={cjIconGlyph} />
+          </span>
+          <span className="min-w-0 flex-1 text-left text-[15px] font-medium leading-snug text-[#A8B8C7]">
+            {item.text}
+          </span>
+        </div>
+      </Reveal>
+    ))}
   </div>
 );
 
@@ -182,17 +156,35 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
   const [progress, setProgress] = useState(0);
   const content = data.content || {};
   const newer = data.content_new || {};
-  const titleMarkup = addClassToSpan(
-    data.title.replace(/(Data Quality Accelerator)$/, "<span>$1</span>"),
-    "text-gradient-brand"
-  );
   const mapped = mapGovernanceData(data);
   const {
-    chapters, snapshot, challenges, objectives, businessOutcomes, medallionLayers, medallionHeaders, validationExamples,
-    incidentSignals, metadataCapabilities, sensitiveControls, governanceAnalytics, featureLayer,
-    managedServices, securityItems, operationalItems, successMetricsList, benefits, deliverables,
-    glanceStats, paragraphs, headings, images,
+    chapters,
+    snapshot,
+    challenges,
+    objectives,
+    outcomes: businessOutcomes,
+    medallionLayers,
+    medallionHeaders,
+    validationExamples,
+    incidentSignals,
+    metadataCapabilities,
+    sensitiveControls,
+    governanceAnalytics,
+    featureLayer,
+    ingestExamples,
+    managedServices,
+    securityItems,
+    operationalItems,
+    successMetricsList,
+    benefits,
+    deliverables,
+    glanceStats,
+    glanceHeaders,
+    paragraphs,
+    headings,
+    images,
   } = mapped;
+  const titleMarkup = addClassToSpan(data.title.replace(/(Data Quality Accelerator)$/, "<span>$1</span>"), "text-gradient-brand");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -207,12 +199,12 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
 
   return (
     <>
-    <SeoTags
-      title={data.seo?.title || data.title}
-      description={data.seo?.description || content.listing_highlight_content}
-      ogImage={data.seo?.og_image || data.image}
-      schema={data.schema}
-    />
+      <SeoTags
+        title={data.seo?.title}
+        description={data.seo?.description}
+        ogImage={data.seo?.og_image}
+        schema={data.schema}
+      />
       <div className="bg-[#07111F]">
         <div className="fixed left-0 right-0 top-0 z-50 h-[3px]" aria-hidden="true">
           <div
@@ -269,9 +261,10 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                 </Reveal>
 
                 <Reveal delay={140}>
-                  <h1 className="mb-6 text-[2rem] font-bold leading-[1.12] tracking-tight text-[#F7FAFC] sm:text-[2.5rem] lg:text-[3.1rem]">
-                    <span dangerouslySetInnerHTML={{ __html: titleMarkup }} />
-                  </h1>
+                  <h1
+                    className="mb-6 text-[2rem] font-bold leading-[1.12] tracking-tight text-[#F7FAFC] sm:text-[2.5rem] lg:text-[3.1rem]"
+                    dangerouslySetInnerHTML={{ __html: titleMarkup }}
+                  />
                 </Reveal>
 
                 <Reveal delay={220}>
@@ -294,8 +287,8 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <Reveal delay={180} className="h-full">
                 <div className={cn(cjCard, "h-full overflow-hidden")}>
                   <SmartImage
-                    src={imageUrl(data.image)}
-                    alt={data.title}
+                    src={images.hero}
+                    alt={imageAlt({ title: data.title }, data.title)}
                     width={1200}
                     height={912}
                     loading="eager"
@@ -443,7 +436,24 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <Reveal delay={60}>
                 <SectionTitle className="mb-6">{headings.outcomes}</SectionTitle>
               </Reveal>
-              <ListGrid items={businessOutcomes} />
+              <Reveal delay={100}>
+                <div className={cn(cjCard, "p-6 lg:p-7")}>
+                  <ul className="space-y-4">
+                    {businessOutcomes.map((o, i) => (
+                      <li
+                        key={o.text}
+                        className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                        />
+                        <span>{o.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
             </section>
           </div>
         </div>
@@ -486,12 +496,12 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                       <div className="space-y-3">
                         <div className="rounded-[18px] border border-white/[0.08] bg-[#102236]/60 px-5 py-4">
                           <code className="font-numbers text-[13.5px] leading-[1.8] text-[#A9E7C2]">
-                            {extractCodes(newer.new_tab_3_first_content || "")[0]}
+                            {ingestExamples[0]}
                           </code>
                         </div>
                         <div className="rounded-[18px] border border-white/[0.08] bg-[#102236]/60 px-5 py-4">
                           <code className="font-numbers text-[13.5px] leading-[1.8] text-[#A9E7C2]">
-                            {extractCodes(newer.new_tab_3_first_content || "")[1]}
+                            {ingestExamples[1]}
                           </code>
                         </div>
                       </div>
@@ -590,14 +600,10 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
 
               <div className="space-y-5">
                 <Reveal delay={100}>
-                  <Body className="max-w-none">
-                    {paragraphs.quality[0]}
-                  </Body>
+                  <Body className="max-w-none">{paragraphs.quality[0]}</Body>
                 </Reveal>
                 <Reveal delay={130}>
-                  <Body className="max-w-none">
-                    {paragraphs.quality[1]}
-                  </Body>
+                  <Body className="max-w-none">{paragraphs.quality[1]}</Body>
                 </Reveal>
                 <Reveal delay={160}>
                   <Body className="max-w-none">{paragraphs.quality[2]}</Body>
@@ -623,19 +629,13 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-16">
                 <div className="space-y-5">
                   <Reveal delay={100}>
-                    <Body>
-                      {paragraphs.incident[0]}
-                    </Body>
+                    <Body>{paragraphs.incident[0]}</Body>
                   </Reveal>
                   <Reveal delay={130}>
-                    <Body>
-                      {paragraphs.incident[1]}
-                    </Body>
+                    <Body>{paragraphs.incident[1]}</Body>
                   </Reveal>
                   <Reveal delay={160}>
-                    <Body>
-                      {paragraphs.incident[2]}
-                    </Body>
+                    <Body>{paragraphs.incident[2]}</Body>
                   </Reveal>
                 </div>
 
@@ -677,14 +677,28 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <div className="grid items-stretch gap-10 lg:grid-cols-[55fr_45fr] lg:gap-16">
                 <div className="space-y-5">
                   <Reveal delay={100}>
-                    <Body>
-                      {paragraphs.metadata[0]}
-                    </Body>
+                    <Body>{paragraphs.metadata[0]}</Body>
                   </Reveal>
                   <Reveal delay={130}>
-                    <Body>
-                      {paragraphs.metadata[1]}
-                    </Body>
+                    <Body>{paragraphs.metadata[1]}</Body>
+                  </Reveal>
+                  <Reveal delay={160}>
+                    <div className={cn(cjCard, "p-6 lg:p-7")}>
+                      <ul className="grid gap-3 sm:grid-cols-2">
+                        {metadataCapabilities.map((m) => (
+                          <li
+                            key={m.text}
+                            className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                            />
+                            <span>{m.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </Reveal>
                 </div>
 
@@ -702,8 +716,6 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                 </Reveal>
               </div>
 
-              <ListGrid items={metadataCapabilities} cols="sm:grid-cols-2 lg:grid-cols-4" />
-
               <div className="mt-7">
                 <Reveal delay={200}>
                   <Body className="max-w-none">
@@ -720,18 +732,30 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
 
               <div className="space-y-5">
                 <Reveal delay={100}>
-                  <Body className="max-w-none">
-                    {paragraphs.security[0]}
-                  </Body>
+                  <Body className="max-w-none">{paragraphs.security[0]}</Body>
                 </Reveal>
                 <Reveal delay={130}>
-                  <Body className="max-w-none">
-                    {paragraphs.security[1]}
-                  </Body>
+                  <Body className="max-w-none">{paragraphs.security[1]}</Body>
+                </Reveal>
+                <Reveal delay={160}>
+                  <div className={cn(cjCard, "p-6 lg:p-7")}>
+                    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {sensitiveControls.map((s) => (
+                        <li
+                          key={s.text}
+                          className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                          />
+                          <span>{s.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </Reveal>
               </div>
-
-              <ListGrid items={sensitiveControls} cols="sm:grid-cols-2 lg:grid-cols-4" />
 
               <div className="mt-7">
                 <Reveal delay={200}>
@@ -749,18 +773,30 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
 
               <div className="space-y-5">
                 <Reveal delay={100}>
-                  <Body className="max-w-none">
-                    {paragraphs.analytics[0]}
-                  </Body>
+                  <Body className="max-w-none">{paragraphs.analytics[0]}</Body>
                 </Reveal>
                 <Reveal delay={130}>
-                  <Body className="max-w-none">
-                    {paragraphs.analytics[1]}
-                  </Body>
+                  <Body className="max-w-none">{paragraphs.analytics[1]}</Body>
+                </Reveal>
+                <Reveal delay={160}>
+                  <div className={cn(cjCard, "p-6 lg:p-7")}>
+                    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {governanceAnalytics.map((g) => (
+                        <li
+                          key={g.text}
+                          className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                          />
+                          <span>{g.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </Reveal>
               </div>
-
-              <ListGrid items={governanceAnalytics} cols="sm:grid-cols-2 lg:grid-cols-5" />
 
               <div className="mt-7">
                 <Reveal delay={200}>
@@ -779,9 +815,7 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <div className="grid items-stretch gap-10 lg:grid-cols-[55fr_45fr] lg:gap-16">
                 <div className="space-y-5">
                   <Reveal delay={100}>
-                    <Body>
-                      {paragraphs.ai[0]}
-                    </Body>
+                    <Body>{paragraphs.ai[0]}</Body>
                   </Reveal>
                   <Reveal delay={130}>
                     <Body>{paragraphs.ai[1]}</Body>
@@ -799,16 +833,14 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                     </div>
                   </Reveal>
                   <Reveal delay={190}>
-                    <Body>
-                      {paragraphs.ai[2]}
-                    </Body>
+                    <Body>{paragraphs.ai[2]}</Body>
                   </Reveal>
                 </div>
 
                 <Reveal delay={150} className="h-full">
                   <div className={cn(cjCard, "h-full overflow-hidden")}>
                     <SmartImage
-                      src={images.predictive}
+                      src={imageUrl(newer.new_tab_3_eight_image)}
                       alt={imageAlt(newer.new_tab_3_eight_image, data.title)}
                       width={1024}
                       height={576}
@@ -828,12 +860,28 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <div className="grid items-stretch gap-10 lg:grid-cols-[55fr_45fr] lg:gap-16">
                 <div className="space-y-5">
                   <Reveal delay={100}>
-                    <Body>
-                      {paragraphs.managed[0]}
-                    </Body>
+                    <Body>{paragraphs.managed[0]}</Body>
                   </Reveal>
                   <Reveal delay={130}>
                     <Body>{paragraphs.managed[1]}</Body>
+                  </Reveal>
+                  <Reveal delay={160}>
+                    <div className={cn(cjCard, "p-6 lg:p-7")}>
+                      <ul className="grid gap-3 sm:grid-cols-2">
+                        {managedServices.map((m) => (
+                          <li
+                            key={m.text}
+                            className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                            />
+                            <span>{m.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </Reveal>
                 </div>
 
@@ -850,8 +898,6 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                   </div>
                 </Reveal>
               </div>
-
-              <ListGrid items={managedServices} />
             </section>
 
             <section id="quality-security" className={cn("focus:outline-none", blockSpace)}>
@@ -865,7 +911,24 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <Reveal delay={120}>
                 <Body className="mt-3 max-w-none">{newer.new_tab_3_ten_content}</Body>
               </Reveal>
-              <ListGrid items={securityItems} />
+              <Reveal delay={140}>
+                <div className={cn(cjCard, "p-6 lg:p-7")}>
+                  <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    {securityItems.map((s) => (
+                      <li
+                        key={s.text}
+                        className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                        />
+                        <span>{s.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
 
               <div className="mt-10">
                 <Reveal delay={100}>
@@ -873,13 +936,30 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                 </Reveal>
                 <Reveal delay={120}>
                   <Body className="mt-3 max-w-none">
-                    {extractParagraphs(newer.new_tab_3_ten_second_sub_content)[0]}
+                    {paragraphs.operations[0]}
                   </Body>
                 </Reveal>
                 <Reveal delay={140}>
-                  <Body className="mt-4 max-w-none">{extractParagraphs(newer.new_tab_3_ten_second_sub_content)[1]}</Body>
+                  <Body className="mt-4 max-w-none">{paragraphs.operations[1]}</Body>
                 </Reveal>
-                <ListGrid items={operationalItems} />
+                <Reveal delay={160}>
+                  <div className={cn(cjCard, "p-6 lg:p-7")}>
+                    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {operationalItems.map((o) => (
+                        <li
+                          key={o.text}
+                          className="flex items-start gap-3 text-left text-[15px] leading-[1.7] text-[#A8B8C7]"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[#5CC8DC]"
+                          />
+                          <span>{o.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
               </div>
             </section>
           </div>
@@ -893,32 +973,14 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
             </Reveal>
 
             <section id="success-metrics" className={cn("focus:outline-none", blockSpace)}>
-              <Reveal delay={60}>
-                <SectionTitle className="mb-6">{headings.delivery}</SectionTitle>
-              </Reveal>
-
-              <Reveal delay={100}>
-                <Body className="mb-8 max-w-none">
-                  {newer.new_tab_4_first_content}
-                </Body>
-              </Reveal>
-
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-                {successMetricsList.map((m, i) => (
-                  <Reveal
-                    key={m.text}
-                    delay={i * 70}
-                    className={cn(
-                      "h-full",
-                      i === successMetricsList.length - 1 &&
-                        successMetricsList.length % 3 === 1 &&
-                        "sm:col-span-2 lg:col-span-3"
-                    )}
-                  >
-                    <BenefitCard item={m} />
-                  </Reveal>
-                ))}
-              </div>
+              <KpiCommandCenter
+                id="success-metrics-grid"
+                eyebrow=""
+                title={headings.delivery}
+                subtitle={newer.new_tab_4_first_content}
+                monitoringLabel={newer.new_tab_4_first_content_qa_label}
+                items={successMetricsList}
+              />
             </section>
           </div>
         </div>
@@ -935,25 +997,17 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
               <ChapterLabel>Chapter 05 — {newer.new_tab_5_text}</ChapterLabel>
             </Reveal>
 
-            <section id="benefits" className="focus:outline-none">
-              <Reveal delay={60}>
-                <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.benefits}</SectionTitle>
-              </Reveal>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-                {benefits.map((b, i) => (
-                  <Reveal
-                    key={b.text}
-                    delay={i * 70}
-                    className={cn(
-                      "h-full",
-                      i === benefits.length - 1 && benefits.length % 3 === 2 && "sm:col-span-2 lg:col-span-1"
-                    )}
-                  >
-                    <BenefitCard item={b} />
-                  </Reveal>
-                ))}
-              </div>
-            </section>
+            <PremiumBenefitsGrid
+              id="benefits"
+              className={blockSpace}
+              eyebrow=""
+              title={headings.benefits}
+              items={benefits.map((b) => ({
+                label: b.text,
+                text: "",
+                icon: b.icon,
+              }))}
+            />
 
             <section id="deliverables" className={cn("focus:outline-none", blockSpace)}>
               <Reveal delay={60}>
@@ -1036,20 +1090,40 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                 <SectionTitle className="mb-8 md:mb-10 lg:mb-12">{headings.glance}</SectionTitle>
               </Reveal>
 
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-                {glanceStats.map((s, i) => (
-                  <Reveal key={s.label} delay={i * 80} className="h-full">
-                    <div className={cn(cjCard, "h-full p-6 lg:p-8")}>
-                      <div className="flex items-center gap-4">
-                        <div className="max-w-[58%] shrink-0 break-words font-bold leading-[1.15] text-[#69D6FF] [font-size:clamp(1.15rem,1.4vw,1.6rem)]">
-                          <Counter value={s.value} />
-                        </div>
-                        <div className="min-w-0 flex-1 text-[13.5px] leading-snug text-[#A8B8C7]">{s.label}</div>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+              <Reveal delay={100}>
+                <div className={cn(cjCard, "overflow-hidden overflow-x-auto")}>
+                  <table className="w-full min-w-[560px] text-left">
+                    <thead>
+                      <tr className="border-b border-white/[0.07] bg-white/[0.03]">
+                        <th className="px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#69D6FF] sm:px-7">
+                          {glanceHeaders[0]}
+                        </th>
+                        <th className="px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#69D6FF] sm:px-7">
+                          {glanceHeaders[1]}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {glanceStats.map((s, i) => (
+                        <tr
+                          key={s.label}
+                          className={cn(
+                            "transition-colors hover:bg-white/[0.02]",
+                            i !== glanceStats.length - 1 && "border-b border-white/[0.07]",
+                          )}
+                        >
+                          <td className="px-5 py-4 align-top text-[14.5px] font-semibold text-[#F7FAFC] sm:px-7">
+                            {s.label}
+                          </td>
+                          <td className="px-5 py-4 align-top text-[14px] leading-[1.6] text-[#A9E7C2] sm:px-7">
+                            {s.value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Reveal>
             </section>
           </div>
         </div>
@@ -1059,7 +1133,7 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
           <div className="absolute inset-0">
             <SmartImage
               src={images.banner}
-              alt=""
+              alt={imageAlt(content.bottom_banner_image)}
               loading="eager"
               width={1920}
               height={640}

@@ -14,6 +14,8 @@ type Props = {
   id?: string;
   eyebrow?: string;
   title?: string;
+  subtitle?: string;
+  monitoringLabel?: string;
   items: KpiMetric[];
   className?: string;
 };
@@ -112,6 +114,8 @@ export function KpiCommandCenter({
   id = "success-metrics",
   eyebrow = "SUCCESS METRICS",
   title = "Success Metrics",
+  subtitle,
+  monitoringLabel = "Monitored continuously",
   items,
   className,
 }: Props) {
@@ -139,6 +143,11 @@ export function KpiCommandCenter({
           {title}
         </h2>
       </Reveal>
+      {subtitle && (
+        <Reveal delay={75}>
+          <p className="mt-4 max-w-3xl text-[1rem] leading-[1.6] text-[#AFC0D4]">{subtitle}</p>
+        </Reveal>
+      )}
       <Reveal delay={90}>
         <div className="mt-5 flex items-center gap-3">
           <span className="relative flex h-1.5 w-1.5">
@@ -146,7 +155,7 @@ export function KpiCommandCenter({
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#82DDB6]" />
           </span>
           <span className="text-[0.68rem] uppercase tracking-[0.2em] text-[#7188A1]">
-            Monitored continuously
+            {monitoringLabel}
           </span>
           <span className="h-px flex-1 bg-[rgba(111,196,255,0.14)]" />
         </div>
