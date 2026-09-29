@@ -120,7 +120,7 @@ const FooterLink = ({ label, href }: { label: string; href: string }) => (
 
 const ContactGroup = ({ label, numbers }: { label: string; numbers: string[] }) => (
   <div className="min-w-0 border-l border-border/40 pl-4">
-    <p className="mb-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">
+    <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">
       {label}
     </p>
     <div className="flex flex-col gap-1">
@@ -162,7 +162,7 @@ const Footer = ({ data }: FooterProps = {}) => {
             <p className="mt-5 text-sm leading-6 text-muted-foreground">
               Technology, data, and AI solutions engineered to help ambitious businesses move faster.
             </p>
-            <p className="mt-5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-foreground/75">
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/75">
               India <span className="px-2 text-accent">•</span> USA <span className="px-2 text-accent">•</span> UK
             </p>
 
@@ -185,7 +185,7 @@ const Footer = ({ data }: FooterProps = {}) => {
           </div>
 
           <nav aria-label="Company links">
-            <h3 className="mb-4 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
               Code1
             </h3>
             <ul className="space-y-1">
@@ -194,7 +194,7 @@ const Footer = ({ data }: FooterProps = {}) => {
           </nav>
 
           <nav aria-label="Services links">
-            <h3 className="mb-4 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
               Services
             </h3>
             <ul className="space-y-1">
@@ -203,7 +203,7 @@ const Footer = ({ data }: FooterProps = {}) => {
           </nav>
 
           <div className="col-span-2 lg:col-span-1">
-            <h3 className="mb-4 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
               Contact
             </h3>
 
@@ -233,7 +233,7 @@ const Footer = ({ data }: FooterProps = {}) => {
         </div>
 
         <div className="border-t border-border/30 py-7">
-          <div className="mb-4 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
+          <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
             <MapPin className="h-4 w-4 text-accent" aria-hidden="true" />
             Locations
           </div>
@@ -248,7 +248,7 @@ const Footer = ({ data }: FooterProps = {}) => {
         </div>
 
         <div className="flex flex-col gap-5 border-t border-border/30 py-6 md:flex-row md:items-center md:justify-between md:gap-8">
-          <div className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-foreground">
             <Award className="h-4 w-4 text-accent" aria-hidden="true" />
             Certifications
           </div>
