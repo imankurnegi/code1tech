@@ -59,6 +59,8 @@ const Layout = () => {
         secondary_menu: data?.data?.secondary_menu
     }
     const footerData = {
+        logo: data?.data?.full,
+        alt: data?.data?.alt,
         footer_logo: data?.data?.footer_logo,
         footer_menus: data?.data?.footer_menus,
         copyright_text: data?.data?.copyright_text,
