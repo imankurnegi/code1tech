@@ -253,16 +253,18 @@ const Footer = ({ data }: FooterProps = {}) => {
             Certifications
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <iframe
-              id="Iframe1"
-              src="https://dunsregistered.dnb.com/SealAuthentication.aspx?Cid=1"
-              width="114px"
-              height="97px"
-              title="Dun & Bradstreet D-U-N-S Registered Seal"
-              frameBorder="0"
-              scrolling="no"
-              className="h-[97px] w-[114px] shrink-0 border-0"
-            />
+            <div className="flex h-14 w-[66px] items-center justify-center overflow-hidden shrink-0">
+              <iframe
+                id="Iframe1"
+                src="https://dunsregistered.dnb.com/SealAuthentication.aspx?Cid=1"
+                width="114px"
+                height="97px"
+                title="Dun & Bradstreet D-U-N-S Registered Seal"
+                frameBorder="0"
+                scrolling="no"
+                className="origin-center scale-[0.58] shrink-0 border-0"
+              />
+            </div>
             {certifications.map((cert) => (
               <img
                 key={cert.label}
