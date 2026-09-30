@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import SmartImage from "@/components/SmartImage";
 import { addClassToSpan, cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import { decode } from "he";
+import he from "he";
 import { DynamicIcon } from "@/components/DynamicIcon";
 
 import {
@@ -39,7 +39,7 @@ const iconName = (name?: string) => name?.replace(/^lucide-/, "") || "";
 const imageUrl = (image?: CaseStudyImage | string) =>
   typeof image === "string" ? image : image?.url || image?.large || "";
 const imageAlt = (image?: CaseStudyImage) => image?.alt || image?.title || "";
-const stripHtml = (html = "") => decode(html.replace(/<[^>]*>/g, "")).trim();
+const stripHtml = (html = "") => he.decode(html.replace(/<[^>]*>/g, "")).trim();
 const extractTagContents = (html = "", tag: string) =>
   [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)<\\/${tag}>`, "gi"))]
     .map((match) => stripHtml(match[1]))
