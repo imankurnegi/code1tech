@@ -282,7 +282,7 @@ const Footer = ({ data }: FooterProps = {}) => {
         </div>
 
         <div className="flex flex-col gap-4 border-t border-border/30 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>Copyright 2025, ITVet Technologies Pvt. Ltd.</p>
+          <p>Copyright 2026, ITVet Technologies Pvt. Ltd.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link className="transition-colors hover:text-accent" to="/privacy-policy">Privacy Policy</Link>
             <Link className="transition-colors hover:text-accent" to="/terms-conditions">Terms &amp; Conditions</Link>
