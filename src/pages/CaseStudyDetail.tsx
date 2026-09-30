@@ -10,6 +10,7 @@ import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import RetailSalesIntelligence from "./case-studies/RetailSalesIntelligence";
 import EnterpriseDataGovernance from "./case-studies/EnterpriseDataGovernance";
+import ConversationalAnalyticsAssistant from "./case-studies/ConversationalAnalyticsAssistant";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -59,6 +60,12 @@ const CaseStudyDetail = () => {
     const enterpriseData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (enterpriseData) {
       return <EnterpriseDataGovernance data={enterpriseData} />;
+    }
+  }
+  if(slug === "genai-powered-conversational-analytics-assistant"){
+    const conversationalData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (conversationalData) {
+      return <ConversationalAnalyticsAssistant data={conversationalData} />;
     }
   }
 
