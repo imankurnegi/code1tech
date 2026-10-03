@@ -96,7 +96,7 @@ const locations = [
   },
   {
     label: "USA Office",
-    address: "5900 Balcones Drive, Suite 100, Austin, TX 78731",
+    address: "The Porter Building, 1 Brunel Way, SL1 1FQ",
   },
   {
     label: "UK Office",
