@@ -96,11 +96,11 @@ const locations = [
   },
   {
     label: "USA Office",
-    address: "The Porter Building, 1 Brunel Way, SL1 1FQ",
+    address: "5900 Balcones Drive, Suite 100, Austin, TX 78731, USA",
   },
   {
     label: "UK Office",
-    address: "24 Maw bray close Reading RG6 3BZ",
+    address: "The Porter Building, 1 Brunel Way, SL1 1FQ",
   },
 ];
 
