@@ -51,6 +51,11 @@ const Contact = () => {
     city: contact?.locations_group?.sub_heading_2,
     address: contact?.locations_group?.address_2,
     country: "USA"
+  }, 
+  {
+    city: contact?.locations_group?.sub_heading_3,
+    address: contact?.locations_group?.address_3,
+    country: "UK"
   }];
 
   
