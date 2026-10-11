@@ -251,7 +251,7 @@ const ConversationalAnalyticsAssistant = ({ data }: { data: CaseStudyData }) => 
                     )}
                     asChild
                   >
-                    <Link to={content.banner_button_url || "/contactus"}>
+                    <Link to={content.banner_button_url}>
                       {content.banner_button_text || "Discuss a Similar Project"}
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1.5" aria-hidden="true" />
                     </Link>
@@ -908,7 +908,7 @@ const ConversationalAnalyticsAssistant = ({ data }: { data: CaseStudyData }) => 
                     )}
                     asChild
                   >
-                    <Link to={bannerButtons[0]?.button_url || "/contactus"}>
+                    <Link to={bannerButtons[0]?.button_url}>
                       {bannerButtons[0]?.button_text || "Schedule a Strategy Call"}
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1.5" aria-hidden="true" />
                     </Link>

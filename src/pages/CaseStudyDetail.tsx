@@ -11,6 +11,7 @@ import ErrorFallback from "@/components/ErrorFallback";
 import RetailSalesIntelligence from "./case-studies/RetailSalesIntelligence";
 import EnterpriseDataGovernance from "./case-studies/EnterpriseDataGovernance";
 import ConversationalAnalyticsAssistant from "./case-studies/ConversationalAnalyticsAssistant";
+import SupplyChainControlTower from "./case-studies/SupplyChainControlTower";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -66,6 +67,12 @@ const CaseStudyDetail = () => {
     const conversationalData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (conversationalData) {
       return <ConversationalAnalyticsAssistant data={conversationalData} />;
+    }
+  }
+  if(slug === "ai-powered-supply-chain-control-tower-demand-forecasting-platform"){
+    const supplyChainData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (supplyChainData) {
+      return <SupplyChainControlTower data={supplyChainData} />;
     }
   }
 

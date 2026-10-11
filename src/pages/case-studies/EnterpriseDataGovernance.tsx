@@ -276,7 +276,7 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                     )}
                     asChild
                   >
-                    <Link to={content.banner_button_url || "/contactus"}>
+                    <Link to={content.banner_button_url}>
                       {content.banner_button_text || "Discuss a Similar Project"}
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1.5" aria-hidden="true" />
                     </Link>
@@ -1161,7 +1161,7 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
                     )}
                     asChild
                   >
-                    <Link to={content.bottom_banner_buttons?.[0]?.button_url || "/contactus"}>
+                    <Link to={content.bottom_banner_buttons?.[0]?.button_url}>
                       {content.bottom_banner_buttons?.[0]?.button_text}
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1.5" aria-hidden="true" />
                     </Link>
