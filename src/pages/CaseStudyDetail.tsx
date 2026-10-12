@@ -12,6 +12,7 @@ import RetailSalesIntelligence from "./case-studies/RetailSalesIntelligence";
 import EnterpriseDataGovernance from "./case-studies/EnterpriseDataGovernance";
 import ConversationalAnalyticsAssistant from "./case-studies/ConversationalAnalyticsAssistant";
 import SupplyChainControlTower from "./case-studies/SupplyChainControlTower";
+import SupplyChainLogisticsControlTower from "./case-studies/SupplyChainLogisticsControlTower";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -73,6 +74,13 @@ const CaseStudyDetail = () => {
     const supplyChainData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (supplyChainData) {
       return <SupplyChainControlTower data={supplyChainData} />;
+    }
+  }
+
+  if(slug === "supply-chain-logistics-control-tower-platform"){
+    const supplyChainLogisticsData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (supplyChainLogisticsData) {
+      return <SupplyChainLogisticsControlTower data={supplyChainLogisticsData} />;
     }
   }
 
