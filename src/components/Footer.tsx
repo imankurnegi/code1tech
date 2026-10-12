@@ -39,55 +39,46 @@ const companyLinks = [
   { label: "About Us", href: "/about" },
   { label: "Our Team", href: "/team" },
   { label: "Case Studies", href: "/case-studies" },
-  { label: "Blog", href: "/blogs" },
+  { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Contact Us", href: "/contactus" },
 ];
 
 const serviceLinks = [
-  { label: "Engineering as a Service", href: "/services/engineer-as-a-service" },
+  {
+    label: "Engineering as a Service",
+    href: "/services/engineer-as-a-service",
+  },
   { label: "Data Engineering", href: "/services/data-engineering" },
   { label: "Data Science", href: "/services/data-science" },
   { label: "AI / ML & Agentic Systems", href: "/services/ai-ml-solutions" },
   { label: "Managed Services", href: "/services/eaas/managed-services" },
 ];
 
-const socialLinks = [
-  {
-    label: "AmbitionBox",
-    href: "https://www.ambitionbox.com/overview/code1-overview",
-    icon: <img src="/ambitionbox.png" alt="" className="h-4 w-4 object-contain" />,
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/code1dev",
-    icon: <Facebook aria-hidden="true" />,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/thecode1/",
-    icon: <Linkedin aria-hidden="true" />,
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/code1.dev/",
-    icon: <Instagram aria-hidden="true" />,
-  },
-  {
-    label: "X",
-    href: "https://twitter.com/code1dev",
-    icon: <Twitter aria-hidden="true" />,
-  },
-  {
-    label: "Pinterest",
-    href: "https://www.pinterest.com/code1dev",
-    icon: (
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-        <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
-      </svg>
-    ),
-  },
-];
+const getSocialHref = (
+  links: any,
+  key: string,
+  fallback: string,
+  aliases: string[] = [],
+) => {
+  if (!links) return fallback;
+  if (Array.isArray(links)) {
+    const allKeys = [key, ...aliases].map((k) => k.toLowerCase());
+    const match = links.find((l: any) =>
+      allKeys.includes(
+        (l?.key || l?.name || l?.label || l?.platform || "").toLowerCase(),
+      ),
+    );
+    return match?.url || match?.href || fallback;
+  }
+  if (typeof links === "object") {
+    if (links[key]) return links[key];
+    for (const alias of aliases) {
+      if (links[alias]) return links[alias];
+    }
+  }
+  return fallback;
+};
 
 const locations = [
   {
@@ -118,7 +109,13 @@ const FooterLink = ({ label, href }: { label: string; href: string }) => (
   </li>
 );
 
-const ContactGroup = ({ label, numbers }: { label: string; numbers: string[] }) => (
+const ContactGroup = ({
+  label,
+  numbers,
+}: {
+  label: string;
+  numbers: string[];
+}) => (
   <div className="min-w-0 border-l border-border/40 pl-4">
     <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">
       {label}
@@ -145,9 +142,78 @@ const Footer = ({ data }: FooterProps = {}) => {
     "https://backend.code1.dev/wp-content/uploads/2026/01/be96b161-1e7c-4c4a-8065-54051cbd349b.png";
   const logoAlt = data?.alt || "Code1 Tech Systems";
 
+  const socialLinks = [
+    {
+      label: "AmbitionBox",
+      href: getSocialHref(
+        data?.social_links,
+        "ambition_box",
+        "https://www.ambitionbox.com/overview/code1-overview",
+        ["ambitionbox"],
+      ),
+      icon: (
+        <img src="/ambitionbox.png" alt="" className="h-4 w-4 object-contain" />
+      ),
+    },
+    {
+      label: "Facebook",
+      href: getSocialHref(
+        data?.social_links,
+        "facebook",
+        "https://www.facebook.com/code1techsystems/",
+      ),
+      icon: <Facebook aria-hidden="true" />,
+    },
+    {
+      label: "LinkedIn",
+      href: getSocialHref(
+        data?.social_links,
+        "linkedin",
+        "https://www.linkedin.com/company/thecode1/",
+      ),
+      icon: <Linkedin aria-hidden="true" />,
+    },
+    {
+      label: "Instagram",
+      href: getSocialHref(
+        data?.social_links,
+        "instagram",
+        "https://www.instagram.com/code1.dev/",
+      ),
+      icon: <Instagram aria-hidden="true" />,
+    },
+    {
+      label: "X",
+      href: getSocialHref(
+        data?.social_links,
+        "twitter",
+        "https://x.com/Code1Tech",
+        ["x"],
+      ),
+      icon: <Twitter aria-hidden="true" />,
+    },
+    {
+      label: "Pinterest",
+      href: getSocialHref(
+        data?.social_links,
+        "pinterest",
+        "https://www.pinterest.com/code1techsystems/",
+      ),
+      icon: (
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="h-4 w-4"
+        >
+          <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <footer className="border-t border-border/20 bg-[hsl(222,50%,4%)] text-foreground">
-
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 lg:grid-cols-[1.2fr_0.75fr_0.95fr_1.3fr] lg:gap-10 lg:py-14">
           <div className="col-span-2 max-w-sm lg:col-span-1">
@@ -160,10 +226,12 @@ const Footer = ({ data }: FooterProps = {}) => {
               />
             </Link>
             <p className="mt-5 text-sm leading-6 text-muted-foreground">
-              Technology, data, and AI solutions engineered to help ambitious businesses move faster.
+              Technology, data, and AI solutions engineered to help ambitious
+              businesses move faster.
             </p>
             <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/75">
-              India <span className="px-2 text-accent">•</span> USA <span className="px-2 text-accent">•</span> UK
+              India <span className="px-2 text-accent">•</span> USA{" "}
+              <span className="px-2 text-accent">•</span> UK
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -181,7 +249,6 @@ const Footer = ({ data }: FooterProps = {}) => {
                 </a>
               ))}
             </div>
-
           </div>
 
           <nav aria-label="Company links">
@@ -189,7 +256,9 @@ const Footer = ({ data }: FooterProps = {}) => {
               Code1
             </h3>
             <ul className="space-y-1">
-              {companyLinks.map((link) => <FooterLink key={link.href} {...link} />)}
+              {companyLinks.map((link) => (
+                <FooterLink key={link.href} {...link} />
+              ))}
             </ul>
           </nav>
 
@@ -198,7 +267,9 @@ const Footer = ({ data }: FooterProps = {}) => {
               Services
             </h3>
             <ul className="space-y-1">
-              {serviceLinks.map((link) => <FooterLink key={link.href} {...link} />)}
+              {serviceLinks.map((link) => (
+                <FooterLink key={link.href} {...link} />
+              ))}
             </ul>
           </nav>
 
@@ -229,7 +300,6 @@ const Footer = ({ data }: FooterProps = {}) => {
               <ContactGroup label="HR" numbers={hrNumbers} />
             </div>
           </div>
-
         </div>
 
         <div className="border-t border-border/30 py-7">
@@ -240,8 +310,12 @@ const Footer = ({ data }: FooterProps = {}) => {
           <div className="grid gap-5 sm:grid-cols-3 sm:gap-8">
             {locations.map((location) => (
               <address key={location.label} className="not-italic">
-                <p className="text-sm font-semibold text-foreground">{location.label}</p>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">{location.address}</p>
+                <p className="text-sm font-semibold text-foreground">
+                  {location.label}
+                </p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                  {location.address}
+                </p>
               </address>
             ))}
           </div>
@@ -284,8 +358,18 @@ const Footer = ({ data }: FooterProps = {}) => {
         <div className="flex flex-col gap-4 border-t border-border/30 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>Copyright 2026, ITVet Technologies Pvt. Ltd.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link className="transition-colors hover:text-accent" to="/privacy-policy">Privacy Policy</Link>
-            <Link className="transition-colors hover:text-accent" to="/terms-conditions">Terms &amp; Conditions</Link>
+            <Link
+              className="transition-colors hover:text-accent"
+              to="/privacy-policy"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              className="transition-colors hover:text-accent"
+              to="/terms-conditions"
+            >
+              Terms &amp; Conditions
+            </Link>
           </div>
         </div>
       </div>
