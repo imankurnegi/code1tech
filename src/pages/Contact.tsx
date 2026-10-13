@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ClientsLogoSlider from "@/components/ClientsLogoSlider";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
@@ -12,30 +11,28 @@ import { useInView } from "@/hooks/useInView";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 
+// Shared so the router / main.tsx can prefetch with the same key + fn
+export const contactPageQueryKey = ["contactPageData"] as const;
+export const fetchContactPageData = async () => {
+  const [contactData, clientLogos] = await Promise.all([
+    api.getContactData(),
+    api.getClientLogos(),
+  ]);
+  return { contactData, clientLogos };
+};
+
 const Contact = () => {
-  const { ref: heroRef, inView: isHeroVisible } = useInView<HTMLElement>();
   const { ref: formRef, inView: isFormVisible } = useInView<HTMLElement>();
   const { ref: locationsRef, inView: isLocationsVisible } = useInView<HTMLElement>();
   const { ref: brandsRef, inView: isBrandsVisible } = useInView<HTMLDivElement>();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["contactPageData"],
-    queryFn: async () => {
-      const [contactData, clientLogos] =
-        await Promise.all([
-          api.getContactData(),
-          api.getClientLogos(),
-        ]);
-
-      return {
-        contactData,
-        clientLogos,
-      };
-    },
+    queryKey: contactPageQueryKey,
+    queryFn: fetchContactPageData,
   });
 
   if (isLoading) return <LoadingSkeleton />;
-    if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
+  if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
 
   const contact = data?.contactData?.data;
   const clientLogosData = data?.clientLogos?.data ?? [];
@@ -51,14 +48,14 @@ const Contact = () => {
     city: contact?.locations_group?.sub_heading_2,
     address: contact?.locations_group?.address_2,
     country: "USA"
-  }, 
+  },
   {
     city: contact?.locations_group?.sub_heading_3,
     address: contact?.locations_group?.address_3,
     country: "UK"
   }];
 
-  
+
   return <>
     <SeoTags
         title={contact?.seo?.title}
@@ -67,8 +64,8 @@ const Contact = () => {
         ogImage={contact?.seo?.og_image}
         schema={contact?.schema}
       />
-    {/* ========== HERO SECTION ========== */}
-    <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 lg:pt-24" style={{
+    {/* ========== HERO SECTION (no entrance animation – LCP) ========== */}
+    <section className="relative min-h-[60vh] lg:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 lg:pt-24" style={{
       background: "linear-gradient(180deg, hsl(222 47% 5%) 0%, hsl(222 47% 4%) 50%, hsl(222 47% 5%) 100%)"
     }}>
       {/* Top fade for seamless navbar blend */}
@@ -76,10 +73,19 @@ const Contact = () => {
         background: 'linear-gradient(to bottom, hsl(222 47% 5%) 0%, hsl(222 47% 5%) 30%, transparent 100%)'
       }} />
 
-      {/* Background Image with improved visibility */}
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style={{
-        backgroundImage: `url(${contact?.banner_image || ""})`
-      }} />
+      {/* Background image as a real <img> so the browser can prioritize it (LCP) */}
+      {contact?.banner_image && (
+        <img
+          src={contact.banner_image}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          loading="eager"
+          width={1920}
+          height={1080}
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-50"
+        />
+      )}
 
       {/* Subtle gradient overlay instead of heavy dark shade */}
       <div className="absolute inset-0" style={{
@@ -106,8 +112,8 @@ const Contact = () => {
 
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className={`max-w-4xl mx-auto transition-all duration-1000 ${isHeroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <h1 dangerouslySetInnerHTML={{ __html: addClassToSpan(contact?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h1 dangerouslySetInnerHTML={{ __html: addClassToSpan(contact?.page_title, "bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent") }} className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-center">
           </h1>
           <p dangerouslySetInnerHTML={{ __html: contact?.page_content || "" }} className="text-base sm:text-lg lg:text-xl max-w-3xl mx-auto text-slate-200 leading-relaxed text-center"></p>
         </div>
