@@ -29,8 +29,8 @@ const contactSchema = z.object({
   phone: z.string().trim()
     .min(1, "Please enter your phone number")
     .regex(PHONE_REGEX, "Phone number can only contain digits")
-    .min(6, "Phone number is too short")
-    .max(15, "Phone number must be 15 digits or fewer"),
+    .min(10, "Phone number is too short")
+    .max(10, "Phone number must be 15 digits or fewer"),
   subject: z.string().trim().optional(),
   message: z.string().trim().min(10, "Please share a bit more about your needs").max(1000, "Message must be less than 1000 characters"),
   captcha: z.string().min(1, "Please enter captcha")
