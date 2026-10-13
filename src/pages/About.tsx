@@ -51,6 +51,7 @@ const About = () => {
     <SeoTags
       title={about?.seo?.title}
       description={about?.seo?.description}
+      canonical={about?.seo?.canonical}
       ogImage={about?.seo?.og_image}
       schema={about?.schema}
     />

@@ -77,6 +77,7 @@ interface BlogPageData {
   seo?: {
     title?: string;
     description?: string;
+    canonical?: string;
     og_image?: string;
     keyword?: string;
     noindex?: string;
@@ -263,9 +264,11 @@ const Blogs = () => {
   return (
     <>
       <SeoTags
-        title={pageMeta?.seo?.title || "Blog — Code1 Tech"}
-        description={pageMeta?.seo?.description || pageMeta?.blog_page_banner?.banner_paragraph || "Thought leadership, technical deep-dives, and industry insights from our team of experts."}
-        ogImage={pageMeta?.seo?.og_image || pageMeta?.blog_page_banner?.banner_background_image || blogHero}
+        title={pageMeta?.seo?.title}
+        description={pageMeta?.seo?.description}
+        ogImage={pageMeta?.seo?.og_image}
+        canonical={pageMeta?.seo?.canonical}
+        schema={pageMeta?.schema}
       />
 
         {/* Grid texture */}

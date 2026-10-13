@@ -31,7 +31,7 @@ type CaseStudyData = {
   categories?: string[];
   content?: Record<string, any>;
   content_new?: Record<string, any>;
-  seo?: { title?: string; description?: string; og_image?: string };
+  seo?: { title?: string; description?: string; canonical?: string; og_image?: string };
   schema?: string | object;
 };
 
@@ -179,7 +179,7 @@ const ConversationalAnalyticsAssistant = ({ data }: { data: CaseStudyData }) => 
 
   return (
     <>
-      <SeoTags title={data.seo?.title} description={data.seo?.description} ogImage={data.seo?.og_image} schema={data.schema} />
+      <SeoTags title={data.seo?.title} description={data.seo?.description} canonical={data.seo?.canonical} ogImage={data.seo?.og_image} schema={data.schema} />
       <div className="bg-[#07111F]">
         <div className="fixed left-0 right-0 top-0 z-50 h-[3px]" aria-hidden="true">
           <div

@@ -37,7 +37,7 @@ type GovernanceCaseStudyData = {
   categories?: string[];
   content?: Record<string, any>;
   content_new?: Record<string, any>;
-  seo?: { title?: string; description?: string; og_image?: string };
+  seo?: { title?: string; description?: string; canonical?: string; og_image?: string };
   schema?: string | object;
 };
 
@@ -202,6 +202,7 @@ const EnterpriseDataGovernance = ({ data }: { data: GovernanceCaseStudyData }) =
       <SeoTags
         title={data.seo?.title}
         description={data.seo?.description}
+        canonical={data.seo?.canonical}
         ogImage={data.seo?.og_image}
         schema={data.schema}
       />

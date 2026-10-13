@@ -550,6 +550,7 @@ const AIMLSolutions = () => {
       <SeoTags
                 title={serviceData?.seo?.title}
                 description={serviceData?.seo?.description}
+                canonical={serviceData?.seo?.canonical}
                 ogImage={serviceData?.seo?.og_image}
                 schema={serviceData?.schema}
               />

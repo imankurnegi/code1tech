@@ -159,6 +159,7 @@ const industries = industriesSection?.cards?.map((card: any) => ({
       <SeoTags
         title={pageData?.seo?.title}
         description={pageData?.seo?.description}
+        canonical={pageData?.seo?.canonical}
         ogImage={pageData?.seo?.og_image}
         schema={pageData?.schema}
       />

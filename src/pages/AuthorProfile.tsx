@@ -132,6 +132,7 @@ const AuthorProfile = () => {
       <SeoTags
         title={seoTitle}
         description={seoDesc}
+        canonical={window.location.href}
         ogImage={seoImage}
       />
 

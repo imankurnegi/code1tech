@@ -63,6 +63,7 @@ const JobDetail = () => {
         <SeoTags
           title={(jobsResponse as any)?.data?.seo?.title}
           description={(jobsResponse as any)?.data?.seo?.description}
+          canonical={(jobsResponse as any)?.data?.seo?.canonical}
           ogImage={(jobsResponse as any)?.data?.seo?.og_image}
           schema={(jobsResponse as any)?.data?.schema}
         />
@@ -88,6 +89,7 @@ const JobDetail = () => {
     <SeoTags
         title={(jobsResponse as any)?.data?.seo?.title}
         description={(jobsResponse as any)?.data?.seo?.description}
+        canonical={(jobsResponse as any)?.data?.seo?.canonical}
         ogImage={(jobsResponse as any)?.data?.seo?.og_image}
         schema={(jobsResponse as any)?.data?.schema}
       />

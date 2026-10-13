@@ -209,6 +209,7 @@ const AIStrategyConsulting = () => {
       <SeoTags
         title={seoSection?.title}
         description={seoSection?.description}
+        canonical={seoSection?.canonical}
         ogImage={seoSection?.og_image}
         schema={schemaSection}
       />

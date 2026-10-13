@@ -140,7 +140,8 @@ const RetailSalesIntelligence = ({ data }: RetailCaseStudyProps) => {
       <SeoTags
                 title={data.seo.title}
                 description={data.seo.description}
-                ogImage={data.seo.og_image}
+                canonical={data.seo?.canonical}
+                ogImage={data.seo?.og_image}
                 schema={data.schema}
               />
       <div className="bg-[#07111F]">

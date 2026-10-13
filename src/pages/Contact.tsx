@@ -63,6 +63,7 @@ const Contact = () => {
     <SeoTags
         title={contact?.seo?.title}
         description={contact?.seo?.description}
+        canonical={contact?.seo?.canonical}
         ogImage={contact?.seo?.og_image}
         schema={contact?.schema}
       />

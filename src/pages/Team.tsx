@@ -67,6 +67,7 @@ const Team = () => {
       <SeoTags
         title={teamData?.seo?.title}
         description={teamData?.seo?.description}
+        canonical={teamData?.seo?.canonical}
         ogImage={teamData?.seo?.og_image}
         schema={teamData?.schema}
       />

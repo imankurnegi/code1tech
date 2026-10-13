@@ -40,7 +40,7 @@ type ChurnCaseStudyData = {
   image?: string;
   content?: any;
   content_new?: any;
-  seo?: { title?: string; description?: string; og_image?: string };
+  seo?: { title?: string; description?: string; canonical?: string; og_image?: string };
   schema?: any;
 };
 type CustomerChurnProps = { data: ChurnCaseStudyData };
@@ -171,6 +171,7 @@ const CustomerChurnIntelligence = ({ data }: CustomerChurnProps) => {
     <SeoTags
                     title={data.seo?.title}
                     description={data.seo?.description}
+                    canonical={data.seo?.canonical}
                     ogImage={data.seo?.og_image}
                     schema={data.schema}
                   />

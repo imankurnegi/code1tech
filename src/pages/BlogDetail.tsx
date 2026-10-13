@@ -49,7 +49,7 @@ interface ApiPost {
   categories: ApiCategory[];
   author: ApiAuthor;
   tags?: string[];
-  seo?: { title?: string; description?: string; og_image?: string };
+  seo?: { title?: string; description?: string; canonical?: string; og_image?: string };
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -385,9 +385,10 @@ const BlogDetail = () => {
   return (
     <>
       <SeoTags
-        title={post.seo?.title ?? post.title}
-        description={post.seo?.description ?? post.content?.slice(0, 160)}
-        ogImage={post.seo?.og_image ?? (post.image || heroImage)}
+        title={post.seo?.title}
+        description={post.seo?.description}
+        canonical={post.seo?.canonical}
+        ogImage={post.seo?.og_image}
         schema={(postResponse as any)?.data?.schema}
       />
 

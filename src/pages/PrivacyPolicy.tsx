@@ -23,6 +23,7 @@ const PrivacyPolicy = () => {
       <SeoTags
         title={privacyData?.seo?.title}
         description={privacyData?.seo?.description}
+        canonical={privacyData?.seo?.canonical}
         ogImage={privacyData?.seo?.og_image}
         schema={privacyData?.schema}
       />

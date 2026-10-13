@@ -86,6 +86,7 @@ if (careersLoading || jobsLoading) return <LoadingSkeleton />;
     <SeoTags
         title={careersSeo?.title}
         description={careersSeo?.description}
+        canonical={careersSeo?.canonical}
         ogImage={careersSeo?.og_image}
         schema={careersResponse?.data?.schema}
       />

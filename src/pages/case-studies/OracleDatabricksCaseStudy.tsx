@@ -43,6 +43,7 @@ interface CaseStudyData {
   seo: {
     title: string;
     description: string;
+    canonical: string;
     og_image: string;
   };
   schema: any;
@@ -419,9 +420,10 @@ const OracleDatabricksCaseStudy = ({ data }: OracleDatabricksCaseStudyProps) => 
   return (
     <>
     <SeoTags
-                title={data.seo.title}
-                description={data.seo.description}
-                ogImage={data.seo.og_image}
+                title={data.seo?.title}
+                description={data.seo?.description}
+                canonical={data.seo?.canonical}
+                ogImage={data.seo?.og_image}
                 schema={data.schema}
               />
       <div className="bg-[#07111F]">

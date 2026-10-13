@@ -14,6 +14,7 @@ const NotFound = () => {
       <SeoTags
         title="Page Not Found"
         description="The page you're looking for doesn't exist."
+        canonical={window.location.href}
         ogImage=""
       />
       <div className="flex min-h-screen items-center justify-center bg-muted">

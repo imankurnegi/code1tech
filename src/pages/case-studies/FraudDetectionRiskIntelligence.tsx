@@ -44,7 +44,7 @@ type FraudImage = {
 
 type FraudCaseStudyData = {
   title: string;
-  seo?: { title?: string; description?: string; og_image?: string };
+  seo?: { title?: string; description?: string; canonical?: string; og_image?: string };
   schema?: any;
   image?: string;
   content: any;
@@ -244,9 +244,10 @@ const FraudDetectionRiskIntelligence = ({ data }: FraudCaseStudyProps) => {
   return (
     <>
     <SeoTags
-                title={data.seo.title}
-                description={data.seo.description}
-                ogImage={data.seo.og_image}
+                title={data.seo?.title}
+                description={data.seo?.description}
+                canonical={data.seo?.canonical}
+                ogImage={data.seo?.og_image}
                 schema={data.schema}
               />
       <div className="bg-[#07111F]">

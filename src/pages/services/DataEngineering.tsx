@@ -469,6 +469,7 @@ const DataEngineering = () => {
       <SeoTags
         title={servicePage?.seo?.title}
         description={servicePage?.seo?.description}
+        canonical={servicePage?.seo?.canonical}
         ogImage={servicePage?.seo?.og_image}
         schema={servicePage?.schema}
       />

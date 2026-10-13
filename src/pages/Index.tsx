@@ -60,6 +60,7 @@ const { data: relatedPostsData } = useQuery({
       <SeoTags
         title={homepageData?.data?.seo?.title}
         description={homepageData?.data?.seo?.description}
+        canonical={homepageData?.data?.seo?.canonical}
         ogImage={homepageData?.data?.seo?.og_image}
         schema={homepageData?.data?.schema}
       />

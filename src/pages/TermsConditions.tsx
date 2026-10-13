@@ -21,6 +21,7 @@ const TermsConditions = () => {
       <SeoTags
         title={termsData?.seo?.title}
         description={termsData?.seo?.description}
+        canonical={termsData?.seo?.canonical}
         ogImage={termsData?.seo?.og_image}
         schema={termsData?.schema}
       />
