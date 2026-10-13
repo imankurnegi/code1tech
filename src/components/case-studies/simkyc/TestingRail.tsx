@@ -11,9 +11,11 @@ export interface RailStage {
 const TestingRail = ({
   stages,
   qaLabels,
+  qaLabel = "Continuous QA",
 }: {
   stages: RailStage[];
   qaLabels: string[];
+  qaLabel?: string;
 }) => {
   const { ref, inView } = useInView<HTMLDivElement>({ once: true });
 
@@ -61,7 +63,7 @@ const TestingRail = ({
         <div className="mb-3.5 flex items-center gap-2.5">
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#A9E7C2]" />
           <span className="text-[10.5px] font-semibold uppercase tracking-[0.2em] text-[#A9E7C2]">
-            Continuous QA
+            {qaLabel}
           </span>
         </div>
         <ul className="flex flex-wrap gap-2">

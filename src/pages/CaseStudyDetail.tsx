@@ -13,6 +13,7 @@ import EnterpriseDataGovernance from "./case-studies/EnterpriseDataGovernance";
 import ConversationalAnalyticsAssistant from "./case-studies/ConversationalAnalyticsAssistant";
 import SupplyChainControlTower from "./case-studies/SupplyChainControlTower";
 import SupplyChainLogisticsControlTower from "./case-studies/SupplyChainLogisticsControlTower";
+import SmartManufacturingIoT from "./case-studies/SmartManufacturingIoT";
 
 const CaseStudyDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -81,6 +82,12 @@ const CaseStudyDetail = () => {
     const supplyChainLogisticsData = pageData?.data?.find((item: any) => item?.slug === slug);
     if (supplyChainLogisticsData) {
       return <SupplyChainLogisticsControlTower data={supplyChainLogisticsData} />;
+    }
+  }
+  if(slug === "smart-manufacturing-iot-predictive-maintenance-platform"){
+    const smartManufacturingData = pageData?.data?.find((item: any) => item?.slug === slug);
+    if (smartManufacturingData) {
+      return <SmartManufacturingIoT data={smartManufacturingData} />;
     }
   }
 
