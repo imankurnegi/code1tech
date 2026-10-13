@@ -21,7 +21,7 @@ const SeoTags = ({
 
   // ✅ fallback handling
   const finalTitle = title
-    ? `${title} | ${siteTitle}`
+    ? `${title}`
     : siteTitle;
 
   const finalDescription =
@@ -42,6 +42,7 @@ const SeoTags = ({
 
       {/* ✅ Open Graph */}
       <meta property="og:type" content={ogType} />
+      {canonical && <meta property="og:url" content={canonical} />}
       <meta property="og:title" content={finalTitle} />
       <meta property="og:description" content={finalDescription} />
       <meta property="og:image" content={finalOgImage} />
