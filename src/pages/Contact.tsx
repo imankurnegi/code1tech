@@ -17,7 +17,6 @@ const Contact = () => {
   const { ref: formRef, inView: isFormVisible } = useInView<HTMLElement>();
   const { ref: locationsRef, inView: isLocationsVisible } = useInView<HTMLElement>();
   const { ref: brandsRef, inView: isBrandsVisible } = useInView<HTMLDivElement>();
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["contactPageData"],
     queryFn: async () => {
