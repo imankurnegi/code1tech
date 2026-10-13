@@ -6,17 +6,31 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import ClientCaptcha from 'react-client-captcha'
 import { api } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 
+// Letters (any language), spaces, hyphens, and apostrophes — e.g. "Mary-Jane", "O'Brien", "José"
+const NAME_REGEX = /^[\p{L}\s'-]+$/u;
+const NAME_STRIP_REGEX = /[^\p{L}\s'-]/gu;
+const PHONE_REGEX = /^\d+$/;
 
 const contactSchema = z.object({
-  firstName: z.string().trim().min(1, "Please enter your first name").max(50, "First name must be less than 50 characters"),
-  lastName: z.string().trim().min(1, "Please enter your last name").max(50, "Last name must be less than 50 characters"),
+  firstName: z.string().trim()
+    .min(1, "Please enter your first name")
+    .max(50, "First name must be less than 50 characters")
+    .regex(NAME_REGEX, "First name can only contain letters"),
+  lastName: z.string().trim()
+    .min(1, "Please enter your last name")
+    .max(50, "Last name must be less than 50 characters")
+    .regex(NAME_REGEX, "Last name can only contain letters"),
   email: z.string().trim().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
-  phone: z.string().trim().min(1, "Please enter your phone number").max(20, "Phone number must be less than 20 characters"),
+  phone: z.string().trim()
+    .min(1, "Please enter your phone number")
+    .regex(PHONE_REGEX, "Phone number can only contain digits")
+    .min(6, "Phone number is too short")
+    .max(15, "Phone number must be 15 digits or fewer"),
   subject: z.string().trim().optional(),
   message: z.string().trim().min(10, "Please share a bit more about your needs").max(1000, "Message must be less than 1000 characters"),
   captcha: z.string().min(1, "Please enter captcha")
@@ -53,6 +67,13 @@ const FIELD_NAME_TO_SCHEMA_KEY: Record<string, keyof ContactFormData> = {
   "message": "message",
 };
 
+// Strip disallowed characters as the user types
+const SANITIZERS: Partial<Record<keyof ContactFormData, (value: string) => string>> = {
+  firstName: (v) => v.replace(NAME_STRIP_REGEX, ""),
+  lastName: (v) => v.replace(NAME_STRIP_REGEX, ""),
+  phone: (v) => v.replace(/\D/g, ""),
+};
+
 const countryCodes = [
   { code: "+1", country: "US" },
   { code: "+44", country: "UK" },
@@ -75,7 +96,7 @@ const ContactUsForm = ({ contactFormFields: contactFormFieldsProp = null }: Cont
   const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
 
   const [generatedCaptcha, setGeneratedCaptcha] = useState("");
-const [captchaError, setCaptchaError] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
 
   const { toast } = useToast();
 
@@ -87,6 +108,20 @@ const [captchaError, setCaptchaError] = useState("");
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema)
   });
+
+  // Wraps register() so sanitized fields drop invalid characters on input
+  const registerField = (key: keyof ContactFormData) => {
+    const field = register(key);
+    const sanitize = SANITIZERS[key];
+    if (!sanitize) return field;
+    return {
+      ...field,
+      onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.target.value = sanitize(e.target.value);
+        return field.onChange(e);
+      },
+    };
+  };
 
   const { data: fetchedContactFormFields, isLoading: isContactFieldsLoading } = useQuery({
     queryKey: ["contact-form-fields"],
@@ -144,14 +179,11 @@ const [captchaError, setCaptchaError] = useState("");
       <form onSubmit={handleSubmit(onSubmit)} className="relative p-6 sm:p-8 lg:p-10">
 
         <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-            {contactFormFields.heading}
+          {contactFormFields.heading}
         </h2>
         <p className="text-muted-foreground mb-8">
           {contactFormFields.paragraph}
         </p>
-
-        {/* <h2 dangerouslySetInnerHTML={{ __html: loaderData?.contactData?.data?.form_heading || "" }} className="text-2xl sm:text-3xl font-bold text-foreground mb-2"></h2>
-        <p className="text-muted-foreground mb-8">{loaderData?.contactData?.data?.form_paragraph}</p> */}
 
         <div className="grid sm:grid-cols-2 gap-5 mb-5">
           {contactFormFields.row1?.map((field) => {
@@ -164,7 +196,7 @@ const [captchaError, setCaptchaError] = useState("");
                   id={field.field_name}
                   type={field.type as "text" | "email"}
                   placeholder={field.placeholder}
-                  {...register(schemaKey)}
+                  {...registerField(schemaKey)}
                   className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors[schemaKey] ? "border-destructive" : ""}`}
                 />
                 {errors[schemaKey]?.message && <p className="text-destructive text-xs mt-1.5">{errors[schemaKey].message}</p>}
@@ -181,7 +213,7 @@ const [captchaError, setCaptchaError] = useState("");
                   id={field.field_name}
                   type={field.type as "text" | "email"}
                   placeholder={field.placeholder}
-                  {...register(schemaKey)}
+                  {...registerField(schemaKey)}
                   className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors[schemaKey] ? "border-destructive" : ""}`}
                 />
                 {errors[schemaKey]?.message && <p className="text-destructive text-xs mt-1.5">{errors[schemaKey].message}</p>}
@@ -200,7 +232,7 @@ const [captchaError, setCaptchaError] = useState("");
                 id={field.field_name}
                 type={field.type as "email"}
                 placeholder={field.placeholder}
-                {...register(schemaKey)}
+                {...registerField(schemaKey)}
                 className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors[schemaKey] ? "border-destructive" : ""}`}
               />
               {errors[schemaKey]?.message && <p className="text-destructive text-xs mt-1.5">{errors[schemaKey].message}</p>}
@@ -242,8 +274,10 @@ const [captchaError, setCaptchaError] = useState("");
                 <Input
                   id={field.field_name}
                   type="tel"
+                  inputMode="numeric"
+                  maxLength={15}
                   placeholder={field.placeholder}
-                  {...register(schemaKey)}
+                  {...registerField(schemaKey)}
                   className={`flex-1 bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200 ${errors[schemaKey] ? "border-destructive" : ""}`}
                 />
               </div>
@@ -265,7 +299,7 @@ const [captchaError, setCaptchaError] = useState("");
                 id={field.field_name}
                 type={field.type as "text"}
                 placeholder={field.placeholder}
-                {...register(schemaKey)}
+                {...registerField(schemaKey)}
                 className="bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 h-12 text-foreground placeholder:text-muted-foreground/50 rounded-xl transition-all duration-200"
               />
             </div>
@@ -282,7 +316,7 @@ const [captchaError, setCaptchaError] = useState("");
                 id={field.field_name}
                 placeholder={field.placeholder}
                 rows={5}
-                {...register(schemaKey)}
+                {...registerField(schemaKey)}
                 className={`bg-muted/30 border-border/50 focus:border-accent focus:ring-2 focus:ring-accent/20 text-foreground placeholder:text-muted-foreground/50 resize-none rounded-xl transition-all duration-200 ${errors[schemaKey] ? "border-destructive" : ""}`}
               />
               {errors[schemaKey]?.message && <p className="text-destructive text-xs mt-1.5">{errors[schemaKey].message}</p>}
