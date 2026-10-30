@@ -417,4 +417,20 @@ export const api = {
     if (!response.ok) throw new Error("Failed to fetch case study");
     return response.json();
   },
+    // GET latest case studies — /casestudies?limit=3&view=card
+  // GET by category — /casestudies?category=cloud,data-ai&limit=3&view=card
+  getRelatedCaseStudies: async (categorySlugs?: string[], limit = 3) => {
+    const params = new URLSearchParams({
+      limit: String(limit),
+      view: "card",
+    });
+
+    if (categorySlugs?.length) {
+      params.set("category", categorySlugs.join(","));
+    }
+
+    const response = await fetch(`${BASE_URL}/casestudies?${params}`, { headers });
+    if (!response.ok) throw new Error("Failed to fetch related case studies");
+    return response.json();
+  },
 };

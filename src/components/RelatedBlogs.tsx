@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Clock } from "lucide-react";
 
 const categoryColors: Record<string, string> = {
   AI: "bg-accent/15 text-accent border-accent/30",
   Data: "bg-sky-500/15 text-sky-400 border-sky-500/30",
-  Cloud: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+  Cloud: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
 };
 
 interface BlogPost {
@@ -15,6 +15,7 @@ interface BlogPost {
   excerpt?: { rendered?: string } | string;
   category?: string;
   featured_image?: string;
+  image?: string;
   reading_time?: string;
 }
 
@@ -22,44 +23,54 @@ interface RelatedBlogsProps {
   dataRelatedBlogs?: BlogPost[];
 }
 
+const stripHtml = (s = "") => s.replace(/<[^>]*>/g, "").trim();
+
 const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const hasData = dataRelatedBlogs.length > 0;
 
-  // Don't render if no related blogs
-  if (!dataRelatedBlogs || dataRelatedBlogs.length === 0) {
-    return null;
-  }
+  // Generate dot positions once so they don't jump on hover re-renders
+  const dots = useMemo(
+    () =>
+      Array.from({ length: 15 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 4}s`,
+        animationDuration: `${4 + Math.random() * 3}s`,
+      })),
+    []
+  );
 
-  // Map API data to component format
-  const displayBlogs = dataRelatedBlogs.map((post: BlogPost) => ({
-    id: post.slug || post.id?.toString() || '',
-    category: post.category || 'Blog',
-    title: typeof post.title === 'string' ? post.title : post.title?.rendered || '',
-    preview: typeof post.excerpt === 'string'
-      ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
-      : post.excerpt?.rendered?.replace(/<[^>]*>/g, '').substring(0, 150) + '...' || '',
-    readingTime: post.reading_time || '5 min read',
-    image: post.image || ""
-  }));
-
+  // All hooks run before any early return
   useEffect(() => {
+    if (!hasData || !sectionRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    observer.observe(sectionRef.current);
     return () => observer.disconnect();
-  }, []);
+  }, [hasData]);
+
+  if (!hasData) return null;
+
+  const displayBlogs = dataRelatedBlogs.slice(0, 3).map((post) => {
+    const excerpt = stripHtml(
+      typeof post.excerpt === "string" ? post.excerpt : post.excerpt?.rendered
+    );
+    return {
+      id: post.slug || post.id?.toString() || "",
+      category: post.category || "Blog",
+      title: typeof post.title === "string" ? post.title : post.title?.rendered || "",
+      preview: excerpt.length > 150 ? excerpt.substring(0, 150) + "..." : excerpt,
+      readingTime: post.reading_time || "5 min read",
+      image: post.featured_image || post.image || "",
+    };
+  });
 
   return (
     <section
@@ -69,23 +80,24 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[hsl(222,47%,5%)] via-[hsl(222,45%,6%)] to-[hsl(222,47%,5%)]" />
-      
+
       {/* Top/Bottom fade */}
-      <div className="absolute top-0 left-0 right-0 h-24 md:h-32 pointer-events-none z-[1]" style={{ background: 'linear-gradient(to bottom, hsl(222 47% 5%), transparent)' }} />
-      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 pointer-events-none z-[1]" style={{ background: 'linear-gradient(to top, hsl(222 47% 5%), transparent)' }} />
-      
+      <div
+        className="absolute top-0 left-0 right-0 h-24 md:h-32 pointer-events-none z-[1]"
+        style={{ background: "linear-gradient(to bottom, hsl(222 47% 5%), transparent)" }}
+      />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-24 md:h-32 pointer-events-none z-[1]"
+        style={{ background: "linear-gradient(to top, hsl(222 47% 5%), transparent)" }}
+      />
+
       {/* Subtle animated dots */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+        {dots.map((style, i) => (
           <div
             key={i}
             className="absolute w-0.5 h-0.5 bg-accent/20 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${4 + Math.random() * 3}s`
-            }}
+            style={style}
           />
         ))}
       </div>
@@ -102,7 +114,10 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
           }`}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Related <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">Blogs</span>
+            Related{" "}
+            <span className="bg-gradient-to-r from-[#5FC2E3] to-[#0077B6] bg-clip-text text-transparent">
+              Blogs
+            </span>
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
             Thought leadership, not content marketing.
@@ -116,7 +131,7 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
             return (
               <Link
                 to={`/blog/${blog.id}`}
-                key={index}
+                key={blog.id || index}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`group relative block transition-all duration-500 ${
@@ -125,21 +140,24 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
                 style={{ transitionDelay: `${150 + index * 100}ms` }}
               >
                 {/* Card container */}
-                <div className={`relative rounded-2xl overflow-hidden bg-gradient-to-br from-muted/50 to-muted/20 border transition-all duration-300 ${
-                  isHovered 
-                    ? "border-accent/40 shadow-xl shadow-accent/10" 
-                    : "border-border/30"
-                }`}>
-                  
+                <div
+                  className={`relative rounded-2xl overflow-hidden bg-gradient-to-br from-muted/50 to-muted/20 border transition-all duration-300 ${
+                    isHovered ? "border-accent/40 shadow-xl shadow-accent/10" : "border-border/30"
+                  }`}
+                >
                   {/* Image container */}
-                  <div className="relative aspect-video overflow-hidden">
-                    <img 
-                      src={blog.image} 
-                      alt={blog.title}
-                      className={`w-full h-full object-cover transition-transform duration-500 ${
-                        isHovered ? "scale-105" : "scale-100"
-                      }`}
-                    />
+                  <div className="relative aspect-video overflow-hidden bg-muted/30">
+                    {blog.image && (
+                      <img
+                        src={blog.image}
+                        alt={blog.title}
+                        loading="lazy"
+                        decoding="async"
+                        className={`w-full h-full object-cover transition-transform duration-500 ${
+                          isHovered ? "scale-105" : "scale-100"
+                        }`}
+                      />
+                    )}
                     {/* Dark gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent" />
                   </div>
@@ -147,23 +165,29 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
                   {/* Content */}
                   <div className="relative p-5 md:p-6">
                     {/* Category tag */}
-                    <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium border mb-4 ${
-                      categoryColors[blog.category] || "bg-muted text-muted-foreground border-border"
-                    }`}>
+                    <span
+                      className={`inline-flex px-3 py-1 rounded-full text-xs font-medium border mb-4 ${
+                        categoryColors[blog.category] || "bg-muted text-muted-foreground border-border"
+                      }`}
+                    >
                       {blog.category}
                     </span>
 
                     {/* Title */}
-                    <h3 className={`text-lg md:text-xl font-bold mb-3 leading-tight transition-colors duration-300 ${
-                      isHovered ? "text-accent" : "text-foreground"
-                    }`}>
+                    <h3
+                      className={`text-lg md:text-xl font-bold mb-3 leading-tight transition-colors duration-300 ${
+                        isHovered ? "text-accent" : "text-foreground"
+                      }`}
+                    >
                       {blog.title}
                     </h3>
 
                     {/* Preview */}
-                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-5 text-left">
-                      {blog.preview}
-                    </p>
+                    {blog.preview && (
+                      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-5 text-left">
+                        {blog.preview}
+                      </p>
+                    )}
 
                     {/* Footer */}
                     <div className="flex items-center justify-between pt-4 border-t border-border/20">
@@ -174,22 +198,28 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
                       </div>
 
                       {/* Read more CTA */}
-                      <div className={`flex items-center gap-1 text-accent text-sm font-medium transition-all duration-300 ${
-                        isHovered ? "opacity-100" : "opacity-70"
-                      }`}>
+                      <div
+                        className={`flex items-center gap-1 text-accent text-sm font-medium transition-all duration-300 ${
+                          isHovered ? "opacity-100" : "opacity-70"
+                        }`}
+                      >
                         <span>Read</span>
-                        <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${
-                          isHovered ? "translate-x-1" : ""
-                        }`} />
+                        <ArrowRight
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            isHovered ? "translate-x-1" : ""
+                          }`}
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Subtle glow on hover */}
-                <div className={`absolute inset-0 rounded-2xl bg-accent/5 pointer-events-none transition-opacity duration-300 ${
-                  isHovered ? "opacity-100" : "opacity-0"
-                }`} />
+                <div
+                  className={`absolute inset-0 rounded-2xl bg-accent/5 pointer-events-none transition-opacity duration-300 ${
+                    isHovered ? "opacity-100" : "opacity-0"
+                  }`}
+                />
               </Link>
             );
           })}
@@ -201,7 +231,10 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <Link to="/blog" className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors">
+          <Link
+            to="/blog"
+            className="group inline-flex items-center text-accent text-base font-medium hover:text-foreground transition-colors"
+          >
             <span className="relative">
               Explore All Insights
               <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />

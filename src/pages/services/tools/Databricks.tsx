@@ -313,7 +313,7 @@ const { data: relatedPostsData } = useQuery({
 
 const { data: relatedCaseData } = useQuery({
   queryKey: ["relatedCase", showRecent ? "recent" : caseCategorySlugs],
-  queryFn: () => api.getCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
+  queryFn: () => api.getRelatedCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
   enabled: !!pageData && showCases,
 });
 
