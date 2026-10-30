@@ -18,6 +18,7 @@ import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
 import { Faqs } from "@/components/Faqs";
 import RelatedBlogs from "@/components/RelatedBlogs";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 
 
 const cardStyle = {
@@ -118,14 +119,25 @@ const BigDataSolutions = () => {
   
 
     const pageData = data?.data;
-    const blogCategory = pageData?.blog_category;
-    const categorySlugs = Array.isArray(blogCategory)
-    ? blogCategory.map((category) => category?.slug).filter((slug): slug is string => Boolean(slug))
-    : [];
+
+   const showRecent = isChecked(pageData?.all);
+    const showBlogRecent = isChecked(pageData?.blog_all);
+    const categorySlugs = toSlugs(pageData?.blog_category);
+    const caseCategorySlugs = toSlugs(pageData?.case_category);
+
+    const showBlogs = showBlogRecent || categorySlugs.length > 0;
+    const showCases = showRecent || caseCategorySlugs.length > 0;
+
     const { data: relatedPostsData } = useQuery({
-    queryKey: ["relatedPosts", categorySlugs],
-    queryFn: () => api.getAllPosts(categorySlugs, 10),
-    enabled: categorySlugs.length > 0,
+      queryKey: ["relatedPosts", showRecent ? "recent" : categorySlugs],
+      queryFn: () => api.getAllPosts(showRecent ? [] : categorySlugs, 3),
+      enabled: !!pageData && showBlogs,
+    });
+
+    const { data: relatedCaseData } = useQuery({
+      queryKey: ["relatedCase", showRecent ? "recent" : caseCategorySlugs],
+      queryFn: () => api.getRelatedCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
+      enabled: !!pageData && showCases,
     });
 
     if (isLoading) return <LoadingSkeleton />;
@@ -743,7 +755,9 @@ const BigDataSolutions = () => {
         </section>
       )}
 
-      <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />
+          {/* RELATED BLOGS */}
+      {showBlogs && <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />}
+      {showCases && <CaseStudiesSection dataCaseStudies={relatedCaseData?.data || []} />}
 
       {/* CONTACT */}
       <section ref={setRef("contact")} className="relative py-8 lg:py-12 overflow-hidden"
