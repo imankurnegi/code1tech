@@ -83,7 +83,7 @@ const getSocialHref = (
 const locations = [
   {
     label: "India HQ",
-    address: "17, 18, 1st Floor, Milap Nagar, Tonk Road, Jaipur, (Raj), 302018",
+    address: "J-5, 5th floor, Tagore Nagar, J Block, Ajmer Road, Jaipur, Rajasthan, India 302021",
   },
   {
     label: "USA Office",
