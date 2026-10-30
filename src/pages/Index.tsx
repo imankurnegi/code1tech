@@ -39,10 +39,10 @@ const Index = () => {
   const homepageData = data?.homeData;
   const clientLogosData = data?.clientLogos?.data ?? [];
 
-    const showRecent = isChecked(homepageData?.data?.all);
-    const showBlogRecent = isChecked(homepageData?.data?.blog_all);
-    const categorySlugs = toSlugs(homepageData?.data?.blog_category);
-    const caseCategorySlugs = toSlugs(homepageData?.data?.case_category);
+    const showRecent = isChecked(data?.data?.all);
+    const showBlogRecent = isChecked(data?.data?.blog_all);
+    const categorySlugs = toSlugs(data?.data?.blog_category);
+    const caseCategorySlugs = toSlugs(data?.data?.case_category);
 
     const showBlogs = showBlogRecent || categorySlugs.length > 0;
     const showCases = showRecent || caseCategorySlugs.length > 0;
@@ -56,7 +56,7 @@ const Index = () => {
     const { data: relatedCaseData } = useQuery({
       queryKey: ["relatedCase", showRecent ? "recent" : caseCategorySlugs],
       queryFn: () => api.getRelatedCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
-      enabled: !!homepageData?.data && showCases,
+      enabled: !!data?.data && showCases,
     });
 
   if (isLoading) return <LoadingSkeleton />;
