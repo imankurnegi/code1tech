@@ -128,6 +128,15 @@ const formatDate = (iso: string) => {
   } catch { return iso; }
 };
 
+
+// HTML entities decode karo, phir saare tags hata do
+const toPlainText = (html = ""): string => {
+  if (!html) return "";
+  const decoded =
+    new DOMParser().parseFromString(html, "text/html").documentElement.textContent || "";
+  return decoded.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+};
+
 // Primary category helpers
 const primaryCategory    = (post: ApiPost) => post.categories?.[0]?.name ?? "";
 const primaryCategorySlug = (post: ApiPost) => post.categories?.[0]?.slug ?? "";
@@ -208,7 +217,14 @@ const Blogs = () => {
 
   // Process data
   const categories = useMemo(() => categoriesResponse?.data ?? categoriesResponse ?? [], [categoriesResponse]);
-  const posts = useMemo(() => postsResponse?.data ?? [], [postsResponse]);
+  const posts = useMemo<ApiPost[]>(
+  () =>
+    (postsResponse?.data ?? []).map((post: ApiPost) => ({
+      ...post,
+      content: toPlainText(post.content),
+    })),
+  [postsResponse]
+);
 
   // Update page meta
   useEffect(() => {

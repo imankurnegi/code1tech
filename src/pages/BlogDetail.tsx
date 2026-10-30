@@ -80,6 +80,13 @@ const formatDate = (iso: string) => {
   } catch { return iso; }
 };
 
+const toPlainText = (html = ""): string => {
+  if (!html) return "";
+  const decoded =
+    new DOMParser().parseFromString(html, "text/html").documentElement.textContent || "";
+  return decoded.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+};
+
 const primaryCategory     = (post: ApiPost) => post.categories?.[0]?.name ?? "";
 const primaryCategorySlug = (post: ApiPost) => post.categories?.[0]?.slug ?? "";
 
@@ -849,7 +856,7 @@ const BlogDetail = () => {
                           {related.title}
                         </h3>
                         <p className="text-muted-foreground text-sm leading-relaxed mb-5 text-left line-clamp-2">
-                          {related.content}
+                         {toPlainText(related.content)}
                         </p>
                         <div className="flex items-center justify-between pt-4 border-t border-border/20">
                           <span className="text-muted-foreground text-xs">{formatDate(related.date)}</span>
