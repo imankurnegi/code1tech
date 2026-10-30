@@ -763,7 +763,7 @@ const faqs = (Array.isArray(pageData?.frequently_asked_question) ? pageData.freq
 
           {/* RELATED BLOGS */}
       {showBlogs && <RelatedBlogs dataRelatedBlogs={relatedPostsData?.data || []} />}
-      {showCases && <CaseStudiesSection dataCaseStudies={relatedCaseData?.data || []} />
+      {showCases && <CaseStudiesSection dataCaseStudies={relatedCaseData?.data || []} />}
 
       {/* ================= CONTACT ================= */}
       <section className="py-16 lg:py-24 relative overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(222 47% 8%) 100%)" }}>
