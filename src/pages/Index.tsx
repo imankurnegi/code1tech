@@ -7,7 +7,6 @@ import EnterpriseTechSection from "@/components/EnterpriseTechSection";
 import TechnologyServicesPanel from "@/components/TechnologyServicesPanel";
 import TechnologyStackSection from "@/components/TechnologyStackSection";
 import IndustriesWeServe from "@/components/IndustriesWeServe";
-import CaseStudiesSection from "@/components/CaseStudiesSection";
 import WorkWithUs from "@/components/WorkWithUs";
 import HiringProcess from "@/components/HiringProcess";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -19,6 +18,7 @@ import SeoTags from "@/components/SeoTags";
 import { api } from "@/api";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import ErrorFallback from "@/components/ErrorFallback";
+import CaseStudiesSection from "@/components/CaseStudiesSection";
 
 const Index = () => {
   const { data, isLoading, error } = useQuery({
@@ -39,19 +39,25 @@ const Index = () => {
   const homepageData = data?.homeData;
   const clientLogosData = data?.clientLogos?.data ?? [];
 
-  const blogCategory = homepageData?.data?.blog_category;
+    const showRecent = isChecked(homepageData?.data?.all);
+    const showBlogRecent = isChecked(homepageData?.data?.blog_all);
+    const categorySlugs = toSlugs(homepageData?.data?.blog_category);
+    const caseCategorySlugs = toSlugs(homepageData?.data?.case_category);
 
-  const categorySlugs = Array.isArray(blogCategory)
-  ? blogCategory
-      .map((category) => category?.slug)
-      .filter((slug): slug is string => Boolean(slug))
-  : [];
+    const showBlogs = showBlogRecent || categorySlugs.length > 0;
+    const showCases = showRecent || caseCategorySlugs.length > 0;
 
-const { data: relatedPostsData } = useQuery({
-  queryKey: ["relatedPosts", categorySlugs],
-  queryFn: () => api.getAllPosts(categorySlugs, 10),
-  enabled: categorySlugs.length > 0,
-});
+    const { data: relatedPostsData } = useQuery({
+      queryKey: ["relatedPosts", showBlogRecent ? "recent" : categorySlugs],
+      queryFn: () => api.getAllPosts(showBlogRecent ? [] : categorySlugs, 3),
+      enabled: !!data && showBlogs,
+    });
+
+    const { data: relatedCaseData } = useQuery({
+      queryKey: ["relatedCase", showRecent ? "recent" : caseCategorySlugs],
+      queryFn: () => api.getRelatedCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
+      enabled: !!homepageData?.data && showCases,
+    });
 
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
@@ -83,7 +89,11 @@ const { data: relatedPostsData } = useQuery({
       <TechnologyServicesPanel dataSmartTechnology={homepageData?.data?.smart_technology_section} />
       <TechnologyStackSection dataCapabilities={homepageData?.data?.our_capabilities_section} />
       <IndustriesWeServe dataIndustries={homepageData?.data?.industries_we_section} />
-      {/* <CaseStudiesSection dataCaseStudies={homepageData?.data?.case_study_section} /> */}
+
+
+
+      <CaseStudiesSection dataCaseStudies={relatedCaseData?.data ?? []} />
+
       <WorkWithUs dataWorkWithUs={homepageData?.data?.work_with_us_section} />
       <HiringProcess dataHiring={homepageData?.data?.simple_transparent_hiring_section} />
       <WhyChooseUs dataWhyBusinesses={homepageData?.data?.why_businesses_section} />
