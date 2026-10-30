@@ -41,7 +41,7 @@ const RelatedBlogs = ({ dataRelatedBlogs = [] }: RelatedBlogsProps) => {
       ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
       : post.excerpt?.rendered?.replace(/<[^>]*>/g, '').substring(0, 150) + '...' || '',
     readingTime: post.reading_time || '5 min read',
-    image: post.featured_image || ""
+    image: post.image || ""
   }));
 
   useEffect(() => {
