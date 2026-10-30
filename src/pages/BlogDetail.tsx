@@ -80,11 +80,31 @@ const formatDate = (iso: string) => {
   } catch { return iso; }
 };
 
+// SSR-safe: DOMParser ki zaroorat nahi
+const decodeEntities = (s: string): string =>
+  s.replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (match, code: string) => {
+    if (code[0] === "#") {
+      const n = code[1].toLowerCase() === "x"
+        ? parseInt(code.slice(2), 16)
+        : parseInt(code.slice(1), 10);
+      return Number.isNaN(n) ? match : String.fromCodePoint(n);
+    }
+    const map: Record<string, string> = {
+      amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+      hellip: "…", ndash: "–", mdash: "—",
+      lsquo: "‘", rsquo: "’", ldquo: "“", rdquo: "”",
+    };
+    return map[code.toLowerCase()] ?? match;
+  });
+
 const toPlainText = (html = ""): string => {
   if (!html) return "";
-  const decoded =
-    new DOMParser().parseFromString(html, "text/html").documentElement.textContent || "";
-  return decoded.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  return decodeEntities(
+    decodeEntities(html)          // &lt;p&gt; → <p>
+      .replace(/<[^>]*>/g, " ")   // tags hatao
+  )                               // bache hue entities (&amp;, &#8217;) decode karo
+    .replace(/\s+/g, " ")
+    .trim();
 };
 
 const primaryCategory     = (post: ApiPost) => post.categories?.[0]?.name ?? "";
