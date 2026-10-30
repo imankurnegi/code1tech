@@ -364,8 +364,8 @@ const BusinessIntelligence = () => {
     const showCases = showRecent || caseCategorySlugs.length > 0;
 
     const { data: relatedPostsData } = useQuery({
-      queryKey: ["relatedPosts", showRecent ? "recent" : categorySlugs],
-      queryFn: () => api.getAllPosts(showRecent ? [] : categorySlugs, 3),
+      queryKey: ["relatedPosts", showBlogRecent ? "recent" : categorySlugs],
+      queryFn: () => api.getAllPosts(showBlogRecent ? [] : categorySlugs, 3),
       enabled: !!pageData && showBlogs,
     });
 
