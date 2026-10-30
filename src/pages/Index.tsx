@@ -36,28 +36,45 @@ const Index = () => {
     },
   });
 
+  // ACF true/false or checkbox: true, 1, "1", "yes", ["yes"], etc.
+  const isChecked = (v: unknown): boolean => {
+    if (Array.isArray(v)) return v.length > 0;
+    if (typeof v === "string") return ["1", "true", "yes", "on"].includes(v.toLowerCase());
+    return Boolean(v);
+  };
+
+  // ACF taxonomy field: term objects, slugs, or a single value
+  const toSlugs = (v: unknown): string[] => {
+    if (!v) return [];
+    const arr = Array.isArray(v) ? v : [v];
+    return arr
+      .map((t: any) => (typeof t === "string" ? t : t?.slug))
+      .filter(Boolean);
+  };
+
   const homepageData = data?.homeData;
   const clientLogosData = data?.clientLogos?.data ?? [];
+  const fields = homepageData?.data;
 
-    const showRecent = isChecked(data?.data?.all);
-    const showBlogRecent = isChecked(data?.data?.blog_all);
-    const categorySlugs = toSlugs(data?.data?.blog_category);
-    const caseCategorySlugs = toSlugs(data?.data?.case_category);
+const showRecent = isChecked(fields?.all);
+const showBlogRecent = isChecked(fields?.blog_all);
+const categorySlugs = toSlugs(fields?.blog_category);
+const caseCategorySlugs = toSlugs(fields?.case_category);
 
-    const showBlogs = showBlogRecent || categorySlugs.length > 0;
-    const showCases = showRecent || caseCategorySlugs.length > 0;
+const showBlogs = showBlogRecent || categorySlugs.length > 0;
+const showCases = showRecent || caseCategorySlugs.length > 0;
 
-    const { data: relatedPostsData } = useQuery({
-      queryKey: ["relatedPosts", showBlogRecent ? "recent" : categorySlugs],
-      queryFn: () => api.getAllPosts(showBlogRecent ? [] : categorySlugs, 3),
-      enabled: !!data && showBlogs,
-    });
+const { data: relatedPostsData } = useQuery({
+  queryKey: ["relatedPosts", showBlogRecent ? "recent" : categorySlugs],
+  queryFn: () => api.getAllPosts(showBlogRecent ? [] : categorySlugs, 3),
+  enabled: !!fields && showBlogs,
+});
 
-    const { data: relatedCaseData } = useQuery({
-      queryKey: ["relatedCase", showRecent ? "recent" : caseCategorySlugs],
-      queryFn: () => api.getRelatedCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
-      enabled: !!data?.data && showCases,
-    });
+const { data: relatedCaseData } = useQuery({
+  queryKey: ["relatedCase", showRecent ? "recent" : caseCategorySlugs],
+  queryFn: () => api.getRelatedCaseStudies(showRecent ? [] : caseCategorySlugs, 3),
+  enabled: !!fields && showCases,
+});
 
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorFallback error={error as Error} onRetry={() => window.location.reload()} />;
