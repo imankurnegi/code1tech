@@ -3,24 +3,25 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { addClassToSpan } from "@/lib/utils";
 import { useInView } from "@/hooks/useInView";
+import { DynamicIcon } from "@/components/DynamicIcon";
+
+interface Stat {
+  value?: string;
+  text?: string;
+}
 
 interface CaseStudyPost {
-  ID?: number;
   id?: number;
-  post_title?: string;
-  title?: { rendered?: string } | string;
-  post_content?: string;
-  excerpt?: { rendered?: string } | string;
-  post_name?: string;
+  title?: string;
   slug?: string;
-  acf?: {
-    card_image?: string;
-    hover_icon?: string;
-    value_1?: string;
-    value_1_text?: string;
-    value_2?: string;
-    value_2_text?: string;
-  };
+  image?: string | false;
+  categories?: string[];
+  content?: {
+    listing_icon?: string;
+    listing_highlight_text?: string;
+    listing_highlight_content?: string;
+    stats?: Stat[];
+  } | string;
 }
 
 interface Props {
@@ -30,7 +31,7 @@ interface Props {
   basePath?: string;
 }
 
-const pick = (v?: { rendered?: string } | string) => (typeof v === "string" ? v : v?.rendered || "");
+const stripHtml = (s = "") => s.replace(/<[^>]*>/g, "").trim();
 
 const CaseStudiesSection = ({
   dataCaseStudies = [],
@@ -43,13 +44,20 @@ const CaseStudiesSection = ({
 
   if (!dataCaseStudies.length) return null;
 
-  const studies = dataCaseStudies.slice(0, 3).map((p) => ({
-    id: p.ID ?? p.id,
-    title: p.post_title || pick(p.title),
-    content: p.post_content || pick(p.excerpt),
-    slug: p.post_name || p.slug || "",
-    acf: p.acf || {},
-  }));
+  const studies = dataCaseStudies.slice(0, 3).map((p, i) => {
+    const c = typeof p.content === "object" && p.content ? p.content : {};
+    return {
+      key: p.id ?? i,
+      title: p.title || "",
+      slug: p.slug || "",
+      image: p.image || "",
+      category: p.categories?.[0] || "",
+      icon: c.listing_icon || "",
+      highlight: stripHtml(c.listing_highlight_text || "").replace(/^"|"$/g, ""),
+      summary: stripHtml(c.listing_highlight_content || ""),
+      stats: (c.stats || []).filter((s) => s?.value).slice(0, 2),
+    };
+  });
 
   return (
     <section ref={sectionRef} className="relative pb-16 md:pb-24 lg:pb-28 overflow-hidden">
@@ -77,67 +85,77 @@ const CaseStudiesSection = ({
           {studies.map((study, index) => {
             const isHovered = hoveredIndex === index;
             return (
-              <div
-                key={study.id ?? index}
-                className="group relative bg-card/30 backdrop-blur-sm border border-border/30 rounded-xl overflow-hidden transition-all duration-500 hover:border-accent/40 hover:bg-card/50"
+              <Link
+                key={study.key}
+                to={`${basePath}/${study.slug}`}
+                className="group relative flex flex-col bg-card/30 backdrop-blur-sm border border-border/30 rounded-xl overflow-hidden transition-all duration-500 hover:border-accent/40 hover:bg-card/50"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <div className="relative h-40 lg:h-44 overflow-hidden">
-                  {study.acf.card_image && (
+                {/* Image */}
+                <div className="relative h-40 lg:h-44 overflow-hidden bg-muted/30">
+                  {study.image && (
                     <img
-                      src={study.acf.card_image}
+                      src={study.image}
                       alt={study.title}
+                      loading="lazy"
+                      decoding="async"
                       className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? "scale-110" : "scale-100"}`}
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
-                  {study.acf.hover_icon && (
-                    <div className={`absolute bottom-3 right-3 p-2 bg-background/80 backdrop-blur-sm rounded-lg transition-all duration-300 ${isHovered ? "bg-accent/20" : ""}`}>
-                      <img
-                        src={study.acf.hover_icon}
-                        alt=""
-                        className="w-6 h-6 object-contain transition-all duration-300"
-                        style={isHovered ? { filter: "brightness(0) saturate(100%) invert(70%) sepia(100%) saturate(1500%) hue-rotate(175deg)" } : {}}
+
+                  {study.icon && (
+                    <div className={`absolute bottom-3 right-3 p-2 backdrop-blur-sm rounded-lg transition-all duration-300 ${isHovered ? "bg-accent/20" : "bg-background/80"}`}>
+                      <DynamicIcon
+                        name={study.icon}
+                        className={`w-6 h-6 transition-colors duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`}
                       />
                     </div>
                   )}
                 </div>
 
-                <div className="p-4 lg:p-5">
-                  <h3 className="text-lg font-bold text-foreground mb-1.5 group-hover:text-accent transition-colors duration-300">
-                    {study.title}
-                  </h3>
-                  {study.content && (
-                    <div className="text-sm text-muted-foreground mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: study.content }} />
+                {/* Content */}
+                <div className="flex flex-col flex-1 p-4 lg:p-5">
+                  {study.category && (
+                    <span className="self-start mb-3 px-2.5 py-1 rounded-full text-[11px] font-medium text-accent bg-accent/10 border border-accent/20 line-clamp-1">
+                      {study.category}
+                    </span>
                   )}
 
-                  <div className="flex gap-4 mb-4">
-                    {[1, 2].map((n) => {
-                      const val = study.acf[`value_${n}` as "value_1"];
-                      const txt = study.acf[`value_${n}_text` as "value_1_text"];
-                      return val ? (
-                        <div key={n} className="flex flex-col">
-                          <span className="text-foreground font-bold text-lg">{val}</span>
-                          <span className="text-muted-foreground text-xs">{txt}</span>
-                        </div>
-                      ) : null;
-                    })}
-                  </div>
+                  <h3 className="text-lg font-bold text-foreground mb-2 leading-snug group-hover:text-accent transition-colors duration-300">
+                    {study.title}
+                  </h3>
 
-                  <Link
-                    to={`${basePath}/${study.slug}`}
-                    className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`}
-                  >
+                  {study.highlight && (
+                    <p className="text-sm italic text-foreground/80 mb-2 line-clamp-2">“{study.highlight}”</p>
+                  )}
+
+                  {study.summary && (
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-3">{study.summary}</p>
+                  )}
+
+                  {study.stats.length > 0 && (
+                    <div className="grid grid-cols-2 gap-4 mb-4 pt-4 border-t border-border/20">
+                      {study.stats.map((s, i) => (
+                        <div key={i} className="flex flex-col">
+                          <span className="text-foreground font-bold text-base leading-tight">{s.value}</span>
+                          <span className="text-muted-foreground text-xs mt-0.5">{s.text}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <span className={`mt-auto flex items-center gap-2 text-sm font-medium transition-all duration-300 ${isHovered ? "text-accent" : "text-muted-foreground"}`}>
                     View Case Study
                     <ArrowRight className={`w-4 h-4 transition-transform duration-300 ${isHovered ? "translate-x-1" : ""}`} />
-                  </Link>
+                  </span>
                 </div>
 
                 <div className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`}>
                   <div className="absolute inset-0 bg-gradient-to-t from-accent/5 to-transparent" />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
