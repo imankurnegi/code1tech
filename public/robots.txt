@@ -12,3 +12,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /code1new/
+Disallow: /blog/contactus
+Disallow: /privacy-policy/contactus
+Disallow: /careers/senior-c-desktop-developer-ai-oriented
+Disallow: /developer/13
